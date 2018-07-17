@@ -91,3 +91,4 @@ public class HomeController {
 	public String mapPage() {
 		return "house/map";
 	}
+}
