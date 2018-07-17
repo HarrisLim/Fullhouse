@@ -1352,7 +1352,7 @@ fieldset[disabled] .btn-link.active {
 .form-control:focus~.input-group-prepend .input-group-text {
   border: 1px solid #f96332;
   border-left: none;
-  background-color: transparent;
+/*   background-color: transparent; */
 }
 
 .has-success .form-control,
@@ -1754,7 +1754,7 @@ textarea.form-control {
   resize: none;
   border: none;
   border-bottom: 1px solid #E3E3E3;
-  border-radius: 0;
+/*   border-radius: 0; */
   line-height: 2;
 }
 
@@ -2270,6 +2270,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   min-height: 53px;
   margin-bottom: 20px;
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
+
 }
 
 .navbar a {
@@ -2363,6 +2364,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   font-weight: 400;
 }
 
+/* 네비게이션 크기 속성 결정 */
 .navbar.navbar-absolute {
   position: absolute;
   width: 100%;
@@ -3825,8 +3827,8 @@ Created using IcoMoon - icomoon.io
   top: 0;
   height: 100%;
   bottom: 0;
-  width: 260px;
-  left: 0;
+  width: 480px;
+  rigth: 0;
   z-index: 1030;
 }
 
@@ -3835,7 +3837,7 @@ Created using IcoMoon - icomoon.io
   position: relative;
   height: calc(100vh - 75px);
   overflow: auto;
-  width: 260px;
+  width: 100%;
   z-index: 4;
   padding-bottom: 100px;
 }
@@ -4178,8 +4180,8 @@ Created using IcoMoon - icomoon.io
 
 .main-panel {
   position: relative;
-  float: right;
-  width: calc(100% - 260px);
+  float: left;
+  width: calc(100% - 480px);
   background-color: #E3E3E3;
   background-color: #ebecf1;
   -webkit-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
@@ -4189,13 +4191,47 @@ Created using IcoMoon - icomoon.io
   transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
 }
 
+.sub-panel {
+  position: relative;
+  float: left;
+  width: calc(100%);
+  height: 75px;
+  background-color: navy;
+  background-color: navy;
+  -webkit-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  -moz-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  -o-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  -ms-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+}
+
+.third-panel {
+  position: relative;
+  float: left;
+  width: calc(100%);
+  height: 60px;
+/*   margin-top: 5px; */
+  background-color: orange;
+  background-color: orange;
+  -webkit-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  -moz-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  -o-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  -ms-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+}
+.main-panel>.sub-panel {
+  padding: 0 30px 30px;
+/*   이곳에 마진주면 네비게이션도 같이 내려감 */
+  margin-top: 10px;
+}
+
 .main-panel>.content {
   padding: 0 30px 30px;
   min-height: calc(100vh - 123px);
   margin-top: -30px;
 }
 
-.main-panel>.navbar {
+.sub-panel>.navbar {
   margin-bottom: 0;
 }
 
@@ -4828,16 +4864,40 @@ Created using IcoMoon - icomoon.io
   .navbar .navbar-nav .nav-item:first-child {
     margin-top: 10px;
   }
-  .navbar .navbar-nav .nav-item:not(:last-child) {
+/*             서드판넬 드랍 다운 메뉴           */
+  .third-panel .navbar-nav .nav-item:not(:last-child) {
     margin-bottom: 10px;
   }
-  .navbar .dropdown.show .dropdown-menu {
+  .third-panel .dropdown.show .dropdown-menu {
     display: block;
   }
-  .navbar .dropdown .dropdown-menu {
+  .third-panel .dropdown .dropdown-menu {
     display: none;
   }
-  .navbar .dropdown.show .dropdown-menu,
+  .third-panel .dropdown.show .dropdown-menu,
+  .third-panel .dropdown .dropdown-menu {
+    background-color: transparent;
+    border: 0;
+    transition: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    width: auto;
+    margin: 0px 1rem;
+    margin-top: 0px;
+  }
+  .third-panel .dropdown.show .dropdown-menu:before,
+  .third-panel .dropdown .dropdown-menu:before {
+    display: none;
+  }
+  .third-panel .dropdown-menu .dropdown-item:focus,
+  .third-panel .dropdown-menu .dropdown-item:hover {
+    color: #FFFFFF;
+  }
+  .navbar.bg-white .dropdown-menu .dropdown-item:focus,
+  .navbar.bg-white .dropdown-menu .dropdown-item:hover {
+    color: #888;
+  }
+  .navb .navbar .dropdown.show .dropdown-menu,
   .navbar .dropdown .dropdown-menu {
     background-color: transparent;
     border: 0;
@@ -4848,6 +4908,7 @@ Created using IcoMoon - icomoon.io
     margin: 0px 1rem;
     margin-top: 0px;
   }
+  
   .navbar .dropdown.show .dropdown-menu:before,
   .navbar .dropdown .dropdown-menu:before {
     display: none;
