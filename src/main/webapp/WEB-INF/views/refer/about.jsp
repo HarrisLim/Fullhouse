@@ -30,7 +30,7 @@
               <a class="nav-link" href="../index.html">Overview</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbar_main_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+              <a class="" href="#" id="navbar_main_dropdown_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
               <div class="dropdown-menu" aria-labelledby="navbar_1_dropdown_1">
                 <a class="dropdown-item" href="../pages/homepage.html">Homepage</a>
                 <a class="dropdown-item" href="../pages/about.html">About us</a>
