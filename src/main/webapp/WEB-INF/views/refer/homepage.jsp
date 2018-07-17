@@ -19,10 +19,8 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
       <div class="container">
-        <a class="navbar-brand" href="../"><strong>Boomerang</strong> UI Kit</a>
-        <button class="navbar-toggler" type="button" data-action="offcanvas-open" data-target="#navbar_main" aria-controls="navbar_main" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        
+
         <div class="navbar-collapse offcanvas-collapse" id="navbar_main">
           <ul class="navbar-nav ml-auto align-items-lg-center">
             <h6 class="dropdown-header font-weight-600 d-lg-none px-0">Menu</h6>
