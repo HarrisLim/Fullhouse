@@ -81,7 +81,6 @@ public class HomeController {
 	public String homepage() {
 		return "refer/homepage";
 	}
-	
 	@RequestMapping(value = "refer/user.do", method = RequestMethod.GET)
 	public String user() {
 		return "refer/user";
@@ -91,6 +90,4 @@ public class HomeController {
 	public String signIn() {
 		return "refer/signIn";
 	}
-
-	
 }
