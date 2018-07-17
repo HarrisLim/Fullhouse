@@ -7,10 +7,10 @@
 <title>customer</title>
 </head>
 <body>
-	<div id = "app">
-		<div class = "sc-gzVnrw ijIGdL"></div>
-	
-	</div>
+
+
+
+
 
 </body>
 </html>

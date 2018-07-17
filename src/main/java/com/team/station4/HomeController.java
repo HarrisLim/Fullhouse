@@ -92,13 +92,5 @@ public class HomeController {
 		return "refer/signIn";
 	}
 
-	@RequestMapping(value = "house/promain.do", method = RequestMethod.GET)
-	public String promain() {
-		return "house/promain";
-	}
-	@RequestMapping(value = "house/customer.do", method = RequestMethod.GET)
-	public String customer() {
-		return "house/customer";
-	}
 	
 }
