@@ -19,7 +19,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
       <div class="container">
-        <a class="navbar-brand" href="./"><strong>Boomerang</strong> UI Kit</a>
+        <a class="navbar-brand" href="./"><strong>Full House</strong> Station4</a>
         <button class="navbar-toggler" type="button" data-action="offcanvas-open" data-target="#navbar_main" aria-controls="navbar_main" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -74,10 +74,10 @@
                   <div class="text-center mt-5">
                     <img src="../assets/images/brand/icon.png" style="width: 200px;" class="img-fluid animated" data-animation-in="jackInTheBox" data-animation-delay="1000">
                     <h2 class="heading display-4 font-weight-400 text-white mt-5 animated" data-animation-in="fadeInUp" data-animation-delay="2000">
-                      <span class="font-weight-700">Boomerang</span> UI Kit
+                      <span class="font-weight-700">Full House</span>
                     </h2>
                     <p class="lead text-white mt-3 lh-180 c-white animated" data-animation-in="fadeInUp" data-animation-delay="2500">
-                      Free HTML UI Kit based on the well known Bootstrap 4 Framework brought to you by <strong class="text-white">Webpixels</strong>
+                                                   안녕하세요 바까봤으여~ <strong class="text-white">수정이 할랑</strong>
                     </p>
                   </div>
                 </div>
@@ -93,10 +93,10 @@
               <!-- Typography -->
               <div class="row align-items-center mb-5">
                 <div class="col-8">
-                  <h2 class="heading h3 mb-0">Typography</h2>
+                  <h2 class="heading h3 mb-0">Full House</h2>
                 </div>
                 <div class="col-4 text-right">
-                  <a href="../docs/typography.html" class="btn btn-sm btn-primary">Open in Docs</a>
+                  <a href="../docs/typography.html" class="btn btn-sm btn-primary">ㅈ ㅏ 이제 시작이야~</a>
                 </div>
               </div>
               <div class="row typeface-palette cols-xs-space cols-sm-space cols-md-space">
@@ -2050,7 +2050,7 @@
                       </div>
                       <div class="icon-text">
                         <h3 class="heading h4">Free support on Github</h3>
-                        <p class="mb-0">You get a professional theme and a promise that we will respond to each issue you are having with our theme on Github.</p>
+                        <p class="mb-0">You get a professional theme and a promise that we will res pond to each issue you are having with our theme on Github.</p>
                       </div>
                     </div>
                   </div>
