@@ -8,13 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at  the highest level of quality.                             ">
     <meta name="author" content="Webpixels">
-    <title>메물관리</title>
+    <title>메물</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700" rel="stylesheet">
     <!-- Theme CSS -->
     <link type="text/css" href="../assets/css/theme.css" rel="stylesheet">
     <!-- Demo CSS - No need to use these in your project -->
     <link type="text/css" href="../assets/css/demo.css" rel="stylesheet">
+    <link href="../kanu/slidephotos/js-image-slider.css" rel="stylesheet" type="text/css" />
+    <script src="../kanu/slidephotos/js-image-slider.js" type="text/javascript"></script>
   </head>
   <body>
     <%@ include file ="nav.jsp" %>
@@ -23,163 +25,127 @@
 		<div class="container">
 			<div class="justify-content-center">
 				<div class="pt-lg-md">
-					<h2 class="h1 mb-4">매물관리</h2>
-				    <!-- 로그인된 아이디에 등록한 매물이 없다면, -->
-					<p class="lead lh-180">
-						일반회원은 1개의 매물만 등록이 가능합니다.<br><br>
-						- 공개중: 내가 등록한 매물이 공개중인 상태<br>
-						- 거래완료: 등록한 매물이 거래완료된 상태<br> 
-						- 검수반려: 운영원칙 위배 또는 신고로 비공개된 상태<br>
-					</p>
-					<br><br><br>
-					<!-- 로그인된 아이디에 등록한 매물이 있다면,  -->
-					<div align="right">
-						<select>
-							<option value="allacount">전체 계정</option> <!-- 해당 공인중개사에 있는 계정을 선택하여 볼 수 있다. -->
-							<option value="firstaccount">1번 계정</option>
-							<option value="secondaccount">2번 계정</option>
-						</select>
-						&nbsp;&nbsp;&nbsp;검색&nbsp;<input placeholder="매물번호/제목/메모">
-						<button type="button" class="btn btn-sm btn-outline-dark">검색</button> 
-					</div>
-					<div class="btn-group" role="group" style="width:100%; margin:10px 0 10px 0">
-				        <button type="button" class="btn btn-outline-dark" style="width:100%">전체</button>
-				        <button type="button" class="btn btn-outline-dark" style="width:100%">광고 진행</button>
-				        <button type="button" class="btn btn-outline-dark" style="width:100%">광고 종료</button>
-				        <button type="button" class="btn btn-outline-dark" style="width:100%">거래 완료</button>
-				        <button type="button" class="btn btn-outline-dark" style="width:100%">검수 반려</button>
-			       	</div>
-			       	<div>
+					<h2 class="h1 mb-4">매물</h2>
+					<div id="sliderFrame">
+						<div id="slider">
+							<img src="../kanu/slidephotos/images/image-slider-1.jpg"/>
+							<img src="../kanu/slidephotos/images/image-slider-2.jpg" />
+							<img src="../kanu/slidephotos/images/image-slider-1.jpg"/>
+							<img src="../kanu/slidephotos/images/image-slider-2.jpg" />
+							<img src="../kanu/slidephotos/images/image-slider-3.jpg"/>
+							<img src="../kanu/slidephotos/images/image-slider-4.jpg"/>
+							<img src="../kanu/slidephotos/images/image-slider-5.jpg" />
+							<img src="../kanu/slidephotos/images/image-slider-1.jpg"/>
+							<img src="../kanu/slidephotos/images/image-slider-2.jpg" />
+							<img src="../kanu/slidephotos/images/image-slider-3.jpg"/>
+							<img src="../kanu/slidephotos/images/image-slider-1.jpg"/>
+							<img src="../kanu/slidephotos/images/image-slider-2.jpg" />
+							<img src="../kanu/slidephotos/images/image-slider-3.jpg"/>
+							<img src="../kanu/slidephotos/images/image-slider-1.jpg"/>
+							<img src="../kanu/slidephotos/images/image-slider-2.jpg" />
+							<img src="../kanu/slidephotos/images/image-slider-3.jpg"/>
+							<img src="../kanu/slidephotos/images/image-slider-2.jpg" />
+							<img src="../kanu/slidephotos/images/image-slider-3.jpg"/>
+						</div>
+						<div id="thumbs">
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb1.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb2.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb1.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb2.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb3.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb4.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb5.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb1.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb2.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb3.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb1.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb2.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb3.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb1.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb2.jpg"></div>
+				            <div class="thumb"><img src="../kanu/slidephotos/images/thumb3.jpg"></div>
+				        </div>
+					</div> 
+			       	<div style="margin-top:40px">
+					<h2 class="h3 mb-4">매물 정보</h2>
 			       		<table class="table talbe-hover align-items-center">
 			       			<tbody>
 			       				<tr>
-			       					<td>
-			       						330001<br>
-			       						[현태 상태]<br>
-			       						ex,<br>
-			       						[광고 종료]
+			       					<td width="25%">
+			       						보증금 / 월세 / 매매가
 			       					</td>
-			       					<td>
-			       						사진 넣는 곳
+			       					<td width="25%">
+			       						<strong>500/45</strong> 
 			       					</td>
-			       					<td>
-			       						원룸 월세 1000/50<br>
-			       						서울특별시 금천구 가산동 가산디지털단지 근처. 가격대비 넓은방
+			       					<td width="25%">
+			       						방 종류
 			       					</td>
-			       					<td>
-			       						<textarea placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30"></textarea>
-			       					</td>
-			       					<td>
-			       						2015-12-21 | 조회수 445 | 찜 1<br>
-										<div class="btn-group" role="group">
-											<button class="btn btn-sm btn-outline-dark">수정</button>
-											<button class="btn btn-sm btn-outline-dark">삭제</button>
-											<button class="btn btn-sm btn-outline-dark">광고재등록</button>
-										</div>
+			       					<td width="25%">
+			       						원룸
 			       					</td>
 			       				</tr>
 			       				<tr>
-			       					<td>
-			       						330001<br>
-			       						[현태 상태]<br>
-			       						ex,<br>
-			       						[광고 종료]
+			       					<td width="25%">
+			       						해당 층 / 건물 층
 			       					</td>
-			       					<td>
-			       						사진 넣는 곳
+			       					<td width="25%">
+			       						<strong>2층 / 4층</strong> 
 			       					</td>
-			       					<td>
-			       						원룸 월세 1000/50<br>
-			       						서울특별시 금천구 가산동 가산디지털단지 근처. 가격대비 넓은방
+			       					<td width="25%">
+			       						전용 / 공급면적
 			       					</td>
-			       					<td>
-			       						<textarea placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30"></textarea>
-			       					</td>
-			       					<td>
-			       						2015-12-21 | 조회수 445 | 찜 1<br>
-										<div class="btn-group" role="group">
-											<button class="btn btn-sm btn-outline-dark">수정</button>
-											<button class="btn btn-sm btn-outline-dark">삭제</button>
-											<button class="btn btn-sm btn-outline-dark">광고재등록</button>
-										</div>
+			       					<td width="25%">
+			       						19.8m2 / 19.8m2
 			       					</td>
 			       				</tr>
 			       				<tr>
-			       					<td>
-			       						330001<br>
-			       						[현태 상태]<br>
-			       						ex,<br>
-			       						[광고 종료]
+			       					<td width="25%">
+			       						보증금 / 월세 / 매매가
 			       					</td>
-			       					<td>
-			       						사진 넣는 곳
+			       					<td width="25%">
+			       						<strong>500/45</strong> 
 			       					</td>
-			       					<td>
-			       						원룸 월세 1000/50<br>
-			       						서울특별시 금천구 가산동 가산디지털단지 근처. 가격대비 넓은방
+			       					<td width="25%">
+			       						방 종류
 			       					</td>
-			       					<td>
-			       						<textarea placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30"></textarea>
-			       					</td>
-			       					<td>
-			       						2015-12-21 | 조회수 445 | 찜 1<br>
-										<div class="btn-group" role="group">
-											<button class="btn btn-sm btn-outline-dark">수정</button>
-											<button class="btn btn-sm btn-outline-dark">삭제</button>
-											<button class="btn btn-sm btn-outline-dark">광고재등록</button>
-										</div>
+			       					<td width="25%">
+			       						원룸
 			       					</td>
 			       				</tr>
 			       				<tr>
-			       					<td>
-			       						330001<br>
-			       						[현태 상태]<br>
-			       						ex,<br>
-			       						[광고 종료]
+			       					<td width="25%">
+			       						보증금 / 월세 / 매매가
 			       					</td>
-			       					<td>
-			       						사진 넣는 곳
+			       					<td width="25%">
+			       						<strong>500/45</strong> 
 			       					</td>
-			       					<td>
-			       						원룸 월세 1000/50<br>
-			       						서울특별시 금천구 가산동 가산디지털단지 근처. 가격대비 넓은방
+			       					<td width="25%">
+			       						방 종류
 			       					</td>
-			       					<td>
-			       						<textarea placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30"></textarea>
-			       					</td>
-			       					<td>
-			       						2015-12-21 | 조회수 445 | 찜 1<br>
-										<div class="btn-group" role="group">
-											<button class="btn btn-sm btn-outline-dark">수정</button>
-											<button class="btn btn-sm btn-outline-dark">삭제</button>
-											<button class="btn btn-sm btn-outline-dark">광고재등록</button>
-										</div>
+			       					<td width="25%">
+			       						원룸
 			       					</td>
 			       				</tr>
 			       				<tr>
-			       					<td>
-			       						330001<br>
-			       						[현태 상태]<br>
-			       						ex,<br>
-			       						[광고 종료]
+			       					<td width="25%">
+			       						보증금 / 월세 / 매매가
 			       					</td>
-			       					<td>
-			       						사진 넣는 곳
+			       					<td width="25%">
+			       						<strong>500/45</strong> 
 			       					</td>
-			       					<td>
-			       						원룸 월세 1000/50<br>
-			       						서울특별시 금천구 가산동 가산디지털단지 근처. 가격대비 넓은방
+			       					<td width="25%">
+			       						방 종류
 			       					</td>
-			       					<td>
-			       						<textarea placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30"></textarea>
+			       					<td width="25%">
+			       						원룸
 			       					</td>
-			       					<td>
-			       						2015-12-21 | 조회수 445 | 찜 1<br>
-										<div class="btn-group" role="group">
-											<button class="btn btn-sm btn-outline-dark">수정</button>
-											<button class="btn btn-sm btn-outline-dark">삭제</button>
-											<button class="btn btn-sm btn-outline-dark">광고재등록</button>
-										</div>
+			       				</tr>
+			       				<tr>
+			       					<td width="25%">
+			       						보증금 / 월세 / 매매가
+			       					</td>
+			       					<td width="25%">
+			       						<strong>500/45</strong> 
 			       					</td>
 			       				</tr>
 			       			</tbody>
