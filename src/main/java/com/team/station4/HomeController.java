@@ -22,17 +22,17 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "refer/index.do", method = RequestMethod.GET)
+	@RequestMapping(value = "house/main.do", method = RequestMethod.GET)
 	public String index() {
-		return "refer/index";
+		return "house/main";
 	}
 	
-	@RequestMapping(value = "refer/home.do", method = RequestMethod.GET)
-	public String home() {
-		return "refer/home";
+	@RequestMapping(value = "house/test.do", method = RequestMethod.GET)
+	public String test() {
+		return "house/test";
 	}
 	
-	@RequestMapping(value = "refer/dashboard.do", method = RequestMethod.GET)
+/*	@RequestMapping(value = "refer/dashboard.do", method = RequestMethod.GET)
 	public String dashBoard() {
 		return "refer/dashboard";
 	}
@@ -90,7 +90,7 @@ public class HomeController {
 	@RequestMapping(value = "refer/signIn.do", method = RequestMethod.GET)
 	public String signIn() {
 		return "refer/signIn";
-	}
+	}*/
 
 	
 }
