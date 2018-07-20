@@ -15,6 +15,83 @@
     <link type="text/css" href="../assets/css/theme.css" rel="stylesheet">
     <!-- Demo CSS - No need to use these in your project -->
     <link type="text/css" href="../assets/css/demo.css" rel="stylesheet">
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=920b18ed9b88780f730ccf0faa6707f7&libraries=services"></script>
+    <script>
+		window.onload(function() {
+			// 다음지도 사용 
+		    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+		        mapOption = {
+		            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+		            level: 5 // 지도의 확대 레벨
+		        };
+		
+		    //지도를 미리 생성
+		    var map = new daum.maps.Map(mapContainer, mapOption);
+		    //주소-좌표 변환 객체를 생성
+		    var geocoder = new daum.maps.services.Geocoder();
+		    //마커를 미리 생성
+		    var marker = new daum.maps.Marker({
+		        position: new daum.maps.LatLng(37.537187, 127.005476),
+		        map: map
+		    });
+			
+		
+		    function sample5_execDaumPostcode() {
+		        new daum.Postcode({
+		            oncomplete: function(data) {
+		                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+		                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+		                var fullAddr = data.address; // 최종 주소 변수
+		                var extraAddr = ''; // 조합형 주소 변수
+		
+		                // 기본 주소가 도로명 타입일때 조합한다.
+		                if(data.addressType === 'R'){
+		                    //법정동명이 있을 경우 추가한다.
+		                    if(data.bname !== ''){
+		                        extraAddr += data.bname;
+		                    }
+		                    // 건물명이 있을 경우 추가한다.
+		                    if(data.buildingName !== ''){
+		                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		                    }
+		                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+		                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+		                }
+		
+		                // 주소 정보를 해당 필드에 넣는다.
+		                document.getElementById("sample5_address").value = fullAddr;
+		                // 주소로 상세 정보를 검색
+		                geocoder.addressSearch(data.address, function(results, status) {
+		                    // 정상적으로 검색이 완료됐으면
+		                    if (status === daum.maps.services.Status.OK) {
+		
+		                        var result = results[0]; //첫번째 결과의 값을 활용
+		
+		                        // 해당 주소에 대한 좌표를 받아서
+		                        var coords = new daum.maps.LatLng(result.y, result.x);
+		                        
+		                        $.ajax({
+		                            url : "join.do", // 보내는 컨트롤러 
+		                            type : "post",
+		                            data : {latLng : coords}
+		                        });
+		                        
+		                        // 지도를 보여준다.
+		                        mapContainer.style.display = "block";
+		                        map.relayout();
+		                        // 지도 중심을 변경한다.
+		                        map.setCenter(coords);
+		                        // 마커를 결과값으로 받은 위치로 옮긴다.
+		                        marker.setPosition(coords)
+		                    }
+		                });
+		            }
+		        }).open();
+		    }
+		});
+	</script>
+    
   </head>
   <body>
     <%@ include file ="nav.jsp" %>
@@ -23,6 +100,11 @@
 		<div class="container">
 			<div class="justify-content-center">
 				<div class="pt-lg-md">
+					
+					<input type="text" id="sample5_address" placeholder="주소"> <!-- 여기 수정해 id랑, 밑에 테이블에 추가하자. -->
+					<input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
+					<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+				
 					<h2 class="h1 mb-4">방 등록하기</h2>
 					<p class="lead lh-180">
 						- 등록한 방 정보는 직거래 매물로 등록됩니다.<br>
@@ -40,10 +122,10 @@
 			<div class="justify-content-center">
 				<div class="pt-lg-md">
 					<h2 class="h1 mb-4">위치정보</h2>
-					<table class="table talbe-hover align-items-center">
+					<table class="table talbe-hover align-items-center" style="margin-bottom:0px">
 						<tbody>
 							<tr>
-								<td scope="row" rowspan="6" style="width:100px">주소</td>
+								<th scope="row" rowspan="6" style="width:100px">주소</th>
 							</tr>
 							<tr class="bg-white" scope="row">
 								<td class="col-5" colspan="2">도로명, 건물명, 지번에 대해 통합검색이 가능합니다.</td>
@@ -64,7 +146,7 @@
 							</tr>
 						</tbody>
 					</table>
-					<hr>
+					<hr style="margin-top:0px">
 				</div>
 			</div>
 		</div>
@@ -74,10 +156,10 @@
 			<div class="justify-content-center">
 				<div class="pt-lg-md">
 					<h2 class="h1 mb-4">기본정보</h2>
-					<table class="table talbe-hover align-items-center">
+					<table class="table talbe-hover align-items-center" style="margin-bottom:0px">
 						<tbody>
 							<tr>
-								<td>방 종류</td>
+								<th>방 종류</th>
 								<td>
 									<select>
 									  <option value="">방 종류 선택</option>
@@ -94,7 +176,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td rowspan="2">거래 종류</td>
+								<th rowspan="2">거래 종류</th>
 								<td colspan="5">
 									<input type="button" value="매매 추가">&nbsp;&nbsp;
 									<input type="button" value="전세 추가">&nbsp;&nbsp;
@@ -105,8 +187,8 @@
 								<td colspan="5"><span style="color:red">거래종류를 추가해주세요. 다중 선택이 가능합니다.</span></td>
 							</tr>
 							<tr>
-								<td rowspan="2">건물 층수</td>
-								<td>건물 층수</td>
+								<th rowspan="2">건물 층수</th>
+								<th>건물 층수</th>
 								<td>
 									<select>
 									  <option value="">건물 층수 선택</option>
@@ -162,12 +244,12 @@
 									  <option value="fiftieth">50층</option>
 									</select>
 								</td>
-								<td rowspan="2">건물 크기(1P = 3.3058m2)</td>
-								<td>공급 면적</td>
+								<th rowspan="2">건물 크기(1P = 3.3058m2)</th>
+								<th>공급 면적</th>
 								<td><input>평 (m2)</td>
 							</tr>
 							<tr>
-								<td>해당 층수</td>
+								<th>해당 층수</th>
 								<td>
 									<select>
 									  <option value="">해당 층수 선택</option>
@@ -226,7 +308,7 @@
 									  <option value="fiftieth">50층</option>
 									</select>
 								</td>
-								<td>전용 면적</td>
+								<th>전용 면적</th>
 								<td><input>평 (m2)</td>
 							</tr>
 							<tr>
@@ -235,7 +317,7 @@
 							</tr>
 						</tbody>
 					</table>
-					<hr>
+					<hr style="margin-top:0px">
 				</div>
 			</div>
 		</div>
@@ -245,10 +327,10 @@
 			<div class="justify-content-center">
 				<div class="pt-lg-md">
 					<h2 class="h1 mb-4">추가정보</h2>
-					<table class="table talbe-hover align-items-center">
+					<table class="table talbe-hover align-items-center" style="margin-bottom:0px">
 						<tbody>
 							<tr>
-								<td rowspan="2">관리비</td>
+								<th rowspan="2">관리비</th>
 								<td colspan="5">
 									<input type="checkbox"> 있음 &nbsp;&nbsp;
 									<input>&nbsp;만원 &nbsp; &nbsp;
@@ -266,15 +348,13 @@
 								</td> 
 							</tr>
 							<tr>
-								<td>주차 여부</td>
+								<th>주차 여부</th>
 								<td>
 									<input type="checkbox"> 가능&nbsp;&nbsp; 
 									<input>&nbsp;만원 &nbsp;&nbsp;
 									<input type="checkbox" checked> 불가능&nbsp;
 								</td>
-								<td>
-									난방종류
-								</td>
+								<th>난방종류</th>
 								<td>
 									<select>
 									  <option value="">난방 종류 선택</option>
@@ -285,21 +365,19 @@
 								</td>
 							</tr>
 							<tr>
-								<td>엘리베이터</td>
+								<th>엘리베이터</th>
 								<td>
 									<input type="checkbox">&nbsp;있음&nbsp;&nbsp;
 									<input type="checkbox" checked>&nbsp;없음
 								</td>
-								<td>
-									반려동물
-								</td>
+								<th>반려동물</th>
 								<td>
 									<input type="checkbox">&nbsp;가능&nbsp;&nbsp;
 									<input type="checkbox" checked>&nbsp;불가능
 								</td>
 							</tr>
 							<tr>
-								<td>입주 가능일</td>
+								<th>입주 가능일</th>
 								<td colspan="5">
 									<input type="date">&nbsp;&nbsp;&nbsp;
 									<input type="checkbox">&nbsp;즉시 입주&nbsp;&nbsp;
@@ -307,7 +385,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td>옵션 항목</td>
+								<th>옵션 항목</th>
 								<td colspan="5">
 									<input type="checkbox">&nbsp;에어컨&nbsp;&nbsp;
 									<input type="checkbox">&nbsp;세탁기&nbsp;&nbsp;
@@ -326,7 +404,7 @@
 							</tr>
 						</tbody>
 					</table>
-					<hr>
+					<hr style="margin-top:0px">
 				</div>
 			</div>
 		</div>
@@ -336,25 +414,25 @@
 			<div class="justify-content-center">
 				<div class="pt-lg-md">
 					<h2 class="h1 mb-4">상세 설명</h2>
-					<table class="table talbe-hover align-items-center">
+					<table class="table talbe-hover align-items-center" style="margin-bottom:0px">
 						<tbody>
 							<tr>
-								<td>방 제목</td>
+								<th>방 제목</th>
 								<td>
 									<input placeholder="예) 신논현역 도보 5분거리, 혼자 살기 좋은 방입니다." style="width:100%">
 								</td>
 							</tr>
 							<tr>
-								<td>상세 설명</td>
+								<th>상세 설명</th>
 								<td><textarea placeholder="방에 대한 추가 설명을 적어주세요." style="width:100%" rows="10"></textarea></td> 
 							</tr>
 							<tr>
-								<td>비공개 메모</td>
+								<th>비공개 메모</th>
 								<td><textarea placeholder="외부에 공개되지 않으며, 등록자에게만 보이는 메모입니다." style="width:100%" rows="5"></textarea></td> 
 							</tr>
 						</tbody>
 					</table>
-					<hr>
+					<hr style="margin-top:0px">
 				</div>
 			</div>
 		</div>
@@ -395,76 +473,7 @@
 		</div>
 	</div>
     </main>
-    <footer class="pt-5 pb-3 footer  footer-dark bg-tertiary">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 col-md-4">
-            <div class="pr-lg-5">
-              <h1 class="heading h6 text-uppercase font-weight-700 mb-3"><strong>Boomerang</strong> UI Kit</h1>
-              <p>Boomerang is a high quality UI Kit built on top of the well known Bootstrap 4 Framework. This theme was designed as its own extended version of Bootstrap with multiple functionalities and controls added, extended color palette and beautiful typography.</p>
-            </div>
-          </div>
-          <div class="col-6 col-md">
-            <h5 class="heading h6 text-uppercase font-weight-700 mb-3">Features</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Cool stuff</a></li>
-              <li><a class="text-muted" href="#">Random feature</a></li>
-              <li><a class="text-muted" href="#">Team feature</a></li>
-              <li><a class="text-muted" href="#">Stuff for developers</a></li>
-              <li><a class="text-muted" href="#">Another one</a></li>
-              <li><a class="text-muted" href="#">Last time</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5 class="heading h6 text-uppercase font-weight-700 mb-3">Solutions</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Resource</a></li>
-              <li><a class="text-muted" href="#">Resource name</a></li>
-              <li><a class="text-muted" href="#">Another resource</a></li>
-              <li><a class="text-muted" href="#">Final resource</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5 class="heading h6 text-uppercase font-weight-700 mb-3">Resources</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Business</a></li>
-              <li><a class="text-muted" href="#">Education</a></li>
-              <li><a class="text-muted" href="#">Government</a></li>
-              <li><a class="text-muted" href="#">Gaming</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5 class="heading h6 text-uppercase font-weight-700 mb-3">About</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Team</a></li>
-              <li><a class="text-muted" href="#">Locations</a></li>
-              <li><a class="text-muted" href="#">Privacy</a></li>
-              <li><a class="text-muted" href="#">Terms</a></li>
-            </ul>
-          </div>
-        </div>
-        <hr>
-        <div class="d-flex align-items-center">
-          <span class="">
-            &copy; 2018 <a href="https://webpixels.io/" class="footer-link" target="_blank">Webpixels</a>. All rights reserved.
-          </span>
-          <ul class="nav ml-lg-auto">
-            <li class="nav-item">
-              <a class="nav-link active" href="https://instagram.com/webpixelsofficial" target="_blank"><i class="fab fa-instagram"></i></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://facebook.com/webpixels" target="_blank"><i class="fab fa-facebook"></i></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://github.com/webpixels" target="_blank"><i class="fab fa-github"></i></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://dribbble.com/webpixels" target="_blank"><i class="fab fa-dribbble"></i></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </footer>
+    <%@ include file="footer.jsp" %>
     <!-- Core -->
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/popper/popper.min.js"></script>
