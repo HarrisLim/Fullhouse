@@ -22,16 +22,6 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "house/main.do", method = RequestMethod.GET)
-	public String index() {
-		return "house/main";
-	}
-	
-	@RequestMapping(value = "house/test.do", method = RequestMethod.GET)
-	public String test() {
-		return "house/test";
-	}
-	
 	@RequestMapping(value = "refer/index.do", method = RequestMethod.GET)
 	public String index1() {
 		return "refer/index";
@@ -42,52 +32,52 @@ public class HomeController {
 		return "refer/dashboard";
 	}
 	
-	@RequestMapping(value = "house/icons.do", method = RequestMethod.GET)
+	@RequestMapping(value = "refer/icons.do", method = RequestMethod.GET)
 	public String icons() {
 		return "refer/icons";
 	}
 	
-	@RequestMapping(value = "house/notifications.do", method = RequestMethod.GET)
+	@RequestMapping(value = "refer/notifications.do", method = RequestMethod.GET)
 	public String notifications() {
 		return "refer/notifications";
 	}
 	
-	@RequestMapping(value = "house/tables.do", method = RequestMethod.GET)
+	@RequestMapping(value = "refer/tables.do", method = RequestMethod.GET)
 	public String tables() {
 		return "refer/tables";
 	}
 	
-	@RequestMapping(value = "house/typography.do", method = RequestMethod.GET)
+	@RequestMapping(value = "refer/typography.do", method = RequestMethod.GET)
 	public String typography() {
 		return "refer/typography";
 	}
 	
-	@RequestMapping(value = "house/upgrade.do", method = RequestMethod.GET)
+	@RequestMapping(value = "refer/upgrade.do", method = RequestMethod.GET)
 	public String upgrade() {
 		return "refer/upgrade";
 	}
 	
-	@RequestMapping(value = "house/about.do", method = RequestMethod.GET)
+	@RequestMapping(value = "refer/about.do", method = RequestMethod.GET)
 	public String about() {
 		return "refer/about";
 	}
 	
-	@RequestMapping(value = "house/contact.do", method = RequestMethod.GET)
+	@RequestMapping(value = "refer/contact.do", method = RequestMethod.GET)
 	public String contact() {
 		return "refer/contact";
 	}
 	
-	@RequestMapping(value = "house/homepage.do", method = RequestMethod.GET)
+	@RequestMapping(value = "refer/homepage.do", method = RequestMethod.GET)
 	public String homepage() {
 		return "refer/homepage";
 	}
 	
-	@RequestMapping(value = "house/user.do", method = RequestMethod.GET)
+	@RequestMapping(value = "refer/user.do", method = RequestMethod.GET)
 	public String user() {
 		return "refer/user";
 	}
 	
-	@RequestMapping(value = "house/signIn.do", method = RequestMethod.GET)
+	@RequestMapping(value = "refer/signIn.do", method = RequestMethod.GET)
 	public String signIn() {
 		return "refer/signIn";
 	}
