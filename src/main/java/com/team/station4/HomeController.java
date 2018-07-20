@@ -81,9 +81,4 @@ public class HomeController {
 	public String signIn() {
 		return "refer/signIn";
 	}
-    
-	@RequestMapping(value = "house/map.do", method= RequestMethod.GET)
-	public String mapPage() {
-		return "house/map";
-	}
 }
