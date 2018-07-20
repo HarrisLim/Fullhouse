@@ -1754,7 +1754,7 @@ textarea.form-control {
   resize: none;
   border: none;
   border-bottom: 1px solid #E3E3E3;
-/*   border-radius: 0; */
+  border-radius: 0;
   line-height: 2;
 }
 
@@ -4178,6 +4178,7 @@ Created using IcoMoon - icomoon.io
   background: rgba(200, 200, 200, 0.2);
 }
 
+
 .main-panel {
   position: relative;
   float: left;
@@ -4219,6 +4220,29 @@ Created using IcoMoon - icomoon.io
   -ms-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
   transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
 }
+
+.fourth-panel {
+  position: relative;
+  float: left;
+  width: calc(100%);
+  height: calc(100% - 145px);
+/*   margin-top: 5px; */
+  background-color: green;
+  background-color: green;
+  -webkit-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  -moz-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  -o-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  -ms-transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+  transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+}
+
+.main-panel>.fourth-panel {
+/*   padding: 0 30px 30px; */
+/*   margin-top: 10px; */
+/*   margin-right: -20px; */
+
+}
+
 .main-panel>.sub-panel {
   padding: 0 30px 30px;
 /*   이곳에 마진주면 네비게이션도 같이 내려감 */
@@ -4239,10 +4263,16 @@ Created using IcoMoon - icomoon.io
   margin-bottom: 50px;
 }
 
-.perfect-scrollbar-on .sidebar,
+/* 지우면 메인판넬 스크롤바 없어지고 대신 서드, 서브 판넬에 생김;;; */
+.perfect-scrollbar-on .sidebar {
+  height: 100%;
+  max-height: 100%;
+/*   overflow : hidden; */
+}
 .perfect-scrollbar-on .main-panel {
   height: 100%;
   max-height: 100%;
+  overflow : hidden;
 }
 
 @media (min-width: 991px) {
@@ -5405,5 +5435,52 @@ Created using IcoMoon - icomoon.io
     width: 90%;
   }
 }
+
+
+/*  <!-- 2줄 시작 --> */
+/* .dropdown-menu { */
+/* 	min-width: 50px; */
+/* } */
+.dropdown-menu.columns-2 {
+	min-width: 240px;
+}
+.dropdown-menu.columns-3 {
+	min-width: 600px;
+}
+.dropdown-menu li a {
+	padding: 5px 15px;
+	font-weight: 300;
+}
+.multi-column-dropdown {
+	list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+.multi-column-dropdown li a {
+	display: block;
+	clear: both;
+	line-height: 1.428571429;
+	color: #333;
+	white-space: normal;
+}
+.multi-column-dropdown li a:hover {
+	text-decoration: none;
+	color: #262626;
+	background-color: rgba(222, 222, 222, 0.3);
+}
+ 
+@media (max-width: 767px) {
+	.dropdown-menu.multi-column {
+		min-width: 240px !important;
+		overflow-x: hidden;
+	}
+}
+ <!-- 2줄 끝 -->
+ 
+
+
+
+
+
 
 /*# sourceMappingURL=dashboard-free.css.map */

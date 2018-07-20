@@ -87,7 +87,5 @@ public class HomeController {
 		return "refer/signIn";
 	}
     
-	@RequestMapping(value = "house/map.do", method= RequestMethod.GET)
-	public String mapPage() {
-		return "house/map";
-	}
+
+}

@@ -18,80 +18,88 @@
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <!-- CSS Files -->
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../assets/css/bootstrap-theme.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css" rel="stylesheet" />
+  
   <link href="../assets/css/now-ui-dashboard.css?v=1.1.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
+  <!-- daum map api -->
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=920b18ed9b88780f730ccf0faa6707f7&libraries=clusterer,services"></script>
+  <!-- 4. Javascript -->
+  <script type="text/javascript" src="../kanu/js/paging.js"></script>
 
 </head>
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="blue"  style="width:480px;right:0">
+    <div class="sidebar" data-color="blue"  style="width:480px;height:calc(100% - 150px);right:0;">
 <!--      
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
       <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-          CT
+        <a href="#" class="simple-text logo-mini">
+        	  〉
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+        <a href="#" class="simple-text logo-normal">
+                 검색 결과 0 개
         </a>
       </div>
-      <div class="sidebar-wrapper">
-        <ul class="nav">
-          <li class="active ">
-            <a href="./dashboard.html">
-              <i class="now-ui-icons design_app"></i>
-              <p>Dashboard</p>
-            </a>
-          </li>
-          <li>
-            <a href="./icons.do">
-              <i class="now-ui-icons education_atom"></i>
-              <p>Icons</p>
-            </a>
-          </li>
-          <li>
-            <a href="./map.html">
-              <i class="now-ui-icons location_map-big"></i>
-              <p>Maps</p>
-            </a>
-          </li>
-          <li>
-            <a href="./notifications.do">
-              <i class="now-ui-icons ui-1_bell-53"></i>
-              <p>Notifications</p>
-            </a>
-          </li>
-          <li>
-            <a href="./user.do">
-              <i class="now-ui-icons users_single-02"></i>
-              <p>User Profile</p>
-            </a>
-          </li>
-          <li>
-            <a href="./tables.do">
-              <i class="now-ui-icons design_bullet-list-67"></i>
-              <p>Table List</p>
-            </a>
-          </li>
-          <li>
-            <a href="./typography.do">
-              <i class="now-ui-icons text_caps-small"></i>
-              <p>Typography</p>
-            </a>
-          </li>
-          <li class="active-pro">
-            <a href="./upgrade.do">
-              <i class="now-ui-icons arrows-1_cloud-download-93"></i>
-              <p>Upgrade to PRO</p>
-            </a>
-          </li>
-        </ul>
+		<!--       슬라이드바 상단 -->
+      <div class="sidebar-wrapper" style="height:100%;">
+		<table class="table table-bordered">
+			<tr>
+				<th>번호</th>
+				<th>주소</th>
+				<th>위도</th>
+				<th>경도</th>
+				<th>날짜</th>
+			</tr>
+      	<c:forEach var="dto" items="${list}">
+      		<tr>
+      			<td>${dto.build_no}</td>
+      			<td>${dto.address}</td>
+      			<td>${dto.lat}</td>
+      			<td>${dto.lng}</td>
+				<td>${dto.bu_rdate}</td>      	
+      		</tr>
+      	</c:forEach>
+      	</table>
+   
+         
       </div>
+<!--       <div style="height:50px;background-color:red;" ><a class="simple-text logo-normal" style="color:black">dd</a></div> -->
+		<div id="page" style="height:150px;width:100%;background-color:red;">  
+      		<!-- 5. paging view -->
+			<ul class="pagination">
+				<c:if test="${page.pageStartNum ne 1}">
+					<!--맨 첫페이지 이동 -->
+					<li class="page-item"><a class="page-link" onclick='pagePre(${page.pageCnt+1},${page.pageCnt});'>&laquo;</a></li>
+					<!--이전 페이지 이동 -->
+					<li class="page-item"><a class="page-link" onclick='pagePre(${page.pageStartNum},${page.pageCnt});'>&lsaquo;</a></li>
+				</c:if>
+			
+				<!--페이지번호 -->
+				<c:forEach var='i' begin="${page.pageStartNum}" end="${page.pageLastNum}" step="1">
+					<li class='pageIndex${i}' ><a class="page-link" onclick='pageIndex(${i});'>${i}</a></li>
+				</c:forEach>
+			
+				<c:if test="${page.lastChk}">
+					<!--다음 페이지 이동 -->
+					<li class="page-item"><a class="page-link" onclick='pageNext(${page.pageStartNum},${page.total},${page.listCnt},${page.pageCnt});'>&rsaquo;</a></li>
+					<!--마지막 페이지 이동 -->
+					<li class="page-item"><a class="page-link" onclick='pageLast(${page.pageStartNum},${page.total},${page.listCnt},${page.pageCnt});'>&raquo;</a></li>
+				</c:if>
+			</ul>
+			<form action="./mapList.do" method="post" id='frmPaging'>
+				<!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
+			<input type='hidden' name='index' id='index' value='${page.index}'>
+			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${page.pageStartNum}'>
+			<input type='hidden' name='listCnt' id='listCnt' value='${page.listCnt}'>	
+			</form>
+		</div>
     </div>
-    
+    	
     
     <div class="main-panel" style="background-color:navy" >
     
@@ -131,7 +139,7 @@
     				#menubar a:hover { font-weight:bold;color:orange; }
 				</style>
 	            <div id="menubar" class="collapse navbar-collapse justify-content-center">
-
+				
 	            	<div><a class="navbar-brand" href="#pablo" >방검색</a></div>
 	            	<div><a class="navbar-brand" href="#pablo">관심목록</a></div>
 	            	<div><a class="navbar-brand" href="#pablo">방 등록</a></div>
@@ -174,6 +182,8 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="kind_of_sale" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="font-size: 1em">매물종류</a>
               <div class="dropdown-menu " aria-labelledby="navbar_1_dropdown_1">
+              	<a class="dropdown-header">매물종류</a>
+              	<div class="dropdown-divider"></div>
 				<a class="dropdown-item" id="month_rent" href="#">월세</a>
                 <a class="dropdown-item" id="engage_or_rent" href="#">전세or월세</a>
                 <a class="dropdown-item" id="engage" href="#">전세</a>
@@ -190,6 +200,8 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="kind_of_trade" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 1em">거래종류</a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar_1_dropdown_1">
+                <a class="dropdown-header">거래종류</a>
+              	<div class="dropdown-divider"></div>
                 <a class="dropdown-item" id="all" href="#">전체</a>
                 <a class="dropdown-item" id="estate_agent" href="#">중개</a>
                 <a class="dropdown-item" id="direct_deal" href="#">직거래</a>
@@ -205,6 +217,8 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="kind_of_room" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 1em">방 종류</a>
               <div class="dropdown-menu" aria-labelledby="navbar_1_dropdown_1">
+                <a class="dropdown-header">방 종류</a>
+              	<div class="dropdown-divider"></div>
               	<a class="dropdown-item" id="room_count_all" href="#">전체</a>
                 <a class="dropdown-item" id="room_count_1" href="#">원룸</a>
                 <a class="dropdown-item" id="room_count_1.5" href="#">1.5룸</a>
@@ -218,109 +232,157 @@
          </div>
       </nav>
        <!-- 보증금 범위 선택 드롭 다운 목록 -->   
-	  <nav class="navbar navbar-expand-lg navbar-transparent" style="float: left">
+       
+
+	   <nav class="navbar navbar-expand-lg navbar-transparent" style="float: left">
       	<div class="container">
           <ul class="navbar-nav ml-auto align-items-lg-center">
-            <li class="nav-item dropdown" id="drop_deposit">
+	        
+            <li class="nav-item dropdown" id="drop_deposit_begin" >
               <a class="nav-link dropdown-toggle" href="#" id="deposit" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 1em">보증금</a>
-              <div class="dropdown-menu" aria-labelledby="navbar_1_dropdown_1" style="float:left">
-                    <a class="dropdown-item" id="begin_0" href="#">0 만원</a>
-	                <a class="dropdown-item" id="begin_500" href="#">500 만원</a>
-	                <a class="dropdown-item" id="begin_1000" href="#">1000 만원</a>
-	                <a class="dropdown-item" id="begin_2000" href="#">2000 만원</a>
-	                <a class="dropdown-item" id="begin_3000" href="#">3000 만원</a>
-	                <a class="dropdown-item" id="begin_4000" href="#">4000 만원</a>
-	                <a class="dropdown-item" id="begin_5000" href="#">5000 만원</a>
-	                <a class="dropdown-item" id="begin_6000" href="#">6000 만원</a>
-	                <a class="dropdown-item" id="begin_7000" href="#">7000 만원</a>
-	                <a class="dropdown-item" id="begin_8000" href="#">8000 만원</a>
-	                <a class="dropdown-item" id="begin_9000" href="#">9000 만원</a>
-	                <a class="dropdown-item" id="begin_10000" href="#">10000 만원</a>
-	                <a class="dropdown-item" id="begin_unlimited" href="#">무제한</a>
+             <ul class="dropdown-menu multi-column columns-2">
+              <div class="row">
+              	  
+	              <input type="text" class="form-control" placeholder="0만원 부터" id="begin_text" value="" style="width:100px;hight:15px;margin-left:20px;font-size:1em;font-weight: bold;" />&nbsp; ~ &nbsp;
+	              <input type="text" class="form-control" placeholder="0만원 까지" id="end_text" value="" style="width:100px;hight:15px;font-size:1em;font-weight: bold;"/>
+	              
+               	<div class="col-sm-13" style="margin-left:20px">
+ 					<ul class="multi-column-dropdown">
+ 					<li><a class="dropdown-item" id="begin_0" href="#">0 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_500" href="#">500 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_1000" href="#">1000 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_2000" href="#">2000 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_3000" href="#">3000 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_4000" href="#">4000 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_5000" href="#">5000 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_6000" href="#">6000 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_7000" href="#">7000 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_8000" href="#">8000 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_9000" href="#">9000 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_10000" href="#">10000 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_unlimited" href="#">무제한</a></li>
+	 			    </ul>
                 </div>
-                <div class="dropdown-menu" aria-labelledby="navbar_1_dropdown_1" style="float:left">
-	                <a class="dropdown-item" id="end_0" href="#">0 만원</a>
-	                <a class="dropdown-item" id="end_500" href="#">500 만원</a>
-	                <a class="dropdown-item" id="end_1000" href="#">1000 만원</a>
-	                <a class="dropdown-item" id="end_2000" href="#">2000 만원</a>
-	                <a class="dropdown-item" id="end_3000" href="#">3000 만원</a>
-	                <a class="dropdown-item" id="end_4000" href="#">4000 만원</a>
-	                <a class="dropdown-item" id="end_5000" href="#">5000 만원</a>
-	                <a class="dropdown-item" id="end_6000" href="#">6000 만원</a>
-	                <a class="dropdown-item" id="end_7000" href="#">7000 만원</a>
-	                <a class="dropdown-item" id="end_8000" href="#">8000 만원</a>
-	                <a class="dropdown-item" id="end_9000" href="#">9000 만원</a>
-	                <a class="dropdown-item" id="end_10000" href="#">10000 만원</a>
-	                <a class="dropdown-item" id="end_unlimited" href="#">무제한</a>
-              </div>
-            </li>
-          </ul>
-         </div>
+           
+                <div class="col-sm-13" style="margin-left:25px">
+      				<ul class="multi-column-dropdown">
+	                <li><a class="dropdown-item" id="end_0" href="##">0 만원</a></li>
+	                <li><a class="dropdown-item" id="end_500" href="##">500 만원</a></li>
+	                <li><a class="dropdown-item" id="end_1000" href="##">1000 만원</a></li>
+	                <li><a class="dropdown-item" id="end_2000" href="##">2000 만원</a></li>
+	                <li><a class="dropdown-item" id="end_3000" href="##">3000 만원</a></li>
+	                <li><a class="dropdown-item" id="end_4000" href="##">4000 만원</a></li>
+	                <li><a class="dropdown-item" id="end_5000" href="##">5000 만원</a></li>
+	                <li><a class="dropdown-item" id="end_6000" href="##">6000 만원</a></li>
+	                <li><a class="dropdown-item" id="end_7000" href="##">7000 만원</a></li>
+	                <li><a class="dropdown-item" id="end_8000" href="##">8000 만원</a></li>
+	                <li><a class="dropdown-item" id="end_9000" href="##">9000 만원</a></li>
+	                <li><a class="dropdown-item" id="end_10000" href="##">10000 만원</a></li>
+	                <li><a class="dropdown-item" id="end_unlimited" href="##">무제한</a></li>
+	     			</ul>
+	              </div>
+	              </div>
+	              </ul>
+	              </li>
+	              </ul>
+	       </div>
       </nav>
-       <!-- 월세 범위 선택 드롭 다운 목록 -->   
-	  <nav class="navbar navbar-expand-lg navbar-transparent" style="float: left">
+       <!-- 월세 범위 선택 드롭 다운 목록 -->
+       <nav class="navbar navbar-expand-lg navbar-transparent" style="float: left">
       	<div class="container">
-          <ul class="navbar-nav ml-auto align-items-lg-center" id="drop_rent_month">
-            <li class="nav-item dropdown">
+          <ul class="navbar-nav ml-auto align-items-lg-center">
+	        
+            <li class="nav-item dropdown" id="drop_rent_month" >
               <a class="nav-link dropdown-toggle" href="#" id="rent_month" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 1em">월세</a>
-              <div class="dropdown-menu" aria-labelledby="navbar_1_dropdown_1">
-	                <a class="dropdown-item" id="end_0" href="#">0 만원</a>
-	                <a class="dropdown-item" id="end_500" href="#">500 만원</a>
-	                <a class="dropdown-item" id="end_1000" href="#">1000 만원</a>
-	                <a class="dropdown-item" id="end_2000" href="#">2000 만원</a>
-	                <a class="dropdown-item" id="end_3000" href="#">3000 만원</a>
-	                <a class="dropdown-item" id="end_4000" href="#">4000 만원</a>
-	                <a class="dropdown-item" id="end_5000" href="#">5000 만원</a>
-	                <a class="dropdown-item" id="end_6000" href="#">6000 만원</a>
-	                <a class="dropdown-item" id="end_7000" href="#">7000 만원</a>
-	                <a class="dropdown-item" id="end_8000" href="#">8000 만원</a>
-	                <a class="dropdown-item" id="end_9000" href="#">9000 만원</a>
-	                <a class="dropdown-item" id="end_10000" href="#">10000 만원</a>
-	                <a class="dropdown-item" id="end_unlimited" href="#">무제한</a>
-              </div>
-            </li>
-          </ul>
-         </div>
-      </nav>
+             <ul class="dropdown-menu multi-column columns-2">
+              <div class="row">
+                  <input type="text" class="form-control" placeholder="0만원 부터" id="begin_rent_text" value="" style="width:100px;hight:15px;margin-left:20px;font-size:1em;font-weight: bold;" />&nbsp; ~ &nbsp;
+	              <input type="text" class="form-control" placeholder="0만원 까지" id="end_rent_text" value="" style="width:100px;hight:15px;font-size:1em;font-weight: bold;"/>
+	              <div class="dropdown-divider"></div>
+	           	<div class="col-sm-13" style="margin-left:20px">
+ 					<ul class="multi-column-dropdown">
+ 					<li><a class="dropdown-item" id="begin_rent_0" href="#">0 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_rent_10" href="#">10 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_rent_20" href="#">20 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_rent_30" href="#">30 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_rent_40" href="#">40 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_rent_50" href="#">50 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_rent_60" href="#">60 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_rent_70" href="#">70 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_rent_80" href="#">80 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_rent_90" href="#">90 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_rent_100" href="#">100 만원</a></li>
+	                <li><a class="dropdown-item" id="begin_rent_unlimited" href="#">무제한</a></li>
+	 			    </ul>
+                </div>
+           
+                <div class="col-sm-13" style="margin-left:25px">
+      				<ul class="multi-column-dropdown">
+  					<li><a class="dropdown-item" id="end_rent_0" href="#">0 만원</a></li>
+	                <li><a class="dropdown-item" id="end_rent_10" href="#">10 만원</a></li>
+	                <li><a class="dropdown-item" id="end_rent_20" href="#">20 만원</a></li>
+	                <li><a class="dropdown-item" id="end_rent_30" href="#">30 만원</a></li>
+	                <li><a class="dropdown-item" id="end_rent_40" href="#">40 만원</a></li>
+	                <li><a class="dropdown-item" id="end_rent_50" href="#">50 만원</a></li>
+	                <li><a class="dropdown-item" id="end_rent_60" href="#">60 만원</a></li>
+	                <li><a class="dropdown-item" id="end_rent_70" href="#">70 만원</a></li>
+	                <li><a class="dropdown-item" id="end_rent_80" href="#">80 만원</a></li>
+	                <li><a class="dropdown-item" id="end_rent_90" href="#">90 만원</a></li>
+	                <li><a class="dropdown-item" id="end_rent_100" href="#">100 만원</a></li>
+	                <li><a class="dropdown-item" id="end_rent_unlimited" href="#">무제한</a></li>
+	 			    </ul>
+                </div>
+	           </div>
+	          </ul>
+	        </li>
+	       </ul>
+	     </div>
+      </nav>   
+		 
        <!-- 추가 옵션 -->   
 	  <nav class="navbar navbar-expand-lg navbar-transparent" style="float: left">
       	<div class="container">
           <ul class="navbar-nav ml-auto align-items-lg-center">
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbar_main_dropdown_6" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 1em">추가옵션</a>
-              <div class="dropdown-menu" aria-labelledby="navbar_1_dropdown_1">
-                <a class="dropdown-item" href="../pages/homepage.html">Homepage</a>
-                <a class="dropdown-item" href="../pages/about.html">About us</a>
-                <a class="dropdown-item" href="../pages/sign-in.html">Sign in</a>
-                <a class="dropdown-item" href="../pages/contact.html">Contact</a>
-              </div>
+                <ul class="dropdown-menu" id="option_ckeck">
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option1" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;주차가능</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option2" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;반려동물</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option3" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;단기임대</a></li>
+				  <div class="dropdown-divider"></div>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option4" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;5평 이하</a></li> 
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option5" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;5~10평</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option6" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;10평 이상</a></li>
+				  <div class="dropdown-divider"></div>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option7" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;반지층</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option8" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;저층(1~3층)</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option9" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;중층(4~6층)</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option10" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;고층(7~19층)</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option11" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;초고층(20층 ~)</a></li>
+				   <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option12" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;옥탑</a></li>
+				  
+				</ul>
             </li>
           </ul>
          </div>
       </nav>
-
+      	
 
     <!-- third-panel -->    
-	</div>	
+	</div>
+	<div class="fourth-panel" id="map"></div>
+		
 	<!--  메인판넬    -->    
 	  </div> 
   </div>
-	            
-			
 
-
-
-       
-      
-      
+     
     
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chart JS -->
   <script src="../assets/js/plugins/chartjs.min.js"></script>
   <!--  Notifications Plugin    -->
@@ -331,33 +393,40 @@
   <script src="../assets/demo/demo.js"></script>
   <!-- map 스크립트  파일 모음 -->
   <script src="../kanu/js/map.js"></script>
+
+
+
   <script>
     $(document).ready(function() {
       // Javascript method's body can be found in assets/js/demos.js
       demo.initDashboardPageCharts();
+    });
 
-    });
 	
-    $(function() {
-        $('#drop_deposit, #drop_rent_month').on({
-            "click": function(event) {
-              if ($(event.target).closest('.dropdown-toggle').length) {
-                $(this).data('closable', false);
-              } else {
-                $(this).data('closable', false);
-              }
-            },
-            "hide.bs.dropdown": function(event) {
-              hide = $(this).data('closable');
-              $(this).data('closable', true);
-              return hide;
-            }
-        });
-    });
+ 	
+
   </script>
 
-
-
 </body>
+	<style>
+	.area {
+	    position: absolute;
+	    background: rgba(0,0,0,0);
+	    border: 1px solid #888;
+	    border-radius: 3px;
+	    font-size: 12px;
+	    top: -5px;
+	    left: 15px;
+	    padding:2px;
+	}
+	
+	.info {
+	    font-size: 12px;
+	    padding: 5px;
+	}
+	.info .title {
+	    font-weight: bold;
+	}
+	</style> 
 
 </html>
