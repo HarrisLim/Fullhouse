@@ -8,57 +8,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at  the highest level of quality.                             ">
     <meta name="author" content="Webpixels">
-    <title>Full House is Station4 ^_^</title>
+    <title>메물</title>
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700" rel="stylesheet">
+    <!-- Theme CSS -->
     <link type="text/css" href="../assets/css/theme.css" rel="stylesheet">
+    <!-- Demo CSS - No need to use these in your project -->
     <link type="text/css" href="../assets/css/demo.css" rel="stylesheet">
-    <!--항상 최신 버전의 SDK를 사용합니다.-->
-	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-	<script src="https://apis.google.com/js/platform.js" async defer>
-</script>
+    <link href="../kanu/slidephotos/js-image-slider.css" rel="stylesheet" type="text/css" />
+    <script src="../kanu/slidephotos/js-image-slider.js" type="text/javascript"></script>
   </head>
   <body>
-  
-  <%@ include file="nav.jsp"%>
-  
+    <%@ include file ="nav.jsp" %>
     <main class="main">
-      <section class="spotlight parallax bg-cover bg-size--cover" data-spotlight="fullscreen" style="background-image: url('../assets/images/backgrounds/img-1.jpg')">
-        <span class="mask bg-primary alpha-7"></span>
-        <div class="spotlight-holder py-lg pt-lg-xl">
-          <div class="container d-flex align-items-center no-padding">
-            <div class="col">
-              <div class="row cols-xs-space align-items-center text-center text-md-left justify-content-center">
-                <div class="col-7">
-                  <div class="text-center mt-5">
-                    <img src="../assets/images/brand/icon.png" style="width: 200px;" class="img-fluid animated" data-animation-in="jackInTheBox" data-animation-delay="1000">
-                    <h2 class="heading display-4 font-weight-400 text-white mt-5 animated" data-animation-in="fadeInUp" data-animation-delay="2000">
-                      <span class="font-weight-700">Full House</span>
-                    </h2>
-                    <p class="lead text-white mt-3 lh-180 c-white animated" data-animation-in="fadeInUp" data-animation-delay="2500">
-                                                   안녕하세요 바까봤으여~ <strong class="text-white">수정이 할랑</strong>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-	  <section class="slice pt-5 sct-color-1">
-        <div class="container">
-          <div class="row justify-content-center align-items-center">
-            <div class="col-lg-8 text-center">
-              <h3 class="heading h3 font-weight-400">
-                I am ready to start a new project with <span class="font-weight-800">Full House</span>
-              </h3>
-            </div>
-          </div>
-        </div>
-      </section>
-	<section>
-    	<%@ include file="themeS.jsp"%>
-      </section>
-      <section class="slice pt-10 sct-color-2">
+	<section class="slice"> 
+		<div class="container">
+			<div class="justify-content-center">
+				<table class="table">
+					<div class="pt-lg-md">
+						<h3 class="h1 mb-5">내 계정</h3>
+						<div class="row ">
+							<p class="col-sm-10 text-reft" style="margin-bottom:0px" >개인정보</p>
+							<p class="col-sm-2 text-primary text-right" style="margin-bottom:0px"><a href="#">회원탈퇴</a></p>
+						</div>
+						<div>
+							<div class="row">
+								<div>
+									<p class="">프로필</p>
+								</div>
+								<div class="">
+									<img src="" class="rounded float-left" alt="...">
+								</div>
+							</div>
+							<div>
+							<p>본인 성명</p>
+							</div>
+							<div>
+							<p>이메일 주소</p>
+							</div>
+							<div>
+							<p>휴대폰 번호</p>
+							</div>
+							<div>
+							<p>비밀번호 변경</p>
+							</div>
+						</div>
+					</div>
+				</table>
+			</div>
+		</div>
+	</section>
+    </main>
+	<section class="slice pt-10 sct-color-2">
       	<div class="container">
         	<div class="row">
         		<div class="col-6 col-md">
@@ -122,8 +123,7 @@
 	            </div>
        		</div>
        	</div>
-      </section>
-    </main>
+	</section>
     <section>
     	<div id="navbar_main" align="center">
 			<a class="navbar-brand" href="#">회사소개</a>
@@ -152,7 +152,5 @@
     <script src="../assets/vendor/textarea-autosize/textarea-autosize.min.js"></script>
     <!-- Theme JS -->
     <script src="../assets/js/theme.js"></script>
-
-
   </body>
 </html>
