@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+	<configuration>
+		<typeAliases>
+			<typeAlias alias="Map" type="com.team.station4.map.model.MapDTO" />
+			<typeAlias alias="PagingVo" type="com.team.station4.map.vo.PagingVo" />
+					
+		</typeAliases>
+		<mappers>
+			<mapper resource="com/team/station4/mybatis/Board.xml" />
+			<mapper resource="com/team/station4/mybatis/Board.xml" />
+		</mappers>
+	</configuration>
