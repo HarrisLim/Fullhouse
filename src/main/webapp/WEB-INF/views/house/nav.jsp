@@ -1,9 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<head>
+	<meta name="google-signin-scope" content="profile email">
+	<meta name="google-signin-client_id" content="69570195917-qamvmgijh74iq624fdgdgcttra3u41fq.apps.googleusercontent.com">
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
 
     
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
 	<div class="container">
+		<img src="../kanu/main/로고.png" class="avatar avatar-sm bg-#00000000" style="background-color:transparent">
         <a class="navbar-brand text-dark" href="../house/main.do"><strong>Full House</strong> Station4</a>
         <button class="navbar-toggler" type="button" data-action="offcanvas-open" data-target="#navbar_main" 
         							aria-controls="navbar_main" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,7 +56,10 @@
 						</div>
 							<button type="submit" class="btn btn-block btn-lg bg-white mt-4">로그인</button>
 							<a data-toggle="modal" href="#myModal2" class="btn btn-primary btn-lg btn-block">회원가입</a>
-							<a id="kakao-login-btn"></a>
+							<div class="row">
+								<div class="col-sm-6"><a id="kakao-login-btn"></a></div>
+								<div class="g-signin2 col-lg-6 text-center" data-onsuccess="onSignIn" style="width:205px;height:50px"></div>
+							</div>
 						<script type='text/javascript'>
 						//<![CDATA[
 						// 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -94,6 +104,23 @@
 			    </div>
 			  </div>
 			</div>
+			<!-- <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div> -->
+			<script>
+			  function onSignIn(googleUser) {
+			    // Useful data for your client-side scripts:
+			    var profile = googleUser.getBasicProfile();
+			    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+			    console.log('Full Name: ' + profile.getName());
+			    console.log('Given Name: ' + profile.getGivenName());
+			    console.log('Family Name: ' + profile.getFamilyName());
+			    console.log("Image URL: " + profile.getImageUrl());
+			    console.log("Email: " + profile.getEmail());
+			
+			    // The ID token you need to pass to your backend:
+			    var id_token = googleUser.getAuthResponse().id_token;
+			    console.log("ID Token: " + id_token);
+			  };
+			</script>
 			<div class="modal" id="myModal2" data-backdrop="static">
 				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
@@ -140,27 +167,16 @@
 					              </div>
 					            </div> -->
 					            <div class="row">
-									<div class="form-group">
-						                <!-- <label>약관 동의</label> -->
-						              <div data-toggle="buttons">
-						              <label class="btn btn-primary active">
-						                  <span class="fa fa-check"></span>
-						                  <input id="agree" type="checkbox" autocomplete="off" checked>
-						              </label>다음의 
-						              <a data-toggle="modal" data-target="#mymodal3" href="#myModal3">이용약관</a>에 동의합니다.
-						              </div>
+									<div class="custom-control custom-checkbox mb-3">
+									  <input type="checkbox" class="custom-control-input is-invalid" id="customCheck6">
+									  <label class="custom-control-label" for="customCheck6"></label>다음의 
+									  <a data-toggle="modal" data-target="#mymodal3" href="#myModal3">이용약관</a>에 동의합니다.
 									</div>
-						              <div class="form-group">
-						                <!-- <label>개인 정보 동의</label> -->
-						              <div data-toggle="buttons">
-						              <label class="btn btn-primary active">
-						                  <span class="fa fa-check"></span>
-						                  <input id="agree" type="checkbox" autocomplete="off" checked>
-						              </label>다음의 
-						              <a data-toggle="modal" data-target="#mymodal4" href="#myModal4">개인 정보 이용</a>에 동의합니다.
-						              </div>
-						              
-									</div>
+						            <div class="custom-control custom-checkbox mb-3">
+									  <input type="checkbox" class="custom-control-input is-invalid" id="customCheck7">
+									  <label class="custom-control-label" for="customCheck7"></label>다음의 
+					              	  <a data-toggle="modal" data-target="#mymodal4" href="#myModal4">개인 정보 이용</a>에 동의합니다.
+					              	</div>
 					            </div>
 					            <div class="form-group text-center">
 					              <button type="submit" class="btn btn-info">회원가입<i class="fa fa-check spaceLeft"></i></button>
@@ -510,13 +526,6 @@
 							<button type="button" class="close" data-dismiss="modal">닫기</button>
 						</div>
 						
-						<script type="text/javascript">
-						$(function() {
-						    for (var i = 0; i < 100; i++) {
-						        $('.modal-body').append(i + '<br>');
-						    }
-						});					
-						</script>
 					</div>
 				</div>
 			</div>
@@ -533,19 +542,17 @@
 						<div class="modal-body">
 							<p>개인 사용자 가입</p>
 							
-						<p>개인 정보의 수집 및 이용에 대한 안내</p>
-						
-						<p>(주)스테이션4는 서비스 제공을 위해서 아래와 같이 개인정보를 수집합니다.</p> 
-						<p>서비스 제공에 필요한 최소한의 개인 정보 이므로 동의를 해주셔야 서비스를 이용하실 수 있습니다.</p>
-						
-						 <p>• 개인정보 항목: 휴대폰 번호, 이름, e-mail(ID) 및 비밀번호</p>
-						
-						 <p>• 수집 및 이용 목적: 서비스의 원활한 제공 및 운영 회원관리, 마케팅 및 광고에의 활용</p>
-						
-						 <p>• 보유 및 이용기간: 이용계약 종료 후 즉시 파기(단 재가입 유예기간동안 2개월까지)</p>
+							<p>개인 정보의 수집 및 이용에 대한 안내</p>
 							
+							<p>(주)스테이션4는 서비스 제공을 위해서 아래와 같이 개인정보를 수집합니다.</p> 
+							<p>서비스 제공에 필요한 최소한의 개인 정보 이므로 동의를 해주셔야 서비스를 이용하실 수 있습니다.</p>
+							
+							<p>• 개인정보 항목: 휴대폰 번호, 이름, e-mail(ID) 및 비밀번호</p>
+							
+							<p>• 수집 및 이용 목적: 서비스의 원활한 제공 및 운영 회원관리, 마케팅 및 광고에의 활용</p>
+							
+							<p>• 보유 및 이용기간: 이용계약 종료 후 즉시 파기(단 재가입 유예기간동안 2개월까지)</p>
 						</div>
-						
 						<div class="modal-footer">
 							<button type="button" class="close" data-dismiss="modal">닫기</button>
 						</div>						

@@ -17,6 +17,35 @@
     <link type="text/css" href="../assets/css/demo.css" rel="stylesheet">
     <link href="../kanu/slidephotos/js-image-slider.css" rel="stylesheet" type="text/css" />
     <script src="../kanu/slidephotos/js-image-slider.js" type="text/javascript"></script>
+    
+    <script>
+		$(document).ready(function(){
+			$("#modifyBtn").click(function() {
+				$("#certiPhone").css("display","");
+				$("#certiPhoneBtn").css("display","");
+				$("#modifyBtn").text("인증"); // 인증번튼 누르면 실제로 핸드폰번호로 인증메시지 보내는 거 할건데, "인증"으로 바꾸는 부분에서 class추가해서 class에 기능 추가해서 위의 "변경"버튼과 구분하자.
+				$(".phoneNum").removeAttr("readonly");
+				$(".phoneNum").css("background","white");
+			});
+		});
+	</script>
+    
+    <style>
+		th{
+			background:rgba(200,200,240,0.1);
+			padding:10px;
+		}
+		td{
+			padding:10px;
+		}
+		tr input{
+			padding:5px 10px 5px 10px;
+		}
+		.phoneNum{
+			background:rgba(200,200,240,0.1);
+		}
+	</style>
+    
   </head>
   <body>
     <%@ include file ="nav.jsp" %>
@@ -24,37 +53,48 @@
 	<section class="slice"> 
 		<div class="container">
 			<div class="justify-content-center">
-				<table class="table">
-					<div class="pt-lg-md">
-						<h3 class="h1 mb-5">내 계정</h3>
-						<div class="row ">
-							<p class="col-sm-10 text-reft" style="margin-bottom:0px" >개인정보</p>
-							<p class="col-sm-2 text-primary text-right" style="margin-bottom:0px"><a href="#">회원탈퇴</a></p>
-						</div>
-						<div>
-							<div class="row">
-								<div>
-									<p class="">프로필</p>
-								</div>
-								<div class="">
-									<img src="" class="rounded float-left" alt="...">
-								</div>
-							</div>
-							<div>
-							<p>본인 성명</p>
-							</div>
-							<div>
-							<p>이메일 주소</p>
-							</div>
-							<div>
-							<p>휴대폰 번호</p>
-							</div>
-							<div>
-							<p>비밀번호 변경</p>
-							</div>
-						</div>
+				<div class="pt-lg-md">
+					<h3 class="h1 mb-5">내 계정</h3>
+					<hr size="5" color="black">
+					<table>
+						<tbody>
+							<tr>
+								<th>프로필</th>
+								<td>사진 변경하는 거 넣자.</td>
+							</tr>
+							<tr>
+								<th>성명</th>
+								<td><input value="text" style="width:100%"></td>
+							</tr>
+							<tr>
+								<th>이메일</th>
+								<td><input value="demo" style="background:rgba(200,200,240,0.1); width:100%" readonly></td>
+							</tr>
+							<tr>
+								<th rowspan="2">휴대폰번호</th>
+								<td><input class="phoneNum" value="010" readonly>&nbsp;-&nbsp;<input class="phoneNum" value="3333" readonly>&nbsp;-&nbsp;<input class="phoneNum" value="2222" readonly></td>
+								<td><button id="modifyBtn" class="btn btn-outline-primary">변경</button></td>
+							</tr>
+							<tr>
+								<td id="certiPhone" style="display:none"><input placeholder="인증번호 입력해주세요" style="width:100%"></td>
+								<td id="certiPhoneBtn" style="display:none"><button class="btn btn-outline-primary">인증번호 확인</button></td>
+							</tr>
+							<tr>
+								<th rowspan="3">비밀번호 변경</th>
+								<td><input placeholder="현재 비밀번호" style="width:100%"></td> 
+							</tr>
+							<tr>
+								<td><input placeholder="변경될 비밀번호" style="width:100%"></td>
+							</tr>
+							<tr>
+								<td><input placeholder="변경될 비밀번호 확인" style="width:100%"></td>
+							</tr>
+						</tbody>
+					</table>
+					<div align="center" style="margin-top:20px;margin-bottom:50px">
+						<input class="btn btn-dark" value="취소">&nbsp;&nbsp;<input class="btn btn-primary" value="확인">
 					</div>
-				</table>
+				</div>
 			</div>
 		</div>
 	</section>
