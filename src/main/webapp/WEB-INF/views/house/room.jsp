@@ -56,6 +56,7 @@
 			color: black;
 			text-align:center;
 			padding:10px;
+			z-index:1;
 		}
     </style>
   </head>

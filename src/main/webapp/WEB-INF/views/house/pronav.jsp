@@ -24,7 +24,7 @@
   
     <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
       <div class="container">
-        <a class="navbar-brand" href="#"><strong>풀 하우스 </strong> FullHoues - Pro</a>
+        <a class="navbar-brand" href="#"><strong>풀 하우스 </strong> FullHouse - Pro</a>
         <button class="navbar-toggler" type="button" data-action="offcanvas-open" data-target="#navbar_main" aria-controls="navbar_main" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -34,20 +34,21 @@
             
             <!-- 하이브리드 시작 -->
 				<li>
-				<a href="#" class="btn btn-block btn-tertiary">상품소개</a>
+				<a href="#" class="navbar-brand">상품소개</a>
 				</li>&nbsp;
 				
 				<li>
-				<a href="#" class="btn btn-block btn-tertiary">고객센터</a>
+				<a href="#" class="navbar-brand">고객센터</a>
 				</li>&nbsp;
 				
 				<li>
-				<a href="#" class="btn btn-block btn-tertiary" data-toggle="modal" data-target="#myModal" >로그인</a>
-				</li>&nbsp;
-			
-				<li>
-				<a href="#"class="btn btn-block btn-danger">회원가입</a>
+				<a href="#" class="navbar-brand">회원가입</a>
+				
 				</li>
+				<li>
+				<a href="#" class="navbar-brand" data-toggle="modal" data-target="#myModal" >로그인</a>
+				</li>
+			
 				<!-- 하이브리드 종료 -->
 
             <!-- 모달 시작 -->	<!-- Modal -->

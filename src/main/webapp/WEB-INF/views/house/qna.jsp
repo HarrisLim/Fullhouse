@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at  the highest level of quality.                             ">
     <meta name="author" content="Webpixels">
-    <title>Full House Custm</title>
+    <title>Full House QNA</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700" rel="stylesheet">
     <!-- Theme CSS -->
@@ -86,7 +86,7 @@
 
 	<nav class="navbar navbar-expand-lg navbar-transparent navbar-light bg-white py-4">
 		<div class="container">
-			<a class="navbar-brand" href=""><strong>Full House</strong>Customer</a>
+			<a class="navbar-brand" href=""><strong>Full House</strong> Customer</a>
 				<button class="navbar-toggler" type="button"
 					data-action="offcanvas-open" data-target="#navbar_main"
 					aria-controls="navbar_main" aria-expanded="false"
@@ -110,22 +110,14 @@
 		</div>
 	</nav>
 	<main class="main">
-
-	<section class="slice slice-xl">
+	<section class="slice slice-xl" style="margin-bottom:-80px">
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-lg-7">
 					<div class="text-center pt-lg-md">
 						<h2 class="heading h1 mb-4">자주 묻는 질문 </h2>
-						
-						<p class="lead lh-180">We are a professional digital agency
-							providing premium themes, UI/UX design and web apps that you will
-							simply love.</p>
 						<div class="input-group">
-							<input type="text" class="form-control" 
-								placeholder="이곳에 궁금한 점을 검색해 보세요!"
-								
-								aria-describedby="basic-addon2"> 
+							<input type="text" class="form-control" placeholder="이곳에 궁금한 점을 검색해 보세요!"	aria-describedby="basic-addon2">								 
 						</div>
 					</div>
 				</div>
@@ -134,9 +126,9 @@
 	</section>
 
 		<section  class="" >
-		<div class="container" style='text-align:center' >
-			<div class="row justify-content-center" >
-				<div class="col-lg-7" > 
+		<div class="container">
+			<div class="row justify-content-center" align="center">
+				<div class="col-lg-12" > 
 		<div>
 			<div class="btn-group" role="group" aria-label="...">
 			  <button type="button" onclick="doDisplay()" class="btn btn-block btn-outline-tertiary mt-5">전체질문</button>
@@ -146,282 +138,124 @@
 			  <button type="button" class="btn btn-block btn-outline-tertiary mt-5">리뷰 / 실시간 문의</button>
 			  <button type="button" class="btn btn-block btn-outline-tertiary mt-5">기타</button>
 			</div>
-		</div>
-				<hr>
-				<div align="left" id="myDIV1">
-				    <a href="javascript:callFunction(2);"  > Q .아이디 를 변경할수 없나요?</a><i class="fas fa-angle-down"></i>
+		</div>	
+				<a href="javascript:callFunction(2);"> 
+				<div align="left" id="myDIV1" class="col-lg-8">
+					<hr>
+				    Q. 아이디 를 변경할수 없나요?<i class="fas fa-angle-down" style="float:right;color:black"></i>
 					<div id="myDIV2" style="display:none"">
-				    	<p>아이디는 회원의 고유 게정으로 활용되는 수단으로 변경 및 수정이 불가합니다.  </p>
+				    	<p style="color:black; padding:10px 20px 0 20px">아이디는 회원의 고유 계정으로 활용되는 수단으로 변경 및 수정이 불가합니다.  </p>
 				    </div> 
 				</div>
-				<hr>
-				<div align="left" id="myDIV3" >
-				    <a href="javascript:callFunction(4);">회원 정보를 변경하고 싶어요.</a>
+				</a>
+				<a href="javascript:callFunction(4);">
+				<div align="left" id="myDIV3" class="col-lg-8">
+					<hr>
+				    Q. 회원 정보를 변경하고 싶어요.<i class="fas fa-angle-down" style="float:right;color:black"></i>
 					<div id="myDIV4" style="display:none">
-				    	<p>가입된 회원정보 변경은 사이트 메인 > 계정관리에서 가능합니다.  </p>
+				    	<p style="color:black; padding:10px 20px 0 20px">가입된 회원정보 변경은 사이트 메인 > 계정관리에서 가능합니다.  </p>
 					</div>
 				</div>
-				<hr>
-				<div align="left" id="myDIV5">
-				    <a href="javascript:callFunction(6);">직원들과 광고상품을 나누어 관리하고 싶어요.</a>
+				</a>
+				<a href="javascript:callFunction(6);">
+				<div align="left" id="myDIV5" class="col-lg-8">
+					<hr>
+				    Q. 직원들과 광고상품을 나누어 관리하고 싶어요.<i class="fas fa-angle-down" style="float:right;color:black"></i>
 					<div id="myDIV6" style="display:none">
-				    	<p>결제한 상품을 여러 직원이 함께 나누어 이용하실 수 있습니다.	계정관리> 하위 계정관리에서 
+				    	<p style="color:black; padding:10px 20px 0 20px">결제한 상품을 여러 직원이 함께 나누어 이용하실 수 있습니다.	계정관리> 하위 계정관리에서 
 				    	사용하고자 하는 아이디(이메일)을 추가 하시면 됩니다. </p>
 				    </div>
 				</div>
-				<hr>
-				<div align="left" id="myDIV7">
-				    <a href="javascript:callFunction(8);">하위계정 추가 (수정/삭제) 는 어디서 하나요?</a>
+				</a>
+				<a href="javascript:callFunction(8);">
+				<div align="left" id="myDIV7" class="col-lg-8">
+					<hr>
+				    Q. 하위계정 추가 (수정/삭제) 는 어디서 하나요?<i class="fas fa-angle-down" style="float:right;color:black"></i>
 					<div id="myDIV8" style="display:none">
-				    	<p>하위계정을 삭제할 경우 계정에 등록된 매물정보도 함께 삭제 처리되므로,필히 매물이동 가능을 통해 다른계정으로 매물이동 후 삭제하시기 바랍니다. </p>
+				    	<p style="color:black; padding:10px 20px 0 20px">하위계정을 삭제할 경우 계정에 등록된 매물정보도 함께 삭제 처리되므로,필히 매물이동 가능을 통해 다른계정으로 매물이동 후 삭제하시기 바랍니다. </p>
 				    </div>
 				</div>
-				<hr>
-				<div align="left" id="myDIV9">
-				    <a href="javascript:callFunction(10);">회원 탈퇴는 어디서 해야하나요?  </a>
+				</a>
+				<a href="javascript:callFunction(10);">
+				<div align="left" id="myDIV9" class="col-lg-8">
+					<hr>
+				    Q. 회원 탈퇴는 어디서 해야하나요?<i class="fas fa-angle-down" style="float:right;color:black"></i>
 					<div id="myDIV10" style="display:none">
-				    	<p>현재 재가입은 제한하지 않으므로 언제든 가입이 가능합니다.   </p>
+				    	<p style="color:black; padding:10px 20px 0 20px">현재 재가입은 제한하지 않으므로 언제든 가입이 가능합니다.   </p>
 				    </div>
 				</div>
-				<hr>
-				<div align="left" id="myDIV11">
-				    <a href="javascript:callFunction(12);">회원탈퇴 후 재가입은 가능한가요? </a>
+				</a>
+				<a href="javascript:callFunction(12);">
+				<div align="left" id="myDIV11" class="col-lg-8">
+					<hr>
+				    Q. 회원탈퇴 후 재가입은 가능한가요?<i class="fas fa-angle-down" style="float:right;color:black"></i>
 					<div id="myDIV12" style="display:none">
-				    	<p>상품관리 > 이용중인 상품에서 사용중인 상품 정보봐 광고기간을 확인하실 수 있습니다.  </p>
+				    	<p style="color:black; padding:10px 20px 0 20px">상품관리 > 이용중인 상품에서 사용중인 상품 정보봐 광고기간을 확인하실 수 있습니다.  </p>
 				    </div>
 				</div>
-				<hr>
-				<div align="left" id="myDIV13">
-				    <a href="javascript:callFunction(14);">상품내역은 어디서 확인 가능한가요?  </a>
+				</a>
+				<a href="javascript:callFunction(14);">
+				<div align="left" id="myDIV13" class="col-lg-8">
+					<hr>
+				    Q. 상품내역은 어디서 확인 가능한가요?<i class="fas fa-angle-down" style="float:right;color:black"></i>
 					<div id="myDIV14" style="display:none">
-				    	<p>상품관리 > 이용중인 상품에서 사용중인 상품 정보의 광고기간을 확인하실 수 있습니다.  </p>
+				    	<p style="color:black; padding:10px 20px 0 20px">상품관리 > 이용중인 상품에서 사용중인 상품 정보의 광고기간을 확인하실 수 있습니다.  </p>
 				    </div>
 				</div>
-				<hr>
-				<div align="left" id="myDIV15">
-				    <a href="javascript:callFunction(16);">환불을 하고싶어요 !  </a>
+				</a>
+				<a href="javascript:callFunction(16);">
+				<div align="left" id="myDIV15" class="col-lg-8">
+					<hr>
+				    Q. 환불을 하고싶어요 !<i class="fas fa-angle-down" style="float:right;color:black"></i>
 					<div id="myDIV16" style="display:none">
-				    	<p>환불은 상품의 사용기간과 사용수량을 확인 후에 최종 환불금액이 산정됩니다. 1899-6804로 연락주시면 운영자 확인후 처리됩니다, </p>
+				    	<p style="color:black; padding:10px 20px 0 20px">환불은 상품의 사용기간과 사용수량을 확인 후에 최종 환불금액이 산정됩니다. 1899-6804로 연락주시면 운영자 확인후 처리됩니다, </p>
 				    </div>
 				</div>
-				<hr>
-				<div align="left" id="myDIV17">
-				    <a href="javascript:callFunction(18);">결재 연장이 뭔가요?  </a>
+				</a>
+				<a href="javascript:callFunction(18);">
+				<div align="left" id="myDIV17" class="col-lg-8">
+					<hr>
+				    Q. 결제 연장이 뭔가요?<i class="fas fa-angle-down" style="float:right;color:black"></i>
 					<div id="myDIV18" style="display:none">
-				    	<p>현재 이용중인 상품의 광고기간을 연장하는 기능입니다. 필요한 기간만큼 추가로 결제하여 광고 기간을 연장할수 있습니다.    </p>
+				    	<p style="color:black; padding:10px 20px 0 20px">현재 이용중인 상품의 광고기간을 연장하는 기능입니다. 필요한 기간만큼 추가로 결제하여 광고 기간을 연장할수 있습니다.    </p>
 				    </div>
 				</div>
-				<hr>
-				<div align="left" id="myDIV19">
-				    <a href="javascript:callFunction(20);">상품 결제 확인서 또는 계약서를 받고싶어요. </a>
+				</a>
+				<a href="javascript:callFunction(20);">
+				<div align="left" id="myDIV19" class="col-lg-8">
+					<hr>
+				    Q. 상품 결제 확인서 또는 계약서를 받고싶어요.<i class="fas fa-angle-down" style="float:right;color:black"></i>
 					<div id="myDIV20" style="display:none">
-				    	<p>결제가 완료된 상품의 계약사실확인서를 제공하고 있습니다. 상품관리 > 이용중인 상품 > 계약확인서 보기를 클릭하세요</p>
+				    	<p style="color:black; padding:10px 20px 0 20px">결제가 완료된 상품의 계약사실확인서를 제공하고 있습니다. 상품관리 > 이용중인 상품 > 계약확인서 보기를 클릭하세요</p>
 				    </div>
 				</div>
-				<hr>
-				<div align="left" id="myDIV21">
-				    <a href="javascript:callFunction(22);">예전에 이용햇던 상품을 보고싶어요  </a>
+				</a>
+				<a href="javascript:callFunction(22);">
+				<div align="left" id="myDIV21" class="col-lg-8">
+					<hr>
+				    Q. 예전에 이용햇던 상품을 보고싶어요.<i class="fas fa-angle-down" style="float:right;color:black"></i>
 					<div id="myDIV22" style="display:none">
-				    	<p>상품관리 > 지난 이용 내역에서 기존에 사용했던 상품 이력을 확인하실수 있습니다.  </p>
+				    	<p style="color:black; padding:10px 20px 0 20px">상품관리 > 지난 이용 내역에서 기존에 사용했던 상품 이력을 확인하실수 있습니다.  </p>
 				    </div>
 				</div>
-				<hr>
-				<div align="left" id="myDIV23">
-				    <a href="javascript:callFunction(24);">회원 탈퇴후 재가입은 가능한가요?  </a>
+				</a>
+				<a href="javascript:callFunction(24);">
+				<div align="left" id="myDIV23" class="col-lg-8">
+					<hr>
+				    Q. 회원 탈퇴후 재가입은 가능한가요?<i class="fas fa-angle-down" style="float:right;color:black"></i>
 					<div id="myDIV24" style="display:none">
-				    	<p>회원 탈퇴는 프로사이트 로그인후 계정 관리 우측하단 "회원 탈회" 를 통해 가능합니다.  </p>
+				    	<p style="color:black; padding:10px 20px 0 20px">회원 탈퇴는 프로사이트 로그인후 계정 관리 우측하단 "회원 탈회" 를 통해 가능합니다.  </p>
 				    </div>
+					<hr>
 				</div>
-				<hr>
+				</a>
 			</div>
 			<hr>
-			</div>
-		</div>
-		</div>
-	</section>
-		
-
-<!-- 일단 여기 까지 윗부분  -->
-
-					
-	<section class="slice bg-tertiary bg-cover bg-size--cover"
-		style="background-image: url('../assets/images/backgrounds/img-1.jpg')">
-		<span class="mask bg-tertiary alpha-9"></span>
-		<div class="container">
-			<div class="row cols-xs-space cols-sm-space cols-md-space">
-				<div class="col-lg-6">
-					<div
-						class="card bg-dark alpha-container text-white border-0 overflow-hidden">
-						<a href="#" target="_blank">
-							<div class="card-img-bg"
-								style="background-image: url('../assets/images/prv/city-1.jpg');"></div>
-							<span class="mask bg-dark alpha-5 alpha-4--hover"></span>
-							<div class="card-body px-5 py-5">
-								<div style="min-height: 300px;">
-									<h3 class="heading h1 text-white mb-3">New York Office</h3>
-									<p class="mt-4 mb-1 h5 text-white lh-180">E:
-										newyork@company.com</p>
-									<p class="mb-1 h5 text-white lh-180">T: 0755.222.333</p>
-								</div>
-								<span href="#" class="text-white text-uppercase font-weight-500">
-									See on map <i class="fas fa-arrow-right ml-2"></i>
-								</span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div
-						class="card bg-dark alpha-container text-white border-0 overflow-hidden">
-						<a href="#" target="_blank">
-							<div class="card-img-bg"
-								style="background-image: url('../assets/images/prv/city-2.jpg');"></div>
-							<span class="mask bg-dark alpha-5 alpha-4--hover"></span>
-							<div class="card-body px-5 py-5">
-								<div style="min-height: 300px;">
-									<h3 class="heading h1 text-white mb-3">New York Office</h3>
-									<p class="mt-4 mb-1 h5 text-white lh-180">E:
-										newyork@company.com</p>
-									<p class="mb-1 h5 text-white lh-180">T: 0755.222.333</p>
-								</div>
-								<span href="#" class="text-white text-uppercase font-weight-500">
-									See on map <i class="fas fa-arrow-right ml-2"></i>
-								</span>
-							</div>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<section class="slice slice-lg">
-		<div class="container">
-			<div
-				class="row align-items-center cols-xs-space cols-sm-space cols-md-space">
-				<div class="col-lg-6">
-					<h3 class="heading h3 mb-4">Send us a message</h3>
-					<form>
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group">
-									<input class="form-control" placeholder="Name" type="text">
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group">
-									<input class="form-control" placeholder="Email address"
-										type="email">
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group">
-									<textarea class="form-control" rows="5"
-										placeholder="Your message"></textarea>
-								</div>
-							</div>
-						</div>
-						<div class="mt-4">
-							<button type="submit" class="btn btn-primary px-4">Send
-								message</button>
-						</div>
-					</form>
-				</div>
-				<div class="col-lg-5 ml-lg-auto">
-					<h3 class="heading heading-3 strong-300">
-						150 Southeast Pidgeon Meadow <br> Claflin Terrace, 305458
-					</h3>
-					<p class="lead mt-4 mb-4">
-						E: <a href="#">support@webpixels.io</a> <br> T: 0755.222.333
-					</p>
-					<p class="">Probably the most complete UI kit out there.
-						Multiple functionalities and controls added, extended color
-						palette and beautiful typography, designed as its own extended
-						version of Bootstrap at the highest level of quality.</p>
-				</div>
 			</div>
 		</div>
 	</section>
 	</main>
-	<footer class="pt-5 pb-3 footer  footer-dark bg-tertiary">
-		<div class="container">
-			<div class="row">
-				<div class="col-12 col-md-4">
-					<div class="pr-lg-5">
-						<h1 class="heading h6 text-uppercase font-weight-700 mb-3">
-							<strong>Boomerang</strong> UI Kit
-						</h1>
-						<p>Boomerang is a high quality UI Kit built on top of the well
-							known Bootstrap 4 Framework. This theme was designed as its own
-							extended version of Bootstrap with multiple functionalities and
-							controls added, extended color palette and beautiful typography.</p>
-					</div>
-				</div>
-				<div class="col-6 col-md">
-					<h5 class="heading h6 text-uppercase font-weight-700 mb-3">Features</h5>
-					<ul class="list-unstyled text-small">
-						<li><a class="text-muted" href="#">Cool stuff</a></li>
-						<li><a class="text-muted" href="#">Random feature</a></li>
-						<li><a class="text-muted" href="#">Team feature</a></li>
-						<li><a class="text-muted" href="#">Stuff for developers</a></li>
-						<li><a class="text-muted" href="#">Another one</a></li>
-						<li><a class="text-muted" href="#">Last time</a></li>
-					</ul>
-				</div>
-				<div class="col-6 col-md">
-					<h5 class="heading h6 text-uppercase font-weight-700 mb-3">Solutions</h5>
-					<ul class="list-unstyled text-small">
-						<li><a class="text-muted" href="#">Resource</a></li>
-						<li><a class="text-muted" href="#">Resource name</a></li>
-						<li><a class="text-muted" href="#">Another resource</a></li>
-						<li><a class="text-muted" href="#">Final resource</a></li>
-					</ul>
-				</div>
-				<div class="col-6 col-md">
-					<h5 class="heading h6 text-uppercase font-weight-700 mb-3">Resources</h5>
-					<ul class="list-unstyled text-small">
-						<li><a class="text-muted" href="#">Business</a></li>
-						<li><a class="text-muted" href="#">Education</a></li>
-						<li><a class="text-muted" href="#">Government</a></li>
-						<li><a class="text-muted" href="#">Gaming</a></li>
-					</ul>
-				</div>
-				<div class="col-6 col-md">
-					<h5 class="heading h6 text-uppercase font-weight-700 mb-3">About</h5>
-					<ul class="list-unstyled text-small">
-						<li><a class="text-muted" href="#">Team</a></li>
-						<li><a class="text-muted" href="#">Locations</a></li>
-						<li><a class="text-muted" href="#">Privacy</a></li>
-						<li><a class="text-muted" href="#">Terms</a></li>
-					</ul>
-				</div>
-			</div>
-			<hr>
-			<div class="d-flex align-items-center">
-				<span class=""> &copy; 2018 <a href="https://webpixels.io/"
-					class="footer-link" target="_blank">Webpixels</a>. All rights
-					reserved.
-				</span>
-				<ul class="nav ml-lg-auto">
-					<li class="nav-item"><a class="nav-link active"
-						href="https://instagram.com/webpixelsofficial" target="_blank"><i
-							class="fab fa-instagram"></i></a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="https://facebook.com/webpixels" target="_blank"><i
-							class="fab fa-facebook"></i></a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="https://github.com/webpixels" target="_blank"><i
-							class="fab fa-github"></i></a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="https://dribbble.com/webpixels" target="_blank"><i
-							class="fab fa-dribbble"></i></a></li>
-				</ul>
-			</div>
-		</div>
-	</footer>
+	<%@include file="footer.jsp" %>
 	<!-- Core -->
 	<script src="../assets/vendor/jquery/jquery.min.js"></script>
 	<script src="../assets/vendor/popper/popper.min.js"></script>

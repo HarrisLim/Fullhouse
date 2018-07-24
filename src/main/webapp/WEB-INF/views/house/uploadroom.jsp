@@ -15,83 +15,7 @@
     <link type="text/css" href="../assets/css/theme.css" rel="stylesheet">
     <!-- Demo CSS - No need to use these in your project -->
     <link type="text/css" href="../assets/css/demo.css" rel="stylesheet">
-	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=920b18ed9b88780f730ccf0faa6707f7&libraries=services"></script>
-    <script>
-		window.onload(function() {
-			// 다음지도 사용 
-		    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-		        mapOption = {
-		            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
-		            level: 5 // 지도의 확대 레벨
-		        };
-		
-		    //지도를 미리 생성
-		    var map = new daum.maps.Map(mapContainer, mapOption);
-		    //주소-좌표 변환 객체를 생성
-		    var geocoder = new daum.maps.services.Geocoder();
-		    //마커를 미리 생성
-		    var marker = new daum.maps.Marker({
-		        position: new daum.maps.LatLng(37.537187, 127.005476),
-		        map: map
-		    });
-			
-		
-		    function sample5_execDaumPostcode() {
-		        new daum.Postcode({
-		            oncomplete: function(data) {
-		                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-		                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-		                var fullAddr = data.address; // 최종 주소 변수
-		                var extraAddr = ''; // 조합형 주소 변수
-		
-		                // 기본 주소가 도로명 타입일때 조합한다.
-		                if(data.addressType === 'R'){
-		                    //법정동명이 있을 경우 추가한다.
-		                    if(data.bname !== ''){
-		                        extraAddr += data.bname;
-		                    }
-		                    // 건물명이 있을 경우 추가한다.
-		                    if(data.buildingName !== ''){
-		                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-		                    }
-		                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
-		                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
-		                }
-		
-		                // 주소 정보를 해당 필드에 넣는다.
-		                document.getElementById("sample5_address").value = fullAddr;
-		                // 주소로 상세 정보를 검색
-		                geocoder.addressSearch(data.address, function(results, status) {
-		                    // 정상적으로 검색이 완료됐으면
-		                    if (status === daum.maps.services.Status.OK) {
-		
-		                        var result = results[0]; //첫번째 결과의 값을 활용
-		
-		                        // 해당 주소에 대한 좌표를 받아서
-		                        var coords = new daum.maps.LatLng(result.y, result.x);
-		                        
-		                        $.ajax({
-		                            url : "join.do", // 보내는 컨트롤러 
-		                            type : "post",
-		                            data : {latLng : coords}
-		                        });
-		                        
-		                        // 지도를 보여준다.
-		                        mapContainer.style.display = "block";
-		                        map.relayout();
-		                        // 지도 중심을 변경한다.
-		                        map.setCenter(coords);
-		                        // 마커를 결과값으로 받은 위치로 옮긴다.
-		                        marker.setPosition(coords)
-		                    }
-		                });
-		            }
-		        }).open();
-		    }
-		});
-	</script>
-    
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   </head>
   <body>
     <%@ include file ="nav.jsp" %>
@@ -100,11 +24,6 @@
 		<div class="container">
 			<div class="justify-content-center">
 				<div class="pt-lg-md">
-					
-					<input type="text" id="sample5_address" placeholder="주소"> <!-- 여기 수정해 id랑, 밑에 테이블에 추가하자. -->
-					<input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
-					<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
-				
 					<h2 class="h1 mb-4">방 등록하기</h2>
 					<p class="lead lh-180">
 						- 등록한 방 정보는 직거래 매물로 등록됩니다.<br>
@@ -129,11 +48,11 @@
 							</tr>
 							<tr class="bg-white" scope="row">
 								<td class="col-5" colspan="2">도로명, 건물명, 지번에 대해 통합검색이 가능합니다.</td>
-								<td rowspan="6" style="width:300px">지도 넣자 </td>
+								<td rowspan="6" style="width:300px"><div id="map" style="width:300px;height:300px;margin-top:10px;"></div></td>
 							</tr>
 							<tr>
-								<td><input placeholder="예) 번동 10-1, 강북구 번동" style="width:380px"></td>
-								<td><input type="button" value="주소검색"></td>
+								<td><input type="text" id="address" placeholder="예) 번동 10-1, 강북구 번동" style="width:380px"></td>
+								<td><input type="button" value="주소검색" onclick="execDaumPostcode()"></td>
 							</tr>
 							<tr>
 								<td colspan="2"><input style="width:480px;height:50px"></td>
@@ -474,6 +393,81 @@
 	</div>
     </main>
     <%@ include file="footer.jsp" %>
+    <!-- 다음지도 관련  -->
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=920b18ed9b88780f730ccf0faa6707f7&libraries=services"></script>
+	<script>
+	    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+	        mapOption = {
+	            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+	            level: 5 // 지도의 확대 레벨
+	        };
+	
+	    //지도를 미리 생성
+	    var map = new daum.maps.Map(mapContainer, mapOption);
+	    //주소-좌표 변환 객체를 생성
+	    var geocoder = new daum.maps.services.Geocoder();
+	    //마커를 미리 생성
+	    var marker = new daum.maps.Marker({
+	        position: new daum.maps.LatLng(37.537187, 127.005476),
+	        map: map
+	    });
+	
+	
+	    function execDaumPostcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var fullAddr = data.address; // 최종 주소 변수
+	                var extraAddr = ''; // 조합형 주소 변수
+	
+	                // 기본 주소가 도로명 타입일때 조합한다.
+	                if(data.addressType === 'R'){
+	                    //법정동명이 있을 경우 추가한다.
+	                    if(data.bname !== ''){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있을 경우 추가한다.
+	                    if(data.buildingName !== ''){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+	                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+	                }
+	
+	                // 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById("address").value = fullAddr;
+	                // 주소로 상세 정보를 검색
+	                geocoder.addressSearch(data.address, function(results, status) {
+	                    // 정상적으로 검색이 완료됐으면
+	                    if (status === daum.maps.services.Status.OK) {
+	
+	                        var result = results[0]; //첫번째 결과의 값을 활용
+	
+	                        // 해당 주소에 대한 좌표를 받아서
+	                        var coords = new daum.maps.LatLng(result.y, result.x);
+	                        
+	                        
+	                        // 지도를 보여준다.
+	                        mapContainer.style.display = "block";
+	                        map.relayout();
+	                        // 지도 중심을 변경한다.
+	                        map.setCenter(coords);
+	                        // 마커를 결과값으로 받은 위치로 옮긴다.
+	                        marker.setPosition(coords)
+
+	                        $.ajax({
+	                            url : "", // 보내는 컨트롤러 
+	                            type : "post",
+	                            data : {latLng : coords}
+	                        });
+	                    }
+	                });
+	            }
+	        }).open();
+	    }
+	</script>
     <!-- Core -->
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/popper/popper.min.js"></script>
@@ -488,5 +482,6 @@
     <script src="../assets/vendor/textarea-autosize/textarea-autosize.min.js"></script>
     <!-- Theme JS -->
     <script src="../assets/js/theme.js"></script>
+    
   </body>
 </html>

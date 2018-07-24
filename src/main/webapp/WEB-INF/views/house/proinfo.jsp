@@ -93,7 +93,7 @@
   <body>
     <%@ include file ="nav.jsp" %>
     <main class="main">
-    <section class="" name="esateinfo"> 
+    <section class="slice" name="esateinfo" style="padding-bottom:0px"> 
 		<div class="container">
 			<div class="justify-content-center">
 				<div class="pt-lg-md">
@@ -102,7 +102,7 @@
 			</div>
 		</div>
 	</section>
-    <section class="slice" name="buildinginfo"> 
+    <section class="" name="buildinginfo"> 
 		<div class="container">
 			<div class="justify-content-center">
 				<div class="pt-lg-md">

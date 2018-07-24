@@ -28,7 +28,6 @@
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=920b18ed9b88780f730ccf0faa6707f7&libraries=clusterer,services"></script>
   <!-- 4. Javascript -->
   <script type="text/javascript" src="../kanu/js/paging.js"></script>
-
 </head>
 
 <body class="">
@@ -398,8 +397,22 @@
 
   <script>
     $(document).ready(function() {
+    	
+    	// 여기는 맥에서 지도 맞추려고 해본 것 
+    	var x = (window.window.outerWidth - 500)+"px";
+		var y = (window.window.outerHeight - 500)+"px";
+// 		alert(window.window.outerHeight);
+// 		$(".fourth-panel").css("bottom", 0);
+// 		$(".fourth-panel").css("width", x);
+// 		$(".fourth-panel").css("height", y);
+// 		alert(x+ ' (11window.window.outerHeight - 145)+"px"');
+
+
       // Javascript method's body can be found in assets/js/demos.js
       demo.initDashboardPageCharts();
+      
+
+      
     });
 
 	

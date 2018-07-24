@@ -20,16 +20,10 @@
 	         </ul>
 	         <ul class="nav ml-lg-auto">
 	            <li class="nav-item">
-	              <a class="nav-link active" href="https://instagram.com/webpixelsofficial" target="_blank"><i class="fab fa-instagram"></i></a>
+	              <a class="nav-link active" href="https://trello.com/b/4LRGxHHs/fullhouse" target="_blank"><i class="fab fa-trello"></i></a>
 	            </li>
 	            <li class="nav-item">
-	              <a class="nav-link" href="https://facebook.com/webpixels" target="_blank"><i class="fab fa-facebook"></i></a>
-	            </li>
-	            <li class="nav-item">
-	              <a class="nav-link" href="https://github.com/webpixels" target="_blank"><i class="fab fa-github"></i></a>
-	            </li>
-	            <li class="nav-item">
-	              <a class="nav-link" href="https://dribbble.com/webpixels" target="_blank"><i class="fab fa-dribbble"></i></a>
+	              <a class="nav-link" href="https://github.com/HarrisLim/Fullhouse" target="_blank"><i class="fab fa-github"></i></a>
 	            </li>
 	          </ul>
 	        </div>
