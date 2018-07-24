@@ -4226,6 +4226,11 @@ Created using IcoMoon - icomoon.io
   float: left;
   width: calc(100%);
   height: calc(100% - 145px);
+  height: -webkit-calc(100% - 145px);
+  height: -moz-calc(100% - 145px);
+  height: -o-calc(100% - 145px);
+  height: -ms-calc(100% - 145px);
+  
 /*   margin-top: 5px; */
   background-color: green;
   background-color: green;

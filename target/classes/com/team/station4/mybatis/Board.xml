@@ -40,6 +40,10 @@
 			select LAT, LNG from BUILDING
 		</select>
 		
+		<select id="myLatLng" parameterType="HashMap" resultType="Map">
+			select LAT, LNG from BUILDING where ADDRESS like '%'||#{서울}||'%'
+		</select>
+		
 		
 		
 		

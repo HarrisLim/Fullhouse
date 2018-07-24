@@ -10,4 +10,5 @@ public interface MapDAO {
 	List<MapDTO> mapList(PagingVo pagingVo);
 	int totalCount();
 	List<MapDTO> location();
+	List<MapDTO>latLng(HashMap hm);
 }
