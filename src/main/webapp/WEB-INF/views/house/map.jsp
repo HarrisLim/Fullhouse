@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Now UI Dashboard by Creative Tim
+    Full House
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -33,146 +33,7 @@
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="blue"  style="width:480px;height:calc(100% - 150px);right:0;">
-<!--      
-        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
-    -->
-      <div class="logo">
-        <a href="#" class="simple-text logo-mini">
-        	  〉
-        </a>
-        <a href="#" class="simple-text logo-normal">
-                 검색 결과 0 개
-        </a>
-      </div>
-		<!--       슬라이드바 상단 -->
-      <div class="sidebar-wrapper" style="height:100%;">
-		<table class="table table-bordered">
-			<tr>
-				<th>번호</th>
-				<th>주소</th>
-				<th>위도</th>
-				<th>경도</th>
-				<th>날짜</th>
-			</tr>
-      	<c:forEach var="dto" items="${list}">
-      		<tr>
-      			<td>${dto.build_no}</td>
-      			<td>${dto.address}</td>
-      			<td>${dto.lat}</td>
-      			<td>${dto.lng}</td>
-				<td>${dto.bu_rdate}</td>      	
-      		</tr>
-      	</c:forEach>
-      	</table>
-   
-         
-      </div>
-<!--       <div style="height:50px;background-color:red;" ><a class="simple-text logo-normal" style="color:black">dd</a></div> -->
-		<div id="page" style="height:150px;width:100%;background-color:red;">  
-      		<!-- 5. paging view -->
-			<ul class="pagination">
-				<c:if test="${page.pageStartNum ne 1}">
-					<!--맨 첫페이지 이동 -->
-					<li class="page-item"><a class="page-link" onclick='pagePre(${page.pageCnt+1},${page.pageCnt});'>&laquo;</a></li>
-					<!--이전 페이지 이동 -->
-					<li class="page-item"><a class="page-link" onclick='pagePre(${page.pageStartNum},${page.pageCnt});'>&lsaquo;</a></li>
-				</c:if>
-			
-				<!--페이지번호 -->
-				<c:forEach var='i' begin="${page.pageStartNum}" end="${page.pageLastNum}" step="1">
-					<li class='pageIndex${i}' ><a class="page-link" onclick='pageIndex(${i});'>${i}</a></li>
-				</c:forEach>
-			
-				<c:if test="${page.lastChk}">
-					<!--다음 페이지 이동 -->
-					<li class="page-item"><a class="page-link" onclick='pageNext(${page.pageStartNum},${page.total},${page.listCnt},${page.pageCnt});'>&rsaquo;</a></li>
-					<!--마지막 페이지 이동 -->
-					<li class="page-item"><a class="page-link" onclick='pageLast(${page.pageStartNum},${page.total},${page.listCnt},${page.pageCnt});'>&raquo;</a></li>
-				</c:if>
-			</ul>
-			<form action="./mapList.do" method="post" id='frmPaging'>
-				<!--출력할 페이지번호, 출력할 페이지 시작 번호, 출력할 리스트 갯수 -->
-			<input type='hidden' name='index' id='index' value='${page.index}'>
-			<input type='hidden' name='pageStartNum' id='pageStartNum' value='${page.pageStartNum}'>
-			<input type='hidden' name='listCnt' id='listCnt' value='${page.listCnt}'>	
-			</form>
-		</div>
-    </div>
-    	
-    
-    <div class="main-panel" style="background-color:navy" >
-    
-       <!-- Navbar -->
-    <div class="sub-panel" >
-      <nav class="navbar navbar-expand-lg bg-primary navbar-transparent navbar-absolute" >
-        <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <div class="navbar-toggle">
-              <button type="button" class="navbar-toggler">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </button>
-            </div>
-            <a class="navbar-brand" href="#pablo">FullHouse</a>
-          </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
-             <form>
-              <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search..." size="50dp">
-                  <div class="input-group-append">
-                  <div class="input-group-text">
-                    <i class="now-ui-icons ui-1_zoom-bold"></i>
-                  </div>
-                </div>
-              </div>
-            </form>
-            
-            <div class="collapse navbar-collapse justify-content-end">
-            	<style>
-    				#menubar a:hover { font-weight:bold;color:orange; }
-				</style>
-	            <div id="menubar" class="collapse navbar-collapse justify-content-center">
-				
-	            	<div><a class="navbar-brand" href="#pablo" >방검색</a></div>
-	            	<div><a class="navbar-brand" href="#pablo">관심목록</a></div>
-	            	<div><a class="navbar-brand" href="#pablo">방 등록</a></div>
-	            	<div><a class="navbar-brand" href="#pablo">공인중개사 회원가입</a></div>
-	            	<div><a class="navbar-brand" href="#pablo">회원가입 및 로그인</a></div>
-	            </div>
-	            <!--  ul 지구본, 드랍다운 메뉴 등     -->
-	         <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#pablo">
-                  <i class="now-ui-icons media-2_sound-wave"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a class="nav-link" href="#pablo">
-                  <i class="now-ui-icons users_single-02"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Account</span>
-                  </p>
-                </a>
-              </li>
-            </ul>
-	          </div>
-	        </div>
-	      </div>
-	    </nav>
-
-	<!-- sub-panel -->  
-	</div>
+   <%@ include file="mapTop.jsp" %>
 	
 	<div class="third-panel">
 	  <!-- 매물 종류 드롭 다운 목록 -->   
@@ -370,14 +231,14 @@
 
     <!-- third-panel -->    
 	</div>
-	<div class="fourth-panel" id="map"></div>
+	
+	<%@ include file="mapView.jsp" %>
 		
 	<!--  메인판넬    -->    
 	  </div> 
   </div>
 
      
-    
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
@@ -391,8 +252,9 @@
   <script src="../assets/js/now-ui-dashboard.min.js?v=1.1.0" type="text/javascript"></script>
   <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
-  <!-- map 스크립트  파일 모음 -->
+      <!-- map 스크립트  파일 모음 -->
   <script src="../kanu/js/map.js"></script>
+
 
 
 
@@ -402,9 +264,8 @@
       demo.initDashboardPageCharts();
     });
 
-	
- 	
 
+   
   </script>
 
 </body>
