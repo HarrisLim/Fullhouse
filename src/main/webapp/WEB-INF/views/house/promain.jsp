@@ -31,13 +31,7 @@
                       			대한민국 1등 부동산 광고 플랫폼 </br>
                       			 풀 하우스
                     </h1>
-                    
-
-<iframe width="560" height="315" align="center" src="https://www.youtube.com/embed/GuUz6bHWR5c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                   
-                   
-                   
-                    
+					<iframe width="560" height="315" align="center" src="https://www.youtube.com/embed/GuUz6bHWR5c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                   </div>
                 </div>
               </div>
@@ -45,27 +39,7 @@
           </div>
         </div>
       </section>
-
-    <section class="slice bg-primary">
-      <div class="container">
-        <div class="row align-items-center cols-xs-space cols-sm-space cols-md-space text-center text-lg-left">
-          <div class="col-lg-7">
-            <h1 class="heading h2 text-white strong-500">
-              Need more information about Boomerang UI Kit?
-            </h1>
-            <p class="lead text-white mb-0">Take up one idea. Let the brain, muscles, nerves, every part of your body, be full of that idea, and just leave every other idea alone.</p>
-          </div>
-          <div class="col-lg-3 ml-lg-auto">
-            <div class="text-center text-md-right">
-              <a href="#" class="btn bg-secondary">
-                Contact us
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="slice slice-lg">
+      <section class="slice slice-lg">
       <div class="container">
         <div class="mb-5 text-center">
           <h3 class="heading h2">Stay tuned with our company news</h3>
@@ -118,85 +92,10 @@
             </div>
           </div>
         </div>
-        <div class="text-center mt-5">
-          <a href="#" class="text-uppercase">
-            All posts
-            <i class="fas fa-arrow-right ml-2"></i>
-          </a>
-        </div>
       </div>
     </section>
   </main>
-  <footer class="pt-5 pb-3 footer  footer-dark bg-tertiary">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-md-4">
-          <div class="pr-lg-5">
-            <h1 class="heading h6 text-uppercase font-weight-700 mb-3"><strong>Boomerang</strong> UIKit</h1>
-            <p>Boomerang is a high quality UI Kit built on top of the well known Bootstrap 4 Framework. This theme was designed as its own extended version of Bootstrap with multiple functionalities and controls added, extended color palette and beautiful typography.</p>
-          </div>
-        </div>
-        <div class="col-6 col-md">
-          <h5 class="heading h6 text-uppercase font-weight-700 mb-3">Features</h5>
-          <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">Cool stuff</a></li>
-            <li><a class="text-muted" href="#">Random feature</a></li>
-            <li><a class="text-muted" href="#">Team feature</a></li>
-            <li><a class="text-muted" href="#">Stuff for developers</a></li>
-            <li><a class="text-muted" href="#">Another one</a></li>
-            <li><a class="text-muted" href="#">Last time</a></li>
-          </ul>
-        </div>
-        <div class="col-6 col-md">
-          <h5 class="heading h6 text-uppercase font-weight-700 mb-3">Solutions</h5>
-          <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">Resource</a></li>
-            <li><a class="text-muted" href="#">Resource name</a></li>
-            <li><a class="text-muted" href="#">Another resource</a></li>
-            <li><a class="text-muted" href="#">Final resource</a></li>
-          </ul>
-        </div>
-        <div class="col-6 col-md">
-          <h5 class="heading h6 text-uppercase font-weight-700 mb-3">Resources</h5>
-          <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">Business</a></li>
-            <li><a class="text-muted" href="#">Education</a></li>
-            <li><a class="text-muted" href="#">Government</a></li>
-            <li><a class="text-muted" href="#">Gaming</a></li>
-          </ul>
-        </div>
-        <div class="col-6 col-md">
-          <h5 class="heading h6 text-uppercase font-weight-700 mb-3">About</h5>
-          <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">Team</a></li>
-            <li><a class="text-muted" href="#">Locations</a></li>
-            <li><a class="text-muted" href="#">Privacy</a></li>
-            <li><a class="text-muted" href="#">Terms</a></li>
-          </ul>
-        </div>
-      </div>
-      <hr>
-      <div class="d-flex align-items-center">
-        <span class="">
-          &copy; 2018 <a href="https://webpixels.io/" class="footer-link" target="_blank">Webpixels</a>. All rights reserved.
-        </span>
-        <ul class="nav ml-lg-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="https://instagram.com/webpixelsofficial" target="_blank"><i class="fab fa-instagram"></i></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://facebook.com/webpixels" target="_blank"><i class="fab fa-facebook"></i></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://github.com/webpixels" target="_blank"><i class="fab fa-github"></i></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://dribbble.com/webpixels" target="_blank"><i class="fab fa-dribbble"></i></a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </footer>
+  <%@include file="./footer.jsp" %>
   <!-- Core -->
   <script src="../assets/vendor/jquery/jquery.min.js"></script>
   <script src="../assets/vendor/popper/popper.min.js"></script>

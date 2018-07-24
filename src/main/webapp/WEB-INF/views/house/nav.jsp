@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+    
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
 	<div class="container">
@@ -145,7 +146,7 @@
 						              <div data-toggle="buttons">
 						              <label class="btn btn-primary active">
 						                  <span class="fa fa-check"></span>
-						                  <input id="agree" type="checkbox" autocomplete="off" checked>
+						                  <input id="agree1" type="checkbox" autocomplete="off" checked>
 						              </label>다음의 
 						              <a data-toggle="modal" data-target="#mymodal3" href="#myModal3">이용약관</a>에 동의합니다.
 						              </div>
@@ -155,7 +156,7 @@
 						              <div data-toggle="buttons">
 						              <label class="btn btn-primary active">
 						                  <span class="fa fa-check"></span>
-						                  <input id="agree" type="checkbox" autocomplete="off" checked>
+						                  <input id="agree2" type="checkbox" autocomplete="off" checked>
 						              </label>다음의 
 						              <a data-toggle="modal" data-target="#mymodal4" href="#myModal4">개인 정보 이용</a>에 동의합니다.
 						              </div>
@@ -509,14 +510,6 @@
 						<div class="modal-footer">
 							<button type="button" class="close" data-dismiss="modal">닫기</button>
 						</div>
-						
-						<script type="text/javascript">
-						$(function() {
-						    for (var i = 0; i < 100; i++) {
-						        $('.modal-body').append(i + '<br>');
-						    }
-						});					
-						</script>
 					</div>
 				</div>
 			</div>
