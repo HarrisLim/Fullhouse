@@ -1,5 +1,6 @@
 package com.team.station4.map.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -31,6 +32,11 @@ public class MapDAOImpl implements MapDAO {
 	@Override
 	public List<MapDTO> location(){
 		return sqlsession.selectList(ns+".myLocation");
+	}
+	
+	@Override
+	public List<MapDTO>latLng(HashMap hm){
+		return sqlsession.selectList(ns+".myLatLng", hm);
 	}
 
 }

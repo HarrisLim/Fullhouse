@@ -19,6 +19,7 @@ public class MapController {
 	@Autowired
 	private MapService service;
 	
+	/* 방검색 페이지 표시  */
 	@RequestMapping(value = "house/map.do", method= RequestMethod.GET)
 	public ModelAndView mapPage(Model model, PagingVo pagingVo) {
 		System.out.println("control");
@@ -26,27 +27,47 @@ public class MapController {
 		pagingVo.setTotal(service.countService());
 		List<MapDTO> list =service.mapListService(pagingVo);
 		List<MapDTO> location = service.locationService();
+		int count = service.countService();
 		
-		
+//		HashMap<String, String> hm = new HashMap<String, String>();
+//		hm.put("전세", "전세");
+//		hm.put("서울시", "서울시");
+//		List<MapDTO>latLng = service.latLngService(hm);
+		double lat = 0.0;
+		double lng = 0.0;
 		for(MapDTO dto : location) {
-			dto.getLat();
-			dto.getLng();
+			lat += dto.getLat();
+			lng += dto.getLng();
+			//System.out.println("lat: "+lat+", lng: "+lng);
 		}
+		
+		lat = lat/location.size();
+		lng = lng/location.size();
+		System.out.println("lat: "+lat+", lng: "+lng+", dto.size(): "+location.size());
+		
 		mv.setViewName("house/map");
+		mv.addObject("count", count);
 		mv.addObject("list", list);
 		mv.addObject("page", pagingVo);
 		return mv;
 	}
 	
-	@RequestMapping(value="house/mapList.do")
-	public ModelAndView list(PagingVo pagingVo) {
-		System.out.println("control");
-		ModelAndView mv = new ModelAndView();
-		List<MapDTO> list =service.mapListService(pagingVo);
-		pagingVo.setTotal(service.countService()); 
-		mv.setViewName("house/map");
+	/* 관심목록 페이지 표시  */
+	@RequestMapping(value="house/myMap.do")
+	public String myMap() {
+		return "house/myMap";
+	}
+	
+	/* 방검색 리스트+paging ajax 표시 */
+	@RequestMapping(value="house/indexJson.do", method= {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView indexJson(PagingVo pagingVo) {
+		System.out.println("index:"+pagingVo.getIndex()+", start:"+pagingVo.getPageStartNum()+", listCnt: "+pagingVo.getListCnt()+", last: "+pagingVo.getLast());
+		ModelAndView mv = new ModelAndView("jsonView");
+		List<MapDTO> list = service.mapListService(pagingVo);
+		pagingVo.setTotal(service.countService());
 		mv.addObject("list", list);
-		mv.addObject("page", pagingVo);
 		return mv;
 	}
+	
+	
 }
