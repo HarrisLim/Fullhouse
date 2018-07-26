@@ -78,7 +78,8 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">FullHouse</a>
+            <img src="../kanu/main/로고.png" class="avatar avatar-sm bg-#00000000" style="background-color:transparent;width:50px;margin-left:-30px">
+            <a class="navbar-brand" href="./main.do">FullHouse</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -106,14 +107,14 @@
 	            	<div><a class="navbar-brand" href="./map.do" >방검색</a></div>
 	            	<div><a class="navbar-brand" href="./myMap.do">관심목록</a></div>
 	            	<div><a class="navbar-brand" href="#pablo">방 등록</a></div>
-	            	<div><a class="navbar-brand" href="#pablo">공인중개사 회원가입</a></div>
+	            	<div><a class="navbar-brand" href="./testInjection.do">공인중개사 회원가입</a></div>
 	            	<div><a class="navbar-brand" href="#pablo">회원가입 및 로그인</a></div>
 	            </div>
 	            <!--  ul 지구본, 드랍다운 메뉴 등     -->
 	         <ul class="navbar-nav ml-auto align-items-lg-center" style="margin-right:40px">
 	         <i class="now-ui-icons users_single-02"></i>
                 <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="kind_of_sale" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="font-size: 0.85em">박종석 님</a>
+                <a class="nav-link dropdown-toggle" href="#" id="my_station" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="font-size: 0.85em">박종석 님</a>
                 
              <div class="dropdown-menu " aria-labelledby="navbar_1_dropdown_1">
                	<a class="dropdown-item" id="my_info" href="#">내정보</a>

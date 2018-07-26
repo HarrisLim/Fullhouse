@@ -38,11 +38,77 @@
 				}, 500);
 
 			}).scroll();
+			
+			if(${option.getAircon()} == 1){
+				var exAricon = document.getElementById('aircon');
+				exAricon.src="../kanu/options/aircon_color.png";
+			}
+			
+			if(${option.getWashing()} == 1){
+				var exAricon = document.getElementById('washing');
+				exAricon.src="../kanu/options/washing_color.png";
+			}
+
+			if(${option.getBed()} == 1){
+				var exAricon = document.getElementById('bed');
+				exAricon.src="../kanu/options/bed_color.png";
+			}
+
+			if(${option.getDesk()} == 1){
+				var exAricon = document.getElementById('desk');
+				exAricon.src="../kanu/options/desk_color.png";
+			}
+
+			if(${option.getCloset()} == 1){
+				var exAricon = document.getElementById('closet');
+				exAricon.src="../kanu/options/closet_color.png";
+			}
+			if(${option.getTv()} == 1){
+				var exAricon = document.getElementById('tv');
+				exAricon.src="../kanu/options/tv_color.png";
+			}
+			if(${option.getShoerack()} == 1){
+				var exAricon = document.getElementById('shoerack');
+				exAricon.src="../kanu/options/shoerack_color.png";
+			}
+			if(${option.getFridge()} == 1){
+				var exAricon = document.getElementById('fridge');
+				exAricon.src="../kanu/options/fridge_color.png";
+			}
+			if(${option.getGasstove()} == 1){
+				var exAricon = document.getElementById('gasstove');
+				exAricon.src="../kanu/options/gasstove_color.png";
+			}
+			if(${option.getInduction()} == 1){
+				var exAricon = document.getElementById('induction');
+				exAricon.src="../kanu/options/induction_color.png";
+			}
+			if(${option.getMicrowave()} == 1){
+				var exAricon = document.getElementById('microwave');
+				exAricon.src="../kanu/options/microwave_color.png";
+			}
+			if(${option.getDoorlock()} == 1){
+				var exAricon = document.getElementById('doorlock');
+				exAricon.src="../kanu/options/doorlock_color.png";
+			}
+			if(${option.getBidet()} == 1){
+				var exAricon = document.getElementById('bidet');
+				exAricon.src="../kanu/options/bidet_color.png";
+			}
+
+
+
 		});
 		
 		$('#myModal').on('shown.bs.modal', function () {
 		  $('#myInput').trigger('focus')
 		})
+		
+		
+		
+		
+	
+	
 	</script>    
     <style>
     	
@@ -58,6 +124,54 @@
 			padding:10px;
 			z-index:1;
 		}
+		
+
+		.map_wrap, .map_wrap * {margin:0; padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+		.map_wrap {position:relative;width:100%;height:350px;}
+		#category {position:absolute;top:10px;left:10px;border-radius: 5px; border:1px solid #909090;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);background: #fff;overflow: hidden;z-index: 2;}
+		#category li {float:left;list-style: none;width:50px;px;border-right:1px solid #acacac;padding:6px 0;text-align: center; cursor: pointer;}
+		#category li.on {background: #eee;}
+		#category li:hover {background: #ffe6e6;border-left:1px solid #acacac;margin-left: -1px;}
+		#category li:last-child{margin-right:0;border-right:0;}
+		#category li span {display: block;margin:0 auto 3px;width:33px;height: 35px;}
+/* 		#category li .category_bg {background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png) no-repeat;} */
+
+		#category li .bg_cafe {background:url(../kanu/images/cafe_black.png) no-repeat;}
+		#category li .bg_mart {background:url(../kanu/images/mart_black.png) no-repeat;}
+		#category li .bg_kindergarten {background:url(../kanu/images/kindergarten_black.png) no-repeat;}
+		#category li .bg_school {background:url(../kanu/images/school_black.png) no-repeat;}
+		#category li .bg_hospital {background:url(../kanu/images/hospital_black.png) no-repeat;}
+		#category li .bg_store {background:url(../kanu/images/store_black.png) no-repeat;}
+		#category li .bg_subway {background:url(../kanu/images/subway_black.png) no-repeat;}
+
+		#category li.on .bg_cafe {background:url(../kanu/images/cafe_color.png) no-repeat;}
+		#category li.on .bg_mart {background:url(../kanu/images/mart_color.png) no-repeat;}
+		#category li.on .bg_kindergarten {background:url(../kanu/images/kindergarten_color.png) no-repeat;}
+		#category li.on .bg_school {background:url(../kanu/images/school_color.png) no-repeat;}
+		#category li.on .bg_hospital {background:url(../kanu/images/hospital_color.png) no-repeat;}
+		#category li.on .bg_store {background:url(../kanu/images/store_color.png) no-repeat;}
+		#category li.on .bg_subway {background:url(../kanu/images/subway_color.png) no-repeat;}
+		
+		
+/* 		#category li .bank {background-position: -10px 0;} */
+/* 		#category li .mart {background-position: -10px -36px;} */
+/* 		#category li .pharmacy {background-position: -10px -72px;} */
+/* 		#category li .oil {background-position: -10px -108px;} */
+/* 		#category li .cafe {background-position: -10px -144px;} */
+/* 		#category li .store {background-position: -10px -180px;} */
+/* 		#category li .subway {background-position: -10px -180px;} */
+		
+		.placeinfo_wrap {position:absolute;bottom:28px;left:-150px;width:300px;}
+		.placeinfo {position:relative;width:100%;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;padding-bottom: 10px;background: #fff;}
+		.placeinfo:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+		.placeinfo_wrap .after {content:'';position:relative;margin-left:-12px;left:50%;width:22px;height:12px;background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+		.placeinfo a, .placeinfo a:hover, .placeinfo a:active{color:#fff;text-decoration: none;}
+		.placeinfo a, .placeinfo span {display: block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+		.placeinfo span {margin:5px 5px 0 5px;cursor: default;font-size:13px;}
+		.placeinfo .title {font-weight: bold; font-size:14px;border-radius: 6px 6px 0 0;margin: -1px -1px 0 -1px;padding:10px; color: #fff;background: #d95050;background: #d95050 url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+		.placeinfo .tel {color:#0f7833;}
+		.placeinfo .jibun {color:#999;font-size:11px;margin-top:0;}
+
     </style>
   </head>
   <body>
@@ -221,11 +335,22 @@
 		<div class="container">
 			<div class="justify-content-center">
 				<div class="pt-lg-md">
-					<h2 class="h3 mb-4">옵션 (아이콘 찾자. 너무 안어울려 지금 ) </h2>
+					<h2 class="h3 mb-4">&nbsp;옵션 </h2>
         			<div style="margin:15px">
-						<img src="../kanu/images/frown-regular.svg" width="50px">&nbsp;&nbsp;
-						<img src="../kanu/images/grin-stars-regular.svg" width="50px"><br> 
-						&nbsp;<strong>에어컨</strong>
+						<img id="aircon" src="../kanu/options/aircon_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						<img id="washing" src="../kanu/options/washing_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						<img id="bed" src="../kanu/options/bed_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						<img id="desk" src="../kanu/options/desk_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						<img id="closet" src="../kanu/options/closet_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						<img id="tv" src="../kanu/options/tv_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						<img id="shoerack" src="../kanu/options/shoerack_black.png" width="70px">&nbsp;&nbsp;&nbsp;<br/> 
+						<img id="fridge" src="../kanu/options/fridge_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						<img id="gasstove" src="../kanu/options/gasstove_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						<img id="induction" src="../kanu/options/induction_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						<img id="microwave" src="../kanu/options/microwave_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						<img id="doorlock" src="../kanu/options/doorlock_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						<img id="bidet" src="../kanu/options/bidet_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						
 					</div>
 			       		<hr style="margin-top:0px">
 				</div>
@@ -249,16 +374,46 @@
 			</div>
 		</div>
 	</section>
-	<section class="" name="detailinfo"> 
+	<section class="" name="detailinfo" style="margin-bottom:70px"> 
 		<div class="container">
 			<div class="justify-content-center">
 				<div class="pt-lg-md">
 					<h2 class="h3 mb-4">위치 및 주변 편의시설</h2>
-					<div style="margin:15px">
-					  여기에 지도 넣고, 지도 밑에 편의시설 아이콘 넣자. 
-					</div>
-			       	<hr>
-				</div>
+				
+					<div class="map_wrap" style="height:700px">
+						    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;margin:15px"></div>
+						    <ul id="category">
+						        <li id="MT1" data-order="0"> 
+						            <span class="bg_mart"></span>
+						            마트
+						        </li>       
+						        <li id="PS3" data-order="1"> 
+						            <span class="bg_kindergarten"></span>
+						            유치원
+						        </li>  
+						        <li id="SC4" data-order="2"> 
+						            <span class="bg_school"></span>
+						            학교
+						        </li>  
+						        <li id="HP8" data-order="3"> 
+						            <span class="bg_hospital"></span>
+						            병원
+						        </li>  
+						        <li id="CE7" data-order="4"> 
+						            <span class="bg_cafe"></span>
+						            카페
+						        </li>  
+						        <li id="CS2" data-order="5"> 
+						            <span class="bg_store"></span>
+						            편의점
+						        </li>
+  						        <li id="SW8" data-order="6"> 
+						            <span class="bg_subway"></span>
+						            지하철
+						        </li>       
+						    </ul>
+						</div>
+
 			</div>
 		</div>
 	</section>
@@ -278,5 +433,9 @@
     <script src="../assets/vendor/textarea-autosize/textarea-autosize.min.js"></script>
     <!-- Theme JS -->
     <script src="../assets/js/theme.js"></script>
+    <!-- daum map api -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=920b18ed9b88780f730ccf0faa6707f7&libraries=clusterer,services"></script>
+    <!-- 4. Javascript -->
+    <script type="text/javascript" src="../kanu/js/room.js"></script>
   </body>
 </html>

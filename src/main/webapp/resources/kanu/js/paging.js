@@ -37,6 +37,9 @@ function pageNext(index, pageStartNum, total, listCnt, pageCnt) {
 		console.log("다음페이지클릭 totalPageCnt: "+totalPageCnt+", index: "+index);
 		index = totalPageCnt-1;
 	}
+	if(pageStartNum <= 0){
+		pageStartNum = 1;
+	}
 	console.log("다음페이지클릭 pageCnt보다 인덱스 커질때 pageStartNum: "+pageStartNum+", index: "+index);
 	$("#pageStartNum").val(pageStartNum);
 	$("#index").val(index);
@@ -70,10 +73,13 @@ function pageLast(index, total, listCnt, pageCnt) {
 // index 리스트 처리
 function pageIndex(index, pageStartNum, total, listCnt, pageCnt) {
 	var totalPageCnt = Math.ceil(total / listCnt);
-	//console.log("pageIndex메서드1: "+pageStartNum);
+	console.log("pageIndex메서드1 pageStarNum: "+pageStartNum+", totalPageCnt: "+totalPageCnt);
 	
 	if(pageStartNum > totalPageCnt - pageCnt){
 		pageStartNum = totalPageCnt - pageCnt+1;
+	}
+	if(pageStartNum <= 0){
+		pageStartNum = 1;
 	}
 	$("#pageStartNum").val(pageStartNum);
 	$("#index").val(index);
@@ -146,8 +152,8 @@ function listCnt() {
 window.onload = function() {
 	// 현재번호 active
 	var index = document.getElementById("index").value;
-	var pageIndex = document.querySelector('.pageIndex'+(Number (index)+1));
-	pageIndex.setAttribute("class", "page-item active");
+	var pageIndex = document.querySelector('.pageIndex'+(Number(index)+1));
+	pageIndex.setAttribute("class", "page-item active"); ////page에 인덱스 1번 포인트 주는 함수
 	// 리스트갯수 selected 처리
 	$("#listCount > option").each(function () {
 		if ($(this).val() == $('#listCnt').val()) {

@@ -1,5 +1,6 @@
 package com.team.station4.map.model.service;
 
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,4 +12,7 @@ public interface MapService {
 	int countService();
 	List<MapDTO> locationService();
 	List<MapDTO> latLngService(HashMap hm);
+	void makeImage(int count);
+	List<Double>randomLat(int count);
+	List<Double>randomLng(int count);	
 }
