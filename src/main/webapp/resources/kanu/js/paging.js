@@ -147,7 +147,7 @@ window.onload = function() {
 	// 현재번호 active
 	var index = document.getElementById("index").value;
 	var pageIndex = document.querySelector('.pageIndex'+(Number(index)+1));
-	pageIndex.setAttribute("class", "active");
+	pageIndex.setAttribute("class", "page-item  active");
 	// 리스트갯수 selected 처리
 	$("#listCount > option").each(function () {
 		if ($(this).val() == $('#listCnt').val()) {
