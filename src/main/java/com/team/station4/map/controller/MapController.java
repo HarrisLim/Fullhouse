@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.team.station4.map.model.MapDTO;
@@ -40,7 +41,7 @@ public class MapController {
 			lng += dto.getLng();
 			//System.out.println("lat: "+lat+", lng: "+lng);
 		}
-		
+		service.makeImage(count);
 		lat = lat/location.size();
 		lng = lng/location.size();
 		System.out.println("lat: "+lat+", lng: "+lng+", dto.size(): "+location.size());
@@ -68,6 +69,34 @@ public class MapController {
 		mv.addObject("list", list);
 		return mv;
 	}
+	@RequestMapping(value="house/testInjection.do")
+	public String test() {
+		return "house/testInjection";
+	}
 	
-	
+	/* 매물 강제 insert */
+	@RequestMapping(value="house/compulsionInjection.do")
+	public ModelAndView compulsionInjection(@RequestParam("count") int count) {
+		ModelAndView mv = new ModelAndView();
+		List<Double> randomLat = service.randomLat(count);
+		List<Double> randomLng = service.randomLng(count);
+		mv.setViewName("house/testInjection");
+		mv.addObject("randomLat", randomLat);
+		mv.addObject("randomLng", randomLng);
+		
+		return mv;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
