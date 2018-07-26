@@ -14,9 +14,7 @@
     <link type="text/css" href="../assets/css/demo.css" rel="stylesheet">
     <!--항상 최신 버전의 SDK를 사용합니다.-->
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-	<script src="https://apis.google.com/js/platform.js" async defer>
-	
-</script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
   </head>
   <body>
   

@@ -30,7 +30,7 @@
 	              </div>
 	            </li>
 	            <li class="nav-item" >
-	            	<a class="nav-link text-dark" href="../house/promain.do">공인중개사 회원가입</a>
+	            	<a class="nav-link text-dark" href="../house/proterms.do">공인중개사 회원가입</a>
 	            </li>
 	            <li>
 	            	<a class="nav-link text-dark" data-toggle="modal" href="#myModal">회원가입 및 로그인</a>

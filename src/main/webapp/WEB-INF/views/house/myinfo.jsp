@@ -3,20 +3,20 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at  the highest level of quality.                             ">
-    <meta name="author" content="Webpixels">
-    <title>메물</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700" rel="stylesheet">
-    <!-- Theme CSS -->
-    <link type="text/css" href="../assets/css/theme.css" rel="stylesheet">
-    <!-- Demo CSS - No need to use these in your project -->
-    <link type="text/css" href="../assets/css/demo.css" rel="stylesheet">
-    <link href="../kanu/slidephotos/js-image-slider.css" rel="stylesheet" type="text/css" />
-    <script src="../kanu/slidephotos/js-image-slider.js" type="text/javascript"></script>
+	<head>
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	    <meta name="description" content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at  the highest level of quality.                             ">
+	    <meta name="author" content="Webpixels">
+	    <title>메물</title>
+	    <!-- Fonts -->
+	    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700" rel="stylesheet">
+	    <!-- Theme CSS -->
+	    <link type="text/css" href="../assets/css/theme.css" rel="stylesheet">
+	    <!-- Demo CSS - No need to use these in your project -->
+	    <link type="text/css" href="../assets/css/demo.css" rel="stylesheet">
+	    <link href="../kanu/slidephotos/js-image-slider.css" rel="stylesheet" type="text/css" />
+	    <script src="../kanu/slidephotos/js-image-slider.js" type="text/javascript"></script>
     
     <script>
 		$(document).ready(function(){

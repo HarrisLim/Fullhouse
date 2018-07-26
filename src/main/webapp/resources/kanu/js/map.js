@@ -2,10 +2,6 @@
 
 	$('document').ready(function(){
 //	$("#idx1").addClass("page-item"); //page에 인덱스 1번 포인트 주는 함수
-//	$("#idx1").css("border", "1px solid black"); //page에 인덱스 1번 포인트 주는 함수
-//	$("#idx1").click(function(){
-//		alert("hi");
-//	}); //page에 인덱스 1번 포인트 주는 함수
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = { 
 	        center: new daum.maps.LatLng(37.570707, 126.984611), // 지도의 중심좌표
