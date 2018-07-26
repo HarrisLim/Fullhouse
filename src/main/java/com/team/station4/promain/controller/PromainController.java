@@ -27,9 +27,8 @@ public class PromainController {
 	public String promain() {
 		return "house/promain";
 	}
-	@RequestMapping(value = "house/customer.do", method = RequestMethod.GET)
-	public String customer() {
-		return "house/customer";
+	@RequestMapping(value = "house/projoin.do", method = RequestMethod.GET)
+	public String promem() {
+		return "house/projoin";
 	}
-	
 }

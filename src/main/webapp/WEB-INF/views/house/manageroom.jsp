@@ -167,7 +167,7 @@
 				       					</td>
 				       				</tr>
 				       				<tr>
-				       					<td rowsplan="4">
+				       					<td rowspan="4">
 				       						330001<br>
 				       						[현태 상태]<br>
 				       						ex,<br>

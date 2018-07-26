@@ -369,6 +369,10 @@
 							- 사진을 최소 3장 이상 등록해야하며, 최대 15장까지 권장합니다.<br> 
 						</div>
 						<div style="background-color:rgba(150, 150, 150, 0.1);height:400px">
+						<div class="custom-file">
+						  <input type="file" class="custom-file-input" id="customFile">
+						  <label class="custom-file-label" for="customFile">Choose file</label>
+						</div>
 							<form name="fileForm" method="post" enctype="multipart/form-data">
 								<div align="center">
 									실시간 최소 3장 이상 등록하셔야 하며, 가로 사진을 권장합니다. <br>
