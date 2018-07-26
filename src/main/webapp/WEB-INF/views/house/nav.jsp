@@ -10,7 +10,7 @@
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
 	<div class="container">
 		<img src="../kanu/main/로고.png" class="avatar avatar-sm bg-#00000000" style="background-color:transparent">
-        <a class="navbar-brand text-dark" href="../house/main.do"><strong>Full House</strong> Station4</a>
+        <a class="navbar-brand text-dark" href="../house/proin.do"><strong>Full House</strong> Station4</a>
         <button class="navbar-toggler" type="button" data-action="offcanvas-open" data-target="#navbar_main" 
         							aria-controls="navbar_main" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -30,7 +30,7 @@
 	              </div>
 	            </li>
 	            <li class="nav-item" >
-	            	<a class="nav-link text-dark" href="../house/promain.do">공인중개사 회원가입</a>
+	            	<a class="nav-link text-dark" href="../house/promem.do">공인중개사 회원가입</a>
 	            </li>
 	            <li>
 	            	<a class="nav-link text-dark" data-toggle="modal" href="#myModal">회원가입 및 로그인</a>

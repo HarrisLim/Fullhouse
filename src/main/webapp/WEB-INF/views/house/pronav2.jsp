@@ -44,7 +44,7 @@
 							href="">고객센터</a></li>
 	
 						<li class="nav-item"><a class="nav-link"
-							href="">회원가입</a></li>
+							href=""../house/proterms.do"">회원가입</a></li>
 						<li class="nav-item"><a class="nav-link"
 							href="">로그인</a></li>
 					</ul>
