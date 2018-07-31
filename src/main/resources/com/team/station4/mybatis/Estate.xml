@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="com.team.station4.estate">
+	
+	<resultMap type="Estate" id="Estate">
+		<result property="estate_no" column="ESTATE_NO" />
+		<result property="pay_count" column="PAY_COUNT" />
+		<result property="estate_name" column="ESTATE_NAME" />
+		<result property="erno" column="ERNO" />
+		<result property="lrno" column="LRNO" />
+		<result property="estateaddr" column="ESTATEADDR" />
+		<result property="owner_name" column="OWNER_NAME" />
+	</resultMap>
+		<select id="lrnoCheck" resultType="int" parameterType="String">
+			select Count(*) from ESTATE where LRNO=#{lrno} 
+		</select>
+		<insert id="proInsert" parameterType="Estate">
+		   insert into ESTATE values(ESTATE_NO_SEQ.nextval, 0, #{estate_name}, #{erno}, #{lrno}, #{estateaddr}, #{owner_name})
+		</insert>
+		
+	</mapper>

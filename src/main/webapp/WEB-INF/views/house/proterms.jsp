@@ -18,6 +18,15 @@
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     
     <script type="text/javascript">
+    	/* $(function()){
+    		$("#allCheck").click(function()){ //전체 선택 체크박스 클릭
+    			if( $("#allCheck").prop(checked)){ // 해당화면에 전체 체크박스들을 체크해준다
+    				$("input[type=checkbox]").prop("checked",true);
+    			}else{
+    				$("input[type=checkbox]").prop("checked",false); // 
+    			}
+    		})
+    	}) */
 		function chk(){
 			var firstChk = $("#firstChk").prop("checked");
 			var secondChk = $("#secondChk").prop("checked");
@@ -55,7 +64,7 @@
 						<h2 class="heading h1 mb-4">이용약관</h2><br><br>
 	              		</div>
 	            	</div>
-	            	<form action="room.do" name="form" method="get" id="toJoin">
+	            	<form action="projoin.do" name="form" method="get" id="toJoin">
 		 				<table width="700" height="500">
 		 				<tr>
 						   <td width="100%" height="50%" align="center">
@@ -1225,7 +1234,7 @@
 						  </tr>
 						</table>
 						<hr>
-						<button class="btn btn-block btn-success">전체 동의</button>
+						<button class="btn btn-block btn-success" onclick="chk();">전체 동의</button>
 						<button class="btn btn-block btn-success disabled" onclick="chk();">회원 가입</button>
 	            	</form>
 	            	

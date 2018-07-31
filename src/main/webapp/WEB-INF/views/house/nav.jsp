@@ -129,33 +129,34 @@
 					          <h1>회원가입</h1>
 					        </div>
 					        <div class="col-md-12 col-md-offset-3">
-					          <form role="form">
+					          <form role="form" name="memInsert" action="./memInsert.do" method="post">
 					            <div class="form-group">
 					              <label for="InputEmail">이메일 주소</label>
-					              <input type="email" class="form-control" id="InputEmail" placeholder="이메일 주소">
+					              <input type="email" class="form-control" id="InputEmail" name="mem_email" placeholder="이메일 주소">
 					            </div>
 					            <div class="form-group">
 					              <label for="InputPassword1">비밀번호</label>
-					              <input type="password" class="form-control" id="InputPassword1" placeholder="비밀번호">
+					              <input type="password" class="form-control" id="InputPw1" name="mem_pw" placeholder="비밀번호">
 					            </div>
 					            <div class="form-group">
 					              <label for="InputPassword2">비밀번호 확인</label>
-					              <input type="password" class="form-control" id="InputPassword2" placeholder="비밀번호 확인">
+					              <input type="password" class="form-control" id="InputPw2" placeholder="비밀번호 확인">
 					              <p class="help-block">비밀번호 확인을 위해 다시한번 입력 해 주세요</p>
 					            </div>
 					            <div class="form-group">
 					              <label for="username">이름</label>
-					              <input type="text" class="form-control" id="username" placeholder="이름을 입력해 주세요">
+					              <input type="text" class="form-control" id="username" name="mem_name" placeholder="이름을 입력해 주세요">
 					            </div>
-					            <!-- <div class="form-group">
-					              <label for="username">휴대폰 인증</label>
+					            <div class="form-group">
+					              <label for="username">휴대폰 번호</label>
 					              <div class="input-group">
-					                <input type="tel" class="form-control" id="username" placeholder="- 없이 입력해 주세요">
-					                <span class="input-group-btn">
+					                <input type="tel" class="form-control" id="Phone" name="mem_phone" placeholder="- 없이 입력해 주세요">
+					              </div>
+					                <!-- <span class="input-group-btn">
 					                  <button class="btn btn-success">인증번호 전송<i class="fa fa-mail-forward spaceLeft"></i></button>
 					                </span>
 					              </div>
-					            </div>
+					            
 					            <div class="form-group">
 					              <label for="username">인증번호 입력</label>
 					              <div class="input-group">
@@ -163,36 +164,13 @@
 					                <span class="input-group-btn">
 					                  <button class="btn btn-success">인증번호 입력<i class="fa fa-edit spaceLeft"></i></button>
 					                </span>
-					              </div>
-					            </div> -->
+					              </div>-->
+					            </div> 
 					            <div class="row">
-<<<<<<< HEAD
-									<div class="form-group">
-						                <!-- <label>약관 동의</label> -->
-						              <div data-toggle="buttons">
-						              <label class="btn btn-primary active">
-						                  <span class="fa fa-check"></span>
-						                  <input id="agree1" type="checkbox" autocomplete="off" checked>
-						              </label>다음의 
-						              <a data-toggle="modal" data-target="#mymodal3" href="#myModal3">이용약관</a>에 동의합니다.
-						              </div>
-									</div>
-						              <div class="form-group">
-						                <!-- <label>개인 정보 동의</label> -->
-						              <div data-toggle="buttons">
-						              <label class="btn btn-primary active">
-						                  <span class="fa fa-check"></span>
-						                  <input id="agree2" type="checkbox" autocomplete="off" checked>
-						              </label>다음의 
-						              <a data-toggle="modal" data-target="#mymodal4" href="#myModal4">개인 정보 이용</a>에 동의합니다.
-						              </div>
-						              
-=======
 									<div class="custom-control custom-checkbox mb-3">
 									  <input type="checkbox" class="custom-control-input is-invalid" id="customCheck6">
 									  <label class="custom-control-label" for="customCheck6"></label>다음의 
 									  <a data-toggle="modal" data-target="#mymodal3" href="#myModal3">이용약관</a>에 동의합니다.
->>>>>>> 36c68833b896ea5f5f71b242dc453ce3e62a88bc
 									</div>
 						            <div class="custom-control custom-checkbox mb-3">
 									  <input type="checkbox" class="custom-control-input is-invalid" id="customCheck7">
@@ -547,10 +525,7 @@
 						<div class="modal-footer">
 							<button type="button" class="close" data-dismiss="modal">닫기</button>
 						</div>
-<<<<<<< HEAD
-=======
-						
->>>>>>> 36c68833b896ea5f5f71b242dc453ce3e62a88bc
+
 					</div>
 				</div>
 			</div>
