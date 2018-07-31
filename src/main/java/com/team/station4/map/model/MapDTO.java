@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class MapDTO {
 
+	
 	private int build_no;
 	private String address;
 	private String protype;

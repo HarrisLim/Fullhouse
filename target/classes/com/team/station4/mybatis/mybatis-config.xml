@@ -6,10 +6,13 @@
 		<typeAliases>
 			<typeAlias alias="Map" type="com.team.station4.map.model.MapDTO" />
 			<typeAlias alias="PagingVo" type="com.team.station4.map.vo.PagingVo" />
-					
+			<typeAlias alias="Member" type="com.team.station4.main.model.MainDTO" />
+			<typeAlias alias="Estate" type="com.team.station4.estate.model.EstateDTO" />		
 		</typeAliases>
 		<mappers>
 			<mapper resource="com/team/station4/mybatis/Board.xml" />
 			<mapper resource="com/team/station4/mybatis/Board.xml" />
+			<mapper resource="com/team/station4/mybatis/MainMem.xml" />
+			<mapper resource="com/team/station4/mybatis/Estate.xml" />
 		</mappers>
 	</configuration>

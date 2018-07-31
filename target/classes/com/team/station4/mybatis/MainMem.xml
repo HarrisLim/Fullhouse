@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="com.team.station4.main">
+	
+	<resultMap type="Member" id="Member">
+		<result property="mem_no" column="MEM_NO" />
+		<result property="mem_name" column="MEM_NAME" />
+		<result property="mem_email" column="MEM_EMAIL" />
+		<result property="mem_pw" column="MEM_PW" />
+		<result property="mem_phone" column="MEM_PHONE" />
+		<result property="mem_rdate" column="MEM_RDATE" />
+	</resultMap>
+	
+		<select id="memSelect" resultType="Member">
+			select * from MEMBER where MEM_NO=#{MEM_NO} 
+		</select>
+		<insert id="memInsert" parameterType="Member">
+		   insert into MEMBER values(MEM_NO_SEQ.nextval, #{mem_email}, #{mem_pw}, '#1'||#{mem_name}, #{mem_phone}, SYSDATE)
+		</insert>
+		
+	</mapper>
