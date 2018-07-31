@@ -145,5 +145,10 @@ public class MapServiceImpl implements MapService {
 
 		 return randomLng;
 	 }
+	 
+	 @Override
+	 public void insertInjectionService(MapDTO dto) {
+		 dao.insertInjection(dto);
+	 }
 
 }

@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class MapDTO {
 
+	
 	private int build_no;
 	private String address;
 	private String protype;
@@ -48,6 +49,29 @@ public class MapDTO {
 		this.addInfo_no = addInfo_no;
 		this.explan_no = explan_no;
 	}
+	
+	public MapDTO(String address, String protype, String wholeFloor, String floor, double jArea, double gArea,
+			int view_count, String picPath, String reservation_time, double lat, double lng, Date bu_rdate, int st_no,
+			int estate_no, int mem_no, int addInfo_no, int explan_no) {
+		super();
+		this.address = address;
+		this.protype = protype;
+		this.wholeFloor = wholeFloor;
+		this.floor = floor;
+		this.jArea = jArea;
+		this.gArea = gArea;
+		this.view_count = view_count;
+		this.picPath = picPath;
+		this.reservation_time = reservation_time;
+		this.lat = lat;
+		this.lng = lng;
+		this.bu_rdate = bu_rdate;
+		this.st_no = st_no;
+		this.estate_no = estate_no;
+		this.mem_no = mem_no;
+		this.addInfo_no = addInfo_no;
+		this.explan_no = explan_no;
+	}
 
 	public int getBuild_no() {
 		return build_no;
@@ -69,7 +93,7 @@ public class MapDTO {
 		return protype;
 	}
 
-	public void setProtype(String property) {
+	public void setProtype(String protype) {
 		this.protype = protype;
 	}
 

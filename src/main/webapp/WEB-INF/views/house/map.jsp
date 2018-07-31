@@ -35,6 +35,11 @@
    <%@ include file="mapTop.jsp" %>
 	
 	<div class="third-panel">
+	<input type="hidden" value="" id="center" name="center" />
+	<input type="hidden" value="" id="level" name="level" />
+	<input type="hidden" value="" id="bounds" name="bounds" />
+	<input type="hidden" value="" id="swLatLng" name="swLatLng" />
+	<input type="hidden" value="" id="neLatLng" name="neLatLng" />
 	  <!-- 매물 종류 드롭 다운 목록 -->   
 	  <nav class="navbar navbar-expand-lg navbar-transparent" style="float: left">
       	<div class="container">

@@ -23,7 +23,7 @@ public class PromainController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 
-	@RequestMapping(value = "house/promain.do", method = RequestMethod.GET)
+	@RequestMapping(value = "house/promain.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public String promain() {
 		return "house/promain";
 	}
