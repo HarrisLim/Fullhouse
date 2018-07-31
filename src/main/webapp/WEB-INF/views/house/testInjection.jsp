@@ -5,8 +5,10 @@
     <meta charset="utf-8">
     <title>마커 클러스터러 사용하기</title>
     <center>
-			<a href="./compulsionInjection.do?count=50"><h2>50개추가</h2> </a>
-			<a href="./compulsionInjection.do?count=100"><h2>100개추가</h2> </a>
+			<br/><br/><br/><a id="requestLatLng" href="#">100개추가 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a id="ajaxRespon" href="#">전송 </a><br/><br/><br/><br/>
+<!-- 			<a id="ajaxRespon" href="#"><h2>100개추가</h2> </a> -->
+			<input type="hidden" id="hidden" />
 		</center>
     
 </head>
@@ -27,6 +29,44 @@ $('document').ready(function (){
         level : 10 // 지도의 확대 레벨 
     });
     
+    $("#map").mouseup(function(){
+    	
+        	console.log("12");
+    	    // 지도의 현재 중심좌표를 얻어옵니다 
+    	    var center = map.getCenter(); 
+    	    
+    	    // 지도의 현재 레벨을 얻어옵니다
+    	    var level = map.getLevel();
+    	    
+    	    // 지도타입을 얻어옵니다
+    	    var mapTypeId = map.getMapTypeId(); 
+    	    
+    	    // 지도의 현재 영역을 얻어옵니다 
+    	    var bounds = map.getBounds();
+    	    
+    	    // 영역의 남서쪽 좌표를 얻어옵니다 
+    	    var swLatLng = bounds.getSouthWest(); 
+    	    
+    	    // 영역의 북동쪽 좌표를 얻어옵니다 
+    	    var neLatLng = bounds.getNorthEast(); 
+    	    
+    	    // 영역정보를 문자열로 얻어옵니다. ((남,서), (북,동)) 형식입니다
+    	    var boundsStr = bounds.toString();
+    	    
+    	    
+    	    var message = '지도 중심좌표는 위도 ' + center.getLat() + ', <br>';
+    	    message += '경도 ' + center.getLng() + ' 이고 <br>';
+    	    message += '지도 레벨은 ' + level + ' 입니다 <br> <br>';
+    	    message += '지도 타입은 ' + mapTypeId + ' 이고 <br> ';
+    	    message += '지도의 남서쪽 좌표는 ' + swLatLng.getLat() + ', ' + swLatLng.getLng() + ' 이고 <br>';
+    	    message += '북동쪽 좌표는 ' + neLatLng.getLat() + ', ' + neLatLng.getLng() + ' 입니다';
+    	    
+    	    // 개발자도구를 통해 직접 message 내용을 확인해 보세요.
+    	    console.log(message);
+
+    });
+    
+    
     // 마커 클러스터러를 생성합니다 
     var clusterer = new daum.maps.MarkerClusterer({
         map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
@@ -40,24 +80,23 @@ $('document').ready(function (){
     // 데이터를 가져와 마커를 생성하고 클러스터러 객체에 넘겨줍니다
     
     
-    $.get("/board/chicken.json", function(data) {
-    	var position = JSON.parse(data);
-        var markers = $(position.positions).map(function(i, position) {
-            return new daum.maps.Marker({
-                position : new daum.maps.LatLng(position.lat, position.lng)         	
-            });
-        });
+//     $.get("/board/chicken.json", function(data) {
+//     	var position = JSON.parse(data);
+//         var markers = $(position.positions).map(function(i, position) {
+//             return new daum.maps.Marker({
+//                 position : new daum.maps.LatLng(position.lat, position.lng)         	
+//             });
+//         });
 
-        // 클러스터러에 마커들을 추가합니다
-        clusterer.addMarkers(markers);
-    });
+//         // 클러스터러에 마커들을 추가합니다
+//         clusterer.addMarkers(markers);
+//     });
     
  // 주소-좌표 변환 객체를 생성합니다
     var geocoder = new daum.maps.services.Geocoder();
  
  // 주소로 좌표를 검색합니다
  	
- 	$(document).ready(function(){
  		$("#sub").click(function(){
  			var addr = $("#addr").val();
 	 		 geocoder.addressSearch(addr, function(result, status) {
@@ -91,9 +130,98 @@ $('document').ready(function (){
 	 	        } 
 	 	    });    
  		});
- 	});
-   
- 	geocoder.coord2Address();
+ 	
+ 	/////////// 랜덤하게 생성된 좌표 정보를 배열에 저장한다. /////////////
+	arrayLatLng = [];
+ 	arrayAddress = [];
+ 	goLatLng = [];
+ 	var tex = "서울시 은평구 역촌동 58-16";
+ 	var tee = "location";
+ 	var y = 0;
+	$("#requestLatLng").click(function(){
+		
+		$.ajax({
+			url : "compulsionInjection.do",
+			type : "post",
+			data : {count : 100},
+			success : function(responseData){
+				var data = JSON.parse(responseData);
+				console.log("인입: "+data.randomLat.length);
+				for(var i=0; i<data.randomLat.length; i++){
+					//console.log("lat: "+data.randomLat[i]);
+					arrayLatLng [i] = new daum.maps.LatLng(data.randomLat[i], data.randomLng[i]);
+					//console.log("i: "+arrayLatLng[i].getLng()+", "+arrayLatLng[i].getLat());
+					//goLatLng [i] = "lat: "+arrayLatLng[i].getLat()+", lng: "+arrayLatLng[i].getLng();
+					function searchDetailAddrFromCoords(arrayLatLng, callback) {
+				 	    // 좌표로 법정동 상세 주소 정보를 요청합니다
+				 	   geocoder.coord2Address(arrayLatLng.getLng(), arrayLatLng.getLat(), callback);
+				 	}
+					
+					searchDetailAddrFromCoords(arrayLatLng[i], function(result, status) {
+				        if (status === daum.maps.services.Status.OK) {
+				        	var detailAddr = !!result[0].road_address ? result[0].road_address.address_name : '';
+				            var oldAddr =   result[0].address.address_name; 
+	                        if(detailAddr.length != 0){
+	                        	//arrayAddress[i] = detailAddr;
+	                        	//tex += detailAddr+', ';
+	                        	arrayAddress.push(detailAddr);
+	                        	tex = detailAddr;
+	                        	addressToLat(tex);
+	                        }
+	                        if(oldAddr.length != 0 && detailAddr.length == 0){
+	                        	//arrayAddress[i] = oldAddr;
+	                        	//tex += oldAddr+', ';
+	                        	arrayAddress.push(oldAddr);
+	                        	tex = oldAddr;
+	                        	addressToLat(tex);
+	                        }
+	                        console.log("address: "+arrayAddress[i]);
+				        }else{
+				        	console.log("주소변환 실패"+i);
+				        }
+				    });
+////////////////////////////////
+
+				}
+				
+			}
+		});
+		//c();	
+	});
+	function addressToLat(tex){
+		 geocoder.addressSearch(tex, function(result, status) {
+			 console.log("tex: "+tex);
+			 // 정상적으로 검색이 완료됐으면 
+		     if (status === daum.maps.services.Status.OK) {
+		    	 goLatLng.push(new daum.maps.LatLng(result[0].y, result[0].x));
+		    	 console.log("배열 goLatLng: "+goLatLng.length);
+		     }else{
+		    	 console.log("좌표변환 실패"+i);
+		     }
+		 });
+	}
+
+	$('#ajaxRespon').click(function (){
+		
+	    $.ajax({
+	       	url : "resultInjection.do",
+	       	type : "post",
+	       	data : {jsonText : arrayAddress, jsonInt : goLatLng},
+	       	success : function(){
+	       		console.log("resultInjection 인입");
+	       		arrayAddress=[];
+	       		goLatLng=[];
+	       	}
+	       		
+	    });
+	});
+	
+	
+
+	
+	
+
+
 }); 	   
 </script>
 </body>

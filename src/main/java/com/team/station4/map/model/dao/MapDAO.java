@@ -11,4 +11,5 @@ public interface MapDAO {
 	int totalCount();
 	List<MapDTO> location();
 	List<MapDTO>latLng(HashMap hm);
+	void insertInjection(MapDTO dto);
 }

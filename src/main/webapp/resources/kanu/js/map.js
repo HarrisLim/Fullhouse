@@ -1,6 +1,6 @@
 ////////////////////////////////  지 도 시 작 ///////////////////////////////////////////////////////////////
 
-	$('document').ready(function(){
+$('document').ready(function(){
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = { 
 	        center: new daum.maps.LatLng(37.570707, 126.984611), // 지도의 중심좌표
@@ -10,11 +10,64 @@
 	var map = new daum.maps.Map(mapContainer, mapOption),
 	    customOverlay = new daum.maps.CustomOverlay({}),
 	    infowindow = new daum.maps.InfoWindow({removable: true});
-    
-//     var map = new daum.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
-//         center : new daum.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
-//         level : 12 // 지도의 확대 레벨 
-//     });
+	
+   //////////지도 정보 가져오기 ///////////////////// 
+	var center = 0.1;
+	var level = 1;
+	var bounds = null;
+	var swLatLng = 0.1;
+	var neLatLng = 0.1;
+	
+	 $("#map").mouseup(function(){
+	   console.log("인포인입");
+	    // 지도의 현재 중심좌표를 얻어옵니다 
+	    center = map.getCenter(); 
+	    $("#center").val(center);
+	    
+	    // 지도의 현재 레벨을 얻어옵니다
+	    level = map.getLevel();
+	    $("#level").val(level);
+	    
+	    // 지도타입을 얻어옵니다
+	    var mapTypeId = map.getMapTypeId(); 
+	    
+	    // 지도의 현재 영역을 얻어옵니다 
+	    bounds = map.getBounds();
+	    $("#bounds").val(bounds);
+	   
+	    // 영역의 남서쪽 좌표를 얻어옵니다 
+	    swLatLng = bounds.getSouthWest(); 
+	    $("#swLatLng").val(swLatLng);
+	    
+	    // 영역의 북동쪽 좌표를 얻어옵니다 
+	    neLatLng = bounds.getNorthEast(); 
+	    $("#neLatLng").val(neLatLng);
+	   
+	    // 영역정보를 문자열로 얻어옵니다. ((남,서), (북,동)) 형식입니다
+	    var boundsStr = bounds.toString();
+	    
+	    
+	    var message = '지도 중심좌표는 위도 ' + center.getLat() + ', <br>';
+	    message += '경도 ' + center.getLng() + ' 이고 <br>';
+	    message += '지도 레벨은 ' + level + ' 입니다 <br> <br>';
+	    message += '지도 타입은 ' + mapTypeId + ' 이고 <br> ';
+	    message += '지도의 남서쪽 좌표는 ' + swLatLng.getLat() + ', ' + swLatLng.getLng() + ' 이고 <br>';
+	    message += '지도의 현재 역역은 '+bounds+' 입니다<br>';
+	    message += '북동쪽 좌표는 ' + neLatLng.getLat() + ', ' + neLatLng.getLng() + ' 입니다';
+	    
+	    console.log(message);
+	    
+	    $.ajax({
+	    	url : "mapMarker.do",
+	    	type : "post",
+	    	data : {centerLat : center.getLat(), centerLng : center.getLng(), 
+	    			neLng : neLatLng.getLng(), neLat : neLatLng.getLat(), 
+	    			swLng : swLatLng.getLng(), swLat : swLatLng.getLat(),
+	    			level : level}
+	    	//data : {message : message}
+	    });
+	    
+	});
     
     // 마커 클러스터러를 생성합니다 
     var clusterer = new daum.maps.MarkerClusterer({
@@ -46,7 +99,7 @@
  
  // 주소로 좌표를 검색합니다
  	
- 	$(document).ready(function(){
+
  		$("#serch_now").click(function(){
  			var addr = $("#serch_addr").val();
 	 		 geocoder.addressSearch(addr, function(result, status) {
@@ -80,7 +133,7 @@
 	 	        } 
 	 	    });    
  		});
- 	});
+
  
  	var areas = [
  	    {
@@ -466,6 +519,7 @@
  	        infowindow.setPosition(mouseEvent.latLng); 
  	        infowindow.setMap(map);
  	    });
+
  	}
  	/////////////////////////////////////////////// 지 도 끝 /////////////////////////////////////////////////////////////////////////////
 	// 보증금 검색 0원 부터

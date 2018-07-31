@@ -20,7 +20,6 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script>
 		$(document).ready(function(){
-
 			
 			if(${option.getAircon()} == 1){
 				var exAricon = document.getElementById('aircon');
@@ -79,6 +78,7 @@
 				exAricon.src="../kanu/options/bidet_color.png";
 			}
 
+			
 
 
 		});
