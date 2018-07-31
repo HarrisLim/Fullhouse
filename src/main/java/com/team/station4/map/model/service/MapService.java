@@ -14,5 +14,7 @@ public interface MapService {
 	List<MapDTO> latLngService(HashMap hm);
 	void makeImage(int count);
 	List<Double>randomLat(int count);
-	List<Double>randomLng(int count);	
+	List<Double>randomLng(int count);
+	void insertInjectionService(MapDTO dto);
+	
 }

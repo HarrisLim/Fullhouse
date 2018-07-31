@@ -44,7 +44,11 @@
 			select LAT, LNG from BUILDING where ADDRESS like '%'||#{서울}||'%'
 		</select>
 		
-		
+		<insert id="myInjection" parameterType="Map">
+			insert into BUILDING values
+			(BUILD_NO_SEQ.nextval, #{address}, #{protype}, #{wholeFloor}, #{floor}, #{jArea}, #{gArea}, #{view_count}, #{picPath}, 
+			#{reservation_time}, #{lat}, #{lng}, #{bu_rdate}, #{st_no}, #{estate_no}, #{mem_no}, #{addInfo_no}, #{explan_no})
+		</insert>
 		
 		
 		

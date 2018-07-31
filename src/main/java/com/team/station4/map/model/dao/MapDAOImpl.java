@@ -38,5 +38,10 @@ public class MapDAOImpl implements MapDAO {
 	public List<MapDTO>latLng(HashMap hm){
 		return sqlsession.selectList(ns+".myLatLng", hm);
 	}
+	
+	@Override
+	public void insertInjection(MapDTO dto) {
+		sqlsession.insert(ns+".myInjection", dto);
+	}
 
 }
