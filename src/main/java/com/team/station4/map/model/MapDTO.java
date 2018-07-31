@@ -69,7 +69,7 @@ public class MapDTO {
 		return protype;
 	}
 
-	public void setProtype(String property) {
+	public void setProtype(String protype) {
 		this.protype = protype;
 	}
 

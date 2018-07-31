@@ -7,7 +7,7 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
     
-<nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-dark py-4">
 	<div class="container">
 		<img src="../kanu/main/로고.png" class="avatar avatar-sm bg-#00000000" style="background-color:transparent">
         <a class="navbar-brand text-dark" href="../house/main.do"><strong>Full House</strong> Station4</a>
@@ -25,7 +25,7 @@
 	              												aria-haspopup="true" aria-expanded="false">검색</a>
 	              <div class="dropdown-menu " aria-labelledby="navbar_1_dropdown_1">
 	                <a class="dropdown-item text-dark" href="../house/map.do">방 검색</a>
-	                <a class="dropdown-item text-dark" href="../house/room.do">방 등록</a>
+	                <a class="dropdown-item text-dark" href="../house/uploadroom.do">방 등록</a>
 	                <a class="dropdown-item text-dark" href="../house/room.do">관심 목록</a>
 	              </div>
 	            </li>
@@ -166,33 +166,10 @@
 					              </div>
 					            </div> -->
 					            <div class="row">
-<<<<<<< HEAD
-									<div class="form-group">
-						                <!-- <label>약관 동의</label> -->
-						              <div data-toggle="buttons">
-						              <label class="btn btn-primary active">
-						                  <span class="fa fa-check"></span>
-						                  <input id="agree1" type="checkbox" autocomplete="off" checked>
-						              </label>다음의 
-						              <a data-toggle="modal" data-target="#mymodal3" href="#myModal3">이용약관</a>에 동의합니다.
-						              </div>
-									</div>
-						              <div class="form-group">
-						                <!-- <label>개인 정보 동의</label> -->
-						              <div data-toggle="buttons">
-						              <label class="btn btn-primary active">
-						                  <span class="fa fa-check"></span>
-						                  <input id="agree2" type="checkbox" autocomplete="off" checked>
-						              </label>다음의 
-						              <a data-toggle="modal" data-target="#mymodal4" href="#myModal4">개인 정보 이용</a>에 동의합니다.
-						              </div>
-						              
-=======
 									<div class="custom-control custom-checkbox mb-3">
 									  <input type="checkbox" class="custom-control-input is-invalid" id="customCheck6">
 									  <label class="custom-control-label" for="customCheck6"></label>다음의 
 									  <a data-toggle="modal" data-target="#mymodal3" href="#myModal3">이용약관</a>에 동의합니다.
->>>>>>> 36c68833b896ea5f5f71b242dc453ce3e62a88bc
 									</div>
 						            <div class="custom-control custom-checkbox mb-3">
 									  <input type="checkbox" class="custom-control-input is-invalid" id="customCheck7">

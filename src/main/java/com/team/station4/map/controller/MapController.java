@@ -41,7 +41,7 @@ public class MapController {
 			lng += dto.getLng();
 			//System.out.println("lat: "+lat+", lng: "+lng);
 		}
-		service.makeImage(count);
+//		service.makeImage(count);
 		lat = lat/location.size();
 		lng = lng/location.size();
 		System.out.println("lat: "+lat+", lng: "+lng+", dto.size(): "+location.size());
