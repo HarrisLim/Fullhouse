@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 	<mapper namespace="com.team.station4.map">
 		
@@ -34,7 +36,7 @@
 			select count(*) from BUILDING
 		</select>
 		
-		<select id="myLocation" resultType="Map">
+		<select id="myLocation" resultType="Build">
 			select LAT, LNG from BUILDING
 		</select>
 		
@@ -47,6 +49,15 @@
 			(BUILD_NO_SEQ.nextval, #{address}, #{protype}, #{wholeFloor}, #{floor}, #{jArea}, #{gArea}, #{view_count}, #{picPath}, 
 			#{reservation_time}, #{lat}, #{lng}, #{bu_rdate}, #{st_no}, #{estate_no}, #{mem_no}, #{addInfo_no}, #{explan_no})
 		</insert>
+		
+		<select id="myCluster" parameterType="HashMap" resultType="Build" >
+			select * from(select A.*, ROWNUM rn from(select * from BUILDING where LNG between #{west} and #{east} order by BUILD_NO desc)A where LAT between #{south} and #{north})where rn between #{start} and #{last}
+		</select>
+		
+		<select id="myCountCluster" parameterType="HashMap" resultType="int" >
+			select count(*) from(select * from BUILDING where LNG between #{west} and #{east})A where LAT between #{south} and #{north}
+		</select>
+		
 		
 		
 		

@@ -150,5 +150,15 @@ public class MapServiceImpl implements MapService {
 	 public void insertInjectionService(BuildDTO dto) {
 		 dao.insertInjection(dto);
 	 }
+	 
+	 @Override
+	 public List<BuildDTO> clickClustererService(HashMap hm){
+		 return dao.clickClusterer(hm);
+	 }
+	 
+	 @Override
+	 public int countClusterService(HashMap hm) {
+		 return dao.countCluster(hm);
+	 }
 
 }

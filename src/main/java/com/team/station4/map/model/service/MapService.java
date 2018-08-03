@@ -16,5 +16,6 @@ public interface MapService {
 	List<Double>randomLat(int count);
 	List<Double>randomLng(int count);
 	void insertInjectionService(BuildDTO dto);
-	
+	List<BuildDTO> clickClustererService(HashMap hm);
+	int countClusterService(HashMap hm);
 }

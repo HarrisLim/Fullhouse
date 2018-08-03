@@ -43,5 +43,15 @@ public class MapDAOImpl implements MapDAO {
 	public void insertInjection(BuildDTO dto) {
 		sqlsession.insert(ns+".myInjection", dto);
 	}
+	
+	@Override
+	public List<BuildDTO> clickClusterer(HashMap hm){
+		return sqlsession.selectList(ns+".myCluster", hm);
+	}
+	
+	@Override
+	public int countCluster(HashMap hm) {
+		return sqlsession.selectOne(ns+".myCountCluster", hm);
+	}
 
 }

@@ -12,4 +12,6 @@ public interface MapDAO {
 	List<BuildDTO> location();
 	List<BuildDTO>latLng(HashMap hm);
 	void insertInjection(BuildDTO dto);
+	List<BuildDTO> clickClusterer(HashMap hm);
+	int countCluster(HashMap hm);
 }

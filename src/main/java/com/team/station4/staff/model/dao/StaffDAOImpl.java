@@ -17,7 +17,6 @@ public class StaffDAOImpl implements StaffDAO {
 	public void StaffInsert(StaffDTO dto2) {
 		// TODO Auto-generated method stub
 		sqlSession.insert(ns + ".staffInsert", dto2);
-
 	}
 
 }

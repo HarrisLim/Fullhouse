@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>마커 클러스터러 사용하기</title>
     <center>
-			<br/><br/><br/><a id="requestLatLng" href="#">100개추가 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<br/><br/><br/><a id="requestLatLng" href="#">30,000개 추가 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<a id="ajaxRespon" href="#">전송 </a><br/><br/><br/><br/>
 <!-- 			<a id="ajaxRespon" href="#"><h2>100개추가</h2> </a> -->
 			<input type="hidden" id="hidden" />
@@ -143,76 +143,93 @@ $('document').ready(function (){
 		$.ajax({
 			url : "compulsionInjection.do",
 			type : "post",
-			data : {count : 100},
+			data : {count : 10000},
 			success : function(responseData){
 				var data = JSON.parse(responseData);
-				console.log("인입: "+data.randomLat.length);
-				for(var i=0; i<data.randomLat.length; i++){
+				//console.log("인입: "+data.randomLat.length);
+				function searchDetailAddrFromCoords(arrayLatLng, callback) {
+                	//console.log("2 : "+ i);
+			 	    // 좌표로 법정동 상세 주소 정보를 요청합니다
+			 	   geocoder.coord2Address(arrayLatLng.getLng(), arrayLatLng.getLat(), callback);
+			 	}
+				//////////////////
+				
+				
+				for(i in data.randomLat){
+					
+                	//console.log("i : "+ i);
 					//console.log("lat: "+data.randomLat[i]);
 					arrayLatLng [i] = new daum.maps.LatLng(data.randomLat[i], data.randomLng[i]);
+					//console.log("latlng: "+ arrayLatLng[i]);
 					//console.log("i: "+arrayLatLng[i].getLng()+", "+arrayLatLng[i].getLat());
 					//goLatLng [i] = "lat: "+arrayLatLng[i].getLat()+", lng: "+arrayLatLng[i].getLng();
-					function searchDetailAddrFromCoords(arrayLatLng, callback) {
-				 	    // 좌표로 법정동 상세 주소 정보를 요청합니다
-				 	   geocoder.coord2Address(arrayLatLng.getLng(), arrayLatLng.getLat(), callback);
-				 	}
-					
+
 					searchDetailAddrFromCoords(arrayLatLng[i], function(result, status) {
-				        if (status === daum.maps.services.Status.OK) {
-				        	var detailAddr = !!result[0].road_address ? result[0].road_address.address_name : '';
-				            var oldAddr =   result[0].address.address_name; 
-	                        if(detailAddr.length != 0){
-	                        	//arrayAddress[i] = detailAddr;
-	                        	//tex += detailAddr+', ';
-	                        	arrayAddress.push(detailAddr);
-	                        	tex = detailAddr;
-	                        	addressToLat(tex);
-	                        }
-	                        if(oldAddr.length != 0 && detailAddr.length == 0){
-	                        	//arrayAddress[i] = oldAddr;
-	                        	//tex += oldAddr+', ';
-	                        	arrayAddress.push(oldAddr);
-	                        	tex = oldAddr;
-	                        	addressToLat(tex);
-	                        }
-	                        console.log("address: "+arrayAddress[i]);
-				        }else{
-				        	console.log("주소변환 실패"+i);
-				        }
+						for(var i in result){
+// 							console.log("i : "+ i+", result: "+ result[i]);
+							for(var j in result[i]){
+// 								console.log("j : "+ j+", result: "+ result[i][j]);
+								for(var x in result[i][j]){
+// 									console.log("x : "+ x+", result: "+ result[i][j].address_name);
+// 									arrayAddress.push(result[i][j][x]);
+								}
+							}
+						}
+						if(result[0] !== undefined){
+// 							console.log("good: "+ result[0].address.address_name); // 됐어요 종석이형 !!!!! ^^
+							addressToLat(result[0].address.address_name);
+							//console.log("good: "+ result[0].address.address_name);
+				
+							
+						}	
+							
+
 				    });
-////////////////////////////////
+
 
 				}
 				
 			}
 		});
-		//c();	
+		
 	});
-	function addressToLat(tex){
-		 geocoder.addressSearch(tex, function(result, status) {
-			 console.log("tex: "+tex);
+//////////////////////////////// 주소로 좌표 변환 ///////////////////////
+	function addressToLat(address){
+		 geocoder.addressSearch(address, function(result, status) {
+			 arrayAddress.push(address);
+			 //console.log("tex: "+address);
 			 // 정상적으로 검색이 완료됐으면 
 		     if (status === daum.maps.services.Status.OK) {
 		    	 goLatLng.push(new daum.maps.LatLng(result[0].y, result[0].x));
-		    	 console.log("배열 goLatLng: "+goLatLng.length);
+		    	 //console.log("배열 goLatLng: "+goLatLng.length);
 		     }else{
 		    	 console.log("좌표변환 실패"+i);
 		     }
 		 });
+		 
 	}
+	
+
 
 	$('#ajaxRespon').click(function (){
-		
+		console.log("resultInjection 인입 arrayAddress.length: "+arrayAddress.length+", goLatLng.length: "+goLatLng.length);
+   		for(i in arrayAddress){
+   			//console.log("address["+arrayLatLng[i]+"]: "+arrayAddress[i]);
+   			console.log("address["+i+"]: "+arrayAddress[i]+", 좌표["+i+"]: "+goLatLng[i]);
+   		}
 	    $.ajax({
 	       	url : "resultInjection.do",
 	       	type : "post",
 	       	data : {jsonText : arrayAddress, jsonInt : goLatLng},
 	       	success : function(){
-	       		console.log("resultInjection 인입");
+
+	       		//console.log("resultInjection 인입 ");
 	       		arrayAddress=[];
 	       		goLatLng=[];
-	       	}
-	       		
+	       	},
+	       	error:function(request,status,error){
+	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	        }
 	    });
 	});
 	
