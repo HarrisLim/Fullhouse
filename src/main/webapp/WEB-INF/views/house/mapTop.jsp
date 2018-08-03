@@ -10,31 +10,61 @@
         <a href="#" class="simple-text logo-mini">
         	  〉
         </a>
-        <a href="#" class="simple-text logo-normal">
-                 검색 결과 ${count} 개
+        <a href="#" class="simple-text logo-normal" >
+                 <div id="listCount">검색 결과 ${count} 개</div>
         </a>
       </div>
-		<!--       슬라이드바 상단 -->
-      <div class="sidebar-wrapper" id="sidebar" style="height:100%;">
-		<table class="table table-bordered">
-			<br/>
-			<tr>
-				<th><center>번호</center></th>
-				<th><center>주소</center></th>
-				<th><center>위도</center></th>
-				<th><center>경도</center></th>
-				<th><center>날짜</center></th>
-			</tr>
-      	<c:forEach var="dto" items="${list}">
-      		<tr>
-      			<td>${dto.build_no}</td>
-      			<td>${dto.address}</td>
-      			<td>${dto.lat}</td>
-      			<td>${dto.lng}</td>
-				<td>${dto.bu_rdate}</td>      	
-      		</tr>
-      	</c:forEach>
-      	</table>
+	<!--       슬라이드바 상단 -->
+	<div class="sidebar-wrapper" id="sidebar" style="height:100%;">
+	<div class ="itemList" style="width:95%;height:145px;border:1px solid gray;margin:5px;margin-left:12px;">
+		<a href="#" target="_blank" >
+			<div class="RoomItem-preview" style="width:120px;height:145px;float:left" >
+				<div class="RoomItem-preview__image" ></div>
+				<div class="RoomItem-preview__image" style="background-image:url(../kanu/roomimg/1.jpeg);width:100%;height:138px;margin:3px;" ></div>
+				<div class="RoomItem-preview__cover" ></div>
+			</div>
+			<div class="RoomItem-detail">
+				<div class="RoomItem-info" >
+					<div class="RoomItem-header" >
+						<div class="RoomItem-price" >
+							<p>
+								<span class="RoomItem-price__type" >월세</span>
+								<span class="RoomsItem-price__title is-0" >7000/60</span>
+							</p>
+						</div>
+						<span class="room-visited" >
+							<i class="dabang-icon" ></i>
+						</span>
+						<div class="RoomItem-icons" >
+							<span class="room-favorite" >
+								<i class="dabang-icon dabang-icon-heart-o icon-size-2xl" ></i>
+							</span>
+						</div>
+					</div>
+					<span class="RoomItem-summary" >
+						<span >쓰리룸 </span>
+						<span > 4층 </span>
+						<span > 59.4m²</span>
+					</span>
+					<div class="RoomItem-types types" >
+						<span class="#주차 tag" >#주차</span>
+					</div>
+					<span class="RoomItem-title"> 신축첫입주/왕테라스/7호선역세권/초등학교인접된 3룸입니다.</span>
+					<span class="RoomItem-date" >2일전</span>
+				</div>
+				<div class="RoomItem-options" >
+					<span class="option-list clearfix" >
+						<span class="title" >옵션</span>
+							<span class="ellipsis" >에어컨, 가스레인지, 신발장, 전자도어락</span>
+					</span>
+				</div>
+			</div>
+		</a>
+	</div>
+		
+		
+		
+
    
 
 	<div id="page" style="height:100px;width:100%;background-color:red;position:absolute;bottom:0;">  

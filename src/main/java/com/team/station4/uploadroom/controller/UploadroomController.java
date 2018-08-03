@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.team.station4.HomeController;
-import com.team.station4.map.model.MapDTO;
+import com.team.station4.map.model.BuildDTO;
 import com.team.station4.uploadroom.model.AddInfoDTO;
 import com.team.station4.uploadroom.model.CostOptionDTO;
 import com.team.station4.uploadroom.model.ExplainDTO;
@@ -30,7 +30,7 @@ ArrayList<MultipartFile> file = new ArrayList<MultipartFile>();
 	}
 
 	@RequestMapping(value="house/uploaddroomsubmit.do", method=RequestMethod.POST)
-	public String uploadroomsubmit(@RequestParam(value="photo", required=false) List<MultipartFile> loadfile, MapDTO mapDTO, AddInfoDTO addInfoDTO, 
+	public String uploadroomsubmit(@RequestParam(value="photo", required=false) List<MultipartFile> loadfile, BuildDTO mapDTO, AddInfoDTO addInfoDTO, 
 													CostOptionDTO costOptionDTO, ExplainDTO explainDTO, OptionsDTO optionsDTO) {
 		System.out.println("addr: "+ mapDTO.getAddress());
 		System.out.println("protype: "+ mapDTO.getProtype());

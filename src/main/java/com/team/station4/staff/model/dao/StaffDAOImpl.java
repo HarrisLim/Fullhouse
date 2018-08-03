@@ -16,7 +16,7 @@ public class StaffDAOImpl implements StaffDAO {
 	@Override
 	public void StaffInsert(StaffDTO dto2) {
 		// TODO Auto-generated method stub
-		sqlSession.insert(ns + ".staffInsert", staff);
+		//sqlSession.insert(ns + ".staffInsert", staff);
 
 	}
 
