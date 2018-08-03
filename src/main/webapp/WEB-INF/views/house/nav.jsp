@@ -6,6 +6,44 @@
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
+<script type="text/javascript">
+	// 비밀번호 확인 스크립트
+	window.onload = function(){
+		$('#inputPw1').keyup(function(){
+			if( $('#inputPw1').val() != $('#inputPw2').val()){
+				$('#font2').text('');
+				$('#font2').html('<b>비밀번호가 다릅니다</b>');
+			}else{
+				$('#font2').text('');
+				$('#font2').text('비밀번호 확인 완료!');
+			}
+		}); // InputPw1 keyup
+		
+		$('#inputPw2').keyup(function(){
+			if( $('#inputPw1').val() != $('#inputPw2').val()){
+				$('#font2').text('');
+				$('#font2').html('<b>비밀번호가 다릅니다</b>');
+			}else{
+				$('#font2').text('');
+				$('#font2').text('비밀번호 확인 완료!');
+			}
+		}); // InputPw2 keyup
+		// 로그인시 빈칸 확인
+		$("#logIn").click(function(){
+			if( $("#input_email").val() === "" ){
+				alert("이메일 주소가 비어있습니다. 적어 주세요.")
+			}else if( $("#input_password").val() === "" ){
+				alert("비밀번호가 비어있습니다. 채워 주세요.")
+			}else{
+				$("#log").submit();
+			}
+		});
+	}
+/* 	$(function(){
+		
+	}); */
+
+</script>
     
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark py-4">
 	<div class="container">
@@ -33,7 +71,7 @@
 	            	<a class="nav-link text-dark" href="../house/proterms.do">공인중개사 회원가입</a>
 	            </li>
 	            <li>
-	            	<a class="nav-link text-dark" data-toggle="modal" href="#myModal">회원가입 및 로그인</a>
+	            	<a id="xxxxx" class="nav-link text-dark" data-toggle="modal" href="#myModal">회원가입 및 로그인</a>
 	            </li>
 			</ul>
            	<div class="modal" id="myModal" tabindex="-1" >
@@ -46,14 +84,14 @@
 		          		<img src="../assets/images/brand/icon.png"  style="width: 100px;">
 			            <h4 class="heading h2 text-white pt-2 pb-4">환영 합니다</h4>
 			            <span class="clearfix"></span>
-						<form class="form-primary">
+						<form class="form-primary" id="log" name="log" action="logIn.do" method="post" >
 						<div class="form-group">
 						  <input type="email" class="form-control" id="input_email" placeholder="Your email">
 						</div>
 						<div class="form-group">
 						  <input type="password" class="form-control" id="input_password" placeholder="Password">
 						</div>
-							<button type="submit" class="btn btn-block btn-lg bg-white mt-4">로그인</button>
+							<input type="button" id="logIn" class="btn btn-block btn-lg bg-white mt-4" value="로그인" >
 							<a data-toggle="modal" href="#myModal2" class="btn btn-primary btn-lg btn-block">회원가입</a>
 							<div class="row">
 								<div class="col-sm-6"><a id="kakao-login-btn"></a></div>
@@ -131,26 +169,28 @@
 					        <div class="col-md-12 col-md-offset-3">
 					          <form role="form" name="memInsert" action="./memInsert.do" method="post">
 					            <div class="form-group">
-					              <label for="InputEmail">이메일 주소</label>
-					              <input type="email" class="form-control" id="InputEmail" name="mem_email" placeholder="이메일 주소">
+					              <label for="inputEmail">이메일 주소</label>
+					              <input type="email" class="form-control" id="inputEmail" name="mem_email" placeholder="이메일 주소">
+					              <div id="font" style="color:red;"></div>
 					            </div>
 					            <div class="form-group">
-					              <label for="InputPassword1">비밀번호</label>
-					              <input type="password" class="form-control" id="InputPw1" name="mem_pw" placeholder="비밀번호">
+					              <label for="inputPassword1">비밀번호</label>
+					              <input type="password" class="form-control" id="inputPw1" name="mem_pw" placeholder="비밀번호">
 					            </div>
 					            <div class="form-group">
-					              <label for="InputPassword2">비밀번호 확인</label>
-					              <input type="password" class="form-control" id="InputPw2" placeholder="비밀번호 확인">
+					              <label for="inputPassword2">비밀번호 확인</label>
+					              <input type="password" class="form-control" id="inputPw2" placeholder="비밀번호 확인">
 					              <p class="help-block">비밀번호 확인을 위해 다시한번 입력 해 주세요</p>
+					              <div id="font2" style="color:red;"></div>
 					            </div>
 					            <div class="form-group">
 					              <label for="username">이름</label>
-					              <input type="text" class="form-control" id="username" name="mem_name" placeholder="이름을 입력해 주세요">
+					              <input type="text" class="form-control" id="userName" name="mem_name" placeholder="이름을 입력해 주세요">
 					            </div>
 					            <div class="form-group">
 					              <label for="username">휴대폰 번호</label>
 					              <div class="input-group">
-					                <input type="tel" class="form-control" id="Phone" name="mem_phone" placeholder="- 없이 입력해 주세요">
+					                <input type="tel" class="form-control" id="phone" name="mem_phone" placeholder="- 없이 입력해 주세요">
 					              </div>
 					                <!-- <span class="input-group-btn">
 					                  <button class="btn btn-success">인증번호 전송<i class="fa fa-mail-forward spaceLeft"></i></button>

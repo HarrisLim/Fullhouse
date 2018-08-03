@@ -18,38 +18,33 @@
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     
     <script type="text/javascript">
-    	/* $(function()){
-    		$("#allCheck").click(function()){ //전체 선택 체크박스 클릭
-    			if( $("#allCheck").prop(checked)){ // 해당화면에 전체 체크박스들을 체크해준다
-    				$("input[type=checkbox]").prop("checked",true);
-    			}else{
-    				$("input[type=checkbox]").prop("checked",false); // 
-    			}
-    		})
-    	}) */
-		function chk(){
-			var firstChk = $("#firstChk").prop("checked");
-			var secondChk = $("#secondChk").prop("checked");
-			var thirdChk = $("#thirdChk").prop("checked");
-			var fourthChk = $("#fourthChk").prop("checked");
-			var fifthChk = $("#fifthChk").prop("checked");
-			
-			if(firstChk && secondChk && thirdChk && fourthChk && fifthChk){ // 다 체크되었을 때
-
-				alert("모든 ???");
-				$("#toJoin").submit();
-			}else{
-				alert("모든 약관에 동의하셔야 회원가입을 할 수 있습니다.");
-				return;
+    	// 약관 동의 ( 전부 동의 버튼 및 회원가입 버튼 스크립트)
+		function chk(str){
+		
+    		if( str == "all" ){ // 전체 동의 버튼 
+    			//	체크 박스 비어 있으면 채운다
+				if( $("input[name=chkBox]").prop("checked") === false ){ 
+					$("input[name=chkBox]").prop('checked', true);
+					$("input[name=chkBox]").attr('checked', true);
+   	    		// 체크 박스가 일부만 채워져있어도 전부 채운다		
+				}else if( $("input[name=chkBox]").prop("checked") === true ){
+   					$("input[name=chkBox]").prop("checked",true); 
+    				$("input[name=chkBox]").attr("checked",true);
+   	    		}
+    			
+			}else if( str == "in" ){ //  회원 가입 버튼
+				//	체크 박스 의 갯수를 불러와 비교후에 넘어가기
+				if( $("input[name=chkBox]:checked").length == 5){
+					alert("전부 체크 되어있구나~ 넘어가 즈 ㅇ ㅏ !!")
+					toJoin.action="projoin.do";
+					$("#toJoin").submit();
+				}else{
+					alert(" 약관 확인후 전부 체크를 해주세요! ")
+					return;
+				}
 			}
 		}
-		
-		function nochk(){ 
-			alert("동의하지 않으면 가입하실 수 없습니다");
-			location.href="../promem.jsp";
-		}
 	</script>
-   <!--  resize="none" -->
   </head>
 <body>
   <!-- 인글루드 시작 -->
@@ -64,7 +59,7 @@
 						<h2 class="heading h1 mb-4">이용약관</h2><br><br>
 	              		</div>
 	            	</div>
-	            	<form action="projoin.do" name="form" method="get" id="toJoin">
+	            	<form name="toJoin" method="get" id="toJoin">
 		 				<table width="700" height="500">
 		 				<tr>
 						   <td width="100%" height="50%" align="center">
@@ -418,7 +413,7 @@
 본 약관은 2018년 6월 15일부터 적용 합니다. </textarea>
 							</div>
 						   <br>
-							<input type="checkbox" name="check" id="firstChk"> 개인정보 수집 및 이용에 동의합니다.
+							<input type="checkbox" name="chkBox"> 개인정보 수집 및 이용에 동의합니다.
 						   </td>
 						</table>
 		 				<table width="700" height="500">
@@ -738,7 +733,7 @@
 이 약관은 2017년 5월 15일부터 적용됩니다.</textarea>
 							</div>
 						   <br>
-						   <input type="checkbox" name="check"  id="secondChk"> 개인정보 수집 및 이용에 동의합니다. 
+						   <input type="checkbox" name="chkBox"> 개인정보 수집 및 이용에 동의합니다. 
 						   </td>
 						  </tr>
 						</table>
@@ -763,7 +758,7 @@
  • 보유 및 이용기간: 이용계약 종료 후 즉시 파기(단 재가입 유예기간동안 2개월까지)</textarea>
 							</div>
 						   <br>
-						   <input type="checkbox" name="check"  id="thirdChk"> 개인정보 수집 및 이용에 동의합니다. 
+						   <input type="checkbox" name="chkBox"> 개인정보 수집 및 이용에 동의합니다. 
 						   </td>
 						  </tr>
 						</table>
@@ -952,7 +947,7 @@
 1. (시행일) 이 약관은 2017년 3월 21일부터 시행합니다.</textarea>
 							</div>
 						   <br>
-						   <input type="checkbox" name="check" id="fourthChk"> 개인정보 수집 및 이용에 동의합니다. 
+						   <input type="checkbox" name="chkBox"> 개인정보 수집 및 이용에 동의합니다. 
 						   </td>
 						  </tr>
 						</table>
@@ -1229,13 +1224,13 @@
 2) 회원의 매물 정보 등록, 허위매물 신고 및 이와 관련한 제재에 관하여 본 약관의 내용과 회사가 제공하는 타 약관의 내용이 충돌하는 경우, 본 약관의 내용이 우선적으로 적용됩니다.</textarea>
 							</div>
 						   <br>
-						   <input type="checkbox" name="check" id="fifthChk"> 개인정보 수집 및 이용에 동의합니다. 
+						   <input type="checkbox" name="chkBox"> 개인정보 수집 및 이용에 동의합니다. 
 						   </td>
 						  </tr>
 						</table>
 						<hr>
-						<button class="btn btn-block btn-success" onclick="chk();">전체 동의</button>
-						<button class="btn btn-block btn-success disabled" onclick="chk();">회원 가입</button>
+						<input type="button" class="btn btn-block btn-success" id="allChk" name="allChk" onclick="chk('all');" value="전체 동의">
+						<input type="button" class="btn btn-block btn-success" id="next" name="next" onclick="chk('in');" value="회원 가입">
 	            	</form>
 	            	
 				</div>

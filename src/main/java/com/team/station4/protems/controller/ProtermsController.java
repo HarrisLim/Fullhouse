@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.team.station4.estate.model.EstateDTO;
 import com.team.station4.estate.model.service.EstateService;
 import com.team.station4.staff.model.StaffDTO;
+import com.team.station4.staff.model.service.StaffService;
 
 /**
  * Handles requests for the application home page.
@@ -19,6 +20,8 @@ import com.team.station4.staff.model.StaffDTO;
 public class ProtermsController {
 	@Autowired
 	EstateService service;
+	@Autowired
+	StaffService service2;
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProtermsController.class);
 	/**
@@ -29,20 +32,44 @@ public class ProtermsController {
 		return "house/proterms";
 	}
 	@RequestMapping(value = "house/estate.do", method = {RequestMethod.GET, RequestMethod.POST})
-	public String estate(EstateDTO dto /*StaffDTO dto2*/) {
-		System.out.println("들어갔느뇨~" + dto.getEstate_name());
-		/*System.out.println("들어갔느뇨~" + dto2.getSt_name());*/
-		service.promemberInsertS(dto);
-		/*service.staffInsertS(dto2);*/
+	public String estate(EstateDTO estatedto, StaffDTO staffdto) {
+		
+		System.out.println("staffdto : " + staffdto.getEstate_no());
+		System.out.println("staffdto : " + staffdto.getSt_pic());
+		System.out.println("staffdto : " + staffdto.getSt_name());
+		System.out.println("staffdto : " + staffdto.getSt_position());
+		System.out.println("staffdto : " + staffdto.getSt_qual());
+		System.out.println("staffdto : " + staffdto.getSt_phone());
+		System.out.println("staffdto : " + staffdto.getSt_homephone());
+		System.out.println("staffdto : " + staffdto.getSt_email());
+		System.out.println("staffdto : " + staffdto.getSt_pw());
+		System.out.println("staffdto : " + staffdto.getSt_joinpath());
+		System.out.println("staffdto : " + staffdto.getSt_media());
+		
+		
+		if(staffdto.getEstate_no() == 0 ) {
+			service.promemberInsertS(estatedto);
+			EstateDTO es = service.lrSelectS(estatedto);
+			System.out.println(" es : " + es);
+			staffdto.setEstate_no(es.getEstate_no());
+			service2.StaffInsertS(staffdto);
+			
+		}else if( staffdto.getEstate_no() > 0) {
+			EstateDTO es = service.esSelectS(estatedto);
+			System.out.println(" es : " + es.getEstate_no());
+			staffdto.setEstate_no(es.getEstate_no());
+			service2.StaffInsertS(staffdto);
+		}
+//		int etate_num = select estate_no from ESTATE where estate_no = dto.getEstate_no();
 		return "house/proterms";
+		
 	}
 	@RequestMapping(value = "house/procheck.do", method = RequestMethod.POST)
-	public ModelAndView procheckin(String lrno) {
-		System.out.println("인입" + lrno );
+	public ModelAndView procheckin(EstateDTO dto) {
 		ModelAndView mv = new ModelAndView();
-		int count = service.proCheckS(lrno);
-		mv.addObject("count" , count);
-		mv.setViewName("jsonView");
-		return mv;
+		EstateDTO dto2 = service.proCheckS(dto);
+			mv.addObject("dto2" , dto2);
+			mv.setViewName("jsonView");
+			return mv;
 	}
 }
