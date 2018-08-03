@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="com.team.station4.price">
+	
+	<resultMap type="Price" id="Price">
+		<result property="priceno" column="PRICENO" />
+		<result property="lease" column="LEASE" />
+		<result property="saleprice" column="SALEPRICE" />
+		<result property="build_no" column="BUILD_NO" />
+	</resultMap>
+<!-- 		<select id="lrnoCheck" resultType="int" parameterType="String"> -->
+<!-- 			select Count(*) from ESTATE where LRNO=#{lrno}  -->
+<!-- 		</select> -->
+		
+	</mapper>

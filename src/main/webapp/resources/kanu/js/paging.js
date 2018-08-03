@@ -87,6 +87,7 @@ function pageIndex(index, pageStartNum, total, listCnt, pageCnt) {
 	ajaxList(index, pageStartNum);
 }
 
+
 function ajaxList(index, pageStartNum){
 	$.ajax({
 		url : "indexJson.do",

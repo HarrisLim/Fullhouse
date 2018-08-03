@@ -2,7 +2,7 @@ package com.team.station4.map.model;
 
 import java.sql.Date;
 
-public class MapDTO {
+public class BuildDTO {
 
 	
 	private int build_no;
@@ -24,9 +24,9 @@ public class MapDTO {
 	private int addInfo_no;
 	private int explan_no;
 	
-	public MapDTO() {}
+	public BuildDTO() {}
 
-	public MapDTO(int build_no, String address, String protype, String wholeFloor, String floor, double jArea,
+	public BuildDTO(int build_no, String address, String protype, String wholeFloor, String floor, double jArea,
 			double gArea, int view_count, String picPath, String reservation_time, double lat, double lng,
 			Date bu_rdate, int st_no, int estate_no, int mem_no, int addInfo_no, int explan_no) {
 		super();
@@ -50,7 +50,7 @@ public class MapDTO {
 		this.explan_no = explan_no;
 	}
 	
-	public MapDTO(String address, String protype, String wholeFloor, String floor, double jArea, double gArea,
+	public BuildDTO(String address, String protype, String wholeFloor, String floor, double jArea, double gArea,
 			int view_count, String picPath, String reservation_time, double lat, double lng, Date bu_rdate, int st_no,
 			int estate_no, int mem_no, int addInfo_no, int explan_no) {
 		super();

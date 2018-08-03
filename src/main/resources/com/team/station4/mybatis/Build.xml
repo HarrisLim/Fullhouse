@@ -6,7 +6,7 @@
 	
 	<mapper namespace="com.team.station4.map">
 		
-		<resultMap id="mapResult" type="Map">
+		<resultMap id="mapResult" type="Build">
 			<result property="build_no" column="BUILD_NO" />
 			<result property="address" column="ADDRESS"/>
 			<result property="protype" column="PROTYPE" />
@@ -28,7 +28,7 @@
 
 		</resultMap>
 	
-		<select id="mySelect" parameterType="HashMap" resultType="Map"> 
+		<select id="mySelect" parameterType="HashMap" resultType="Build"> 
 			select * from (select A.*, ROWNUM rn from (select * from BUILDING order by BUILD_NO desc)A) where rn between #{start} and #{last}
 		</select>
 		
@@ -36,19 +36,28 @@
 			select count(*) from BUILDING
 		</select>
 		
-		<select id="myLocation" resultType="Map">
+		<select id="myLocation" resultType="Build">
 			select LAT, LNG from BUILDING
 		</select>
 		
-		<select id="myLatLng" parameterType="HashMap" resultType="Map">
+		<select id="myLatLng" parameterType="HashMap" resultType="Build">
 			select LAT, LNG from BUILDING where ADDRESS like '%'||#{서울}||'%'
 		</select>
 		
-		<insert id="myInjection" parameterType="Map">
+		<insert id="myInjection" parameterType="Build">
 			insert into BUILDING values
 			(BUILD_NO_SEQ.nextval, #{address}, #{protype}, #{wholeFloor}, #{floor}, #{jArea}, #{gArea}, #{view_count}, #{picPath}, 
 			#{reservation_time}, #{lat}, #{lng}, #{bu_rdate}, #{st_no}, #{estate_no}, #{mem_no}, #{addInfo_no}, #{explan_no})
 		</insert>
+		
+		<select id="myCluster" parameterType="HashMap" resultType="Build" >
+			select * from(select A.*, ROWNUM rn from(select * from BUILDING where LNG between #{west} and #{east} order by BUILD_NO desc)A where LAT between #{south} and #{north})where rn between #{start} and #{last}
+		</select>
+		
+		<select id="myCountCluster" parameterType="HashMap" resultType="int" >
+			select count(*) from(select * from BUILDING where LNG between #{west} and #{east})A where LAT between #{south} and #{north}
+		</select>
+		
 		
 		
 		

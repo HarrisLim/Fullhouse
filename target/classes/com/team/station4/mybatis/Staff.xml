@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 	<mapper namespace="com.team.station4.Staff">
 	
 	<resultMap type="Staff" id="Staff">
+	
 		<result property="st_no" column="ST_NO" />
 		<result property="estate_no" column="ESTATE_NO" />
 		<result property="st_pic" column="ST_PIC" />
@@ -20,13 +19,14 @@
 		<result property="st_joinpath" column="ST_JOINPATH" />
 		<result property="st_media" column="ST_MEDIA" />
 		<result property="st_rdate" column="ST_RDATE" />
+		
 	</resultMap>
 		<!-- <select id="memSelect" resultType="Member">
 			select * from ESTATE where ESTATE_NO=#{ESTATE_NO} 
 		</select> -->
 		<insert id="staffInsert" parameterType="Staff">
-		   insert into Staff values(ST_NO_SEQ.nextval, #{estate_no}, #{st_pic}, #{st_name}, #{st_position}, 
-		   #{st_qual}, #{st_phone}, #{st_homephone}, #{st_email}, #{st_pw}, #{st_joinpath}, #{st_media}, SYSDATE)
+		   insert into STAFF values(ST_NO_SEQ.nextval, #{estate_no}, #{st_pic}, #{st_name}, #{st_position}, 
+		   #{st_qual}, #{st_phone}, #{st_homephone}, #{st_email}, #{st_pw}, #{st_joinpath}, '몰라', SYSDATE)
 		</insert>
 		
 	</mapper>

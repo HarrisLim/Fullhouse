@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="com.team.station4.options">
+	
+	<resultMap type="Options" id="Options">
+		<result property="option_no" column="OPTION_NO" />
+		<result property="aircon" column="AIRCON" />
+		<result property="washing" column="WHASING" />
+		<result property="bed" column="BED" />
+		<result property="desk" column="DESK" />
+		<result property="closet" column="CLOSET" />
+		<result property="option_tv" column="OPTION_TV" />
+		<result property="fridge" column="FRIDGE" />
+		<result property="shoerack" column="SHOERACK" />
+		<result property="gasstove" column="GASSTOVE" />
+		<result property="induction" column="INDUCTION" />
+		<result property="microwave" column="MICROWAVE" />
+		<result property="doorlock" column="DOORLOCK" />
+		<result property="bidet" column="BIDET" />
+	</resultMap>
+	<insert id="myInsert" parameterType="Options">
+		insert into OPTIONS values(OPTION_NO_SEQ.nextval, #{aircon}, #{washing}, #{bed}, #{desk}, #{closet}, #{option_tv}, #{fridge}, #{shoerack}, #{gasstove}, #{induction}, #{microwave}, #{doorlock}, #{bidet})
+	</insert> 
+	<select id="mySelect" resultType="int">
+		select max(option_no) from OPTIONS
+	</select>
+	</mapper>

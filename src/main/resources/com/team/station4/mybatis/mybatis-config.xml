@@ -4,15 +4,16 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 	<configuration>
 		<typeAliases>
-			<typeAlias alias="Map" type="com.team.station4.map.model.MapDTO" />
+			<typeAlias alias="Build" type="com.team.station4.map.model.BuildDTO" />
 			<typeAlias alias="PagingVo" type="com.team.station4.map.vo.PagingVo" />
 			<typeAlias alias="Member" type="com.team.station4.main.model.MainDTO" />
-			<typeAlias alias="Estate" type="com.team.station4.estate.model.EstateDTO" />		
+			<typeAlias alias="Estate" type="com.team.station4.estate.model.EstateDTO" />
 		</typeAliases>
 		<mappers>
-			<mapper resource="com/team/station4/mybatis/Board.xml" />
-			<mapper resource="com/team/station4/mybatis/Board.xml" />
+			<mapper resource="com/team/station4/mybatis/Build.xml" />
+			<mapper resource="com/team/station4/mybatis/Build.xml" />
 			<mapper resource="com/team/station4/mybatis/MainMem.xml" />
 			<mapper resource="com/team/station4/mybatis/Estate.xml" />
+			<mapper resource="com/team/station4/mybatis/Staff.xml" />
 		</mappers>
 	</configuration>

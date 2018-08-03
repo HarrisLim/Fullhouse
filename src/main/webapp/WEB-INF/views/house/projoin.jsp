@@ -55,16 +55,16 @@
 
 		                // 우편번호와 주소 정보를 해당 필드에 넣는다.
 		                document.getElementById('postcode').value = data.zonecode; //5자리 새우편번호 사용
-		                document.getElementById('address').value = fullAddr;
+		                document.getElementById('estateaddr1').value = fullAddr;
 
 		                // 커서를 상세주소 필드로 이동한다.
-		                document.getElementById('address2').focus();
+		                document.getElementById('estateaddr2').focus();
 		            }
 		        }).open();
 		    }
 			
 			/* 파일 업로드 스크립트 */
-			 function uploadFile(){
+			/*  function uploadFile(){
 	                var form = $('#FILE_FORM')[0];
 	                var formData = new FormData(form);
 	                formData.append("fileObj", $("#FILE_TAG")[0].files[0]);
@@ -80,52 +80,126 @@
 	                                alert("업로드 성공!!");
 	                            }
 	                    });
-	            }
+	            } */
+	            
+				window.onload = function(){
+					$('#st_pw').keyup(function(){
+						if( $('#st_pw').val() != $('#st_pwcheck').val()){
+							$('#font').text('');
+							$('#font').html('<b>암호틀림</b>');
+						}else{
+							$('#font').text('');
+							$('#font').text('암호맞음');
+						}
+					}); // st_pw keyup
+					
+					$('#st_pwcheck').keyup(function(){
+						if( $('#st_pw').val() != $('#st_pwcheck').val()){
+							$('#font').text('');
+							$('#font').html('<b>암호틀림</b>');
+						}else{
+							$('#font').text('');
+							$('#font').text('암호맞음');
+						}
+					}); // st_pwcheck keyup
+				}
+				
 			//다중 submit ( 중복검사 버튼 & 회원가입 버튼)
 			 function lrnoCheck(str) {
 				var value = $('#lrno1').val();
+				value += "-";
 				value += $('#lrno2').val();
+				value += "-";
 				value += $('#lrno3').val();
 				$('#lrno').val(value);
 				console.log(value);
 				
 					if(str == "check"){
+						
 						$.ajax({
 							type:'POST',
 							url:'procheck.do',
 							data:{ lrno : $("#lrno").val() },
 							success : function(responseData){
-								var data = JSON.parse(responseData.count);
+								var data = responseData.dto2;
 								
-								if(data == 0) {
-									alert("등록되어 있지 않은 번호 입니다.");
+								if( $("#lrno1").val()==="" || $("#lrno2").val()==="" || $("#lrno3").val()==="" ){
+									alert(" 사업자 등록번호를 등록해주세요")
+									$("#lrno1").focus();
+									return;
+								} 
+								if( data === null ) {
 									var input;
-									input = confirm("등록하시겠습니까?")
-									if(input){
+									input = confirm("등록되어 있지 않습니다. 등록하시겠습니까?");
+									
+									if( input ){
 										var value = $('#lrno1').attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
 										value += $('#lrno2').attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
 										value += $('#lrno3').attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
-										$('#lrno').val(value);	
+										$('#lrno').val(value).attr("readonly",true);
+										$("#lrCheck").attr("disabled",true);
 									}else{
 										$("#lrno1").val("");
 										$("#lrno2").val("");
 										$("#lrno3").val("");
+										return;
 									}
-									return;
-								}else if(data == 1) {
-									alert("등록되어 있는 번호 입니다.");
-									$("#lrno1").val("");
-									$("#lrno2").val("");
-									$("#lrno3").val("");
-									return;
+										
 									
+								}else if( data.lrno != null ) {
+									
+									
+									alert(" 등록된 번호 값을 불러옵니다.");
+									var String2 = data.lrno;
+									var lrnoin = String2.split("-");
+									$("#lrno1").val(lrnoin[0]).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
+									$("#lrno2").val(lrnoin[1]).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
+									$("#lrno3").val(lrnoin[2]).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
+									$("#lrno").val(data.lrno).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
+									$("#estate_name").val(data.estate_name).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
+									$("#erno").val(data.erno).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
+									$("#owner_name").val(data.owner_name).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
+									$("#estateaddr").val(data.estateaddr).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
+									var String = data.estateaddr;
+									var addrin = String.split("-");
+									$("#postcode").val(addrin[0]).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
+									$("#estateaddr1").val(addrin[1]).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
+									$("#estateaddr2").val(addrin[2]).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
+									$("#lrCheck").attr("disabled",true);
+									$("#postco").attr("disabled",true);
+									$("#Estate_no").val(data.estate_no).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
+									return;
 								}
-								
 							}
 						});
+												
+					}else if( str == "str" ){
+						// 분할 테그 합치기
 						
-					}else if(str == "str"){
-						alert("??");
+						var value2 = $('#postcode').val();
+						value2 += "-";
+						value2 += $('#estateaddr1').val();
+						value2 += "-";
+						value2 += $('#estateaddr2').val();
+						$('#estateaddr').val(value2);
+						console.log(value2);
+						
+						var value3 = $('#st_phone1').val();
+						value3 += "-";
+						value3 += $('#st_phone2').val();
+						value3 += "-";
+						value3 += $('#st_phone3').val();
+						$('#st_phone').val(value3);
+						console.log(value3);
+						
+						var value4 = $('#st_homephone1').val();
+						value4 += "-";
+						value4 += $('#st_homephone2').val();
+						value4 += "-";
+						value4 += $('#st_homephone3').val();
+						$('#st_homephone').val(value4);
+						console.log(value4);
+						
 						if( $("#estate_name").val()===""){
 							alert(" 중개 사무소명을 등록해주세요 ")
 							$("#estate_name").focus();
@@ -151,7 +225,7 @@
 							$("#owner_name").focus();
 							return;
 						}
-						/* if( $("#st_name").val()==="" ){
+						 if( $("#st_name").val()==="" ){
 							alert(" 본인 이름을 등록해주세요")
 							$("#st_name").focus();
 							return;
@@ -180,54 +254,14 @@
 							alert(" 비밀번호를 입력해주세요")
 							$("#st_pw").focus();
 							return;
-						} */
+						}
+						
 						
 						proInsert.action="estate.do";
 						$("#proInsert").submit();	
 					}
-					
-					// 분할 테그 합치기
-					var value = $('#lrno1').val();
-					value += $('#lrno2').val();
-					value += $('#lrno3').val();
-					$('#lrno').val(value);
-					
-					var value2 = $('#postcode').val();
-					value2 += $('#estateaddr1').val();
-					value2 += $('#estateaddr2').val();
-					$('#estateaddr').val(value2);
-					
-					var value3 = $('#st_phone1').val();
-					value3 += $('#st_phone2').val();
-					value3 += $('#st_phone3').val();
-					$('#st_phone').val(value3);
-					
-					var value4 = $('#st_homephone1').val();
-					value4 += $('#st_homephone2').val();
-					value4 += $('#st_homephone3').val();
-					$('#st_homephone').val(value4);
-					
-					console.log(value);
-					console.log(value2);
-					console.log(value3);
-					console.log(value4);
 				}
-			 
-			
-			/* window.onload = function(){
-				$("#proin").click(function(){
-					
-					
-					
-				});
-			} */
- 		
-			
-			/* function proCheck(){
-				val 
-			} */
-			
-			
+	            
 		</script>
 	    
 	    <style>
@@ -255,7 +289,7 @@
   	<body>
 		<%@ include file="nav.jsp"%>
 
-    <main class="main"> n
+    <main class="main">
 	<form name="proInsert" id="proInsert" method="post">
 	<section class="slice"> 
 		<div class="container">
@@ -267,16 +301,16 @@
 						<tbody>
 							<tr>
 								<th>중개 사무소명</th>
-								<td><input id="estate_name" name="estate_name" style="width:75%" value=""></td>
+								<td><input id="estate_name" name="estate_name" style="width:75%" value="알리"></td>
 							</tr>
 							<tr>
 								<th>중개 등록번호</th>
 								<td>
-									<input value="" id="erno" name="erno" style="width:50%"/>
-									<button type="button" class="btn btn-sm btn-outline-primary btn-icon" style="width:25%">
+									<input value="752" id="erno" name="erno" style="width:50%"/>
+									<!-- <button type="button" class="btn btn-sm btn-outline-primary btn-icon" style="width:25%">
 										    <span class="btn-inner--text">중개등록증 첨부</span>
 										    <span class="btn-inner--icon"><i class="fas fa-user"></i></span>
-									</button>
+									</button> -->
 									
 						        <!-- <form id="FILE_FORM" method="post" enctype="multipart/form-data" action="">
 						            <input type="file" id="FILE_TAG" name="FILE_TAG">
@@ -286,31 +320,31 @@
 							</tr>
 							<tr>
 								<th>사업자 등록번호</th>
-								<td><input style="width:14%" id="lrno1" name="lrno1">&nbsp;-&nbsp;<input style="width:14%" id="lrno2" name="lrno2">&nbsp;-&nbsp;
-								<input style="width:14%" id="lrno3" name="lrno3">
+								<td><input style="width:14%" id="lrno1" name="lrno1" value="4">&nbsp;-&nbsp;<input style="width:14%" id="lrno2" name="lrno2" value="5">&nbsp;-&nbsp;
+								<input style="width:14%" id="lrno3" name="lrno3" value="6">
 								<input type="hidden" id="lrno" name="lrno" value=""/>
 
 									<input type="button" id="lrCheck" name="lrCheck" class="btn btn-sm btn-outline-primary" onClick="lrnoCheck('check')" value="인증">
 									
-									<button type="button" class="btn btn-sm btn-outline-primary btn-icon disabled">
+									<!-- <button type="button" class="btn btn-sm btn-outline-primary btn-icon disabled">
 									    <span class="btn-inner--text" >사업자등록증 첨부</span>
 									    <span class="btn-inner--icon"><i class="fas fa-user"></i></span>
-									</button>
+									</button> -->
 								</td>
 							</tr>
 							<tr>
 								<th rowspan="2">중개 사무소 주소</th>
-								<td><input type="text" id="postcode" value="1004">
-								<input class="btn btn-sm btn-outline-primary" type="button" onclick="execDaumPostcode()" value="우편번호 찾기"></td>
+								<td><input type="text" id="postcode" value="10">
+								<input class="btn btn-sm btn-outline-primary" id=postco type="button" onclick="execDaumPostcode()" value="우편번호 찾기"></td>
 							</tr>
 							<tr>
-								<td><input type="text" id="estateaddr1" style="width:35%" value="rk">
-								<input type="text" id="estateaddr2" style="width:35%" value="즈o r"> 
+								<td><input type="text" id="estateaddr1" style="width:35%" value="te">
+								<input type="text" id="estateaddr2" style="width:35%" value="st"> 
 								<input type="hidden" id="estateaddr" name="estateaddr" value=""/></td> 
 							</tr>
 							<tr>
 								<th>중개사 대표자명</th>
-								<td><input value="아무개" id="owner_name" name="owner_name" style="width:75%"/></td>
+								<td><input value="test" id="owner_name" name="owner_name" style="width:75%"/></td>
 							</tr>
 						</tbody>
 					</table>
@@ -326,44 +360,45 @@
 					<hr size="5" color="black">
 					<table width="800" align="center">
 						<tbody>
+							<div><input type="hidden" id="Estate_no" name="Estate_no" value="0" /></div>
 							<tr>
 								<th>프로필</th>
-								<td colspan="2" id="st_pic" name="st_pic">사진 변경하는 거 넣자.</td>
+								<td colspan="2" ><input type="hidden" id="st_pic" name="st_pic" value="사진"/>사진 변경하는 거 넣자.</td>
 							</tr>
 							<tr>
 								<th>본인 성명</th>
 								<td>
-									<input value="text" id="st_name" name="st_name" style="width:25%"/>
+									<input value="테스트" id="st_name" name="st_name" style="width:25%"/>
 									직책 직급<input value="직책/직급" id="st_position" name="st_position" style=" width:25%"/>
 								</td>
 								<td>	
 								    <div class="col-lg-12">
 					                    <select class="selectpicker" id="st_qual" name="st_qual" data-style="btn-sm btn-outline-primary btn-icon" title="권한/자격">
-											<option>권한/자격</option>
-											<option>대표공인중개사</option>
-											<option>소속공인중개사</option>
-											<option>중개보조원</option>
-											<option>중개인</option>
+											<option value="권한/자격">권한/자격</option>
+											<option value="대표공인중개사">대표공인중개사</option>
+											<option value="소속공인중개사">소속공인중개사</option>
+											<option value="중개보조원">중개보조원</option>
+											<option value="중개인">중개인</option>
 					                    </select>
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<th>이메일</th>
-								<td colspan="2"><input style="width:60%" id="st_email" value=""/></td>
+								<td colspan="2"><input style="width:60%" id="st_email" name="st_email"value="test@test.com"/></td>
 							</tr>
 							<tr>
 								<th>휴대폰번호</th>
-								<td colspan="2"><input id="st_phone1" value="010" >&nbsp;-&nbsp;<input id="st_phone2" value="">
-								&nbsp;-&nbsp;<input id="st_phone3" value="">
+								<td colspan="2"><input id="st_phone1" value="010" >&nbsp;-&nbsp;<input id="st_phone2" value="5882">
+								&nbsp;-&nbsp;<input id="st_phone3" value="1004">
 								<input type="hidden" id="st_phone" name="st_phone" value=""/>
 								</td>
 								
 							</tr>
 							<tr>
 								<th>대표 번호</th>
-								<td colspan="2"><input value="02" id="st_homephone1">&nbsp;-&nbsp;<input value="" id="st_homephone2">
-								&nbsp;-&nbsp;<input  value="" id="st_homephone3">
+								<td colspan="2"><input value="02" id="st_homephone1">&nbsp;-&nbsp;<input value="1004" id="st_homephone2">
+								&nbsp;-&nbsp;<input  value="8282" id="st_homephone3">
 								<input type="hidden" id="st_homephone" name="st_homephone" value=""/>
 								</td>
 							</tr>
@@ -373,21 +408,24 @@
 							</tr> -->
 							<tr>
 								<th rowspan="2">비밀번호</th>
-								<td colspan="2"><input placeholder="비밀번호" style="width:100%" id="st_pw" name="st_pw"/></td> 
+								<td colspan="2"><input placeholder="비밀번호" style="width:65%" id="st_pw" name="st_pw"/></td> 
 							</tr>
 							<tr>
-								<td colspan="2"><input placeholder="비밀번호 확인" style="width:100%"/></td>
+								<td colspan="2">
+								<input placeholder="비밀번호 확인" style="width:65%" id="st_pwcheck" name="st_pwcheck"/>
+								<div id=font ></div>
+								</td>
 							</tr>
 							<tr>
 								<th>가입 경로</th>
 								<td colspan="2">
 									<div class="col-lg-4">
-					                    <select class="selectpicker"  id="st_joinpath" data-style="btn-sm btn-outline-primary btn-icon" title="가입 경로">
-											<option>가입 경로</option>
-											<option>인터넷 광고(카페,블로그)</option>
-											<option>TV광고,옥외광고,포스터(오프라인)</option>
-											<option>미디어월 영업대행</option>
-											<option>지인 추천 및 기타</option>
+					                    <select class="selectpicker"  id="st_joinpath" name="st_joinpath" data-style="btn-sm btn-outline-primary btn-icon" title="가입 경로">
+											<option value="가입 경로">가입 경로</option>
+											<option value="인터넷 광고(카페,블로그)">인터넷 광고(카페,블로그)</option>
+											<option value="TV광고,옥외광고,포스터(오프라인)">TV광고,옥외광고,포스터(오프라인)</option>
+											<option value="미디어월 영업대행">미디어월 영업대행</option>
+											<option value="지인 추천 및 기타">지인 추천 및 기타</option>
 					                    </select>
 									</div>
 								</td>
