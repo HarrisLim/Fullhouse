@@ -1,7 +1,5 @@
 package com.team.station4.estate.model.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +17,18 @@ public class EstateServiceImpl implements EstateService {
 		estatedao.promemberInsert(estate);
 	}
 	@Override
-	public int proCheckS(String lrno) {
+	public EstateDTO proCheckS(EstateDTO dto) {
 		// TODO Auto-generated method stub
-		return estatedao.procheck(lrno);
+		return estatedao.procheck(dto);
+	}
+	@Override
+	public EstateDTO esSelectS(EstateDTO dto) {
+		// TODO Auto-generated method stub
+		return estatedao.esselect(dto);
+	}
+	@Override
+	public EstateDTO lrSelectS(EstateDTO dto) {
+		// TODO Auto-generated method stub
+		return estatedao.lrselect(dto);
 	}
 }

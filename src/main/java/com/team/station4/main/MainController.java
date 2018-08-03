@@ -40,8 +40,11 @@ public class MainController {
 	
 	@RequestMapping(value = "house/memInsert.do", method = RequestMethod.POST)
 	public String memInsert(MainDTO dto) {
-		System.out.println("인입: "+dto.getMem_name());
 		service.memberInsertS(dto);
+		return "house/main";
+	}
+	@RequestMapping(value = "house/logIn.do", method = {RequestMethod.GET , RequestMethod.POST} )
+	public String logIn() {
 		return "house/main";
 	}
 }

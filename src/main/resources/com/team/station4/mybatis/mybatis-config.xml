@@ -8,23 +8,12 @@
 			<typeAlias alias="PagingVo" type="com.team.station4.map.vo.PagingVo" />
 			<typeAlias alias="Member" type="com.team.station4.main.model.MainDTO" />
 			<typeAlias alias="Estate" type="com.team.station4.estate.model.EstateDTO" />
-			<typeAlias alias="AddInfo" type="com.team.station4.uploadroom.model.AddInfoDTO" />
-			<typeAlias alias="CostOption" type="com.team.station4.uploadroom.model.CostOptionDTO" />
-			<typeAlias alias="Explain" type="com.team.station4.uploadroom.model.ExplainDTO" />
-			<typeAlias alias="Monthly" type="com.team.station4.uploadroom.model.MonthlyDTO" />
-			<typeAlias alias="Options" type="com.team.station4.uploadroom.model.OptionsDTO" />
-			<typeAlias alias="Price" type="com.team.station4.uploadroom.model.PriceDTO" />
 		</typeAliases>
 		<mappers>
 			<mapper resource="com/team/station4/mybatis/Build.xml" />
 			<mapper resource="com/team/station4/mybatis/Build.xml" />
 			<mapper resource="com/team/station4/mybatis/MainMem.xml" />
 			<mapper resource="com/team/station4/mybatis/Estate.xml" />
-			<mapper resource="com/team/station4/mybatis/AddInfo.xml" />
-			<mapper resource="com/team/station4/mybatis/CostOption.xml" />
-			<mapper resource="com/team/station4/mybatis/Explain.xml" />
-			<mapper resource="com/team/station4/mybatis/Monthly.xml" />
-			<mapper resource="com/team/station4/mybatis/Options.xml" />
-			<mapper resource="com/team/station4/mybatis/Price.xml" />
+			<mapper resource="com/team/station4/mybatis/Staff.xml" />
 		</mappers>
 	</configuration>

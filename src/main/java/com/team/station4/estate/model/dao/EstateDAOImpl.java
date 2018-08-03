@@ -1,7 +1,5 @@
 package com.team.station4.estate.model.dao;
 
-import java.util.List;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,10 +19,22 @@ public class EstateDAOImpl implements EstateDAO {
 		sqlSession.insert(ns + ".proInsert", estate);
 	}
 	@Override
-	public int procheck(String lrno) {
+	public EstateDTO procheck(EstateDTO dto) {
 		// TODO Auto-generated method stub
-		int count = sqlSession.selectOne(ns+".lrnoCheck", lrno);
-		System.out.println("dto : " + count);
-		return count;
+		EstateDTO dto2= sqlSession.selectOne(ns+".lrnoCheck", dto);
+		return dto2;
+	}
+	@Override
+	public EstateDTO esselect(EstateDTO dto) {
+		// TODO Auto-generated method stub
+		EstateDTO estateno = sqlSession.selectOne(ns+".esSelect", dto);
+		return estateno;
+	}
+	@Override
+	public EstateDTO lrselect(EstateDTO dto) {
+		// TODO Auto-generated method stub
+		System.out.println("erno : " + dto.getLrno());
+		EstateDTO erno = sqlSession.selectOne(ns+".esSelect2", dto);
+		return erno;
 	}
 }

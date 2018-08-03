@@ -11,6 +11,7 @@ public class StaffDTO {
 	private String st_position;
 	private String st_qual;
 	private String st_phone;
+	private String st_homephone;
 	private String st_email;
 	private String st_pw;
 	private String st_joinpath;
@@ -20,7 +21,8 @@ public class StaffDTO {
 	public StaffDTO() {}
 
 	public StaffDTO(int st_no, int estate_no, String st_pic, String st_name, String st_position, String st_qual,
-			String st_phone, String st_email, String st_pw, String st_joinpath, String st_media, Date st_rdate) {
+			String st_phone, String st_homephone, String st_email, String st_pw, String st_joinpath, String st_media,
+			Date st_rdate) {
 		super();
 		this.st_no = st_no;
 		this.estate_no = estate_no;
@@ -29,6 +31,7 @@ public class StaffDTO {
 		this.st_position = st_position;
 		this.st_qual = st_qual;
 		this.st_phone = st_phone;
+		this.st_homephone = st_homephone;
 		this.st_email = st_email;
 		this.st_pw = st_pw;
 		this.st_joinpath = st_joinpath;
@@ -92,6 +95,14 @@ public class StaffDTO {
 		this.st_phone = st_phone;
 	}
 
+	public String getSt_homephone() {
+		return st_homephone;
+	}
+
+	public void setSt_homephone(String st_homephone) {
+		this.st_homephone = st_homephone;
+	}
+
 	public String getSt_email() {
 		return st_email;
 	}
@@ -131,6 +142,7 @@ public class StaffDTO {
 	public void setSt_rdate(Date st_rdate) {
 		this.st_rdate = st_rdate;
 	}
+
 	
 	
 }
