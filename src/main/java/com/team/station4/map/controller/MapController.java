@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.team.station4.map.model.MapDTO;
+import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.model.service.MapService;
 import com.team.station4.map.vo.PagingVo;
 
@@ -36,8 +36,8 @@ public class MapController {
 		System.out.println("control");
 		ModelAndView mv = new ModelAndView();
 		pagingVo.setTotal(service.countService());
-		List<MapDTO> list =service.mapListService(pagingVo);
-		List<MapDTO> location = service.locationService();
+		List<BuildDTO> list =service.mapListService(pagingVo);
+		List<BuildDTO> location = service.locationService();
 		int count = service.countService();
 		
 //		HashMap<String, String> hm = new HashMap<String, String>();
@@ -46,7 +46,7 @@ public class MapController {
 //		List<MapDTO>latLng = service.latLngService(hm);
 		double lat = 0.0;
 		double lng = 0.0;
-		for(MapDTO dto : location) {
+		for(BuildDTO dto : location) {
 			lat += dto.getLat();
 			lng += dto.getLng();
 			//System.out.println("lat: "+lat+", lng: "+lng);
@@ -74,7 +74,7 @@ public class MapController {
 	public ModelAndView indexJson(PagingVo pagingVo) {
 		System.out.println("index:"+pagingVo.getIndex()+", start:"+pagingVo.getPageStartNum()+", listCnt: "+pagingVo.getListCnt()+", last: "+pagingVo.getLast());
 		ModelAndView mv = new ModelAndView("jsonView");
-		List<MapDTO> list = service.mapListService(pagingVo);
+		List<BuildDTO> list = service.mapListService(pagingVo);
 		pagingVo.setTotal(service.countService());
 		mv.addObject("list", list);
 		return mv;
@@ -100,14 +100,14 @@ public class MapController {
 		
 		
 		mv = new ModelAndView("jsonView");
-		List<MapDTO> dto = service.locationService();
+		List<BuildDTO> dto = service.locationService();
 		List<Object> arryList = new ArrayList<Object>();
 		HashMap<String, Double> hm = new HashMap<String, Double>();
 		int i = 0;	
 		int j = 0;
 		double lat = 0.1;
 		double lng = 0.1;
-		for(MapDTO latLng : dto) {
+		for(BuildDTO latLng : dto) {
 			hm.put("lat" ,latLng.getLat());
 			hm.put("lng" ,latLng.getLng());
 			arryList.add(hm);
@@ -155,7 +155,7 @@ public class MapController {
 		System.out.println("인입");
 		ArrayList<Double> locationLat = new ArrayList<Double>();
 		ArrayList<Double> locationLng = new ArrayList<Double>();
-		MapDTO dto = null;
+		BuildDTO dto = null;
 		Random ran = new Random();
 		String year = "";
 		int yeaerInt = 0;
@@ -189,7 +189,7 @@ public class MapController {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			dto = new MapDTO(addressList.get(i), propertyStr, Integer.toString(ran.nextInt(20)+1), Integer.toString(ran.nextInt(20)+1), 121.1, 100.8, ran.nextInt(100), 
+			dto = new BuildDTO(addressList.get(i), propertyStr, Integer.toString(ran.nextInt(20)+1), Integer.toString(ran.nextInt(20)+1), 121.1, 100.8, ran.nextInt(100), 
 					"c:/station4/images", "2018년 3월 5일", locationLat.get(i), locationLng.get(i), sqlDate, 10, 10, 10, 10, 10);
 			service.insertInjectionService(dto);
 			//System.out.println("lat:"+locationLat.get(i)+", lng:"+locationLng.get(i));

@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.team.station4.map.model.MapDTO;
+import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.vo.PagingVo;
 
 @Repository
@@ -18,7 +18,7 @@ public class MapDAOImpl implements MapDAO {
 	private String ns = "com.team.station4.map";
 	
 	@Override
-	public List<MapDTO> mapList(PagingVo pagingVo) {
+	public List<BuildDTO> mapList(PagingVo pagingVo) {
 		System.out.println("start: "+pagingVo.getStart()+", last: "+pagingVo.getLast());
 		return sqlsession.selectList(ns+".mySelect", pagingVo);
 
@@ -30,17 +30,17 @@ public class MapDAOImpl implements MapDAO {
 	}
 	
 	@Override
-	public List<MapDTO> location(){
+	public List<BuildDTO> location(){
 		return sqlsession.selectList(ns+".myLocation");
 	}
 	
 	@Override
-	public List<MapDTO>latLng(HashMap hm){
+	public List<BuildDTO>latLng(HashMap hm){
 		return sqlsession.selectList(ns+".myLatLng", hm);
 	}
 	
 	@Override
-	public void insertInjection(MapDTO dto) {
+	public void insertInjection(BuildDTO dto) {
 		sqlsession.insert(ns+".myInjection", dto);
 	}
 

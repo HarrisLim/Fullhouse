@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="com.team.station4.addinfo">
+	
+	<resultMap type="AddInfo" id="AddInfo">
+		<result property="addinfo_no" column="ADDINFO_NO" />
+		<result property="costfee" column="COSTFEE" />
+		<result property="parking" column="PARKING" />
+		<result property="elevator" column="ELEVATOR" />
+		<result property="heat" column="HEAT" />
+		<result property="animal" column="ANIMAL" />
+		<result property="movedate" column="MOVEDATE" />
+		<result property="option_no" column="OPTION_NO" />
+		<result property="cost_no" column="COST_NO" />
+	</resultMap>
+<!-- 		<select id="lrnoCheck" resultType="int" parameterType="String"> -->
+<!-- 			select Count(*) from ESTATE where LRNO=#{lrno}  -->
+<!-- 		</select> -->
+		
+	</mapper>

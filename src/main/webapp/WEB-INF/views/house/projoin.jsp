@@ -255,7 +255,7 @@
   	<body>
 		<%@ include file="nav.jsp"%>
 
-    <main class="main"> n
+    <main class="main">
 	<form name="proInsert" id="proInsert" method="post">
 	<section class="slice"> 
 		<div class="container">

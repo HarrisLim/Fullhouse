@@ -91,15 +91,17 @@
 								<td rowspan="6" style="width:300px"><div id="map" style="width:300px;height:300px;margin-top:10px;"></div></td>
 							</tr>
 							<tr>
-								<td><input type="text" id="address" name="addr" placeholder="예) 번동 10-1, 강북구 번동" style="width:380px"></td>
+								<td><input type="text" id="address" name="addr" placeholder="주소검색을 이용해서 주소를 입력해주세요." style="width:380px;background:rgba(200,200,240,0.1);padding:5px 10px 5px 10px" readonly></td>
 								<td><input class="btn btn-sm btn-primary" type="button" value="주소검색" onclick="execDaumPostcode()"></td>
 							</tr>
 							<tr>
-								<td colspan="2"><input id="detailAddress" name="detailAddr" placeholder="상세 주소를 입력해주세요. (동, 호수)" style="width:480px"></td>
+								<td colspan="2"><input id="detailAddress" name="detailAddr" placeholder="상세 주소를 입력해주세요. (동, 호수)" style="width:480px;padding:5px 10px 5px 10px"></td>
 							</tr>
 						</tbody>
 					</table>
 					<input type="hidden" name="address" id="realAddr">
+					<input type="hidden" name="lat" id="lat">
+					<input type="hidden" name="lng" id="lng">
 					<hr style="margin-top:0px">
 				</div>
 			</div>
@@ -126,7 +128,7 @@
 									</select>
 								</td>
 								<td colspan="5">
-									다방에서는 고시원(텔)등의 고시원업 매물 등록을 제한합니다. (차단조치) 
+									FullHouse에서는 고시원(텔)등의 고시원업 매물 등록을 제한합니다. (차단조치) 
 								</td>
 							</tr>
 							<tr>
@@ -212,7 +214,6 @@
 									  <option value="underground">반지하</option>
 									  <option value="looptop">옥탑</option>
 									  <option value="first">1층</option>
-									  <option value="first">1층</option>
 									  <option value="second">2층</option>
 									  <option value="third">3층</option>
 									  <option value="fourth">4층</option>
@@ -288,9 +289,9 @@
 							<tr>
 								<th rowspan="2">관리비</th>
 								<td colspan="5">
-									<input type="radio" name="costFeeT" value="1"> 있음 &nbsp;&nbsp;
+									<input type="radio" name="costFeeT" value="1" onclick="$('#costFeeP').css('background-color','').removeAttr('readonly');"> 있음 &nbsp;&nbsp;
 									<input id="costFeeP">&nbsp;만원 &nbsp; &nbsp;
-									<input type="radio" name="costFeeT" value="0"> 없음
+									<input type="radio" name="costFeeT" value="0" onclick="$('#costFeeP').css('background-color','rgba(200, 200, 240, 0.1)').attr('readonly', true).val('');"> 없음
 									<input type="hidden" name="costFee" id="costFee">
 								</td>
 							</tr>
@@ -369,7 +370,7 @@
 									<input type="hidden" id="desk" name="desk">
 									<input type="hidden" id="closet" name="closet">
 									<input type="hidden" id="option_tv" name="option_tv">
-									<input type="hidden" id="shoeRack" name="shoeRack">
+									<input type="hidden" id="shoerack" name="shoerack">
 									<input type="hidden" id="fridge" name="fridge">
 									<input type="hidden" id="gasstove" name="gasstove">
 									<input type="hidden" id="induction" name="induction"> 
@@ -421,14 +422,12 @@
 					<hr>
 					<div>
 						<div style="border:solid;color:red;padding:10px;border-width:1px;margin-bottom:20px">
-							- 사진은 가로로 찍은 사진을 권장합니다.<br>
+							- 사진은 가로로 찍은 사진을 권장하고 최대 15장까지를 권장합니다.<br>
 							- 사진 용량은 사진 1장당 10MB까지 등록이 가능합니다.<br>
-							- 사진을 최소 3장 이상 등록해야하며, 최대 15장까지 권장합니다.<br> 
 						</div>
 						<div id="picBgd" style="background-color:rgba(150, 150, 150, 0.1);height:400px;padding: 20px;">
-						
 								<div align="center">
-									<span style="color:red">다방 로고를 제외한 불필요한 정보(워터마크, 상호, 전화번호 등)가 있는 매물은 비공개 처리 됩니다.</span><br>
+									<span style="color:red">FullHouse 로고를 제외한 불필요한 정보(워터마크, 상호, 전화번호 등)가 있는 매물은 비공개 처리 됩니다.</span><br>
 
 								    <div class="custom-file" style="margin: 15px 0 20px 0;">
 								        <input type="file" class="custom-file-input" id="customFile" name="photo" id="photo" accept=".png, .jpg, .jpeg" onchange="readFile(this);" multiple>
@@ -452,6 +451,7 @@
 		</div>
 	</div>
     </form>
+<!--     <form id="uploadForm" style="display:none;"></form> -->
     </main>
     <%@ include file="footer.jsp" %>
     <!-- 다음지도 관련  -->
@@ -510,8 +510,9 @@
 	
 	                        // 해당 주소에 대한 좌표를 받아서
 	                        var coords = new daum.maps.LatLng(result.y, result.x);
-	                        
-	                        
+	                        $("#lat").val(result.y);
+	                        $("#lng").val(result.x);
+	                        console.log(result.y+", "+ result.x);
 	                        // 지도를 보여준다.
 	                        mapContainer.style.display = "block";
 	                        map.relayout();
@@ -519,26 +520,14 @@
 	                        map.setCenter(coords);
 	                        // 마커를 결과값으로 받은 위치로 옮긴다.
 	                        marker.setPosition(coords)
-	
-	                        $.ajax({
-	                            url : "", // 보내는 컨트롤러 
-	                            type : "post",
-	                            data : {latLng : coords}
-	                        });
 	                    }
 	                });
 	            }
 	        }).open();
 	    }
 
-		function removePic(x){
-			if(confirm("선택한 사진을 지우시겠습니까?"))
-				x.parentNode.parentNode.removeChild(x.parentNode);
-			else
-				return;
-		}
-		
 		var uploadFiles = [];
+		var z = 0;
 	    function readFile(input) {
 		    setInterval(function(){
 		        if($("#photos").height() > 300)
@@ -550,46 +539,108 @@
 	        counter = input.files.length;
 	   		for(x = 0; x<counter; x++){
 	   			if (input.files && input.files[x]) {
-		   			console.log("files["+x+"].name:  "+input.files[x].name);
+// 		   			console.log("files["+x+"].name:  "+input.files[x].name);
 	   				var reader = new FileReader();
 	   				reader.onload = function (e) {
-	           			$("#photos").append('<div class="photo" style="width:200px; height:150px;margin:7px"><img src="'+e.target.result+'" class="img-thumbnail" style="width:100%;height:100%"><button type="button" class="btn" onclick="removePic(this)"> X </button></div>');
+	           			$("#photos").append('<div class="photo" style="width:200px; height:150px;margin:7px"><img src="'+e.target.result+'" class="img-thumbnail" style="width:100%;height:100%"><button type="button" class="btn" onclick="removePic(this)" name="'+(z++)+'"> X </button></div>');
 	   				};
 	   				reader.readAsDataURL(input.files[x]);
 	   				uploadFiles.push(input.files[x]);
+// 	   				console.log(uploadFiles);
 	   			}
 	        }
-	        if(counter == x){$("#status").html('');}
-	        console.log("uploadFiles.length: "+ uploadFiles.length);
+	        if(counter == x) $("#status").html('');
+// 	        console.log("uploadFiles.length: "+ uploadFiles.length);
 	      }
 		
 	    function addPrice(kind){
 	    	if(kind==='sell'){ // 매매
 		    	if(!document.getElementById("addSellPrice")){
-	    			$("#addPrice").append("<div id='addSellPrice' style='margin:10px'><span class='badge badge-lg badge-pill badge-primary' style='padding:10px'>매매</span><input style='padding:5px 10px 5px 10px; margin:0 10px 0 30px' placeholder='매매'>&nbsp;만원&nbsp;&nbsp;&nbsp;&nbsp; <button class='btn btn-sm btn-danger sell' name='sellF' onclick='removeThis(this)'> X </button><br></div>");
+	    			$("#addPrice").append("<div id='addSellPrice' style='margin:10px'><span class='badge badge-lg badge-pill badge-primary' style='padding:10px'>매매</span><input style='padding:5px 10px 5px 10px; margin:0 10px 0 30px' name='salePrice' placeholder='매매'>&nbsp;만원&nbsp;&nbsp;&nbsp;&nbsp; <button class='btn btn-sm btn-danger sell' name='sellF' onclick='removeThis(this)'> X </button><br></div>");
 	    			$("#addSellBtn").attr("disabled", "");
 		    	}
 	    	}else if(kind==='deposit'){ // 전세 
 		    	if(!document.getElementById("addDepositPrice")){
-	    			$("#addPrice").append("<div id='addDepositPrice' style='margin:10px'><span class='badge badge-lg badge-pill badge-primary' style='padding:10px'>전세</span><input style='padding:5px 10px 5px 10px; margin:0 10px 0 30px' placeholder='전세'>&nbsp;만원&nbsp;&nbsp;&nbsp;&nbsp; <button class='btn btn-sm btn-danger' name='depositF' onclick='removeThis(this)'> X </button><br></div>");
+	    			$("#addPrice").append("<div id='addDepositPrice' style='margin:10px'><span class='badge badge-lg badge-pill badge-primary' style='padding:10px'>전세</span><input style='padding:5px 10px 5px 10px; margin:0 10px 0 30px' name='lease' placeholder='전세'>&nbsp;만원&nbsp;&nbsp;&nbsp;&nbsp; <button class='btn btn-sm btn-danger' name='depositF' onclick='removeThis(this)'> X </button><br></div>");
 	    			$("#addDepositBtn").attr("disabled", "");
 		    	}
-	    	}else{ // 월세 
-	    		$("#addPrice").append("<div style='margin:10px'><span class='badge badge-lg badge-pill badge-primary' style='padding:10px'>월세</span><input style='padding:5px 10px 5px 10px; margin:0 10px 0 30px' placeholder='보증금'>&nbsp;/&nbsp;<input style='padding:5px 10px 5px 10px; margin:0 10px 0 10px' placeholder='월세'>&nbsp;만원&nbsp;&nbsp;&nbsp;&nbsp; <button class='btn btn-sm btn-danger' name='monthlyF' onclick='removeThis(this)'> X </button><br></div>");
+	    	}else{ // 월세
+	    		$("#addPrice").append("<div style='margin:10px'><span class='badge badge-lg badge-pill badge-primary' style='padding:10px'>월세</span><input style='padding:5px 10px 5px 10px; margin:0 10px 0 30px' name='monthly' placeholder='보증금'>&nbsp;/&nbsp;<input style='padding:5px 10px 5px 10px; margin:0 10px 0 10px' name='deposit' placeholder='월세'>&nbsp;만원&nbsp;&nbsp;&nbsp;&nbsp; <button class='btn btn-sm btn-danger' name='monthlyF' onclick='removeThis(this)'> X </button><br></div>");
 	    	}
 	    }
 	    
 	  	function removeThis(x){
 	  		if(x.name === 'sellF')
-
     			$("#addSellBtn").removeAttr("disabled", "");
 	  		else if(x.name === 'depositF')
     			$("#addDepositBtn").removeAttr("disabled", "");
 	  		x.parentNode.parentNode.removeChild(x.parentNode);
 	  	}
 	  	
+	  	var delCount = 0;
+	  	function removePic(x){
+			if(confirm("선택한 사진을 지우시겠습니까?")){
+				x.parentNode.parentNode.removeChild(x.parentNode);
+// 				console.log("x.name: "+ x.name);
+// 				x.name -= delCount;
+				uploadFiles[x.name] = 0;
+				delCount++;
+// 				for(var key in uploadFiles){
+// 					console.log("key : "+ key+", obj: "+ uploadFiles[key].name);
+// 				}
+			}else
+				return;
+		}
+	  	
+	  	function uploadImg(){
+	  	    var files = JSON.stringify(uploadFiles);
+	  	    
+	  	 	var form = $('#uploadForm')[0];
+	          var formData = new FormData(form);
+	
+	          for (var index = 0; index < Object.keys(uploadFiles).length; index++) {
+	              //formData 공간에 files라는 이름으로 파일을 추가한다.
+	              //동일명으로 계속 추가할 수 있다.
+	              formData.append('uploadFiles',uploadFiles[index]);
+	        }
+	  	  
+	  	    $.ajax({
+	  	        type: 'POST',
+                enctype : 'multipart/form-data',
+                processData : false,
+                contentType : false,
+	  	        dataType: 'JSON',
+	  	        data: formData,
+	  	        url: 'imageupload.do',
+	  	        success: function(json) {
+	  	            console.log("사진 전송 성공");
+	  	        },
+	  	        error: function(request,status,error){
+	  	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	  	        }
+	  	    });
+	  	
+	  	}
+	  	function delIdel(){ // uploadFiles에 들어간 0을 삭제. (0은 삭제할 때 사용한 것) 
+	  		for(var i=0; i<uploadFiles.length; i++){
+	  			if(uploadFiles[i] === 0){
+	  				uploadFiles.splice(i, 1);
+	  				delIdel();
+	  			}
+	  		}
+// 	  		for(var j=0; j<uploadFiles.length;j++){
+// 	  			console.log("final: "+ uploadFiles[j]);
+// 	  		}
+	  	}
+
 	    function submitBtn(){
-	    	$("#customFile").val(uploadFiles); // 이렇게 파일이 저장되어있는 배열을 input태그의 value로 줘서 controller로 보내려고 했는데, 잘 안된다. 일단 다른 기능들 먼저 하자.
+	    	delIdel();
+	    	var wholeAddr = $("#address").val() +"_fhs_"+ $("#detailAddress").val();
+	    	
+// 			for(var i=0 in uploadFiles){
+// 	    		$("#customFile").append("<input type='file' name='photo' value='"+uploadFiles[i]+"'>");
+// // 	    		console.log(i+"생성: "+uploadFiles[i]);
+// 			}
 	    	$("#realAddr").val($("#address").val() +" "+ $("#detailAddress").val());
 	    	
 	    	// 관리비
@@ -633,8 +684,8 @@
 			else $("#closet").val(0);
 			if($("#option_tvT:checked").val()==="1") $("#option_tv").val(1);
 			else $("#option_tv").val(0);
-			if($("#shoeRackT:checked").val()==="1") $("#shoeRack").val(1);
-			else $("#shoeRack").val(0);
+			if($("#shoeRackT:checked").val()==="1") $("#shoerack").val(1);
+			else $("#shoerack").val(0);
 			if($("#fridgeT:checked").val()==="1") $("#fridge").val(1);
 			else $("#fridge").val(0);
 			if($("#gasstoveT:checked").val()==="1") $("#gasstove").val(1);
@@ -647,7 +698,8 @@
 			else $("#doorlock").val(0);
 			if($("#bidetT:checked").val()==="1") $("#bidet").val(1);
 			else $("#bidet").val(0);
-			
+
+	    	uploadImg();
 	    	$("#formId").submit();
 	    }
 	    

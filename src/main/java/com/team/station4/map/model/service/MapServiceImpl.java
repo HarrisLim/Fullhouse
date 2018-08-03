@@ -21,7 +21,7 @@ import javax.imageio.ImageIO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.team.station4.map.model.MapDTO;
+import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.model.dao.MapDAO;
 import com.team.station4.map.vo.PagingVo;
 
@@ -31,7 +31,7 @@ public class MapServiceImpl implements MapService {
 	MapDAO dao;
 	
 	@Override
-	public List<MapDTO> mapListService(PagingVo pagingVo) {
+	public List<BuildDTO> mapListService(PagingVo pagingVo) {
 		return dao.mapList(pagingVo);
 	}
 	
@@ -41,12 +41,12 @@ public class MapServiceImpl implements MapService {
 	}
 	
 	@Override
-	public List<MapDTO> locationService(){
+	public List<BuildDTO> locationService(){
 		return dao.location();
 	}
 	
 	@Override
-	public List<MapDTO> latLngService(HashMap hm){
+	public List<BuildDTO> latLngService(HashMap hm){
 		return dao.latLng(hm);
 	}
 	
@@ -147,7 +147,7 @@ public class MapServiceImpl implements MapService {
 	 }
 	 
 	 @Override
-	 public void insertInjectionService(MapDTO dto) {
+	 public void insertInjectionService(BuildDTO dto) {
 		 dao.insertInjection(dto);
 	 }
 

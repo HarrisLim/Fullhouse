@@ -15,7 +15,7 @@ public class StaffServiceImpl implements StaffService {
 	@Override
 	public void StaffInsertS(StaffDTO dto) {
 		// TODO Auto-generated method stub
-		staffdao.staffInsert(dto);
+//		staffdao.staffInsert(dto);
 	}
 
 }
