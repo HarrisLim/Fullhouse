@@ -15,6 +15,20 @@ public class MainServiceImpl implements MainService {
 	public void memberInsertS(MainDTO member) {
 		// TODO Auto-generated method stub
 		mainDao.memberInsert(member);	
-		
+	}
+	@Override
+	public String emCheckS(MainDTO dto) {
+		// TODO Auto-generated method stub
+		return mainDao.emCheck(dto);
+	}
+	@Override
+	public int log1CheckS(MainDTO dto) {
+		// TODO Auto-generated method stub
+		return mainDao.log1Check(dto);
+	}
+	@Override
+	public int log2CheckS(MainDTO dto) {
+		// TODO Auto-generated method stub
+		return mainDao.log2Check(dto);
 	}
 }

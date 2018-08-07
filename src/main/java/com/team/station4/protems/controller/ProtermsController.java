@@ -60,7 +60,6 @@ public class ProtermsController {
 			staffdto.setEstate_no(es.getEstate_no());
 			service2.StaffInsertS(staffdto);
 		}
-//		int etate_num = select estate_no from ESTATE where estate_no = dto.getEstate_no();
 		return "house/proterms";
 		
 	}
