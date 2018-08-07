@@ -15,7 +15,9 @@
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+<!--   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
   <!-- CSS Files -->
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../assets/css/bootstrap-theme.min.css" rel="stylesheet" />
@@ -28,6 +30,7 @@
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=920b18ed9b88780f730ccf0faa6707f7&libraries=clusterer,services"></script>
   <!-- 4. Javascript -->
   <script type="text/javascript" src="../kanu/js/paging.js"></script>
+
 </head>
 
 <body class="">
@@ -35,11 +38,22 @@
    <%@ include file="mapTop.jsp" %>
 	
 	<div class="third-panel">
+	<!-- 	바운스 (지도영역)에서 가지고온 좌표 값 저장 -->
 	<input type="hidden" value="" id="center" name="center" />
 	<input type="hidden" value="" id="level" name="level" />
 	<input type="hidden" value="" id="bounds" name="bounds" />
 	<input type="hidden" value="" id="swLatLng" name="swLatLng" />
 	<input type="hidden" value="" id="neLatLng" name="neLatLng" />
+	<!-- 	바운스 (지도영역)에서 가지고온 좌표 값 에서 위도 경도 분리 저장 -->
+	<input type="hidden" value="" id="swLatLng_getLng" name="swLatLng_getLng" />
+	<input type="hidden" value="" id="swLatLng_getLat" name="swLatLng_getLat" />
+	<input type="hidden" value="" id="neLatLng_getLng" name="neLatLng_getLng" />
+	<input type="hidden" value="" id="neLatLng_getLat" name="neLatLng_getLat" />
+	<!-- 	클러스터 에서 가지고온 좌표 값 저장 -->
+	<input type="hidden" value="" id="east" name="east" />
+	<input type="hidden" value="" id="west" name="west" />
+	<input type="hidden" value="" id="south" name="south" />
+	<input type="hidden" value="" id="north" name="north" />
 	  <!-- 매물 종류 드롭 다운 목록 -->   
 	  <nav class="navbar navbar-expand-lg navbar-transparent" style="float: left">
       	<div class="container">
@@ -108,8 +122,8 @@
              <ul class="dropdown-menu multi-column columns-2">
               <div class="row">
               	  
-	              <input type="text" class="form-control" placeholder="0만원 부터" id="begin_text" value="" style="width:100px;hight:15px;margin-left:20px;font-size:1em;font-weight: bold;" />&nbsp; ~ &nbsp;
-	              <input type="text" class="form-control" placeholder="0만원 까지" id="end_text" value="" style="width:100px;hight:15px;font-size:1em;font-weight: bold;"/>
+	              <input type="text" class="form-control" placeholder="0" id="begin_text" value="" style="width:80px;hight:15px;margin-left:20px;font-size:0.9em;font-weight: bold;text-align:right;" onkeyup="beginKeyUp()" onkeydown="onlyNumber(this)"/>&nbsp;<span style="margin-top:4px">만 ~</span> &nbsp;
+	              <input type="text" class="form-control" placeholder="999999" id="end_text" value="999999" style="width:80px;hight:15px;font-size:0.9em;font-weight: bold;text-align:right;" onkeyup="endKeyUp()" onkeydown="onlyNumber(this)"/>&nbsp;<span style="margin-top:4px">만 </span>
 	              
                	<div class="col-sm-13" style="margin-left:20px">
  					<ul class="multi-column-dropdown">

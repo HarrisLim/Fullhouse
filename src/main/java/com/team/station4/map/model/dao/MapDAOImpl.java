@@ -2,6 +2,7 @@ package com.team.station4.map.model.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,16 @@ public class MapDAOImpl implements MapDAO {
 	private String ns = "com.team.station4.map";
 	
 	@Override
-	public List<BuildDTO> mapList(PagingVo pagingVo) {
-		System.out.println("start: "+pagingVo.getStart()+", last: "+pagingVo.getLast());
-		return sqlsession.selectList(ns+".mySelect", pagingVo);
-
+	public List<BuildDTO> mapList(Map jsonLatLng){
+		return sqlsession.selectList(ns+".mySelect", jsonLatLng);
 	}
+	
 	
 	@Override
-	public int totalCount() {
-		return sqlsession.selectOne(ns+".myCountPage");
+	public int countCluster(Map jsonLatLng) {
+		return sqlsession.selectOne(ns+".myCountCluster", jsonLatLng);
 	}
-	
+
 	@Override
 	public List<BuildDTO> location(){
 		return sqlsession.selectList(ns+".myLocation");
@@ -45,13 +45,13 @@ public class MapDAOImpl implements MapDAO {
 	}
 	
 	@Override
-	public List<BuildDTO> clickClusterer(HashMap hm){
-		return sqlsession.selectList(ns+".myCluster", hm);
+	public void insertPrice(HashMap price) {
+		sqlsession.insert(ns+".myInsertPrice", price);
 	}
 	
 	@Override
-	public int countCluster(HashMap hm) {
-		return sqlsession.selectOne(ns+".myCountCluster", hm);
+	public int count() {
+		return sqlsession.selectOne(ns+".myCount");
 	}
 
 }

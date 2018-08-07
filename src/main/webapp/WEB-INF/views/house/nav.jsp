@@ -28,20 +28,95 @@
 				$('#font2').text('비밀번호 확인 완료!');
 			}
 		}); // InputPw2 keyup
-		// 로그인시 빈칸 확인
+		// 로그인시 빈칸 확인 및 로그인시 이메일 & 비밀번호 확인 
 		$("#logIn").click(function(){
 			if( $("#input_email").val() === "" ){
 				alert("이메일 주소가 비어있습니다. 적어 주세요.")
 			}else if( $("#input_password").val() === "" ){
 				alert("비밀번호가 비어있습니다. 채워 주세요.")
 			}else{
-				$("#log").submit();
+				$.ajax({
+					type:'POST',
+					url:'empwCheck.do',
+					data:{ mem_email : $('#input_email').val() , mem_pw : $('#input_pw').val() },
+					success : function(responseData){
+						alert ( 'responseData : ' + responseData.count )
+						if( responseData.count == 2 ){
+							alert ( '로그인 GoGoSing' )
+						}else if( responseData.count == 0){
+							alert ( '이메일이 틀렸습니다 다시 입력해 주세요.' )
+							return;
+						}else if( responseData.count == 1){
+							alert ( '비밀번호가 틀렸습니다 다시 입력해 주세요.' )
+							return;
+						}
+						alert ('나왔다~아~')
+					}
+					
+				});
 			}
+			
 		});
-	}
-/* 	$(function(){
+		// mem_pw : $('#input_pw').val()
+		// 이메일 주소 중복 체크
+		$('#inputEmail').keyup(function(){
+			
+			$.ajax({
+				type:'POST',
+				url:'emCheck.do',
+				data:{ mem_email : $("#inputEmail").val() },
+				success : function(responseData){
+					//alert(responseData.email);
+					var data = responseData.email;
+					
+					if( $("#inputEmail").val() != data ){
+						$('#font').text('');
+						$('#font').html('<b> 중복되지 않습니다. 사용가능 합니다! </b>');
+						$('#memInput').attr( 'disabled', false );
+					}else if($("#inputEmail").val() === ""){
+						$('#font').text('');
+					}else{
+						$('#font').text('');
+						$('#font').text('중복 되는 이메일 입니다.');
+						$('#memInput').attr( 'disabled', true );
+						
+					}
+				}
+			});
+		});
+
+		// inputEmail / inputPw1 / userName / phone / customCheck6 / customCheck7
+		//회원 가입시 확인 스크립트
+		$("#memInput").click(function(){
+			if( $("#inputEmail").val() === "" ){
+				alert(" 이메일을 입력해주세요.")
+				return;
+			}
+			if( $("#inputPw1").val() === "" ){
+				alert(" 비밀번호를 입력해주세요.")
+				return;
+			}
+			if( $("#userName").val() === "" ){
+				alert(" 이름을 입력해주세요.")
+				return;
+			}
+			if( $("#phone").val() === "" ){
+				alert(" 핸드폰 번호를 입력해주세요.")
+				return;
+			}
+			if( $("input[name=customCheck6]").prop("checked") === false ){
+				alert(" 이용약관에 확인 해주세요.")
+				return;
+			}
+			if( $("input[name=customCheck7]").prop("checked") === false ){
+				alert(" 개인정보 이용에 확인 해주세요.")
+				return;
+			}
+			$("#memInsert").submit();
+		});
 		
-	}); */
+	}
+
 
 </script>
     
@@ -86,10 +161,10 @@
 			            <span class="clearfix"></span>
 						<form class="form-primary" id="log" name="log" action="logIn.do" method="post" >
 						<div class="form-group">
-						  <input type="email" class="form-control" id="input_email" placeholder="Your email">
+						  <input type="email" class="form-control" id="input_email" name="input_email" placeholder="Your email">
 						</div>
 						<div class="form-group">
-						  <input type="password" class="form-control" id="input_password" placeholder="Password">
+						  <input type="password" class="form-control" id="input_pw" name="input_pw" placeholder="Password">
 						</div>
 							<input type="button" id="logIn" class="btn btn-block btn-lg bg-white mt-4" value="로그인" >
 							<a data-toggle="modal" href="#myModal2" class="btn btn-primary btn-lg btn-block">회원가입</a>
@@ -113,8 +188,12 @@
 									success: function(res) {
 										console.log(res);
 										
+										alert(" userID  : " + res.id )
+										alert("userEmail : " + res.account_email )
+										alert("NN : " + res.properties.nickname )
+										
 										var userID = res.id;						//유저의 카카오톡 고유 id
-										var userEmail = res.kaccount_email;			//유저의 이메일
+										var userEmail = res.account_email;			//유저의 이메일
 										var userNickName = res.properties.nickname;	//유저가 등록한 별명
 										
 										console.log(userID);
@@ -167,7 +246,7 @@
 					          <h1>회원가입</h1>
 					        </div>
 					        <div class="col-md-12 col-md-offset-3">
-					          <form role="form" name="memInsert" action="./memInsert.do" method="post">
+					          <form role="form" id="memInsert" name="memInsert" action="./memInsert.do" method="post">
 					            <div class="form-group">
 					              <label for="inputEmail">이메일 주소</label>
 					              <input type="email" class="form-control" id="inputEmail" name="mem_email" placeholder="이메일 주소">
@@ -208,19 +287,19 @@
 					            </div> 
 					            <div class="row">
 									<div class="custom-control custom-checkbox mb-3">
-									  <input type="checkbox" class="custom-control-input is-invalid" id="customCheck6">
+									  <input type="checkbox" class="custom-control-input is-invalid" id="customCheck6" name="customCheck6">
 									  <label class="custom-control-label" for="customCheck6"></label>다음의 
 									  <a data-toggle="modal" data-target="#mymodal3" href="#myModal3">이용약관</a>에 동의합니다.
 									</div>
 						            <div class="custom-control custom-checkbox mb-3">
-									  <input type="checkbox" class="custom-control-input is-invalid" id="customCheck7">
+									  <input type="checkbox" class="custom-control-input is-invalid" id="customCheck7" name="customCheck7">
 									  <label class="custom-control-label" for="customCheck7"></label>다음의 
 					              	  <a data-toggle="modal" data-target="#mymodal4" href="#myModal4">개인 정보 이용</a>에 동의합니다.
 					              	</div>
 					            </div>
 					            <div class="form-group text-center">
-					              <button type="submit" class="btn btn-info">회원가입<i class="fa fa-check spaceLeft"></i></button>
-					              <button type="submit" class="btn btn-warning">가입취소<i class="fa fa-times spaceLeft"></i></button>
+					              <button type="button" class="btn btn-info" id="memInput" disabled>회원가입<i class="fa fa-check spaceLeft"></i></button>
+					              <button type="button" class="btn btn-warning" id="Cancel" data-dismiss="modal" >가입취소<i class="fa fa-times spaceLeft"></i></button>
 					            </div>
 					          </form>
 					        </div>

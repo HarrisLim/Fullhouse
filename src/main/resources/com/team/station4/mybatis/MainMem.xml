@@ -13,9 +13,22 @@
 		<result property="mem_rdate" column="MEM_RDATE" />
 	</resultMap>
 	
-		<select id="memSelect" resultType="Member">
-			select * from MEMBER where MEM_NO=#{MEM_NO} 
+		<select id="memSelect" resultType="Member" parameterType="Member">
+			select * from MEMBER where MEM_NO=#{mem_no} 
 		</select>
+		
+		<select id="emCheck" resultType="String" parameterType="Member">
+			select mem_email from MEMBER where mem_email=#{mem_email} 
+		</select>
+		
+		<select id="log1Check" resultType="int" parameterType="Member">
+			select Count(*) from MEMBER where mem_email=#{mem_email} 
+		</select>
+		
+		<select id="log2Check" resultType="int" parameterType="Member">
+			select Count(*) from MEMBER where mem_email=#{mem_email} and mem_pw=#{mem_pw}			
+		</select>
+		
 		<insert id="memInsert" parameterType="Member">
 		   insert into MEMBER values(MEM_NO_SEQ.nextval, #{mem_email}, #{mem_pw}, '#1'||#{mem_name}, #{mem_phone}, SYSDATE)
 		</insert>

@@ -92,7 +92,7 @@
 							</tr>
 							<tr>
 								<td><input type="text" id="address" name="addr" placeholder="주소검색을 이용해서 주소를 입력해주세요." style="width:380px;background:rgba(200,200,240,0.1);padding:5px 10px 5px 10px" readonly></td>
-								<td><input class="btn btn-sm btn-primary" type="button" value="주소검색" onclick="execDaumPostcode()"></td>
+								<td><input id="searchingBtn" class="btn btn-sm btn-primary" type="button" value="주소검색" onclick="execDaumPostcode()"></td>
 							</tr>
 							<tr>
 								<td colspan="2"><input id="detailAddress" name="detailAddr" placeholder="상세 주소를 입력해주세요. (동, 호수)" style="width:480px;padding:5px 10px 5px 10px"></td>
@@ -117,7 +117,7 @@
 							<tr>
 								<th>방 종류</th>
 								<td>
-									<select class="btn btn-sm btn-primary" name="protype">
+									<select class="btn btn-sm btn-primary" name="proType" id="proType">
 									  <option value="">방 종류 선택</option>
 									  <option value="oneroom">원룸</option>
 									  <option value="onefiveroom">1.5룸</option>
@@ -136,7 +136,7 @@
 								<td colspan="5">
 									<input id="addSellBtn" class="btn btn-sm btn-primary" type="button" value="매매 추가" onclick="addPrice('sell')">&nbsp;&nbsp;
 									<input id="addDepositBtn" class="btn btn-sm btn-primary" type="button" value="전세 추가" onclick="addPrice('deposit')">&nbsp;&nbsp;
-									<input class="btn btn-sm btn-primary" type="button" value="월세 추가" onclick="addPrice('monthly')">
+									<input id="addMonthlyBtn" class="btn btn-sm btn-primary" type="button" value="월세 추가" onclick="addPrice('monthly')">
 								</td>
 							</tr>
 							<tr>
@@ -148,125 +148,31 @@
 								<th rowspan="2">건물 층수</th>
 								<th>건물 층수</th>
 								<td>
-									<select class="btn btn-sm btn-primary" name="wholeFloor">
+									<select class="btn btn-sm btn-primary" name="wholeFloor" id="wholeFloor">
 									  <option value="">건물 층수 선택</option>
-									  <option value="first">1층</option>
-									  <option value="second">2층</option>
-									  <option value="third">3층</option>
-									  <option value="fourth">4층</option>
-									  <option value="fifth">5층</option>
-									  <option value="sixth">6층</option>
-									  <option value="seventh">7층</option>
-									  <option value="eighth">8층</option>
-									  <option value="ninth">9층</option>
-									  <option value="tenth">10층</option>
-									  <option value="eleventh">11층</option>
-									  <option value="twelfth">12층</option>
-									  <option value="thirteenth">13층</option>
-									  <option value="fourteenth">14층</option>
-									  <option value="fifteenth">15층</option>
-									  <option value="sixteenth">16층</option>
-									  <option value="seventeenth">17층</option>
-									  <option value="eighteenth">18층</option>
-									  <option value="nineteenth">19층</option>
-									  <option value="twentieth">20층</option>
-									  <option value="twentyfirst">21층</option>
-									  <option value="twentysecond">22층</option>
-									  <option value="twentythird">23층</option>
-									  <option value="fourth">24층</option>
-									  <option value="twentyfifth">25층</option>
-									  <option value="twentysixth">26층</option>
-									  <option value="twentyseventh">27층</option>
-									  <option value="twentyeighth">28층</option>
-									  <option value="twentyninth">29층</option>
-									  <option value="thirtieth">30층</option>
-									  <option value="thirtyfirst">31층</option>
-									  <option value="thirtysecond">32층</option>
-									  <option value="thirtythird">33층</option>
-									  <option value="thirtyfourth">34층</option>
-									  <option value="thirtyfifth">35층</option>
-									  <option value="thirtysixth">36층</option>
-									  <option value="thirtyseventh">37층</option>
-									  <option value="thirtyeighth">38층</option>
-									  <option value="thirtyninth">39층</option>
-									  <option value="fortieth">40층</option>
-									  <option value="thirtyfirst">41층</option>
-									  <option value="thirtysecond">42층</option>
-									  <option value="thirtythird">43층</option>
-									  <option value="thirtyfourth">44층</option>
-									  <option value="thirtyfifth">45층</option>
-									  <option value="thirtysixth">46층</option>
-									  <option value="thirtyseventh">47층</option>
-									  <option value="thirtyeighth">48층</option>
-									  <option value="thirtyninth">49층</option>
-									  <option value="fiftieth">50층</option>
+									  <c:forEach var="a" begin="1" end="50" step="1">
+									  	<option value="${a}">${a}층</option>
+									  </c:forEach>
 									</select>
 								</td>
 								<th rowspan="2">건물 크기(1P = 3.3058m2)</th>
 								<th>공급 면적</th>
-								<td><input name="gArea">평 (m2)</td>
+								<td><input name="gArea" id="gArea" onkeyup="checkNumber(this, 'double')" placeholder="ex) 27.4">평 (m2)</td>
 							</tr>
 							<tr>
 								<th>해당 층수</th>
 								<td>
-									<select class="btn btn-sm btn-primary" name="floor">
+									<select class="btn btn-sm btn-primary" name="floor" id="floor" onchange="checkFloor()">
 									  <option value="">해당 층수 선택</option>
-									  <option value="underground">반지하</option>
-									  <option value="looptop">옥탑</option>
-									  <option value="first">1층</option>
-									  <option value="second">2층</option>
-									  <option value="third">3층</option>
-									  <option value="fourth">4층</option>
-									  <option value="fifth">5층</option>
-									  <option value="sixth">6층</option>
-									  <option value="seventh">7층</option>
-									  <option value="eighth">8층</option>
-									  <option value="ninth">9층</option>
-									  <option value="tenth">10층</option>
-									  <option value="eleventh">11층</option>
-									  <option value="twelfth">12층</option>
-									  <option value="thirteenth">13층</option>
-									  <option value="fourteenth">14층</option>
-									  <option value="fifteenth">15층</option>
-									  <option value="sixteenth">16층</option>
-									  <option value="seventeenth">17층</option>
-									  <option value="eighteenth">18층</option>
-									  <option value="nineteenth">19층</option>
-									  <option value="twentieth">20층</option>
-									  <option value="twentyfirst">21층</option>
-									  <option value="twentysecond">22층</option>
-									  <option value="twentythird">23층</option>
-									  <option value="fourth">24층</option>
-									  <option value="twentyfifth">25층</option>
-									  <option value="twentysixth">26층</option>
-									  <option value="twentyseventh">27층</option>
-									  <option value="twentyeighth">28층</option>
-									  <option value="twentyninth">29층</option>
-									  <option value="thirtieth">30층</option>
-									  <option value="thirtyfirst">31층</option>
-									  <option value="thirtysecond">32층</option>
-									  <option value="thirtythird">33층</option>
-									  <option value="thirtyfourth">34층</option>
-									  <option value="thirtyfifth">35층</option>
-									  <option value="thirtysixth">36층</option>
-									  <option value="thirtyseventh">37층</option>
-									  <option value="thirtyeighth">38층</option>
-									  <option value="thirtyninth">39층</option>
-									  <option value="fortieth">40층</option>
-									  <option value="thirtyfirst">41층</option>
-									  <option value="thirtysecond">42층</option>
-									  <option value="thirtythird">43층</option>
-									  <option value="thirtyfourth">44층</option>
-									  <option value="thirtyfifth">45층</option>
-									  <option value="thirtysixth">46층</option>
-									  <option value="thirtyseventh">47층</option>
-									  <option value="thirtyeighth">48층</option>
-									  <option value="thirtyninth">49층</option>
-									  <option value="fiftieth">50층</option>
+									  <option value="-1">반지하</option>
+									  <option value="100">옥탑</option>
+									  <c:forEach var="a" begin="1" end="50" step="1">
+									  	<option value="${a}">${a}층</option>
+									  </c:forEach>
 									</select>
 								</td>
 								<th>전용 면적</th>
-								<td><input name="jArea">평 (m2)</td>
+								<td><input name="jArea" id="jArea" onkeyup="checkNumber(this, 'double')" placeholder="ex) 17.9">평 (m2)</td>
 							</tr>
 							<tr>
 							</tr>
@@ -289,24 +195,25 @@
 							<tr>
 								<th rowspan="2">관리비</th>
 								<td colspan="5">
-									<input type="radio" name="costFeeT" value="1" onclick="$('#costFeeP').css('background-color','').removeAttr('readonly');"> 있음 &nbsp;&nbsp;
-									<input id="costFeeP">&nbsp;만원 &nbsp; &nbsp;
-									<input type="radio" name="costFeeT" value="0" onclick="$('#costFeeP').css('background-color','rgba(200, 200, 240, 0.1)').attr('readonly', true).val('');"> 없음
+									<input type="radio" name="costFeeT" value="1" onclick="$('#costFeeP').css('background-color','').removeAttr('readonly');$('#costFeeCB [type=checkbox]').prop('disabled',false)"> 있음 &nbsp;&nbsp;
+									<input id="costFeeP" onkeyup="checkNumber(this, 'int')" placeholder="ex) 120000">&nbsp;만원 &nbsp; &nbsp;
+									<input type="radio" name="costFeeT" value="0" onclick="$('#costFeeP').css('background-color','rgba(200, 200, 240, 0.1)').attr('readonly', true).val('');$('#costFeeCB [type=checkbox]').prop({'disabled':true, 'checked':false})"> 없음
 									<input type="hidden" name="costFee" id="costFee">
 								</td>
 							</tr>
 							<tr>
-								<td colspan="5">
+								<td colspan="5" id="costFeeCB">
 									관리비포함 항목 선택&nbsp;:&nbsp;
 									<input type="checkbox" id="internetT" value="1"> 인터넷 &nbsp; 
 									<input type="checkbox" id="cost_tvT" value="1"> 유선TV &nbsp; 
 									<input type="checkbox" id="cleanFeeT" value="1"> 청소비 &nbsp; 
 									<input type="checkbox" id="waterFeeT" value="1"> 수도세 &nbsp; 
-									<input type="checkbox" id="gasT" value="1"> 도시가스 &nbsp; 
+									<input type="checkbox" id="gasT" value="1"> 도시가스 &nbsp;
 									<input type="checkbox" id="electricityT" value="1"> 전기세 &nbsp;
 									<input type="hidden" id="internet" name="internet">
 									<input type="hidden" id="cost_tv" name="cost_tv">
 									<input type="hidden" id="cleanFee" name="cleanFee">
+									<input type="hidden" id="waterFee" name="waterFee">
 									<input type="hidden" id="gas" name="gas">
 									<input type="hidden" id="electricity" name="electricity">
 								</td> 
@@ -314,8 +221,8 @@
 							<tr>
 								<th>주차 여부</th>
 								<td>
-									<input type="radio" name="parkingT"> 가능&nbsp;&nbsp; 
-									<input type="radio" name="parkingT"> 불가능&nbsp;
+									<input type="radio" name="parkingT" value="1"> 가능&nbsp;&nbsp; 
+									<input type="radio" name="parkingT" value="0"> 불가능&nbsp;
 									<input type="hidden" name="parking" id="parking">
 								</td>
 								<th>난방종류</th>
@@ -331,14 +238,14 @@
 							<tr>
 								<th>엘리베이터</th>
 								<td>
-									<input type="radio" name="elevatorT">&nbsp;있음&nbsp;&nbsp;
-									<input type="radio" name="elevatorT">&nbsp;없음
+									<input type="radio" name="elevatorT" value="1">&nbsp;있음&nbsp;&nbsp;
+									<input type="radio" name="elevatorT" value="0">&nbsp;없음
 									<input type="hidden" name="elevator" id="elevator">
 								</td>
 								<th>반려동물</th>
 								<td>
-									<input type="radio" name="animalT">&nbsp;가능&nbsp;&nbsp;
-									<input type="radio" name="animalT">&nbsp;불가능
+									<input type="radio" name="animalT" value="1">&nbsp;가능&nbsp;&nbsp;
+									<input type="radio" name="animalT" value="0">&nbsp;불가능
 									<input type="hidden" name="animal" id="animal">
 								</td>
 							</tr>
@@ -381,6 +288,8 @@
 							</tr>
 						</tbody>
 					</table>
+					<input type="hidden" name="buildState" value="1">
+					<input type="hidden" name="buildType" id="buildType">
 					<hr style="margin-top:0px">
 				</div>
 			</div>
@@ -422,8 +331,9 @@
 					<hr>
 					<div>
 						<div style="border:solid;color:red;padding:10px;border-width:1px;margin-bottom:20px">
-							- 사진은 가로로 찍은 사진을 권장하고 최대 15장까지를 권장합니다.<br>
+							- 사진은 가로로 찍은 사진을 권장하고 최대 12장까지 권장합니다.<br>
 							- 사진 용량은 사진 1장당 10MB까지 등록이 가능합니다.<br>
+							- 사진의 확장자는 png, jpg, jpeg만 가능합니다.
 						</div>
 						<div id="picBgd" style="background-color:rgba(150, 150, 150, 0.1);height:400px;padding: 20px;">
 								<div align="center">
@@ -446,12 +356,11 @@
 		<div>
 			<div align="center" style="background-color:rgb(240, 0, 0);padding:15px"><span style="color:white">허위매물을 등록할 경우 Fullhouse에서 임의적으로 계정 및 매물 전체 삭제 처리되며, 결제된 금액은 환불되지 않습니다.</span></div>
 			<div align="center" style="margin-top:20px;margin-bottom:50px">
-				<input class="btn btn-dark" value="취소">&nbsp;&nbsp;<input class="btn btn-primary" value="방 올리기" onclick="submitBtn()">
+				<input type="button" style="width:150px" class="btn btn-dark" value="취소">&nbsp;&nbsp;<input type="button" style="width:150px" class="btn btn-primary" value="방 올리기" onclick="submitBtn()">
 			</div>
 		</div>
 	</div>
     </form>
-<!--     <form id="uploadForm" style="display:none;"></form> -->
     </main>
     <%@ include file="footer.jsp" %>
     <!-- 다음지도 관련  -->
@@ -459,6 +368,17 @@
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=920b18ed9b88780f730ccf0faa6707f7&libraries=services"></script>
 	<script>
 
+// 		window.onload = function(){
+		    function checkNumber(x, type){
+		    	if(type==="int") var regexp = /[^0-9]/g;
+		    	else var regexp = /[^-\.0-9]/g; 	
+		    	v = $(x).val();
+		    	if(regexp.test(v) ) {
+		    		alert("숫자만 입력해주세요.");
+		    		$(x).val(v.replace(regexp,''));
+		    	}
+		    }
+// 		}
 	
 	    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 	        mapOption = {
@@ -525,7 +445,7 @@
 	            }
 	        }).open();
 	    }
-
+	    
 		var uploadFiles = [];
 		var z = 0;
 	    function readFile(input) {
@@ -552,7 +472,6 @@
 	        if(counter == x) $("#status").html('');
 // 	        console.log("uploadFiles.length: "+ uploadFiles.length);
 	      }
-		
 	    function addPrice(kind){
 	    	if(kind==='sell'){ // 매매
 		    	if(!document.getElementById("addSellPrice")){
@@ -565,7 +484,7 @@
 	    			$("#addDepositBtn").attr("disabled", "");
 		    	}
 	    	}else{ // 월세
-	    		$("#addPrice").append("<div style='margin:10px'><span class='badge badge-lg badge-pill badge-primary' style='padding:10px'>월세</span><input style='padding:5px 10px 5px 10px; margin:0 10px 0 30px' name='monthly' placeholder='보증금'>&nbsp;/&nbsp;<input style='padding:5px 10px 5px 10px; margin:0 10px 0 10px' name='deposit' placeholder='월세'>&nbsp;만원&nbsp;&nbsp;&nbsp;&nbsp; <button class='btn btn-sm btn-danger' name='monthlyF' onclick='removeThis(this)'> X </button><br></div>");
+	    		$("#addPrice").append("<div class='addMonthlyPrice' style='margin:10px'><span class='badge badge-lg badge-pill badge-primary' style='padding:10px'>월세</span><input style='padding:5px 10px 5px 10px; margin:0 10px 0 30px' name='monthly' placeholder='보증금'>&nbsp;/&nbsp;<input style='padding:5px 10px 5px 10px; margin:0 10px 0 10px' name='deposit' placeholder='월세'>&nbsp;만원&nbsp;&nbsp;&nbsp;&nbsp; <button class='btn btn-sm btn-danger' name='monthlyF' onclick='removeThis(this)'> X </button><br></div>");
 	    	}
 	    }
 	    
@@ -581,18 +500,13 @@
 	  	function removePic(x){
 			if(confirm("선택한 사진을 지우시겠습니까?")){
 				x.parentNode.parentNode.removeChild(x.parentNode);
-// 				console.log("x.name: "+ x.name);
-// 				x.name -= delCount;
 				uploadFiles[x.name] = 0;
 				delCount++;
-// 				for(var key in uploadFiles){
-// 					console.log("key : "+ key+", obj: "+ uploadFiles[key].name);
-// 				}
 			}else
 				return;
 		}
-	  	
 	  	function uploadImg(){
+	  		var result = 0;
 	  	    var files = JSON.stringify(uploadFiles);
 	  	    
 	  	 	var form = $('#uploadForm')[0];
@@ -614,12 +528,16 @@
 	  	        url: 'imageupload.do',
 	  	        success: function(json) {
 	  	            console.log("사진 전송 성공");
+	  	            if(json===-2){ // 10MB가 넘으면 -2를 return하는데, 이걸로 어떻게 submit을 막을까 ?, 현재는 테스트를 위해 1MB로 해놓음. - 다시 10MB로 바꿈.
+	  	            	alert("10MB가 넘는 사진이 있습니다. 확인 후 다시 올려주세요.");
+	  	            }
 	  	        },
 	  	        error: function(request,status,error){
 	  	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	  	        }
 	  	    });
-	  	
+
+          	result=0;
 	  	}
 	  	function delIdel(){ // uploadFiles에 들어간 0을 삭제. (0은 삭제할 때 사용한 것) 
 	  		for(var i=0; i<uploadFiles.length; i++){
@@ -628,20 +546,129 @@
 	  				delIdel();
 	  			}
 	  		}
-// 	  		for(var j=0; j<uploadFiles.length;j++){
-// 	  			console.log("final: "+ uploadFiles[j]);
-// 	  		}
 	  	}
 
+		function checkFloor(){
+			if($("#floor")[0].selectedIndex > ($("#wholeFloor")[0].selectedIndex+2)){
+				alert("건물층수보다 높은 층을 선택할 수 없습니다.");
+				$("#floor").val("");
+			}
+		}
+		function checkOutBlank(){
+			if($("#address").val() === ""){
+				alert('주소를 입력해주세요.');
+				$("#searchingBtn").focus();
+				return 0;
+			}else if($("#detailAddress").val() === "") {
+				alert("상세주소를 입력해주세요.");
+				$("#detailAddress").focus();
+				return 0;
+			}else if($("#proType").val()===""){
+				alert("방 종류를 선택해주세요");
+				$("#proType").focus();
+				return 0;
+			}else if($("#addPrice").children().length<2){
+				alert("가격을 추가해주세요.");
+				$("#addSellBtn").focus();
+				return 0;
+			}else if($("#addSellPrice input").val()===""){
+				alert("매매 가격을 입력해주세요.");
+				$("#addDepositPrice").focus();
+				return 0;
+			}else if($("#addDepositPrice input").val()===""){
+				alert("전세 가격을 입력해주세요.");
+				$("#addDepositPrice").focus();
+				return 0;
+			}else if($(".addMonthlyPrice").length >=1){
+				for(var i=0; i<$(".addMonthlyPrice").length; i++){
+					if($(".addMonthlyPrice [name=deposit]:eq("+i+")").val()==="" || $(".addMonthlyPrice [name=monthly]:eq("+i+")").val()===""){
+						alert("월세 가격을 입력해주세요.");
+						$("#addMonthlyBtn").focus();
+						return 0;			
+					}
+				}
+			}
+			if($("#wholeFloor").val()===""){
+				alert("건물층수를 선택해주세요.");
+				$("#wholeFloor").focus();
+				return 0;
+			}else if($("#floor").val()===""){
+				alert("해당층수를 선택해주세요.");
+				$("#floor").focus();
+				return 0;
+			}else if($("#gArea").val()===""){
+				alert("공급면적을 입력해주세요.");
+				$("#gArea").focus();
+				return 0;
+			}else if($("#jArea").val()===""){
+				alert("전용면적을 입력해주세요.");
+				$("#jArea").focus();
+				return 0;
+			}else if($("input[name=costFeeT]:checked").length===0){
+				alert("관리비의 유무를 체크해주세요.");
+				$("#costFeeP").focus();
+				return 0;
+			}else if($("input[name=costFeeT]:checked").val()==="1" && $("#costFeeP").val()===""){
+				alert("관리비를 입력해주세요.");
+				$("#costFeeP").focus();
+				return 0;
+			}else if($("#costFeeCB [type=checkbox]:checked").length==0 && $("[name=costFeeT]:checked").val()==="1"){
+				alert("관리비포함 항목을 적어도 1개는 선택해주세요.");
+				$("[name=parkingT]").focus();
+				return 0;
+			}else if($("[name=parkingT]:checked").length===0){
+				alert("주차여부를 체크해주세요.");
+				$("[name=parkingT]").focus();
+				return 0;
+			}else if($("[name=heat]").val()===""){
+				alert("난방종류를 선택해주세요.");
+				$("[name=heat]").focus();
+				return 0;
+			}else if($("[name=elevatorT]:checked").length===0){
+				alert("엘리베이터의 유무를 선택해주세요.");
+				$("[name=elevatorT]").focus();
+				return 0;
+			}else if($("[name=animalT]:checked").length===0){
+				alert("반려동물의 유무를 선택해주세요.");
+				$("[name=animalT]").focus();
+				return 0;
+			}else if($("[name=moveDate]").val()===""){
+				alert("입주가능일을 선택해주세요.");
+				$("[name=moveDate]").focus();
+				return 0;
+			}else if($("[name=roomTitle]").val()===""){
+				alert("방 설명의 제목을 선택해주세요.");
+				$("[name=roomTitle]").focus();
+				return 0;
+			}else if($("[name=explainText]").val()===""){
+				alert("방 설명의 내용을 입력해주세요.");
+				$("[name=explainText]").focus();
+				return 0;
+			}else if($("#photos").children().length===0){
+				alert("최소한 1장의 사진을 올려주세요.");
+				$("#customFile").focus();
+				return 0;
+			}
+
+		}
+		
+		function chooseBuildType(a, b, c){
+	    	if(a==0 && b==0 && c>=1) return 1;
+	    	if(a==0 && b==1 && c==0) return 2;
+	    	if(a==1 && b==0 && c==0) return 3;
+	    	if(a==0 && b==1 && c>=1) return 4;
+	    	else return 7;
+	    }
+		
 	    function submitBtn(){
+	    	if(checkOutBlank()===0){
+	    		return;
+	    	};
 	    	delIdel();
 	    	var wholeAddr = $("#address").val() +"_fhs_"+ $("#detailAddress").val();
-	    	
-// 			for(var i=0 in uploadFiles){
-// 	    		$("#customFile").append("<input type='file' name='photo' value='"+uploadFiles[i]+"'>");
-// // 	    		console.log(i+"생성: "+uploadFiles[i]);
-// 			}
-	    	$("#realAddr").val($("#address").val() +" "+ $("#detailAddress").val());
+
+	    	uploadImg();
+	    	$("#realAddr").val(wholeAddr);
 	    	
 	    	// 관리비
 	    	if($('input[name=costFeeT]:checked').val()==="1") $("#costFee").val($("#costFeeP").val());
@@ -654,6 +681,8 @@
 			else $("#cost_tv").val(0);
 			if($("#cleanFeeT:checked").val()==="1") $("#cleanFee").val(1);
 			else $("#cleanFee").val(0);
+			if($("#waterFeeT:checked").val()==="1") $("#waterFee").val(1);
+			else $("#waterFee").val(0);
 			if($("#gasT:checked").val()==="1") $("#gas").val(1);
 			else $("#gas").val(0);
 			if($("#electricityT:checked").val()==="1") $("#electricity").val(1);
@@ -699,9 +728,11 @@
 			if($("#bidetT:checked").val()==="1") $("#bidet").val(1);
 			else $("#bidet").val(0);
 
-	    	uploadImg();
+			$("#buildType").val(chooseBuildType($("#addSellPrice").length, $("#addDepositPrice").length, $(".addMonthlyPrice").length));
+			alert("success");
 	    	$("#formId").submit();
 	    }
+	    
 	    
 	</script>
 	
