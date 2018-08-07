@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -31,15 +32,15 @@ public class MapServiceImpl implements MapService {
 	MapDAO dao;
 	
 	@Override
-	public List<BuildDTO> mapListService(PagingVo pagingVo) {
-		return dao.mapList(pagingVo);
+	public List<BuildDTO> mapListService(Map jsonLatLng){
+		return dao.mapList(jsonLatLng);
 	}
 	
-	@Override
-	public int countService() {
-		return dao.totalCount();
-	}
-	
+	 @Override
+	 public int countClusterService(Map jsonLatLng) {
+		 return dao.countCluster(jsonLatLng);
+	 }
+
 	@Override
 	public List<BuildDTO> locationService(){
 		return dao.location();
@@ -152,13 +153,12 @@ public class MapServiceImpl implements MapService {
 	 }
 	 
 	 @Override
-	 public List<BuildDTO> clickClustererService(HashMap hm){
-		 return dao.clickClusterer(hm);
+	 public void insertPriceService(HashMap price) {
+		 dao.insertPrice(price);
 	 }
 	 
 	 @Override
-	 public int countClusterService(HashMap hm) {
-		 return dao.countCluster(hm);
+	 public int countService() {
+		 return dao.count();
 	 }
-
 }

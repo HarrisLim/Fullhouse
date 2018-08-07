@@ -11,11 +11,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,30 +34,23 @@ public class MapController {
 	
 	/* 방검색 페이지 표시  */
 	@RequestMapping(value = "house/map.do", method= RequestMethod.GET)
-	public ModelAndView mapPage(Model model, PagingVo pagingVo) {
+	public ModelAndView mapPage(PagingVo pagingVo) {
 		System.out.println("control");
 		ModelAndView mv = new ModelAndView();
-		pagingVo.setTotal(service.countService());
-		List<BuildDTO> list =service.mapListService(pagingVo);
-		List<BuildDTO> location = service.locationService();
-		int count = service.countService();
+		Map<String, Object> hm = new HashMap<String, Object>();
 		
-//		HashMap<String, String> hm = new HashMap<String, String>();
-//		hm.put("전세", "전세");
-//		hm.put("서울시", "서울시");
-//		List<MapDTO>latLng = service.latLngService(hm);
-		double lat = 0.0;
-		double lng = 0.0;
-		for(BuildDTO dto : location) {
-			lat += dto.getLat();
-			lng += dto.getLng();
-			//System.out.println("lat: "+lat+", lng: "+lng);
-		}
-//		service.makeImage(count);
-		lat = lat/location.size();
-		lng = lng/location.size();
-		System.out.println("lat: "+lat+", lng: "+lng+", dto.size(): "+location.size());
-		
+		hm.put("start", pagingVo.getStart());
+		hm.put("last", pagingVo.getLast());
+		//추후 본인 위치기반 맵 중심 보여줄 경우 변경 가능
+		hm.put("south", 37.45075192460503); 
+		hm.put("west", 126.72406178505217);
+		hm.put("north", 37.6898343030413);
+		hm.put("east", 127.2456203269095);
+
+		List<BuildDTO> list =service.mapListService(hm);
+		int count = service.countClusterService(hm);
+		pagingVo.setTotal(count);
+
 		mv.setViewName("house/map");
 		mv.addObject("count", count);
 		mv.addObject("list", list);
@@ -71,12 +66,25 @@ public class MapController {
 	
 	/* 방검색 리스트+paging ajax 표시 */
 	@RequestMapping(value="house/indexJson.do", method= {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView indexJson(PagingVo pagingVo) {
-		System.out.println("index:"+pagingVo.getIndex()+", start:"+pagingVo.getPageStartNum()+", listCnt: "+pagingVo.getListCnt()+", last: "+pagingVo.getLast());
+	public ModelAndView indexJson(@RequestBody Map<String, Object> jsonLatLng) {
+		System.out.println("jsonLatLng:index: "+jsonLatLng.get("index")+", pageStartNum: "+jsonLatLng.get("pageStartNum"));
+		System.out.println("jsonLatLng:south: "+jsonLatLng.get("south")+", north: "+jsonLatLng.get("north")+", east: "+jsonLatLng.get("east")+", west: "+jsonLatLng.get("west"));
+		System.out.println("jsonLatLng:buildType: "+jsonLatLng.get("buildType")+", kind_of_trade: "+jsonLatLng.get("kind_of_trade")+", proType: "+jsonLatLng.get("proType"));
+		
+		
 		ModelAndView mv = new ModelAndView("jsonView");
-		List<BuildDTO> list = service.mapListService(pagingVo);
-		pagingVo.setTotal(service.countService());
+		PagingVo pagingVo = new PagingVo();
+		pagingVo.setIndex((Integer)jsonLatLng.get("index"));
+		pagingVo.setPageStartNum((Integer)jsonLatLng.get("pageStartNum"));
+		jsonLatLng.put("start", pagingVo.getStart());
+		jsonLatLng.put("last", pagingVo.getLast());
+
+		List<BuildDTO> list =service.mapListService(jsonLatLng);
+		
+		pagingVo.setTotal(service.countClusterService(jsonLatLng));
+		System.out.println("pagingVo.getPageLastNum: "+pagingVo.getPageLastNum());
 		mv.addObject("list", list);
+		mv.addObject("pagingVo", pagingVo);
 		return mv;
 	}
 	
@@ -84,42 +92,6 @@ public class MapController {
 	@RequestMapping(value="house/testInjection.do")
 	public String test() {
 		return "house/testInjection";
-	}
-	
-	/* 지도 정보 받기 */
-	@RequestMapping(value="house/mapMarker.do", method= {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView mapMarker(@RequestParam("neLat") double north, @RequestParam("neLng") double east, @RequestParam("swLat")double south, @RequestParam("swLng")double west, @RequestParam("centerLat")double centerLat, @RequestParam("centerLng")double centerLng,
-			@RequestParam("level")int level,/*, @RequestParam("bounds")double bounds */PagingVo pagingVo) {
-		ModelAndView mv = new ModelAndView();
-		System.out.println("북동 좌표 neLat: "+north);
-		System.out.println("북동 좌표 neLng: "+east);
-		System.out.println("남서 좌표 swLat: "+south);
-		System.out.println("남서 좌표 swLng: "+west);
-		//System.out.println("지도 현재 영역 bounds: "+bounds);
-		System.out.println("지도 중심 좌표 centerLat: "+centerLat);
-		System.out.println("지도 중심 좌표 centerLng: "+centerLng);
-		System.out.println("지도 레벨 level: "+level);
-		HashMap<String, Object> hm = new HashMap<String, Object>();
-		hm.put("north", north);
-		hm.put("east", east);
-		hm.put("south", south);
-		hm.put("west", west);
-		int count = service.countClusterService(hm);
-		pagingVo.setTotal(count);
-		hm.put("start", pagingVo.getStart());
-		hm.put("last", pagingVo.getLast());
-		List<BuildDTO>dto = service.clickClustererService(hm);
-		
-		
-		mv.setViewName("jsonView");
-		mv.addObject("count", count);
-		mv.addObject("list", dto);
-		mv.addObject("north", north);
-		mv.addObject("east", east);
-		mv.addObject("south", south);
-		mv.addObject("west", west);
-		mv.addObject("page", pagingVo);
-		return mv;
 	}
 	
 	/* 클러스터러 생성  */
@@ -148,40 +120,7 @@ public class MapController {
 		return mv;
 	}
 	
-	///////   클러스터 클릭시 list 띄우고 페이징 처리 까지     ///////
-	@RequestMapping(value="house/clickClusterer.do", method= {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView clickClusterer(@RequestParam("west") double west, @RequestParam("south") double south,  @RequestParam("east") double east,  @RequestParam("north") double north, PagingVo pagingVo) {
-		ModelAndView mv = new ModelAndView();
-		HashMap<String, Object> hm = new HashMap<String, Object>();
 		
-		
-		System.out.println("clickClusterPagingVo: start: "+Double.parseDouble(Integer.toString(pagingVo.getStart()))+", last: "+Double.parseDouble(Integer.toString(pagingVo.getLast())));
-		hm.put("west", west);
-		hm.put("south", south);
-		hm.put("east", east);
-		hm.put("north", north);
-		int count = service.countClusterService(hm);
-		pagingVo.setTotal(count);
-		hm.put("start", pagingVo.getStart());
-		hm.put("last", pagingVo.getLast());
-		System.out.println("clickClusterPagingVo: start: "+hm.get("start")+", last: "+hm.get("last")+", west: "+west+", east: "+east+", south:"+south+", north:"+north);
-		List<BuildDTO> dto = service.clickClustererService(hm);
-		System.out.println("클러스터 클릭한 dto size: "+count);
-		
-	
-		mv.setViewName("jsonView");
-//		mv.addObject("hm", hm);
-		mv.addObject("count", count);
-		mv.addObject("west", west);
-		mv.addObject("south", south);
-		mv.addObject("east", east);
-		mv.addObject("north", north);
-		mv.addObject("list", dto);
-		mv.addObject("page", pagingVo);
-		return mv;
-	}
-	
-	
 	
 	
 	
@@ -205,7 +144,8 @@ public class MapController {
 //		for(int i=0; i<addressList.size(); i++) {
 //			System.out.println("Address인입: "+addressList.get(i)+", latLng인입: "+latLngList.get(i));
 //		}
-		
+		ArrayList<BuildDTO>list = new ArrayList<BuildDTO>();
+		HashMap<String, Object> price = null;
 		ArrayList<Double> locationLat = new ArrayList<Double>();
 		ArrayList<Double> locationLng = new ArrayList<Double>();
 		BuildDTO dto = null;
@@ -214,6 +154,8 @@ public class MapController {
 		int yeaerInt = 0;
 		String month = "";
 		String day = "";
+		String roomTitle = "한강뷰/전망좋은/옥수역도보 10분/신축빌라/옥수초등학교인접/내부도색완료/동남향";
+		String explainText = "한강뷰/전망좋은/옥수역도보 10분/신축빌라/옥수초등학교인접/내부도색완료/동남향";
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 		int property = 0;
 		String propertyStr = "";
@@ -243,10 +185,24 @@ public class MapController {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			dto = new BuildDTO(addressList.get(i), propertyStr, Integer.toString(ran.nextInt(20)+1), Integer.toString(ran.nextInt(20)+1), 121.1, 100.8, ran.nextInt(100), 
-					"c:/station4/images", "2018년 3월 5일", locationLat.get(i), locationLng.get(i), sqlDate, 10, 10, 10, 10, 10);
+			
+			dto = new BuildDTO(addressList.get(i), ran.nextInt(4)+1,  propertyStr, ran.nextInt(20)+1, ran.nextInt(20)+1, 121.1, 100.8, ran.nextInt(100), 
+					"../kanu/roomimg/"+(ran.nextInt(10)+1)+".jpeg", "2018년 3월 5일", locationLat.get(i), locationLng.get(i), roomTitle, explainText, "2번째 매물 등록", ran.nextInt(4)+1,sqlDate, 10, 10, 10);
 			service.insertInjectionService(dto);
 			//System.out.println("lat:"+locationLat.get(i)+", lng:"+locationLng.get(i));
+			
+			
+		}
+		//insert price 
+		int count = service.countService();
+		for (int i=0; i<count; i++) {
+			price = new HashMap<String, Object>();
+			price.put("lease", ran.nextInt(900000000)+5000000);
+			price.put("monthly", ran.nextInt(2000000)+1);
+			price.put("deposit", ran.nextInt(500000000)+5000000);
+			price.put("build_no", (1)+(i++));
+			System.out.println("lease: "+price.get("lease")+", monthly: "+price.get("monthly")+", deposit: "+price.get("deposit")+", build_no: "+price.get("build_no"));
+			service.insertPriceService(price);
 			
 		}
 		

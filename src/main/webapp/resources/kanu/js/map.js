@@ -2,123 +2,6 @@
 
 
     // 이전 페이지 index
-       function pagePreCluster(index, pageStartNum, total, listCnt, pageCnt, east, west, north, south) {
-       	var totalPageCnt = Math.ceil(total / listCnt);
-       	index -= 1;
-       	pageStartNum -= 1;
-       	if(pageStartNum <= 1){
-       		pageStartNum = 1;
-       	}
-       	if(index <= 0){
-       		console.log("이전페이지클릭 totalPageCnt: "+totalPageCnt+", index: "+index);
-       		index = 0;
-       	}
-       	$("#pageStartNum").val(pageStartNum);
-       	$("#index").val(index);
-
-       	ajaxListCluster(index, pageStartNum, east, west, north, south);
-
-       }
-
-       // 다음 페이지 index
-       function pageNextCluster(index, pageStartNum, total, listCnt, pageCnt, east, west, north, south) {
-       	var totalPageCnt = Math.ceil(total / listCnt); 
-       	var max = Math.ceil(totalPageCnt / pageCnt); 
-//       	if (max * pageCnt > index + pageCnt) {
-       		//console.log("다음페이지클릭: max*pageCnt:"+max*pageCnt+", index+pageCnt: "+index+pageCnt+", totalPageCnt: "+totalPageCnt+", max: "+max+", index:"+index);
-       	index += 1;
-       	pageStartNum += 1;
-       	if(pageStartNum > totalPageCnt - pageCnt){
-       		pageStartNum = totalPageCnt - pageCnt+1;
-       	}
-       	if(index >= totalPageCnt-1){
-       		console.log("다음페이지클릭 totalPageCnt: "+totalPageCnt+", index: "+index);
-       		index = totalPageCnt-1;
-       	}
-       	if(pageStartNum <= 0){
-       		pageStartNum = 1;
-       	}
-       	console.log("다음페이지클릭 pageCnt보다 인덱스 커질때 pageStartNum: "+pageStartNum+", index: "+index);
-       	$("#pageStartNum").val(pageStartNum);
-       	$("#index").val(index);
-       	ajaxListCluster(index, pageStartNum, east, west, north, south);
-       }
-       
-    // index 리스트 처리
-       function pageIndexCluster(index, pageStartNum, total, listCnt, pageCnt, east, west, north, south) {
-       	var totalPageCnt = Math.ceil(total / listCnt);
-       	console.log("pageIndex메서드1 pageStarNum: "+pageStartNum+", totalPageCnt: "+totalPageCnt);
-       	
-       	if(pageStartNum > totalPageCnt - pageCnt){
-       		pageStartNum = totalPageCnt - pageCnt+1;
-       	}
-       	if(pageStartNum <= 0){
-       		pageStartNum = 1;
-       	}
-       	$("#pageStartNum").val(pageStartNum);
-       	$("#index").val(index);
-       	console.log("숫자 페이지 클릭 pageStartNum: "+pageStartNum+", index: "+index);
-       	ajaxListCluster(index, pageStartNum, east, west, north, south);
-       }
-
-
-       function ajaxListCluster(index, pageStartNum, east, west, north, south){
-       	$.ajax({
-       		url : "clickClusterer.do",
-       		type : "post",
-       		//data : {"index" : pageStartNum-1, "pageStartNum" : $("#pageStartNum").val(), "listCnt" : $("#listCnt").val()},
-       		data : {"index" : index, "pageStartNum" : pageStartNum, "listCnt" : $("#listCnt").val(), east : east, west : west, north : north, south : south},
-       		success : function(responseData){
-       			
-       			//console.log("인입"+responseData);
-       			var data = responseData;
-       			//console.log("인입2"+data);
-       			var html = "";
-       			html += "<table class='table table-bordered'>";
-       			html += "<br/>";
-       			html += "<tr>";
-       			html += "<th><center>번호</center></th>";
-       			html += "<th><center>주소</center></th>";
-       			html += "<th><center>위도</center></th>";
-       			html += "<th><center>경도</center></th>";
-       			html += "<th><center>날짜</center></th>";
-       			html += "</tr>";
-       			if(data.length != 0){
-       				for(var i=0; i<data.list.length; i++){
-       					html +="<tr>";
-       					html +="<td>"+data.list[i].build_no+"</td>";
-       					html +="<td>"+data.list[i].address+"</td>";
-       					html +="<td>"+data.list[i].lat+"</td>";
-       					html +="<td>"+data.list[i].lng+"</td>";
-       					html +="<td>"+data.list[i].bu_rdate+"</td>";
-       					html +="</tr>";
-       				}
-       				html += "</table>";
-       			}
-       			var text = "";
-       			///////////////
-             		//5. paging view
-       			html += "<div id='page' style='height:100px;width:100%;background-color:red;position:absolute;bottom:0;'>";
-       			html += "<ul class='pagination' style='justify-content:center'>";
-       			//이전 페이지 이동
-       			//text += "<li class='page-item'><a class='page-link' onclick='pagePre("+data.pagingVo.pageStartNum+","+data.pagingVo.pageCnt+");'>&lsaquo;</a></li>";
-       			html += "<li class='page-item'><a class='page-link' onclick='pagePreCluster("+data.pagingVo.index+","+data.pagingVo.pageStartNum+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+","+data.east+","+data.west+","+data.north+","+data.south+");'>&lsaquo;</a></li>";
-       				//페이지번호
-       				for(var i=data.pagingVo.pageStartNum; i<=data.pagingVo.pageLastNum; i++){
-       					html += "<li class='pageIndex"+i+"'><a class='page-link' onclick='pageIndexCluster("+(i-1)+","+i+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+","+data.east+","+data.west+","+data.north+","+data.south+");'>"+i+"</a></li>";
-       				}
-       				//<!--다음 페이지 이동 -->
-       				html += "<li class='page-item'><a class='page-link' onclick='pageNextCluster("+data.pagingVo.index+","+data.pagingVo.pageStartNum+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+","+data.east+","+data.west+","+data.north+","+data.south+");'>&rsaquo;</a></li>";
-       				html += "</ul>";
-       				html += "</div>";
-       				$("#sidebar").empty().append(html);
-       				$(".pageIndex"+(data.pagingVo.index+1)).addClass("page-item active");
-       		}
-       	});
-       }
-       
-       
-       
 
 $('document').ready(function(){
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -137,7 +20,15 @@ $('document').ready(function(){
 	var level = map.getLevel();
 	var bounds = map.getBounds();
 	var swLatLng = bounds.getSouthWest();
+	$("#swLatLng").val(swLatLng);
+    $("#west").val(swLatLng.getLng());
+    $("#south").val(swLatLng.getLat());
+
 	var neLatLng = bounds.getNorthEast();
+	$("#neLatLng").val(neLatLng);
+    $("#east").val(neLatLng.getLng());
+    $("#north").val(neLatLng.getLat());
+    
 	var size = 80;
 	
 	 $("#map").mouseup(function(){
@@ -160,11 +51,13 @@ $('document').ready(function(){
 	    // 영역의 남서쪽 좌표를 얻어옵니다 
 	    swLatLng = bounds.getSouthWest(); 
 	    $("#swLatLng").val(swLatLng);
-	    
+	    $("#west").val(swLatLng.getLng());
+	    $("#south").val(swLatLng.getLat());
 	    // 영역의 북동쪽 좌표를 얻어옵니다 
 	    neLatLng = bounds.getNorthEast(); 
 	    $("#neLatLng").val(neLatLng);
-	   
+	    $("#east").val(neLatLng.getLng());
+	    $("#north").val(neLatLng.getLat());
 	    // 영역정보를 문자열로 얻어옵니다. ((남,서), (북,동)) 형식입니다
 	    var boundsStr = bounds.toString();
 	    
@@ -178,60 +71,8 @@ $('document').ready(function(){
 	    message += '북동쪽 좌표는 ' + neLatLng.getLat() + ', ' + neLatLng.getLng() + ' 입니다';
 	    
 	    console.log(message);
-	    
-	    $.ajax({
-	    	url : "mapMarker.do",
-	    	type : "post",
-	    	data : {centerLat : center.getLat(), centerLng : center.getLng(), 
-	    			neLng : neLatLng.getLng(), neLat : neLatLng.getLat(), 
-	    			swLng : swLatLng.getLng(), swLat : swLatLng.getLat(),
-	    			level : level},
-	    	success : function(responseData){
-	    		var data = responseData;
-	    		console.log("data east: "+data.east+", data west: "+data.west+", data south: "+data.south+", data north: "+data.north);
-				var html = "";
-				html += "<table class='table table-bordered'>";
-				html += "<br/>";
-				html += "<tr>";
-				html += "<th><center>번호</center></th>";
-				html += "<th><center>주소</center></th>";
-				html += "<th><center>위도</center></th>";
-				html += "<th><center>경도</center></th>";
-				html += "<th><center>날짜</center></th>";
-				html += "</tr>";
-				if(data.length != 0){
-					for(var i=0; i<data.list.length; i++){
-						html +="<tr>";
-						html +="<td>"+data.list[i].build_no+"</td>";
-						html +="<td>"+data.list[i].address+"</td>";
-						html +="<td>"+data.list[i].lat+"</td>";
-						html +="<td>"+data.list[i].lng+"</td>";
-						html +="<td>"+data.list[i].bu_rdate+"</td>";
-						html +="</tr>";
-					}
-					html += "</table>";
-				}
-				var text = "검색결과 "+data.count+" 개";
-				///////////////
-	      		//5. paging view
-				html += "<div id='page' style='height:100px;width:100%;background-color:red;position:absolute;bottom:0;'>";
-				html += "<ul class='pagination' style='justify-content:center'>";
-				//이전 페이지 이동
-				//text += "<li class='page-item'><a class='page-link' onclick='pagePre("+data.pagingVo.pageStartNum+","+data.pagingVo.pageCnt+");'>&lsaquo;</a></li>";
-				html += "<li class='page-item'><a class='page-link' onclick='pagePreCluster("+data.pagingVo.index+","+data.pagingVo.pageStartNum+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+","+data.east+","+data.west+","+data.north+","+data.south+");'>&lsaquo;</a></li>";
-					//페이지번호
-					for(var i=data.pagingVo.pageStartNum; i<=data.pagingVo.pageLastNum; i++){
-						html += "<li class='pageIndex"+i+"'><a class='page-link' onclick='pageIndexCluster("+(i-1)+","+i+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+","+data.east+","+data.west+","+data.north+","+data.south+");'>"+i+"</a></li>";
-					}
-					//<!--다음 페이지 이동 -->
-					html += "<li class='page-item'><a class='page-link' onclick='pageNextCluster("+data.pagingVo.index+","+data.pagingVo.pageStartNum+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+","+data.east+","+data.west+","+data.north+","+data.south+");'>&rsaquo;</a></li>";
-					html += "</ul>";
-					html += "</div>";
-					$("#sidebar").empty().append(html);
-					$(".pageIndex"+(data.pagingVo.index+1)).addClass("page-item active");
-					$("#listCount").empty().append(text);
-			}
-	    });
+	    console.log("listCount: "+$("#total").val()+",listCnt: "+$("#listCnt").val()+",pageCnt: "+$("#pageCnt").val());
+	    pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	    
 	});
 	 
@@ -337,64 +178,29 @@ $('document').ready(function(){
 	    // 영역의 남서쪽 좌표를 얻어옵니다 
 	    swLatLng = bounds.getSouthWest(); 
 	    $("#swLatLng").val(swLatLng);
-	    
+	    $("#west").val(swLatLng.getLng());
+	    $("#south").val(swLatLng.getLat());
 	    // 영역의 북동쪽 좌표를 얻어옵니다 
 	    neLatLng = bounds.getNorthEast(); 
 	    $("#neLatLng").val(neLatLng);
+	    $("#east").val(neLatLng.getLng());
+	    $("#north").val(neLatLng.getLat());
+	    /////////////////////////////////////////
+
+	    // 영역의 남서쪽 좌표를 얻어옵니다 
+	    swLatLng = bounds.getSouthWest(); 
+	    $("#swLatLng").val(swLatLng);
+	    $("#west").val(swLatLng.getLng());
+	    $("#south").val(swLatLng.getLat());
+	    // 영역의 북동쪽 좌표를 얻어옵니다 
+	    neLatLng = bounds.getNorthEast(); 
+	    $("#neLatLng").val(neLatLng);
+	    $("#east").val(neLatLng.getLng());
+	    $("#north").val(neLatLng.getLat());
+	    pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
+	    
     	
-	    $.ajax({
-	    	url : "mapMarker.do",
-	    	type : "post",
-	    	data : {centerLat : center.getLat(), centerLng : center.getLng(), 
-	    			neLng : neLatLng.getLng(), neLat : neLatLng.getLat(), 
-	    			swLng : swLatLng.getLng(), swLat : swLatLng.getLat(),
-	    			level : level},
-	    	success : function(responseData){
-	    		var data = responseData;
-	    		console.log("data east: "+data.east+", data west: "+data.west+", data south: "+data.south+", data north: "+data.north);
-				var html = "";
-				html += "<table class='table table-bordered'>";
-				html += "<br/>";
-				html += "<tr>";
-				html += "<th><center>번호</center></th>";
-				html += "<th><center>주소</center></th>";
-				html += "<th><center>위도</center></th>";
-				html += "<th><center>경도</center></th>";
-				html += "<th><center>날짜</center></th>";
-				html += "</tr>";
-				if(data.length != 0){
-					for(var i=0; i<data.list.length; i++){
-						html +="<tr>";
-						html +="<td>"+data.list[i].build_no+"</td>";
-						html +="<td>"+data.list[i].address+"</td>";
-						html +="<td>"+data.list[i].lat+"</td>";
-						html +="<td>"+data.list[i].lng+"</td>";
-						html +="<td>"+data.list[i].bu_rdate+"</td>";
-						html +="</tr>";
-					}
-					html += "</table>";
-				}
-				var text = "검색결과 "+data.count+" 개";
-				///////////////
-	      		//5. paging view
-				html += "<div id='page' style='height:100px;width:100%;background-color:red;position:absolute;bottom:0;'>";
-				html += "<ul class='pagination' style='justify-content:center'>";
-				//이전 페이지 이동
-				//text += "<li class='page-item'><a class='page-link' onclick='pagePre("+data.pagingVo.pageStartNum+","+data.pagingVo.pageCnt+");'>&lsaquo;</a></li>";
-				html += "<li class='page-item'><a class='page-link' onclick='pagePreCluster("+data.pagingVo.index+","+data.pagingVo.pageStartNum+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+","+data.east+","+data.west+","+data.north+","+data.south+");'>&lsaquo;</a></li>";
-					//페이지번호
-					for(var i=data.pagingVo.pageStartNum; i<=data.pagingVo.pageLastNum; i++){
-						html += "<li class='pageIndex"+i+"'><a class='page-link' onclick='pageIndexCluster("+(i-1)+","+i+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+","+data.east+","+data.west+","+data.north+","+data.south+");'>"+i+"</a></li>";
-					}
-					//<!--다음 페이지 이동 -->
-					html += "<li class='page-item'><a class='page-link' onclick='pageNextCluster("+data.pagingVo.index+","+data.pagingVo.pageStartNum+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+","+data.east+","+data.west+","+data.north+","+data.south+");'>&rsaquo;</a></li>";
-					html += "</ul>";
-					html += "</div>";
-					$("#sidebar").empty().append(html);
-					$(".pageIndex"+(data.pagingVo.index+1)).addClass("page-item active");
-					$("#listCount").empty().append(text);
-			}
-	    });
+	   
     }
 
 
@@ -404,66 +210,16 @@ $('document').ready(function(){
     	rectangle.setOptions({fillColor: 'rgba(0,0,0,0)'});
     	rectangle.setOptions({strokeColor: 'rgba(0,0,0,0)'});
         
-//    	var dataa = clusterer.getStyles();
-//    	for(i in dataa){
-//    		console.log("no is " + [i] + ", value is " + dataa[i]);
-//    	}
-    	
     	var west = cluster.getBounds().da;
+    	$("#west").val(west);
     	var south = cluster.getBounds().ka;
+    	$("#south").val(south);
     	var east = cluster.getBounds().ia;
+    	$("#east").val(east);
     	var north = cluster.getBounds().ja;
+    	$("#north").val(north);
     	//console.log("클러스터러 영역:"+west+", "+south+", "+east+", "+north );
-	      $.ajax({
-	    	url : "clickClusterer.do",
-	    	type : "get",
-	    	data : {west : west, south : south, east : east, north : north},
-	    	success : function(responseData){
-	    		var data = responseData;
-	    		console.log("data east: "+data.east+", data west: "+data.west+", data south: "+data.south+", data north: "+data.north);
-				var html = "";
-				html += "<table class='table table-bordered'>";
-				html += "<br/>";
-				html += "<tr>";
-				html += "<th><center>번호</center></th>";
-				html += "<th><center>주소</center></th>";
-				html += "<th><center>위도</center></th>";
-				html += "<th><center>경도</center></th>";
-				html += "<th><center>날짜</center></th>";
-				html += "</tr>";
-				if(data.length != 0){
-					for(var i=0; i<data.list.length; i++){
-						html +="<tr>";
-						html +="<td>"+data.list[i].build_no+"</td>";
-						html +="<td>"+data.list[i].address+"</td>";
-						html +="<td>"+data.list[i].lat+"</td>";
-						html +="<td>"+data.list[i].lng+"</td>";
-						html +="<td>"+data.list[i].bu_rdate+"</td>";
-						html +="</tr>";
-					}
-					html += "</table>";
-				}
-				var text = "검색결과 "+data.count+" 개";
-				///////////////
-	      		//5. paging view
-				html += "<div id='page' style='height:100px;width:100%;background-color:red;position:absolute;bottom:0;'>";
-				html += "<ul class='pagination' style='justify-content:center'>";
-				//이전 페이지 이동
-				//text += "<li class='page-item'><a class='page-link' onclick='pagePre("+data.pagingVo.pageStartNum+","+data.pagingVo.pageCnt+");'>&lsaquo;</a></li>";
-				html += "<li class='page-item'><a class='page-link' onclick='pagePreCluster("+data.pagingVo.index+","+data.pagingVo.pageStartNum+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+","+data.east+","+data.west+","+data.north+","+data.south+");'>&lsaquo;</a></li>";
-				//페이지번호
-				for(var i=data.pagingVo.pageStartNum; i<=data.pagingVo.pageLastNum; i++){
-					html += "<li class='pageIndex"+i+"'><a class='page-link' onclick='pageIndexCluster("+(i-1)+","+i+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+","+data.east+","+data.west+","+data.north+","+data.south+");'>"+i+"</a></li>";
-				}
-				//<!--다음 페이지 이동 -->
-				html += "<li class='page-item'><a class='page-link' onclick='pageNextCluster("+data.pagingVo.index+","+data.pagingVo.pageStartNum+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+","+data.east+","+data.west+","+data.north+","+data.south+");'>&rsaquo;</a></li>";
-				html += "</ul>";
-				html += "</div>";
-				$("#sidebar").empty().append(html);
-				$(".pageIndex"+(data.pagingVo.index+1)).addClass("page-item active");
-				$("#listCount").empty().append(text);
-			}
-	    });
+    	pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val()); 
    });
     
     var rectangle;
@@ -561,103 +317,90 @@ $('document').ready(function(){
 	// 보증금 검색 0원 부터
 	$("#begin_0").click(function(){
 		if($("#begin_0").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_text").val("0원");
+		$("#begin_text").val(0);
 		$("#begin_0").css("background-color", "#3B8DE0");
 		$("#begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_500").click(function(){
 		if($("#begin_500").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_text").val("500만원");
+		$("#begin_text").val(500);
 		$("#begin_500").css("background-color", "#3B8DE0");
 		$("#begin_0 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0").addClass("disabled");
 		$("#end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		console.log("보증금시작 500만원 선택1");
+		if($("#end_text").val() < 500 || $("#end_text").val() === ""){
+			$("#end_text").val(500); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_1000").click(function(){
 		if($("#begin_1000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_text").val("1000만원");
+		$("#begin_text").val(1000);
 		$("#begin_1000").css("background-color", "#3B8DE0");
 		$("#begin_0 , #begin_500 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500").addClass("disabled");
 		$("#end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#end_text").val() < 1000 || $("#end_text").val() === ""){
+			$("#end_text").val(1000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_2000").click(function(){
 		if($("#begin_2000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_text").val("2000만원");
+		$("#begin_text").val(2000);
 		$("#begin_2000").css("background-color", "#3B8DE0");
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000").addClass("disabled");
 		$("#end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#end_text").val() < 2000 || $("#end_text").val() === ""){
+			$("#end_text").val(2000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_3000").click(function(){
 		if($("#begin_3000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_text").val("3000만원");
+		$("#begin_text").val(3000);
 		$("#begin_3000").css("background-color", "#3B8DE0");
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000").addClass("disabled");
 		$("#end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#end_text").val() < 3000 || $("#end_text").val() === ""){
+			$("#end_text").val(3000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_4000").click(function(){
 		if($("#begin_4000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_text").val("4000만원");
+		$("#begin_text").val(4000);
 		$("#begin_4000").css("background-color", "#3B8DE0");
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000").addClass("disabled");
 		$("#end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#end_text").val() < 4000 || $("#end_text").val() === ""){
+			$("#end_text").val(4000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_5000").click(function(){
@@ -665,106 +408,94 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_text").val("5000만원");
+		$("#begin_text").val(5000);
 		$("#begin_5000").css("background-color", "#3B8DE0");
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000").addClass("disabled");
 		$("#end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#end_text").val() < 5000 || $("#end_text").val() === ""){
+			$("#end_text").val(5000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_6000").click(function(){
 		if($("#begin_6000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_text").val("6000만원");
+		$("#begin_text").val(6000);
 		$("#begin_6000").css("background-color", "#3B8DE0");
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000").addClass("disabled");
 		$("#end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#end_text").val() < 6000 || $("#end_text").val() === ""){
+			$("#end_text").val(6000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_7000").click(function(){
 		if($("#begin_7000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_text").val("7000만원");
+		$("#begin_text").val(7000);
 		$("#begin_7000").css("background-color", "#3B8DE0");
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000").addClass("disabled");
 		$("#end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#end_text").val() < 7000 || $("#end_text").val() === ""){
+			$("#end_text").val(7000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_8000").click(function(){
 		if($("#begin_8000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_text").val("8000만원");
+		$("#begin_text").val(8000);
 		$("#begin_8000").css("background-color", "#3B8DE0");
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000").addClass("disabled");
 		$("#end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#end_text").val() < 8000 || $("#end_text").val() === ""){
+			$("#end_text").val(8000);
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_9000").click(function(){
 		if($("#begin_9000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_text").val("9000만원");
+		$("#begin_text").val(9000);
 		$("#begin_9000").css("background-color", "#3B8DE0");
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000").addClass("disabled");
 		$("#end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#end_text").val() < 9000 || $("#end_text").val() === ""){
+			$("#end_text").val(9000);
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_10000").click(function(){
 		if($("#begin_10000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_text").val("1억");
+		$("#begin_text").val(10000);
 		$("#begin_10000").css("background-color", "#3B8DE0");
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000").addClass("disabled");
 		$("#end_10000, #end_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#end_text").val() < 10000 || $("#end_text").val() === ""){
+			$("#end_text").val(10000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_unlimited").click(function(){
 		if($("#begin_unlimited").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
 		$("#begin_text").val("무제한");
@@ -772,28 +503,25 @@ $('document').ready(function(){
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000").addClass("disabled");
 		$("#end_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#end_text").val() != "무제한" || $("#end_text").val() === ""){
+			$("#end_text").val("무제한"); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	// 보증금 0원 까지
 	$("#end_0").click(function(){
 		if($("#end_0").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_text").val("0원");
+		$("#end_text").val(0);
 		$("#end_0").css("background-color", "#3B8DE0");
 		$("#end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#begin_text").val() > 0 || $("#begin_text").val() === ""){
+			$("#begin_text").val(0); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_500").click(function(){
@@ -801,52 +529,47 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_text").val("500만원");
+		$("#end_text").val(500);
 		$("#end_500").css("background-color", "#3B8DE0");
 		$("#end_0 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500").removeClass("disabled");
 		$("#begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#begin_text").val() > 500 || $("#begin_text").val() === ""){
+			$("#begin_text").val(500); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 		
 	});
 	
 	$("#end_1000").click(function(){
 		if($("#end_1000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_text").val("1000만원");
+		$("#end_text").val(1000);
 		$("#end_1000").css("background-color", "#3B8DE0");
 		$("#end_0 , #end_500 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000").removeClass("disabled");
 		$("#begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#begin_text").val() > 1000 || $("#begin_text").val() === ""){
+			$("#begin_text").val(1000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 		
 	});
 	
 	$("#end_2000").click(function(){
 		if($("#end_2000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_text").val("2000만원");
+		$("#end_text").val(2000);
 		$("#end_2000").css("background-color", "#3B8DE0");
 		$("#end_0 , #end_500 , #end_1000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000").removeClass("disabled");
 		$("#begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#begin_text").val() > 2000 || $("#begin_text").val() === ""){
+			$("#begin_text").val(2000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_3000").click(function(){
@@ -854,33 +577,30 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_text").val("3000만원");
+		$("#end_text").val(3000);
 		$("#end_3000").css("background-color", "#3B8DE0");
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000").removeClass("disabled");
 		$("#begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#begin_text").val() > 3000 || $("#begin_text").val() === ""){
+			$("#begin_text").val(3000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_4000").click(function(){
 		if($("#end_4000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_text").val("4000만원");
+		$("#end_text").val(4000);
 		$("#end_4000").css("background-color", "#3B8DE0");
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000").removeClass("disabled");
 		$("#begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#begin_text").val() > 4000 || $("#begin_text").val() === ""){
+			$("#begin_text").val(4000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_5000").click(function(){
@@ -888,67 +608,60 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_text").val("5000만원");
+		$("#end_text").val(5000);
 		$("#end_5000").css("background-color", "#3B8DE0");
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000").removeClass("disabled");
 		$("#begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#begin_text").val() > 5000 || $("#begin_text").val() === ""){
+			$("#begin_text").val(5000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_6000").click(function(){
 		if($("#end_6000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_text").val("6000만원");
+		$("#end_text").val(6000);
 		$("#end_6000").css("background-color", "#3B8DE0");
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000").removeClass("disabled");
 		$("#begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#begin_text").val() > 6000 || $("#begin_text").val() === ""){
+			$("#begin_text").val(6000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_7000").click(function(){
 		if($("#end_7000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_text").val("7000만원");
+		$("#end_text").val(7000);
 		$("#end_7000").css("background-color", "#3B8DE0");
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000").removeClass("disabled");
 		$("#begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#begin_text").val() > 7000 || $("#begin_text").val() === ""){
+			$("#begin_text").val(7000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_8000").click(function(){
 		if($("#end_8000").attr('class').includes("disabled")){
-			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_text").val("8000만원");
+		$("#end_text").val(8000);
 		$("#end_8000").css("background-color", "#3B8DE0");
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000").removeClass("disabled");
 		$("#begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#begin_text").val() > 8000 || $("#begin_text").val() === ""){
+			$("#begin_text").val(8000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_9000").click(function(){
@@ -956,16 +669,15 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_text").val("9000만원");
+		$("#end_text").val(9000);
 		$("#end_9000").css("background-color", "#3B8DE0");
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000").removeClass("disabled");
 		$("#begin_10000, #begin_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#begin_text").val() > 9000 || $("#begin_text").val() === ""){
+			$("#begin_text").val(9000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_10000").click(function(){
@@ -973,16 +685,15 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_text").val("1억");
+		$("#end_text").val(10000);
 		$("#end_10000").css("background-color", "#3B8DE0");
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000").removeClass("disabled");
 		$("#begin_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#begin_text").val() > 10000 || $("#begin_text").val() === ""){
+			$("#begin_text").val(10000); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_unlimited").click(function(){
@@ -994,12 +705,13 @@ $('document').ready(function(){
 		$("#end_unlimited").css("background-color", "#3B8DE0");
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_text").val(), end : $("#end_text").val}
-		});
+		if($("#begin_text").val() != "무제한"){
+			$("#begin_text").val("무제한"); 
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
+	
+
 	
 	////////////////////////////////////////////////////////////////////////////////
 
@@ -1474,43 +1186,57 @@ $('document').ready(function(){
     });
 	
 	
-    // 매물 종류
+    // 매물 종류/////////////////////////////////////
+	 $("#kind_of_sale").change(function (){
+		 console.log("매물종류 변경");
+	 });
 	// 월세
 	$("#month_rent").click( function () {
 		  var arc = $("#month_rent").text();
 		  $("#kind_of_sale").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
     // 전세or월세
 	$("#engage_or_rent").click( function () {
 		  var arc = $("#engage_or_rent").text();
 		  $("#kind_of_sale").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
     // 전세
 	$("#engage").click( function () {
 		  var arc = $("#engage").text();
 		  $("#kind_of_sale").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
     // 매매
 	$("#sale").click( function () {
 		  var arc = $("#sale").text();
 		  $("#kind_of_sale").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
-	// 거래 종류
+	// 거래 종류///////////////////////////////////////////
+//	 $("#kind_of_trade").change(function (){
+//		 console.log("거래종류 변경"+$("#kind_of_trade").val());
+//	 });
+	
     // 전체
 	$("#all").click( function () {
 		  var arc = $("#all").text();
 		  $("#kind_of_trade").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
     // 중개
 	$("#estate_agent").click( function () {
 		  var arc = $("#estate_agent").text();
 		  $("#kind_of_trade").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
     // 직거래
 	$("#direct_deal").click( function () {
 		  var arc = $("#direct_deal").text();
 		  $("#kind_of_trade").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 
 	// 방종류
@@ -1518,36 +1244,45 @@ $('document').ready(function(){
 	$("#room_count_all").click( function () {
 		  var arc = $("#room_count_all").text();
 		  $("#kind_of_room").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
     // 원룸
 	$("#room_count_1").click( function () {
 		  var arc = $("#room_count_1").text();
 		  $("#kind_of_room").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
     // 1.5룸
 	$("#room_count_1.5").click( function () {
 		  var arc = $("#room_count_1.5").text();
 		  $("#kind_of_room").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
     // 투룸
 	$("#room_count_2").click( function () {
 		  var arc = $("#room_count_2").text();
 		  $("#kind_of_room").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
     // 쓰리룲
 	$("#room_count_3").click( function () {
 		  var arc = $("#room_count_3").text();
 		  $("#kind_of_room").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
     // 오피스텔
 	$("#room_count_office").click( function () {
 		  var arc = $("#room_count_office").text();
 		  $("#kind_of_room").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
     // 아파트
 	$("#room_count_appart").click( function () {
+		console.log("아파트 선택 인입");
 		  var arc = $("#room_count_appart").text();
 		  $("#kind_of_room").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
+		  //search();
 	});
 	/////////////////////////////////////////////////////////////
 
@@ -1613,7 +1348,94 @@ $('document').ready(function(){
 		  var arc = $("#dropdown-item_1").text();
 		  $("#navbar_main_dropdown_1").empty().append(arc);
 	});
-
-});	
 	
-    
+	//////////////////////관심목록 등록////////////////////////
+	
+	//매물 마우스 오버
+	function changebgc(c){
+		$(c).mouseover(function(){
+			$(c).css('background-color', '#D2E5FF');
+			//e6e6e6
+		});
+	}
+
+	//매물 마우스 아웃
+	$(".itemList").mouseout(function(){
+		$('.itemList').css('background-color', '#00ff0000');
+		//e6e6e6
+	});
+	
+});	
+
+//좋아요 하트 버튼 동작
+function heart(that){
+	if($(that).children().children().attr('class').includes("o")){
+		$(that).children().children().removeClass().addClass("fa fa-heart fa-2x");
+	}else {
+		$(that).children().children().removeClass().addClass("fa fa-heart-o fa-2x");
+	}
+}
+
+//하트 마우스 오버
+function heartMouseOver(that){
+	$(that).css('color', 'red');
+}
+
+//하트 마우스 아웃
+function heartMouseOut(that){
+	$(that).css("color", "gray");
+}
+
+//매물 마우스 오버시 백컬러 변경
+function backColor(that){
+	$(that).css('background-color', '#D2E5FF');
+}
+
+//매물 마우스 아웃 백컬러 변경
+function buildMouseOut(that){
+	$(that).css('background-color', '#00ff0000');
+	//e6e6e6
+}
+
+//search 태우는곳
+function search (){
+	var protype = $("#kind_of_room").text();
+	console.log("protype: "+protype);
+	$.ajax({
+		url : "map.do",
+   		type : "get",
+   		data : {protype : protype, listCnt : 10}
+   		//success : function(responseData){}
+	});
+}
+//보증금 부터~ 입력창
+function beginKeyUp(){
+	if(isNaN($("#end_text").val())) $("#end_text").val(99999);
+	if(isNaN($("#begin_text").val())) $("#begin_text").val(0);
+	var end = $("#end_text").val();
+	var begin = $("#begin_text").val();
+	setTimeout(function() {
+		if(end < begin && !isNaN(end) && !isNaN(begin)) $("#end_text").val(begin);
+		}, 1000);
+
+}
+//보증금 ~까지 입력창
+function endKeyUp(){
+	if(isNaN($("#end_text").val())) $("#end_text").val(99999);
+	if(isNaN($("#begin_text").val())) $("#begin_text").val(0);
+	var end = $("#end_text").val();
+	var begin = $("#begin_text").val();
+	setTimeout(function() {
+		if(end < begin && !isNaN(end) && !isNaN(begin)) $("#begin_text").val(end);
+		}, 1000);
+
+}
+//보증금, 월세 숫자만 입력 받을 수 있게 하는 메서드
+function onlyNumber(obj) {
+	if(isNaN($("#end_text").val())) $("#end_text").val(99999);
+	if(isNaN($("#begin_text").val())) $("#begin_text").val(0);
+    $(obj).keyup(function(){
+         $(this).val($(this).val().replace(/[^0-9]/g,""));
+    }); 
+
+}

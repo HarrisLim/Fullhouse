@@ -143,7 +143,7 @@ $('document').ready(function (){
 		$.ajax({
 			url : "compulsionInjection.do",
 			type : "post",
-			data : {count : 10000},
+			data : {count : 100},
 			success : function(responseData){
 				var data = JSON.parse(responseData);
 				//console.log("인입: "+data.randomLat.length);
@@ -176,7 +176,7 @@ $('document').ready(function (){
 							}
 						}
 						if(result[0] !== undefined){
-// 							console.log("good: "+ result[0].address.address_name); // 됐어요 종석이형 !!!!! ^^
+ 							console.log("good: "+ result[0].address.address_name); // 됐어요 종석이형 !!!!! ^^
 							addressToLat(result[0].address.address_name);
 							//console.log("good: "+ result[0].address.address_name);
 				
