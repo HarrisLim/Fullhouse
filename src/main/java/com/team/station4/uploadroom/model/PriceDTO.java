@@ -4,15 +4,19 @@ public class PriceDTO {
 	int priceNo;
 	int lease;
 	int salePrice;
+	int monthly;
+	int deposit;
 	int build_no;
 	
 	public PriceDTO(){}
 
-	public PriceDTO(int priceNo, int lease, int salePrice, int build_no) {
+	public PriceDTO(int priceNo, int lease, int salePrice, int monthly, int deposit, int build_no) {
 		super();
 		this.priceNo = priceNo;
 		this.lease = lease;
 		this.salePrice = salePrice;
+		this.monthly = monthly;
+		this.deposit = deposit;
 		this.build_no = build_no;
 	}
 
@@ -40,6 +44,22 @@ public class PriceDTO {
 		this.salePrice = salePrice;
 	}
 
+	public int getMonthly() {
+		return monthly;
+	}
+
+	public void setMonthly(int monthly) {
+		this.monthly = monthly;
+	}
+
+	public int getDeposit() {
+		return deposit;
+	}
+
+	public void setDeposit(int deposit) {
+		this.deposit = deposit;
+	}
+
 	public int getBuild_no() {
 		return build_no;
 	}
@@ -47,5 +67,4 @@ public class PriceDTO {
 	public void setBuild_no(int build_no) {
 		this.build_no = build_no;
 	}
-	
 }

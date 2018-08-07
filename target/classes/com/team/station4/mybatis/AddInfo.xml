@@ -6,17 +6,39 @@
 	
 	<resultMap type="AddInfo" id="AddInfo">
 		<result property="addinfo_no" column="ADDINFO_NO" />
-		<result property="costfee" column="COSTFEE" />
+		<result property="costFee" column="COSTFEE" />
+		<result property="internet" column="INTERNET" />
+		<result property="cost_tv" column="COST_TV" />
+		<result property="cleanFee" column="CLEANFEE" />
+		<result property="waterFee" column="WATERFEE" />
+		<result property="gas" column="GAS" />
+		<result property="electricity" column="ELECTRICITY" />
 		<result property="parking" column="PARKING" />
 		<result property="elevator" column="ELEVATOR" />
 		<result property="heat" column="HEAT" />
 		<result property="animal" column="ANIMAL" />
-		<result property="movedate" column="MOVEDATE" />
-		<result property="option_no" column="OPTION_NO" />
-		<result property="cost_no" column="COST_NO" />
+		<result property="moveDate" column="MOVEDATE" />
+		<result property="aircon" column="AIRCON" />
+		<result property="washing" column="WHASING" />
+		<result property="bed" column="BED" />
+		<result property="desk" column="DESK" />
+		<result property="closet" column="CLOSET" />
+		<result property="option_tv" column="OPTION_TV" />
+		<result property="fridge" column="FRIDGE" />
+		<result property="shoerack" column="SHOERACK" />
+		<result property="gasstove" column="GASSTOVE" />
+		<result property="induction" column="INDUCTION" />
+		<result property="microwave" column="MICROWAVE" />
+		<result property="doorlock" column="DOORLOCK" />
+		<result property="bidet" column="BIDET" />
 	</resultMap>
-<!-- 		<select id="lrnoCheck" resultType="int" parameterType="String"> -->
-<!-- 			select Count(*) from ESTATE where LRNO=#{lrno}  -->
-<!-- 		</select> -->
+	<insert id="myInsert" parameterType="String">
+		insert into ADDINFO values(ADDINFO_NO_SEQ.nextval, #{costFee}, #{internet}, #{cost_tv}, #{cleanFee}, #{waterFee}, #{gas}, #{electricity}, #{parking}, #{elevator}, #{heat}, #{animal}, #{moveDate}, #{aircon}, #{washing}, #{bed}, #{desk}, #{closet}, #{option_tv}, #{fridge}, #{shoerack}, #{gasstove}, #{induction}, #{microwave}, #{doorlock}, #{bidet})
+	</insert>
+	<select id="mySelect" resultType="int">
+		select max(addinfo_no) from ADDINFO
+	</select>
 		
 	</mapper>
+
+	

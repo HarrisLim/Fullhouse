@@ -21,10 +21,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.team.station4.HomeController;
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.uploadroom.model.AddInfoDTO;
-import com.team.station4.uploadroom.model.CostOptionDTO;
-import com.team.station4.uploadroom.model.ExplainDTO;
-import com.team.station4.uploadroom.model.MonthlyDTO;
-import com.team.station4.uploadroom.model.OptionsDTO;
 import com.team.station4.uploadroom.model.PriceDTO;
 import com.team.station4.uploadroom.model.service.UploadroomService;
 
@@ -39,70 +35,51 @@ public class UploadroomController {
 		return "house/uploadroom";
 	}
 	
-//	@RequestMapping(value="house/uploadpic.do")
-//	public @ResponseBody List<File> getPic(){
-////		List<File> fileList = new ArrayList<File>();
-//		System.out.println("hi");
-//		return fileList;
-//	}
-	
-	@RequestMapping(value="house/uploaddroomsubmit.do", method=RequestMethod.POST) // @RequestParam(value="photo", required=false) List<MultipartFile> loadfile,
-	public String uploadroomsubmit(OptionsDTO optionsDTO, CostOptionDTO costOptionDTO //BuildDTO mapDTO, AddInfoDTO addInfoDTO, ExplainDTO explainDTO, OptionsDTO optionsDTO, PriceDTO priceDTO,
-													// @RequestParam(value="monthly", required=false) List<String> monthly, @RequestParam(value="deposit", required=false) List<String> deposit
+	@RequestMapping(value="house/uploaddroomsubmit.do", method=RequestMethod.POST)
+	public String uploadroomsubmit(AddInfoDTO addInfoDTO, BuildDTO buildDTO, PriceDTO priceDTO,
+													@RequestParam(value="monthly", required=false) List<String> monthly, @RequestParam(value="deposit", required=false) List<String> deposit
 			) {
-		int idx = wholePath.lastIndexOf(",");
-		wholePath = wholePath.substring(0, idx);
-		System.out.println("getAircon: "+ optionsDTO.getAircon());
-		System.out.println("getBed: "+ optionsDTO.getBed());
-		System.out.println("getFridge: "+ optionsDTO.getFridge());
-		System.out.println("getMicrowave: "+ optionsDTO.getMicrowave());
-		System.out.println("getMicrowave: "+ optionsDTO.getShoerack());
-		System.out.println("getBidet: "+ optionsDTO.getBidet());
-		urService.optionsInsertService(optionsDTO);
-		System.out.println("options_no: "+urService.optionsSelectService());
-//		System.out.println("addr: "+ mapDTO.getAddress()); // 파일업로드 테스트를 위한 주석 
-//		System.out.println("protype: "+ mapDTO.getProtype());
-//		System.out.println("wholeFloor: "+ mapDTO.getWholeFloor());
-//		System.out.println("getLat: "+ mapDTO.getLat());
-//		System.out.println("getLng: "+ mapDTO.getLng());
-//		System.out.println("floor: "+ mapDTO.getFloor());
-//		System.out.println("gArea: "+ mapDTO.getgArea());
-//		System.out.println("jArea: "+ mapDTO.getjArea());
-//		System.out.println("CostFee: "+ addInfoDTO.getCostFee());
-		System.out.println("getInternet: "+ costOptionDTO.getInternet());
-		System.out.println("getCost_tv: "+ costOptionDTO.getCost_tv());
-		System.out.println("getCleanFee: "+ costOptionDTO.getCleanFee());
-		System.out.println("getWaterFee: "+ costOptionDTO.getWaterFee());
-		System.out.println("getGas: "+ costOptionDTO.getGas());
-		System.out.println("getElecticity: "+ costOptionDTO.getElecticity());
-//		System.out.println("moveDate: "+ addInfoDTO.getMoveDate());
-//		System.out.println("getParking: "+ addInfoDTO.getParking());
-//		System.out.println("Elevator: "+ addInfoDTO.getElevator());
-//		System.out.println("Heat: "+ addInfoDTO.getHeat());
-//		System.out.println("animal: "+ addInfoDTO.getAnimal());
-//		System.out.println("RoomTitle: "+ explainDTO.getRoomTitle());
-//		System.out.println("ExplainText: "+ explainDTO.getExplainText());
-//		System.out.println("getPrivateMemo: "+ explainDTO.getPrivateMemo());
-//		System.out.println("SalePrice: "+ priceDTO.getSalePrice());
-//		System.out.println("Lease: "+ priceDTO.getLease());
-//		for(int i=0; i<monthly.size(); i++) {
-//			System.out.println("Monthly("+i+"): "+ monthly.get(i));
-//			System.out.println("Deposit("+i+"): "+ deposit.get(i));	
-//		}
+		System.out.println("buildType: "+ buildDTO.getBuildType());
+		 // 맨 마지막 ,(콤마) 제거
+		if(wholePath.contains(",")) { // 한장일 때, 
+			int idx = wholePath.lastIndexOf(",");
+			wholePath = wholePath.substring(0, idx);
+		}
+		System.out.println("wholePath: "+wholePath);
+		
+		
+		urService.addInfoInsertService(addInfoDTO); // 추가정보 
+		System.out.println("addinfo_no: "+ urService.addInfoSelectService());
+		
+		
+		buildDTO.setAddInfo_no(urService.addInfoSelectService());
+		buildDTO.setPicPath(wholePath);
+		urService.buildingInsertService(buildDTO); // 매물
+		System.out.println("buildingSelectService: "+urService.buildingSelectService());
+		
+		priceDTO.setBuild_no(urService.buildingSelectService());
+		for(int i=0; i<monthly.size(); i++) {
+			priceDTO.setMonthly(Integer.parseInt(monthly.get(i)));
+			priceDTO.setDeposit(Integer.parseInt(deposit.get(i)));
+			if(i==0) urService.priceInsertService(priceDTO);
+			else urService.priceMonthlyInsertService(priceDTO);
+		}
 		
 		return "redirect:/house/uploadroom.do";
 	}
 
-//    private static final int RESULT_EXCEED_SIZE = -2;
+    private static final int RESULT_EXCEED_SIZE = -2;
 //    private static final int RESULT_SUCCESS = 1;
-//    private static final long LIMIT_SIZE = 10 * 1024 * 1024;
+    private static final long LIMIT_SIZE = 10 * 1024 * 1024;
+//    private static final long LIMIT_SIZE = 1024 * 1024; // 테스트를 위해 1MB로 해놨따. 
     
 	@ResponseBody
     @RequestMapping(value="house/imageupload.do", method=RequestMethod.POST)
     public int multiImageUpload(@RequestParam("uploadFiles")List<MultipartFile> images) {
 		try {
+			wholePath="";
 	        long sizeSum = 0;
-	        String path = "/Users/harris/Documents/java_bit/sts/workspace/Fullhouse/src/main/webapp/resources/kanu/roomimg";
+	        String path = "resources/kanu/roomimg";
 	        File fStore = new File(path);
 	        if(!fStore.exists()) {
 	        	fStore.mkdirs();
@@ -112,11 +89,12 @@ public class UploadroomController {
 	        	imgFiles.add(image);
 	            String originalName = image.getOriginalFilename();
 	            System.out.println("originalname: " + originalName);
+	            
 	            //용량 검사
-	//            sizeSum += image.getSize();
-	//            if(sizeSum >= LIMIT_SIZE) {
-	//                return RESULT_EXCEED_SIZE;
-	//            }
+	            sizeSum += image.getSize();
+	            if(sizeSum >= LIMIT_SIZE) {
+	                return RESULT_EXCEED_SIZE;
+	            }
 	
 	            if(new File(path, originalName).exists()) {
 	            	int idx = originalName.lastIndexOf(".");

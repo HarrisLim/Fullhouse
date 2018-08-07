@@ -26,12 +26,10 @@
 					<h2 class="h1 mb-4">매물관리</h2>
 				    <!-- 로그인된 아이디에 등록한 매물이 없다면, -->
 					<p class="lead lh-180">
-						일반회원은 1개의 매물만 등록이 가능합니다.<br><br>
-						- 공개중: 내가 등록한 매물이 공개중인 상태<br>
-						- 거래완료: 등록한 매물이 거래완료된 상태<br> 
-						- 검수반려: 운영원칙 위배 또는 신고로 비공개된 상태<br>
-					</p>
-					<br><br><br>
+						일반회원은 1개의 매물만 등록이 가능합니다. -- 일반회원일 때만 보여줘.
+					</p><br>
+					${buildList[0].lat}
+					${buildList[0].roomTitle}
 					<!-- 로그인된 아이디에 등록한 매물이 있다면,  -->
 					<nav>
 					  <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -44,17 +42,12 @@
 					  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 					  <br>
 						 <div align="right">
-							<select>
-								<option value="allacount">전체 계정</option> <!-- 해당 공인중개사에 있는 계정을 선택하여 볼 수 있다. -->
-								<option value="firstaccount">1번 계정</option>
-								<option value="secondaccount">2번 계정</option>
-							</select>
 							<input placeholder="매물번호/제목/메모" style="padding:5px">
 							<button type="button" class="btn btn-sm btn-outline-dark">검색</button> 
 						</div>
 						<div class="btn-group" role="group" style="width:100%; margin:10px 0 10px 0">
 					        <button type="button" class="btn btn-outline-dark" style="width:100%">전체</button>
-					        <button type="button" class="btn btn-outline-dark" style="width:100%">광고 진행</button>
+					        <button type="button" class="btn btn-outline-dark" style="width:100%">광고중</button>
 					        <button type="button" class="btn btn-outline-dark" style="width:100%">광고 종료</button>
 					        <button type="button" class="btn btn-outline-dark" style="width:100%">거래 완료</button>
 					        <button type="button" class="btn btn-outline-dark" style="width:100%">검수 반려</button>
@@ -62,139 +55,44 @@
 				       	<div>
 				       		<table class="table talbe-hover align-items-center"  style="margin-bottom:0px">
 				       			<tbody>
-				       				<tr>
-				       					<td>
-				       						330001<br>
-				       						[현태 상태]<br>
-				       						ex,<br>
-				       						[광고 종료]
-				       					</td>
-				       					<td>
-				       						사진 넣는 곳
-				       					</td>
-				       					<td>
-				       						원룸 월세 1000/50<br>
-				       						서울특별시 금천구 가산동 가산디지털단지 근처. 가격대비 넓은방
-				       					</td>
-				       					<td>
-				       						<textarea placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30"></textarea>
-				       					</td>
-				       					<td>
-				       						2015-12-21 | 조회수 445 | 찜 1<br>
-											<div class="btn-group" role="group">
-												<button class="btn btn-sm btn-outline-dark">수정</button>
-												<button class="btn btn-sm btn-outline-dark">삭제</button>
-												<button class="btn btn-sm btn-outline-dark">광고재등록</button>
-											</div>
-				       					</td>
-				       				</tr>
-				       				<tr>
-				       					<td>
-				       						330001<br>
-				       						[현태 상태]<br>
-				       						ex,<br>
-				       						[광고 종료]
-				       					</td>
-				       					<td>
-				       						사진 넣는 곳
-				       					</td>
-				       					<td>
-				       						원룸 월세 1000/50<br>
-				       						서울특별시 금천구 가산동 가산디지털단지 근처. 가격대비 넓은방
-				       					</td>
-				       					<td>
-				       						<textarea placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30"></textarea>
-				       					</td>
-				       					<td>
-				       						2015-12-21 | 조회수 445 | 찜 1<br>
-											<div class="btn-group" role="group">
-												<button class="btn btn-sm btn-outline-dark">수정</button>
-												<button class="btn btn-sm btn-outline-dark">삭제</button>
-												<button class="btn btn-sm btn-outline-dark">광고재등록</button>
-											</div>
-				       					</td>
-				       				</tr>
-				       				<tr>
-				       					<td>
-				       						330001<br>
-				       						[현태 상태]<br>
-				       						ex,<br>
-				       						[광고 종료]
-				       					</td>
-				       					<td>
-				       						사진 넣는 곳
-				       					</td>
-				       					<td>
-				       						원룸 월세 1000/50<br>
-				       						서울특별시 금천구 가산동 가산디지털단지 근처. 가격대비 넓은방
-				       					</td>
-				       					<td>
-				       						<textarea placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30"></textarea>
-				       					</td>
-				       					<td>
-				       						2015-12-21 | 조회수 445 | 찜 1<br>
-											<div class="btn-group" role="group">
-												<button class="btn btn-sm btn-outline-dark">수정</button>
-												<button class="btn btn-sm btn-outline-dark">삭제</button>
-												<button class="btn btn-sm btn-outline-dark">광고재등록</button>
-											</div>
-				       					</td>
-				       				</tr>
-				       				<tr>
-				       					<td>
-				       						330001<br>
-				       						[현태 상태]<br>
-				       						ex,<br>
-				       						[광고 종료]
-				       					</td>
-				       					<td>
-				       						사진 넣는 곳
-				       					</td>
-				       					<td>
-				       						원룸 월세 1000/50<br>
-				       						서울특별시 금천구 가산동 가산디지털단지 근처. 가격대비 넓은방
-				       					</td>
-				       					<td>
-				       						<textarea placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30"></textarea>
-				       					</td>
-				       					<td>
-				       						2015-12-21 | 조회수 445 | 찜 1<br>
-											<div class="btn-group" role="group">
-												<button class="btn btn-sm btn-outline-dark">수정</button>
-												<button class="btn btn-sm btn-outline-dark">삭제</button>
-												<button class="btn btn-sm btn-outline-dark">광고재등록</button>
-											</div>
-				       					</td>
-				       				</tr>
-				       				<tr>
-				       					<td rowspan="4">
-				       						330001<br>
-				       						[현태 상태]<br>
-				       						ex,<br>
-				       						[광고 종료]
-				       					</td>
-				       					<td>
-				       						사진 넣는 곳
-				       					</td>
-				       					<td>
-				       						원룸 월세 1000/50<br>
-				       						서울특별시 금천구 가산동 가산디지털단지 근처. 가격대비 넓은방
-				       					</td>
-				       					<td>
-				       						<textarea placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30"></textarea>
-				       					</td>
-				       					<td>
-				       						2015-12-21 | 조회수 445 | 찜 1<br>
-											<div class="btn-group" role="group">
-												<button class="btn btn-sm btn-outline-dark">수정</button>
-												<button class="btn btn-sm btn-outline-dark">삭제</button>
-												<button class="btn btn-sm btn-outline-dark">광고재등록</button>
-											</div>
-				       					</td>
-				       				</tr>
+					       			<c:forEach items="${buildList }" var="build">
+						       			<tr>
+					       					<td>
+					       						No. ${build.build_no }<br>
+				       							[${build.buildState }]<br> <!-- 여기도 buildstate에 따라 한글로 보여줘 if로 조건줘서  -->
+					       					</td>
+					       					<td>
+					       						<img src="../${build.picPath }" class="img-thumbnail" style="width:250px;height:150px">
+					       					</td>
+					       					<td>
+			       								${build.proType } ${build.buildType } 여기에 돈.<br> <!-- 여기에 if로 주자.  -->
+					       						${build.roomTitle }
+					       					</td>
+					       					<td>
+					       						<textarea rows="5" cols="40" placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30">${build.privateMemo }</textarea>
+					       					</td>
+					       					<td>
+					       						<p style="text-align:left;margin-left:10px">업로드: ${build.bu_rdate }<br>
+					       						조회수: ${build.view_count }<br>
+												</p>
+												<div class="btn-group" role="group">
+													<button class="btn btn-sm btn-outline-dark">수정</button>
+													<button class="btn btn-sm btn-outline-dark">삭제</button>
+													<button class="btn btn-sm btn-outline-dark">광고재등록</button>
+												</div>
+					       					</td>
+					       				</tr>
+				       				</c:forEach>
 				       			</tbody>
 				       		</table>
 				       		<hr style="margin-top:0px">
+				       		<div style="height:50px">
+								<p class="lead lh-180" style="text-align:left;float:right;font-weight: bold;">
+									- 광고중: 내가 등록한 매물이 공개중인 상태<br>
+									- 거래완료: 등록한 매물이 거래완료된 상태<br> 
+									- 검수반려: 운영원칙 위배 또는 신고로 비공개된 상태<br>
+								</p>
+							</div>
 				       	</div>
 					  
 					  </div>

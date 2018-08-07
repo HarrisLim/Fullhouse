@@ -8,7 +8,9 @@
 			<typeAlias alias="PagingVo" type="com.team.station4.map.vo.PagingVo" />
 			<typeAlias alias="Member" type="com.team.station4.main.model.MainDTO" />
 			<typeAlias alias="Estate" type="com.team.station4.estate.model.EstateDTO" />
-			<typeAlias alias="Staff" type="com.team.station4.staff.model.StaffDTO" />	
+			<typeAlias alias="Staff" type="com.team.station4.staff.model.StaffDTO" />
+			<typeAlias alias="AddInfo" type="com.team.station4.uploadroom.model.AddInfoDTO" />
+			<typeAlias alias="Price" type="com.team.station4.uploadroom.model.PriceDTO" />
 		</typeAliases>
 		<mappers>
 			<mapper resource="com/team/station4/mybatis/Build.xml" />
@@ -16,5 +18,7 @@
 			<mapper resource="com/team/station4/mybatis/MainMem.xml" />
 			<mapper resource="com/team/station4/mybatis/Estate.xml" />
 			<mapper resource="com/team/station4/mybatis/Staff.xml" />
+			<mapper resource="com/team/station4/mybatis/AddInfo.xml" />
+			<mapper resource="com/team/station4/mybatis/Price.xml" />
 		</mappers>
 	</configuration>

@@ -9,7 +9,8 @@
 		<resultMap id="mapResult" type="Build">
 			<result property="build_no" column="BUILD_NO" />
 			<result property="address" column="ADDRESS"/>
-			<result property="protype" column="PROTYPE" />
+			<result property="buildType" column="BUILDTYPE" />
+			<result property="proType" column="PROTYPE" />
 			<result property="wholeFloor" column="WHOLEFLOOR" />
 			<result property="floor" column="FLOOR" />
 			<result property="jArea" column="JAREA" />
@@ -19,15 +20,28 @@
 			<result property="reservation_time" column="RESERVATION_TIME" />
 			<result property="lat" column="LAT" />
 			<result property="lng" column="LNG" />
+			<result property="roomTitle" column="ROOMTITLE" />
+			<result property="explainText" column="EXPLAINTEXT" />
+			<result property="privateMemo" column="PRIVATEMEMO" />
+			<result property="buildState" column="BUILDSTATE" />
 			<result property="bu_rdate" column="BU_RDATE" />
 			<result property="st_no" column="ST_NO" />
 			<result property="estate_no" column="ESTATE_NO" />
 			<result property="mem_no" column="MEM_NO" />
 			<result property="addInfo_no" column="ADDINFO_NO" />
-			<result property="explan_no" column="EXPLAN_NO" />
 
 		</resultMap>
 	
+		<insert id="myInsert" parameterType="Build"> <!-- 로그인 정보가 아직 없으니까 null처리, reservation_time은 방등록할 때 하는 것이 아니라, room.do에서 하는 것이니까 초기값은 null  -->
+			insert into BUILDING values (BUILD_NO_SEQ.nextval, #{address}, #{buildType}, #{proType}, #{wholeFloor}, #{floor}, #{jArea}, #{gArea}, 0, #{picPath}, null, #{lat}, #{lng}, #{roomTitle}, #{explainText}, #{privateMemo}, #{buildState}, SYSDATE, null, null, null, #{addInfo_no})
+		</insert>
+		<select id="myNo" resultType="int">
+			select max(build_no) from BUILDING	
+		</select>
+		<select id="mySelectEstate" resultType="Build" parameterType="int">
+			select * from BUILDING where ESTATE_NO = #{estate_no}
+		</select>
+		
 		<select id="mySelect" parameterType="HashMap" resultType="Build"> 
 			select * from (select A.*, ROWNUM rn from (select * from BUILDING order by BUILD_NO desc)A) where rn between #{start} and #{last}
 		</select>

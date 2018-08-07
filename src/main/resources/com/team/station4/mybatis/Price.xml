@@ -7,11 +7,15 @@
 	<resultMap type="Price" id="Price">
 		<result property="priceno" column="PRICENO" />
 		<result property="lease" column="LEASE" />
-		<result property="saleprice" column="SALEPRICE" />
+		<result property="salePrice" column="SALEPRICE" />
+		<result property="monthly" column="MONTHLY" />
+		<result property="deposit" column="DEPOSIT" />
 		<result property="build_no" column="BUILD_NO" />
 	</resultMap>
-<!-- 		<select id="lrnoCheck" resultType="int" parameterType="String"> -->
-<!-- 			select Count(*) from ESTATE where LRNO=#{lrno}  -->
-<!-- 		</select> -->
-		
+	<insert id="myInsert" parameterType="Price">
+		insert into PRICE values(PRICE_NO_SEQ.nextval, #{lease}, #{salePrice}, #{monthly}, #{deposit}, #{build_no})
+	</insert>
+	<insert id="myMonthlyInsert" parameterType="Price">
+		insert into PRICE values(PRICE_NO_SEQ.nextval, 0, 0, #{monthly}, #{deposit}, #{build_no})
+	</insert>
 	</mapper>
