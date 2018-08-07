@@ -7,6 +7,7 @@
 	<mapper namespace="com.team.station4.map">
 		
 		<resultMap id="mapResult" type="Build">
+		
 			<result property="build_no" column="BUILD_NO" />
 			<result property="address" column="ADDRESS"/>
 			<result property="buildType" column="BUILDTYPE" />
@@ -31,7 +32,6 @@
 			<result property="addInfo_no" column="ADDINFO_NO" />
 
 		</resultMap>
-	
 		<insert id="myInsert" parameterType="Build"> <!-- 로그인 정보가 아직 없으니까 null처리, reservation_time은 방등록할 때 하는 것이 아니라, room.do에서 하는 것이니까 초기값은 null  -->
 			insert into BUILDING values (BUILD_NO_SEQ.nextval, #{address}, #{buildType}, #{proType}, #{wholeFloor}, #{floor}, #{jArea}, #{gArea}, 0, #{picPath}, null, #{lat}, #{lng}, #{roomTitle}, #{explainText}, #{privateMemo}, #{buildState}, SYSDATE, null, null, null, #{addInfo_no})
 		</insert>
@@ -46,10 +46,51 @@
 			select * from (select A.*, ROWNUM rn from (select * from BUILDING order by BUILD_NO desc)A) where rn between #{start} and #{last}
 		</select>
 		
-		<select id="myCountPage" resultType="int" >
-			select count(*) from BUILDING
+		<select id="mySelect" parameterType="Map" resultType="Build"> 
+
+			select * from(select A.*, ROWNUM rn from(select * from BUILDING NATURAL JOIN PRICE where LNG between #{west} and #{east} order by BUILD_NO desc)A 
+			where LAT between #{south} and #{north}
+			<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
+			<if test="proType != null">
+				AND  PROTYPE=#{proType}
+			</if>
+			
+			<!-- 매물 종류 -->
+			<choose>
+			<when test="buildType != null and buildType == '월세' ">
+				 AND  BUILDTYPE=1
+			</when>
+			<when test="buildType != null and buildType == '전세' ">
+				 AND  BUILDTYPE=2
+			</when>
+			<when test="buildType != null and buildType == '매매' ">
+				 AND  BUILDTYPE=3
+			</when>
+			<when test="buildType != null and buildType == '월세or전세' ">
+				 AND  BUILDTYPE=4
+			</when>
+			</choose>
+			
+			<!-- 거래 종류 -->			
+			<choose>
+			<when test="kind_of_trade != null and kind_of_trade == '중개' ">
+				 AND  ESTATE_NO between 1 and 999999
+			</when>
+			<when test="kind_of_trade != null and kind_of_trade == '직거래' ">
+				 AND  MEM_NO between 1 and 999999
+			</when>
+			</choose>
+			
+			<!-- 보증금 -->	
+<!-- 			<if test="deposit != null" > -->
+<!-- 				AND DEPOSIT between #{} and #{} -->
+<!-- 			</if> -->
+			
+			)where rn between #{start} and #{last}
+			
+			
 		</select>
-		
+
 		<select id="myLocation" resultType="Build">
 			select LAT, LNG from BUILDING
 		</select>
@@ -60,20 +101,53 @@
 		
 		<insert id="myInjection" parameterType="Build">
 			insert into BUILDING values
-			(BUILD_NO_SEQ.nextval, #{address}, #{protype}, #{wholeFloor}, #{floor}, #{jArea}, #{gArea}, #{view_count}, #{picPath}, 
-			#{reservation_time}, #{lat}, #{lng}, #{bu_rdate}, #{st_no}, #{estate_no}, #{mem_no}, #{addInfo_no}, #{explan_no})
+			(BUILD_NO_SEQ.nextval, #{address}, #{buildType}, #{proType}, #{wholeFloor}, #{floor}, #{jArea}, #{gArea}, #{view_count}, #{picPath}, 
+			#{reservation_time}, #{lat}, #{lng}, #{roomTitle}, #{explainText}, #{privateMemo}, #{buildState}, #{bu_rdate}, #{st_no}, #{estate_no}, null, #{addInfo_no})
 		</insert>
 		
-		<select id="myCluster" parameterType="HashMap" resultType="Build" >
-			select * from(select A.*, ROWNUM rn from(select * from BUILDING where LNG between #{west} and #{east} order by BUILD_NO desc)A where LAT between #{south} and #{north})where rn between #{start} and #{last}
-		</select>
-		
-		<select id="myCountCluster" parameterType="HashMap" resultType="int" >
+		<select id="myCountCluster" parameterType="Map" resultType="int" >
 			select count(*) from(select * from BUILDING where LNG between #{west} and #{east})A where LAT between #{south} and #{north}
+						<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
+			<if test="proType != null">
+				AND  PROTYPE=#{proType}
+			</if>
+			
+			<!-- 매물 종류 -->
+			<choose>
+			<when test="buildType != null and buildType == '월세' ">
+				 AND  BUILDTYPE=1
+			</when>
+			<when test="buildType != null and buildType == '전세' ">
+				 AND  BUILDTYPE=2
+			</when>
+			<when test="buildType != null and buildType == '매매' ">
+				 AND  BUILDTYPE=3
+			</when>
+			<when test="buildType != null and buildType == '월세or전세' ">
+				 AND  BUILDTYPE=4
+			</when>
+			</choose>
+			
+			<!-- 거래 종류 -->			
+			<choose>
+			<when test="kind_of_trade != null and kind_of_trade == '중개' ">
+				 AND  ESTATE_NO between 1 and 999999
+			</when>
+			<when test="kind_of_trade != null and kind_of_trade == '직거래' ">
+				 AND  MEM_NO between 1 and 999999
+			</when>
+			</choose>
 		</select>
+
 		
 		
+		<insert id="myInsertPrice" parameterType="HashMap">
+			insert into PRICE values(PRICE_NO_SEQ.nextval, #{lease}, null, #{monthly}, #{deposit}, #{build_no})
+		</insert>
 		
+		<select id="myCount" resultType="int">
+			select count(*) from BUILDING
+		</select>
 		
 
 	</mapper>

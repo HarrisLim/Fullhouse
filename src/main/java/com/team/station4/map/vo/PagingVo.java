@@ -11,10 +11,10 @@ public class PagingVo {
 	private int total;			// 리스트 총 갯수
 	
 	{
-		pageCnt = 5; 
+		pageCnt = 10; 
 		index = 0;
 		pageStartNum = 1;
-		listCnt = 5;
+		listCnt = 10;
 	}
 	
 	public PagingVo() {}
