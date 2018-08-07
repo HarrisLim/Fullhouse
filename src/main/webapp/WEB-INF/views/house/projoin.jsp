@@ -82,27 +82,27 @@
 	                    });
 	            } */
 	            
-				window.onload = function(){
+				/* window.onload = function(){
 					$('#st_pw').keyup(function(){
 						if( $('#st_pw').val() != $('#st_pwcheck').val()){
-							$('#font').text('');
-							$('#font').html('<b>암호틀림</b>');
+							$('#profont').text('');
+							$('#profont').html('<b>암호틀림</b>');
 						}else{
-							$('#font').text('');
-							$('#font').text('암호맞음');
+							$('#profont').text('');
+							$('#profont').text('암호맞음');
 						}
 					}); // st_pw keyup
 					
 					$('#st_pwcheck').keyup(function(){
 						if( $('#st_pw').val() != $('#st_pwcheck').val()){
-							$('#font').text('');
-							$('#font').html('<b>암호틀림</b>');
+							$('#profont').text('');
+							$('#profont').html('<b>암호틀림</b>');
 						}else{
-							$('#font').text('');
-							$('#font').text('암호맞음');
+							$('#profont').text('');
+							$('#profont').text('암호맞음');
 						}
 					}); // st_pwcheck keyup
-				}
+				} */
 				
 			//다중 submit ( 중복검사 버튼 & 회원가입 버튼)
 			 function lrnoCheck(str) {
@@ -255,7 +255,11 @@
 							$("#st_pw").focus();
 							return;
 						}
-						
+						if( $('#st_pw').val() != $('#st_pwcheck').val()){
+							alert("비밀번호가 같지 않습니다 다시 입력해주세요")
+							$("#st_pw").focus();
+							return;
+						}
 						
 						proInsert.action="estate.do";
 						$("#proInsert").submit();	
@@ -408,12 +412,12 @@
 							</tr> -->
 							<tr>
 								<th rowspan="2">비밀번호</th>
-								<td colspan="2"><input placeholder="비밀번호" style="width:65%" id="st_pw" name="st_pw"/></td> 
+								<td colspan="2"><input type="password"placeholder="비밀번호" style="width:65%" id="st_pw" name="st_pw"/></td> 
 							</tr>
 							<tr>
 								<td colspan="2">
-								<input placeholder="비밀번호 확인" style="width:65%" id="st_pwcheck" name="st_pwcheck"/>
-								<div id=font ></div>
+								<input type="password" placeholder="비밀번호 확인" style="width:65%" id="st_pwcheck" name="st_pwcheck"/>
+								<div id="profont" style="color:red;" ></div>
 								</td>
 							</tr>
 							<tr>

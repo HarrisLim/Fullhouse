@@ -8,7 +8,7 @@
 			<typeAlias alias="PagingVo" type="com.team.station4.map.vo.PagingVo" />
 			<typeAlias alias="Member" type="com.team.station4.main.model.MainDTO" />
 			<typeAlias alias="Estate" type="com.team.station4.estate.model.EstateDTO" />
-			<typeAlias alias="Staff" type="com.team.station4.staff.model.StaffDTO" />	
+			<typeAlias alias="Staff" type="com.team.station4.staff.model.StaffDTO" />
 		</typeAliases>
 		<mappers>
 			<mapper resource="com/team/station4/mybatis/Build.xml" />
