@@ -23,9 +23,9 @@
 			.itemList a:hover { font-weight:bold;color:gray; }
 		</style>
 	<c:forEach var="dto" items="${list}">	
-		<div class ="itemList" style="width:95%;height:145px;border:1px solid gray;margin:5px;margin-left:12px;" onmouseover="$(this).css('background-color', '#D2E5FF')">
+		<div class ="itemList" style="width:95%;height:145px;border:1px solid gray;margin:5px;margin-left:12px;" onmouseover="getterLatLng(this)" onmouseout="buildMouseOut(this)" onclick="buildContent(this)">
 			<!-- 관심목록 추가 하트모양 -->
-			<div class="RoomItem-icons" style="float:right;margin:15px;" onClick="heart(this)">
+			<div class="RoomItem-icons" style="float:right;margin:15px;" onClick="heart(this)" id="test1">
 				<span class="room-favorite" >
 					<i id="icon_heart" class="fa fa-heart-o fa-2x" style="color:gray" onmouseover="$(this).css('color', 'red')" onmouseout="$(this).css('color', 'gray')"></i>
 				</span>
@@ -131,7 +131,7 @@
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
              <form>
               <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search..." size="50dp">
+                <input type="text" value="" class="form-control" placeholder="관심지역 또는 매물 번호 검색.." size="50dp">
                   <div class="input-group-append">
                   <div class="input-group-text">
                     <i class="now-ui-icons ui-1_zoom-bold"></i>

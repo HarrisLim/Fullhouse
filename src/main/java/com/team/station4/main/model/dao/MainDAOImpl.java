@@ -41,5 +41,12 @@ public class MainDAOImpl implements MainDAO {
 		
 		return pwCount;
 	}
-	
+
+	@Override
+	public MainDTO securitygetUsersByID(String mem_email) {
+		// TODO Auto-generated method stub
+		MainDTO securitygetUsersByID = sqlSession.selectOne(ns + ".securitygetUsersByID", mem_email);
+		
+		return securitygetUsersByID;
+	}
 }

@@ -6,6 +6,10 @@
 
 <head>
   <meta charset="utf-8" />
+<!--   여기부터     -->
+  <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+  <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+  
   <link rel="apple-touch-icon" sizes="76x76" href="../kanu/main/로고.png">
   <link rel="icon" type="image/png" href="../kanu/main/로고.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -28,8 +32,7 @@
   <link href="../assets/demo/demo.css" rel="stylesheet" />
   <!-- daum map api -->
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=920b18ed9b88780f730ccf0faa6707f7&libraries=clusterer,services"></script>
-  <!-- 4. Javascript -->
-  <script type="text/javascript" src="../kanu/js/paging.js"></script>
+
 
 </head>
 
@@ -54,6 +57,17 @@
 	<input type="hidden" value="" id="west" name="west" />
 	<input type="hidden" value="" id="south" name="south" />
 	<input type="hidden" value="" id="north" name="north" />
+	<!-- 	추가정보 저장      -->
+	<input type="hidden" value="" id="parking" name="parking" />
+	<input type="hidden" value="" id="animal" name="animal" />
+	<input type="hidden" value="" id="startFloor" name="startFloor" />
+	<input type="hidden" value="" id="endFloor" name="endFloor" />
+	<input type="hidden" value="" id="startArea" name="startArea" />
+	<input type="hidden" value="" id="endArea" name="endArea" />
+	
+	<!-- flag = 0 방검색 페이지에서 json 처리 위한 구분자 -->
+	<input type="hidden" value="0" id="flag" name="flag" />
+	
 	  <!-- 매물 종류 드롭 다운 목록 -->   
 	  <nav class="navbar navbar-expand-lg navbar-transparent" style="float: left">
       	<div class="container">
@@ -63,6 +77,7 @@
               <div class="dropdown-menu " aria-labelledby="navbar_1_dropdown_1">
               	<a class="dropdown-header">매물종류</a>
               	<div class="dropdown-divider"></div>
+              	<a class="dropdown-item" id="all_rent" href="#">전체</a>
 				<a class="dropdown-item" id="month_rent" href="#">월세</a>
                 <a class="dropdown-item" id="engage_or_rent" href="#">전세or월세</a>
                 <a class="dropdown-item" id="engage" href="#">전세</a>
@@ -100,7 +115,7 @@
               	<div class="dropdown-divider"></div>
               	<a class="dropdown-item" id="room_count_all" href="#">전체</a>
                 <a class="dropdown-item" id="room_count_1" href="#">원룸</a>
-                <a class="dropdown-item" id="room_count_1.5" href="#">1.5룸</a>
+                <a class="dropdown-item" id="room_count_15" href="#">1.5룸</a>
                 <a class="dropdown-item" id="room_count_2" href="#">투룸</a>
                 <a class="dropdown-item" id="room_count_3" href="#">쓰리룸</a>
                 <a class="dropdown-item" id="room_count_office" href="#">오피스텔</a>
@@ -122,8 +137,8 @@
              <ul class="dropdown-menu multi-column columns-2">
               <div class="row">
               	  
-	              <input type="text" class="form-control" placeholder="0" id="begin_text" value="" style="width:80px;hight:15px;margin-left:20px;font-size:0.9em;font-weight: bold;text-align:right;" onkeyup="beginKeyUp()" onkeydown="onlyNumber(this)"/>&nbsp;<span style="margin-top:4px">만 ~</span> &nbsp;
-	              <input type="text" class="form-control" placeholder="999999" id="end_text" value="999999" style="width:80px;hight:15px;font-size:0.9em;font-weight: bold;text-align:right;" onkeyup="endKeyUp()" onkeydown="onlyNumber(this)"/>&nbsp;<span style="margin-top:4px">만 </span>
+	              <input type="text" class="form-control" placeholder="0" id="begin_text" value="0" style="width:80px;hight:15px;margin-left:20px;font-size:0.9em;font-weight: bold;text-align:right;" onkeyup="beginKeyUp()" onkeydown="onlyNumber(this)"/>&nbsp;<span style="margin-top:4px">만 ~</span> &nbsp;
+	              <input type="text" class="form-control" placeholder="999999" id="end_text" value="999999" style="width:80px;hight:15px;font-size:0.9em;font-weight: bold;text-align:right;" onkeyup="endKeyUp()" onkeydown="onlyNumber(this)" />&nbsp;<span style="margin-top:4px">만 </span>
 	              
                	<div class="col-sm-13" style="margin-left:20px">
  					<ul class="multi-column-dropdown">
@@ -175,8 +190,9 @@
               <a class="nav-link dropdown-toggle" href="#" id="rent_month" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 1em">월세</a>
              <ul class="dropdown-menu multi-column columns-2">
               <div class="row">
-                  <input type="text" class="form-control" placeholder="0만원 부터" id="begin_rent_text" value="" style="width:100px;hight:15px;margin-left:20px;font-size:1em;font-weight: bold;" />&nbsp; ~ &nbsp;
-	              <input type="text" class="form-control" placeholder="0만원 까지" id="end_rent_text" value="" style="width:100px;hight:15px;font-size:1em;font-weight: bold;"/>
+                  <input type="text" class="form-control" placeholder="0" id="begin_rent_text" value="0" style="width:80px;hight:15px;margin-left:20px;font-size:0.9em;font-weight: bold;text-align:right;" onkeyup="beginRentKeyUp()" onkeydown="onlyNumber(this)"/>&nbsp;<span style="margin-top:4px">만 ~</span> &nbsp;
+	              <input type="text" class="form-control" placeholder="99999" id="end_rent_text" value="9999" style="width:80px;hight:15px;font-size:0.9em;font-weight: bold;text-align:right;" onkeyup="endRentKeyUp()" onkeydown="onlyRentNumber(this)" />&nbsp;<span style="margin-top:4px">만 </span>
+
 	              <div class="dropdown-divider"></div>
 	           	<div class="col-sm-13" style="margin-left:20px">
  					<ul class="multi-column-dropdown">
@@ -225,20 +241,19 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbar_main_dropdown_6" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 1em">추가옵션</a>
                 <ul class="dropdown-menu" id="option_ckeck">
-				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option1" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;주차가능</a></li>
-				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option2" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;반려동물</a></li>
-				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option3" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;단기임대</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="parking" tabIndex="-1" style="color:black;font-size:1em;margin:5px;" ><input type="checkbox" class="parking" />&nbsp;주차가능</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="animal" tabIndex="-1" style="color:black;font-size:1em;margin:5px;" ><input type="checkbox" class="animal" />&nbsp;반려동물</a></li>
 				  <div class="dropdown-divider"></div>
-				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option4" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;5평 이하</a></li> 
-				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option5" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;5~10평</a></li>
-				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option6" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;10평 이상</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck1" data-value="under5" tabIndex="-1" style="color:black;font-size:1em;margin:5px;" ><input type="checkbox" class="under5" name="group"/>&nbsp;5평 이하</a></li> 
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck1" data-value="under10" tabIndex="-1" style="color:black;font-size:1em;margin:5px;" ><input type="checkbox" class="under10" name="group"/>&nbsp;5~10평</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck1" data-value="over10" tabIndex="-1" style="color:black;font-size:1em;margin:5px;" ><input type="checkbox" class="over10" name="group"/>&nbsp;10평 이상</a></li>
 				  <div class="dropdown-divider"></div>
-				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option7" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;반지층</a></li>
-				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option8" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;저층(1~3층)</a></li>
-				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option9" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;중층(4~6층)</a></li>
-				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option10" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;고층(7~19층)</a></li>
-				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option11" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;초고층(20층 ~)</a></li>
-				   <li style="margin-bottom:5px"><a href="#" class="option_ckeck" data-value="option12" tabIndex="-1" style="color:black;font-size:1em;margin:5px;"><input type="checkbox"/>&nbsp;옥탑</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck2" data-value="groundFloor" tabIndex="-1" style="color:black;font-size:1em;margin:5px;" ><input type="checkbox" class="groundFloor" name="group1"/>&nbsp;반지층</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck2" data-value="BottomFloor" tabIndex="-1" style="color:black;font-size:1em;margin:5px;" ><input type="checkbox" class="BottomFloor" name="group1"/>&nbsp;저층(1~3층)</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck2" data-value="middleFloor" tabIndex="-1" style="color:black;font-size:1em;margin:5px;" ><input type="checkbox" class="middleFloor" name="group1"/>&nbsp;중층(4~6층)</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck2" data-value="heightFloor" tabIndex="-1" style="color:black;font-size:1em;margin:5px;" ><input type="checkbox" class="heightFloor" name="group1"/>&nbsp;고층(7~19층)</a></li>
+				  <li style="margin-bottom:5px"><a href="#" class="option_ckeck2" data-value="topFloor" tabIndex="-1" style="color:black;font-size:1em;margin:5px;" ><input type="checkbox" class="topFloor" name="group1"/>&nbsp;초고층(20층 ~)</a></li>
+				   <li style="margin-bottom:5px"><a href="#" class="option_ckeck2" data-value="topRoom" tabIndex="-1" style="color:black;font-size:1em;margin:5px;" ><input type="checkbox" class="topRoom" name="group1"/>&nbsp;옥탑</a></li>
 				  
 				</ul>
             </li>
@@ -271,8 +286,10 @@
   <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
       <!-- map 스크립트  파일 모음 -->
+    <!-- 4. Javascript -->
+  <script type="text/javascript" src="../kanu/js/paging.js"></script>    
   <script src="../kanu/js/map.js"></script>
-
+	
 
 
 

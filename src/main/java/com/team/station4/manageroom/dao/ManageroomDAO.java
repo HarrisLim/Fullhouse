@@ -9,4 +9,5 @@ public interface ManageroomDAO {
 	int mrEstateNoSelect(String email); // 회원 email로 공인중개소번호 알아내기  
 	List<BuildDTO> mrBuildSelect(int estateNo);
 	List<StaffDTO> mrStaffSelect(int estateNo);
+	
 }

@@ -33,4 +33,5 @@
 		   insert into MEMBER values(MEM_NO_SEQ.nextval, #{mem_email}, #{mem_pw}, '#1'||#{mem_name}, #{mem_phone}, SYSDATE)
 		</insert>
 		
+		
 	</mapper>

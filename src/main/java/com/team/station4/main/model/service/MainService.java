@@ -8,4 +8,5 @@ public interface MainService {
 	String emCheckS(MainDTO dto);
 	int log1CheckS(MainDTO dto);
 	int log2CheckS(MainDTO dto);
+	MainDTO getUsersByID(String mem_email);
 }
