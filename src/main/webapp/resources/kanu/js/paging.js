@@ -1,11 +1,15 @@
 // 4. Javascript
 //submit
+
+
+
+
 function frmPaging() {
 	
 	document.getElementById("frmPaging").submit();
 }
 // 이전 페이지 index
-function pagePre(index, pageStartNum, total, listCnt, pageCnt) {
+function pagePre(index, pageStartNum, total, listCnt, pageCnt, jsl, clickedState, valueJSL, stateJSL) {
 	var totalPageCnt = Math.ceil(total / listCnt);
 	index -= 1;
 	pageStartNum -= 1;
@@ -18,12 +22,12 @@ function pagePre(index, pageStartNum, total, listCnt, pageCnt) {
 	}
 	$("#pageStartNum").val(pageStartNum);
 	$("#index").val(index);
-
-	ajaxList(index, pageStartNum);
+	if(jsl==1) search(stateJSL, valueJSL, clickedState, index, pageStartNum);
+	else ajaxList(index, pageStartNum);
 
 }
 // 다음 페이지 index
-function pageNext(index, pageStartNum, total, listCnt, pageCnt) {
+function pageNext(index, pageStartNum, total, listCnt, pageCnt, jsl, clickedState, valueJSL, stateJSL) {
 	var totalPageCnt = Math.ceil(total / listCnt); 
 	var max = Math.ceil(totalPageCnt / pageCnt); 
 //	if (max * pageCnt > index + pageCnt) {
@@ -43,7 +47,9 @@ function pageNext(index, pageStartNum, total, listCnt, pageCnt) {
 	console.log("다음페이지클릭 pageCnt보다 인덱스 커질때 pageStartNum: "+pageStartNum+", index: "+index);
 	$("#pageStartNum").val(pageStartNum);
 	$("#index").val(index);
-	ajaxList(index, pageStartNum);
+	if(jsl==1) search(stateJSL, valueJSL, clickedState, index, pageStartNum);
+	else ajaxList(index, pageStartNum);
+
 }
 
 // 마지막 페이지 index
@@ -71,7 +77,7 @@ function pageLast(index, total, listCnt, pageCnt) {
 	frmPaging();
 }
 // index 리스트 처리
-function pageIndex(index, pageStartNum, total, listCnt, pageCnt) {
+function pageIndex(index, pageStartNum, total, listCnt, pageCnt, jsl, clickedState, valueJSL, stateJSL) {
 	var totalPageCnt = Math.ceil(total / listCnt);
 	console.log("pageIndex메서드 pageStarNum: "+pageStartNum+", totalPageCnt: "+totalPageCnt+", total: "+total);
 	
@@ -84,37 +90,113 @@ function pageIndex(index, pageStartNum, total, listCnt, pageCnt) {
 	$("#pageStartNum").val(pageStartNum);
 	$("#index").val(index);
 	console.log("숫자 페이지 클릭 pageStartNum: "+pageStartNum+", index: "+index);
-	ajaxList(index, pageStartNum);
+	
+	if(jsl==1) search(stateJSL, valueJSL, clickedState, index, pageStartNum);
+	else ajaxList(index, pageStartNum);
 }
 
 
 function ajaxList(index, pageStartNum){
-	var latLngArray = {};
+	
 	latLngArray["north"] = $("#north").val();
 	latLngArray["south"] = $("#south").val();
 	latLngArray["east"] = $("#east").val();
 	latLngArray["west"] = $("#west").val();
 	latLngArray["index"] = index;
 	latLngArray["pageStartNum"] = pageStartNum;
+	latLngArray["flag"] = $("#flag").val();
 	//매물 종류
 	if($("#kind_of_sale").text() == '월세' || $("#kind_of_sale").text() == '전세or월세' || $("#kind_of_sale").text() == '전세' || $("#kind_of_sale").text() == '매매'){
 		console.log("매물 종류 클릭: "+$("#kind_of_sale").text());
 		latLngArray["buildType"] = $("#kind_of_sale").text();
+	}else if($("#kind_of_sale").text() == '전체') {
+		console.log("매물종류 전체선택");
+		delete latLngArray["buildType"];
 	}
+
 	//거래종류
 	if($("#kind_of_trade").text() == '전체' || $("#kind_of_trade").text() == '중개' || $("#kind_of_trade").text() == '직거래'){
 		console.log("거래 종류 클릭: "+$("#kind_of_trade").text());
 		latLngArray["kind_of_trade"] = $("#kind_of_trade").text();
 	}
+
 	//방종류
 	if($("#kind_of_room").text() == '전체' || $("#kind_of_room").text() == '원룸' || $("#kind_of_room").text() == '1.5룸' || $("#kind_of_room").text() == '투룸' || $("#kind_of_room").text() == '쓰리룸' || $("#kind_of_room").text() == '오피스텔' || $("#kind_of_room").text() == '아파트'){
 		console.log("방 종류 클릭: "+$("#kind_of_room").text());
 		latLngArray["proType"] = $("#kind_of_room").text();
 	}
+
 	//보증금
-	if($("#begin_text").val() != null || $("#end_text").val() != null){
-		console.log("보증금 시작: "+$("#begin_text").val()+", 보증금 끝: "+$("#end_text").val());
+	if( $("#begin_text").val() != undefined &&  $("#end_text").val() != undefined ){ //관심목록 에서 사용하기 위한 if문
+		if( $("#begin_text").val()*1 <= $("#end_text").val()*1){
+			if(!isNaN($("#begin_text").val()) && !isNaN($("#end_text").val())){
+				console.log("보증금 시작: "+$("#begin_text").val()+", 보증금 끝: "+$("#end_text").val());
+				latLngArray["beginDeposit"] = $("#begin_text").val();
+				latLngArray["endDeposit"] = $("#end_text").val();
+			}else{
+				alert("텍스트 숫자만 입력하세요~");
+				return;
+			}
+		}else{
+			alert("보증금 범위 or 텍스트 숫자 확인해주세요!");
+			return;
+		}
 	}
+	
+	//월세
+	if( $("#begin_rent_text").val() != undefined &&  $("#end_rent_text").val() != undefined ){ //관심목록 에서 사용하기 위한 if문
+		if( $("#begin_rent_text").val()*1 <= $("#end_rent_text").val()*1){
+			if(!isNaN($("#begin_rent_text").val()) && !isNaN($("#end_rent_text").val())){
+				console.log("보증금 시작: "+$("#begin_rent_text").val()+", 보증금 끝: "+$("#end_rent_text").val());
+				latLngArray["beginRent"] = $("#begin_rent_text").val();
+				latLngArray["endRent"] = $("#end_rent_text").val();
+			}else{
+				alert("텍스트 숫자만 입력하세요~");
+				return;
+			}
+		}else{
+			alert("월세 범위 or 텍스트 숫자 확인해주세요!");
+			return;
+		}
+	}
+	
+	//추가사항
+	//층수 선택
+	if($("#startFloor").val() != "" && $("#endFloor").val() != ""){
+		console.log("층수 선택");
+		latLngArray["startFloor"] = $("#startFloor").val();
+		latLngArray["endFloor"] = $("#endFloor").val();
+	}else{
+		delete latLngArray["startFloor"];
+		delete latLngArray["endFloor"];
+	}
+	
+	//면적 선택
+	if($("#startArea").val() != "" && $("#endArea").val() != ""){
+		console.log("면적 선택");
+		latLngArray["startArea"] = $("#startArea").val();
+		latLngArray["endArea"] = $("#endArea").val();
+	}else{
+		delete latLngArray["startArea"];
+		delete latLngArray["endArea"];
+	}
+	
+	//주차
+	if($("#parking").val() != ""){
+		console.log("주차");
+		latLngArray["parking"] = $("#parking").val();
+	}else{
+		delete latLngArray["parking"];
+	}
+	
+	//반려동물
+	if($("#animal").val() != ""){
+		console.log("반려동물");
+		latLngArray["animal"] = $("#animal").val();
+	}else{
+		delete latLngArray["animal"];
+	}
+	
 	
 	var jsonLatLng = JSON.stringify(latLngArray);
 	console.log("latLng:"+jsonLatLng);
@@ -137,7 +219,7 @@ function ajaxList(index, pageStartNum){
 
 			if(data.length != 0){
 				for(var i=0; i<data.list.length; i++){
-					html +="<div class ='itemList' style='width:95%;height:145px;border:1px solid gray;margin:5px;margin-left:12px;' onmouseover='backColor(this)' onmouseout='buildMouseOut(this)'>";
+					html +="<div class ='itemList' style='width:95%;height:145px;border:1px solid gray;margin:5px;margin-left:12px;' onmouseover='getterLatLng(this)' onmouseout='buildMouseOut(this)' onclick='buildContent(this)'>";
 					html +="<div class='RoomItem-icons' style='float:right;margin:15px;' onClick='heart(this)'>";
 					html +="<span class='room-favorite' >";
 					html +="<i id='icon_heart' class='fa fa-heart-o fa-2x' style='color:gray' onmouseover='heartMouseOver(this)' onmouseout='heartMouseOut(this)'></i>";
@@ -215,8 +297,34 @@ function ajaxList(index, pageStartNum){
 			$("#total").val(data.pagingVo.total);
 			$("#listCnt").val(data.pagingVo.listCnt);
 			$("#pageCnt").val(data.pagingVo.pageCnt);
-		}
+			
+			var jsonLatLng = JSON.stringify(latLngArray);
+			 //console.log("클러스터러 인입 페이징 ajax: "+jsonLatLng);
+			if(latLngArray["flag"] == 0){
+				 $.ajax({
+					 	contentType : "application/json",
+				    	url : "mapClusterer.do",
+				    	type : "post",
+				    	dataType : "json",
+				    	data : jsonLatLng,
+					 	success : function(responseData){
+						    var position = responseData;
+					        var markers = $(position.positions).map(function(i, position) {
+					            return new daum.maps.Marker({
+					                position : new daum.maps.LatLng(position.lat, position.lng)         	
+					            });
+					        });
+					        // 클러스터러에 마커들을 추가합니다
+				        	clusterer.clear();
+					        clusterer.addMarkers(markers);
+					        
+						}
+				 });
+			}
+		 }
+	
 	});
+
 }
 
 // 리스트출력개수 처리
@@ -226,7 +334,8 @@ function listCnt() {
 	document.getElementById("listCnt").value = document.getElementById("listCount").value;
 	frmPaging();
 }
-window.onload = function() {
+//window.onload = function() {
+$('document').ready(function(){	
 	// 현재번호 active
 	var index = document.getElementById("index").value;
 	var pageIndex = document.querySelector('.pageIndex'+(Number(index)+1));
@@ -237,4 +346,5 @@ window.onload = function() {
 			$(this).prop("selected", true);
 		}
 	});
-}
+});
+

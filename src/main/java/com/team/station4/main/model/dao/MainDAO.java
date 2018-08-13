@@ -8,4 +8,6 @@ public interface MainDAO {
 	String emCheck(MainDTO dto);
 	int log1Check(MainDTO dto);
 	int log2Check(MainDTO dto);
+	String memName(MainDTO dto);
+	MainDTO securitygetUsersByID(String mem_email);
 }

@@ -20,4 +20,21 @@ public interface MapService {
 	void insertInjectionService(BuildDTO dto);
 	void insertPriceService(HashMap price);
 	int countService();
+	
+	/* jsl */
+	int countBuildService(Map hm);
+	
+	List<BuildDTO>clusterListService(Map map);
+	void InsertAddInfoService(HashMap addInfo);
+	int myMaxService();
+	void memHotUpdateService(int buildNo);
+	int memHotSelectService(int buildNo);
+	void memHotDeleteService(int buildNo);
+	String myHotService();
+	BuildDTO hotListService(int parseInt);
+	String myRecentService();
+	BuildDTO recentListService(int parseInt);
+	int memRecentSelectService(String buildNo);
+	void memRecentUpdateService(String reRecent);
+	List<BuildDTO> hotListServicePaging(Map<String, Object> jsonLatLng);
 }

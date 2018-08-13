@@ -11,6 +11,8 @@
 			<typeAlias alias="Staff" type="com.team.station4.staff.model.StaffDTO" />
 			<typeAlias alias="AddInfo" type="com.team.station4.uploadroom.model.AddInfoDTO" />
 			<typeAlias alias="Price" type="com.team.station4.uploadroom.model.PriceDTO" />
+			<typeAlias alias="Reservation" type="com.team.station4.room.model.ReservationDTO" />
+			<typeAlias alias="Request" type="com.team.station4.room.model.RequestDTO" />
 		</typeAliases>
 		<mappers>
 			<mapper resource="com/team/station4/mybatis/Build.xml" />
@@ -20,5 +22,7 @@
 			<mapper resource="com/team/station4/mybatis/Staff.xml" />
 			<mapper resource="com/team/station4/mybatis/AddInfo.xml" />
 			<mapper resource="com/team/station4/mybatis/Price.xml" />
+			<mapper resource="com/team/station4/mybatis/Reservation.xml" />
+			<mapper resource="com/team/station4/mybatis/Request.xml" />
 		</mappers>
 	</configuration>

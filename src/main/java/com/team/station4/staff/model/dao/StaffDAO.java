@@ -5,4 +5,5 @@ import com.team.station4.staff.model.StaffDTO;
 public interface StaffDAO {
 	
 	void StaffInsert(StaffDTO dto);
+	int semCheck(String email);
 }

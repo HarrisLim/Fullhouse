@@ -3,32 +3,32 @@ package com.team.station4.uploadroom.model;
 import java.sql.Date;
 
 public class AddInfoDTO {
-	int addInfo_no;
-	int costFee;
-	int internet;
-	int cost_tv;
-	int cleanFee;
-	int waterFee;
-	int gas;
-	int electricity;
-	int parking;
-	int elevator;
-	String heat;
-	int animal;
-	Date moveDate;
-	int aircon;
-	int washing;
-	int bed;
-	int desk;
-	int closet;
-	int option_tv;
-	int shoerack;
-	int fridge;
-	int gasstove;
-	int induction;
-	int microwave;
-	int doorlock;
-	int bidet;
+	private int addInfo_no;
+	private int costFee;
+	private int internet;
+	private int cost_tv;
+	private int cleanFee;
+	private int waterFee;
+	private int gas;
+	private int electricity;
+	private int parking;
+	private int elevator;
+	private String heat;
+	private int animal;
+	private Date moveDate;
+	private int aircon;
+	private int washing;
+	private int bed;
+	private int desk;
+	private int closet;
+	private int option_tv;
+	private int shoerack;
+	private int fridge;
+	private int gasstove;
+	private int induction;
+	private int microwave;
+	private int doorlock;
+	private int bidet;
 	
 	public AddInfoDTO() {}
 

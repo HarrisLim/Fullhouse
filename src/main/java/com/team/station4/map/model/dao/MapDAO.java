@@ -16,4 +16,22 @@ public interface MapDAO {
 	void insertInjection(BuildDTO dto);
 	void insertPrice(HashMap price);
 	int count();
+	
+	/* jsl */
+	int countBuild(Map hm);
+	
+	List<BuildDTO>clusterList(Map hm);
+	void InsertAddInfo(HashMap addInfo);
+	int myMax();
+	void memHotUpdate(int buildNo);
+	int memHotSelect(int buildNo);
+	void memHotDelete(int buildNo);
+	String myHot();
+	BuildDTO hotList(int parseInt);
+	String myRecent();
+	BuildDTO recentList(int parseInt);
+	int memRecentSelect(String buildNo);
+	void memRecentUpdate(String reRecent);
+	List<BuildDTO> hotListPaging(Map<String, Object> jsonLatLng);
+	
 }

@@ -10,7 +10,9 @@
 		<result property="mem_email" column="MEM_EMAIL" />
 		<result property="mem_pw" column="MEM_PW" />
 		<result property="mem_phone" column="MEM_PHONE" />
+		<result property="hot" column="HOT" />
 		<result property="mem_rdate" column="MEM_RDATE" />
+		<result property="recentList" column="RECENTLIST" />
 	</resultMap>
 	
 		<select id="memSelect" resultType="Member" parameterType="Member">
@@ -29,8 +31,13 @@
 			select Count(*) from MEMBER where mem_email=#{mem_email} and mem_pw=#{mem_pw}			
 		</select>
 		
+		<select id="memName" resultType="String" parameterType="Member">
+			select mem_name from MEMBER where MEM_EMAIL=#{mem_email}
+		</select>
+		
 		<insert id="memInsert" parameterType="Member">
 		   insert into MEMBER values(MEM_NO_SEQ.nextval, #{mem_email}, #{mem_pw}, '#1'||#{mem_name}, #{mem_phone}, SYSDATE)
 		</insert>
+		
 		
 	</mapper>

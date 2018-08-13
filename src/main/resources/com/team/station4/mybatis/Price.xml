@@ -18,4 +18,10 @@
 	<insert id="myMonthlyInsert" parameterType="Price">
 		insert into PRICE values(PRICE_NO_SEQ.nextval, 0, 0, #{monthly}, #{deposit}, #{build_no})
 	</insert>
+	<select id="mySelectBuild" parameterType="int" resultType="Price">
+		select * from PRICE where BUILD_NO = #{build_no}
+	</select>
+	<delete id="myDelete" parameterType="int">
+		delete from PRICE where BUILD_NO=#{build_no}
+	</delete>
 	</mapper>

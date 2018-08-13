@@ -52,7 +52,7 @@ public class UploadroomController {
 		System.out.println("addinfo_no: "+ urService.addInfoSelectService());
 		
 		
-		buildDTO.setAddInfo_no(urService.addInfoSelectService());
+		//buildDTO.setAddInfo_no(urService.addInfoSelectService());
 		buildDTO.setPicPath(wholePath);
 		urService.buildingInsertService(buildDTO); // 매물
 		System.out.println("buildingSelectService: "+urService.buildingSelectService());

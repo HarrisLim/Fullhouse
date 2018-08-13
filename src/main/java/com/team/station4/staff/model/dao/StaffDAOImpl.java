@@ -18,5 +18,11 @@ public class StaffDAOImpl implements StaffDAO {
 		// TODO Auto-generated method stub
 		sqlSession.insert(ns + ".staffInsert", dto2);
 	}
+	@Override
+	public int semCheck(String email) {
+		// TODO Auto-generated method stub
+		int sem = sqlSession.selectOne(ns + ".semCheck", email);
+		return sem;
+	}
 
 }
