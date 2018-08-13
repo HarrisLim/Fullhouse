@@ -10,7 +10,9 @@
 		<result property="mem_email" column="MEM_EMAIL" />
 		<result property="mem_pw" column="MEM_PW" />
 		<result property="mem_phone" column="MEM_PHONE" />
+		<result property="hot" column="HOT" />
 		<result property="mem_rdate" column="MEM_RDATE" />
+		<result property="recentList" column="RECENTLIST" />
 	</resultMap>
 	
 		<select id="memSelect" resultType="Member" parameterType="Member">

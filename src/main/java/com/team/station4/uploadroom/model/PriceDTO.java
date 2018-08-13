@@ -1,12 +1,12 @@
 package com.team.station4.uploadroom.model;
 
 public class PriceDTO {
-	int priceNo;
-	int lease;
-	int salePrice;
-	int monthly;
-	int deposit;
-	int build_no;
+	private int priceNo;
+	private int lease;
+	private int salePrice;
+	private int monthly;
+	private int deposit;
+	private int build_no;
 	
 	public PriceDTO(){}
 

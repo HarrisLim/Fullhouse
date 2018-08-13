@@ -7,11 +7,10 @@
 	<mapper namespace="com.team.station4.map">
 		
 		<resultMap id="mapResult" type="Build">
-		
 			<result property="build_no" column="BUILD_NO" />
 			<result property="address" column="ADDRESS"/>
 			<result property="buildType" column="BUILDTYPE" />
-ㅌ			<result property="proType" column="PROTYPE" />
+			<result property="proType" column="PROTYPE" />
 			<result property="wholeFloor" column="WHOLEFLOOR" />
 			<result property="floor" column="FLOOR" />
 			<result property="jArea" column="JAREA" />
@@ -29,22 +28,96 @@
 			<result property="st_no" column="ST_NO" />
 			<result property="estate_no" column="ESTATE_NO" />
 			<result property="mem_no" column="MEM_NO" />
-			<result property="addInfo_no" column="ADDINFO_NO" />
-
 		</resultMap>
+		<!-- jsl -->
 		<insert id="myInsert" parameterType="Build"> <!-- 로그인 정보가 아직 없으니까 null처리, reservation_time은 방등록할 때 하는 것이 아니라, room.do에서 하는 것이니까 초기값은 null  -->
-			insert into BUILDING values (BUILD_NO_SEQ.nextval, #{address}, #{buildType}, #{proType}, #{wholeFloor}, #{floor}, #{jArea}, #{gArea}, 0, #{picPath}, null, #{lat}, #{lng}, #{roomTitle}, #{explainText}, #{privateMemo}, #{buildState}, SYSDATE, null, null, null, #{addInfo_no})
+			insert into BUILDING values (BUILD_NO_SEQ.nextval, #{address}, #{buildType}, #{proType}, #{wholeFloor}, #{floor}, #{jArea}, #{gArea}, 0, #{picPath}, null, #{lat}, #{lng}, #{roomTitle}, #{explainText}, #{privateMemo}, #{buildState}, SYSDATE, null, null, null)
 		</insert>
 		<select id="myNo" resultType="int">
 			select max(build_no) from BUILDING	
 		</select>
-		<select id="mySelectEstate" resultType="Build" parameterType="int">
-			select * from BUILDING where ESTATE_NO = #{estate_no}
+		<select id="mySelectEstate" resultType="Build" parameterType="Map">
+			select * from(select A.*, ROWNUM rn from(select * from BUILDING NATURAL JOIN PRICE where estate_no=#{buildDTO.estate_no} order by BUILD_NO desc)A)where rn between #{start} and #{last}
+		</select>
+		<select id="mySearchNoSelect" resultType="Build" parameterType="Build">
+			select * from(select A.*, ROWNUM rn from(select * from BUILDING NATURAL JOIN PRICE where estate_no=#{buildDTO.estate_no} 
+			<choose>
+				<when test="theNum != 0">
+					and build_no like #{theNum}||'%'
+				</when>
+			</choose>
+			<choose> 
+				<when test="buildState == 0">
+					and buildState between 1 and 4
+				</when>
+				<otherwise>
+					and buildState=#{buildState}
+				</otherwise>
+			</choose> 
+			order by BUILD_NO desc)A)where rn between #{start} and #{last} 
+		</select>
+		<select id="mySearchTitleSelect" resultType="Build" parameterType="Build">
+			select * from(select A.*, ROWNUM rn from(select * from BUILDING NATURAL JOIN PRICE where estate_no=#{buildDTO.estate_no} and ROOMTITLE like '%'||#{theTitle}||'%'
+			<choose> 
+				<when test="buildState == 0">
+					and buildState between 1 and 4
+				</when>
+				<otherwise>
+					and buildState=#{buildState}
+				</otherwise>
+			</choose> 
+			order by BUILD_NO desc)A)where rn between #{start} and #{last} 
+		</select>
+		<select id="mySearchMemoSelect" resultType="Build" parameterType="Build">
+			select * from(select A.*, ROWNUM rn from(select * from BUILDING NATURAL JOIN PRICE where estate_no=#{buildDTO.estate_no} and PRIVATEMEMO like '%'||#{theMemo}||'%'
+			<choose> 
+				<when test="buildState == 0">
+					and buildState between 1 and 4
+				</when>
+				<otherwise>
+					and buildState=#{buildState}
+				</otherwise>
+			</choose> 
+			order by BUILD_NO desc)A)where rn between #{start} and #{last}
+		</select>
+		<update id="myUpdatePrivateMemo" parameterType="Map">
+			update BUILDING set PRIVATEMEMO=#{privateMemo} where BUILD_NO=#{build_no}
+		</update>
+		<delete id="myDelete" parameterType="int">
+			delete from BUILDING where BUILD_NO=#{build_no}
+		</delete>
+		<select id="myCountBuild" parameterType="Map" resultType="int">
+			select count(*) from BUILDING where estate_no=1
+			<choose>
+				<when test="buildState == 1">
+					AND BUILDSTATE=1
+				</when>
+				<when test="buildState == 2">
+					AND BUILDSTATE=2
+				</when>
+				<when test="buildState == 3">
+					AND BUILDSTATE=3
+				</when>
+				<when test="buildState == 4">
+					AND BUILDSTATE=4
+				</when>
+			</choose>
+			<choose>
+				<when test="theNum == 0">
+					
+				</when>
+				<when test="theNum != null and theTitle == null and theMemo == null">
+					and build_no like #{theNum}||'%'
+				</when>
+				<when test="theNum == null and theTitle != null and theMemo == null">
+					and ROOMTITLE like '%'||#{theTitle}||'%'
+				</when>
+				<when test="theNum == null and theTitle == null and theMemo != null">
+					and PRIVATEMEMO like '%'||#{theMemo}||'%'
+				</when>
+			</choose>
 		</select>
 		
-		<select id="mySelect" parameterType="HashMap" resultType="Build"> 
-			select * from (select A.*, ROWNUM rn from (select * from BUILDING order by BUILD_NO desc)A) where rn between #{start} and #{last}
-		</select>
 		
 		
 		<select id="mySelect" parameterType="Map" resultType="Build"> 

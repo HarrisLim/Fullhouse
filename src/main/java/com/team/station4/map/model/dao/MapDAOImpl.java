@@ -54,4 +54,11 @@ public class MapDAOImpl implements MapDAO {
 		return sqlsession.selectOne(ns+".myCount");
 	}
 
+
+	/* jsl */
+	@Override
+	public int countBuild(Map hm) {
+		return sqlsession.selectOne(ns+".myCountBuild", hm);
+	}
+
 }

@@ -20,4 +20,7 @@ public interface MapService {
 	void insertInjectionService(BuildDTO dto);
 	void insertPriceService(HashMap price);
 	int countService();
+	
+	/* jsl */
+	int countBuildService(Map hm);
 }

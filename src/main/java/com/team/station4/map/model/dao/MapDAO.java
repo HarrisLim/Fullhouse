@@ -16,4 +16,7 @@ public interface MapDAO {
 	void insertInjection(BuildDTO dto);
 	void insertPrice(HashMap price);
 	int count();
+	
+	/* jsl */
+	int countBuild(Map hm);
 }

@@ -5,7 +5,7 @@ function frmPaging() {
 	document.getElementById("frmPaging").submit();
 }
 // 이전 페이지 index
-function pagePre(index, pageStartNum, total, listCnt, pageCnt) {
+function pagePre(index, pageStartNum, total, listCnt, pageCnt, jsl, clickedState, valueJSL, stateJSL) {
 	var totalPageCnt = Math.ceil(total / listCnt);
 	index -= 1;
 	pageStartNum -= 1;
@@ -18,12 +18,12 @@ function pagePre(index, pageStartNum, total, listCnt, pageCnt) {
 	}
 	$("#pageStartNum").val(pageStartNum);
 	$("#index").val(index);
-
-	ajaxList(index, pageStartNum);
+	if(jsl==1) search(stateJSL, valueJSL, clickedState, index, pageStartNum);
+	else ajaxList(index, pageStartNum);
 
 }
 // 다음 페이지 index
-function pageNext(index, pageStartNum, total, listCnt, pageCnt) {
+function pageNext(index, pageStartNum, total, listCnt, pageCnt, jsl, clickedState, valueJSL, stateJSL) {
 	var totalPageCnt = Math.ceil(total / listCnt); 
 	var max = Math.ceil(totalPageCnt / pageCnt); 
 //	if (max * pageCnt > index + pageCnt) {
@@ -43,7 +43,9 @@ function pageNext(index, pageStartNum, total, listCnt, pageCnt) {
 	console.log("다음페이지클릭 pageCnt보다 인덱스 커질때 pageStartNum: "+pageStartNum+", index: "+index);
 	$("#pageStartNum").val(pageStartNum);
 	$("#index").val(index);
-	ajaxList(index, pageStartNum);
+	if(jsl==1) search(stateJSL, valueJSL, clickedState, index, pageStartNum);
+	else ajaxList(index, pageStartNum);
+
 }
 
 // 마지막 페이지 index
@@ -71,7 +73,7 @@ function pageLast(index, total, listCnt, pageCnt) {
 	frmPaging();
 }
 // index 리스트 처리
-function pageIndex(index, pageStartNum, total, listCnt, pageCnt) {
+function pageIndex(index, pageStartNum, total, listCnt, pageCnt, jsl, clickedState, valueJSL, stateJSL) {
 	var totalPageCnt = Math.ceil(total / listCnt);
 	console.log("pageIndex메서드 pageStarNum: "+pageStartNum+", totalPageCnt: "+totalPageCnt+", total: "+total);
 	
@@ -84,7 +86,9 @@ function pageIndex(index, pageStartNum, total, listCnt, pageCnt) {
 	$("#pageStartNum").val(pageStartNum);
 	$("#index").val(index);
 	console.log("숫자 페이지 클릭 pageStartNum: "+pageStartNum+", index: "+index);
-	ajaxList(index, pageStartNum);
+	
+	if(jsl==1) search(stateJSL, valueJSL, clickedState, index, pageStartNum);
+	else ajaxList(index, pageStartNum);
 }
 
 

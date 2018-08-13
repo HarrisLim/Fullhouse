@@ -161,4 +161,13 @@ public class MapServiceImpl implements MapService {
 	 public int countService() {
 		 return dao.count();
 	 }
+
+	 
+	/* jsl */
+	@Override
+	public int countBuildService(Map hm) {
+		return dao.countBuild(hm);
+	}
+	 
+	
 }

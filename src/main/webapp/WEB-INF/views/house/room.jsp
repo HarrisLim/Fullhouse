@@ -187,7 +187,7 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	      	<input placeholder="&nbsp;연락처를 남겨주시면, 매물정보 확인 후 연락드립니다." style="width:100%;height:40px">
+	      	<input placeholder="&nbsp; 여기에 로그인 한 아이디의 phone을 넣고, disabled를 넣는다. REQUEST(favorite페이지)에서 식별하기 위함)" style="width:100%;height:40px">
 	        <button type="button" class="btn btn-primary" style="float:right;margin:10px">연락 요청</button>
 	      </div>
 	    </div>
