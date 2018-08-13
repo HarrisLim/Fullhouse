@@ -41,5 +41,11 @@ public class MainDAOImpl implements MainDAO {
 		
 		return pwCount;
 	}
+	@Override
+	public String memName(MainDTO dto) {
+		// TODO Auto-generated method stub
+		String Name = sqlSession.selectOne(ns + ".memName", dto);
+		return Name;
+	}
 	
 }

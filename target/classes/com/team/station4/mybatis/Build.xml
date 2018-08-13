@@ -119,7 +119,6 @@
 		</select>
 		
 		
-		
 		<select id="mySelect" parameterType="Map" resultType="Build"> 
 
 			select * from(select A.*, ROWNUM rn from(select * from BUILDING NATURAL JOIN PRICE where LNG between #{west} and #{east} order by BUILD_NO desc)A 

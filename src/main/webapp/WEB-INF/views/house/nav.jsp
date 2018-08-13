@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+    
 <head>
 	<meta name="google-signin-scope" content="profile email">
 	<meta name="google-signin-client_id" content="69570195917-qamvmgijh74iq624fdgdgcttra3u41fq.apps.googleusercontent.com">
@@ -27,8 +28,9 @@
 				$('#font2').text('');
 				$('#font2').text('비밀번호 확인 완료!');
 			}
-		}); // InputPw2 keyup
-		// 로그인시 빈칸 확인 및 로그인시 이메일 & 비밀번호 확인 
+		}); // InputPw2 keyu
+		
+		// 로그인시 빈칸 확인 및 로그인시 이메일 & 비밀번호 확인
 		$("#logIn").click(function(){
 			if( $("#input_email").val() === "" ){
 				alert("이메일 주소가 비어있습니다. 적어 주세요.")
@@ -40,9 +42,11 @@
 					url:'empwCheck.do',
 					data:{ mem_email : $('#input_email').val() , mem_pw : $('#input_pw').val() },
 					success : function(responseData){
-						alert ( 'responseData : ' + responseData.count )
 						if( responseData.count == 2 ){
-							alert ( '로그인 GoGoSing' )
+							var fName = '${sessionScope.memName}'
+							var name = fName.substring(2);
+							alert ( '환영 합니다!!' + name + '님' )
+							location.href="../house/main.do"
 						}else if( responseData.count == 0){
 							alert ( '이메일이 틀렸습니다 다시 입력해 주세요.' )
 							return;
@@ -50,12 +54,11 @@
 							alert ( '비밀번호가 틀렸습니다 다시 입력해 주세요.' )
 							return;
 						}
-						alert ('나왔다~아~')
+						
 					}
 					
 				});
 			}
-			
 		});
 		// mem_pw : $('#input_pw').val()
 		// 이메일 주소 중복 체크
@@ -123,7 +126,7 @@
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark py-4">
 	<div class="container">
 		<img src="../kanu/main/로고.png" class="avatar avatar-sm bg-#00000000" style="background-color:transparent">
-        <a class="navbar-brand text-dark" href="../house/main.do"><strong>Full House</strong> Station4</a>
+        <a class="navbar-brand text-dark" id="logo" href="../house/main.do"><strong>Full House</strong> Station4</a>
         <button class="navbar-toggler" type="button" data-action="offcanvas-open" data-target="#navbar_main" 
         							aria-controls="navbar_main" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -147,6 +150,9 @@
 	            </li>
 	            <li>
 	            	<a id="xxxxx" class="nav-link text-dark" data-toggle="modal" href="#myModal">회원가입 및 로그인</a>
+	            	<%-- <c:if test="${memName ne null}">
+	            		<a id="xxxxx" class="nav-link text-dark" data-toggle="modal" href="#myModal">${sessionScope.memName}님</a>
+	            	</c:if> --%>
 	            </li>
 			</ul>
            	<div class="modal" id="myModal" tabindex="-1" >
@@ -161,10 +167,10 @@
 			            <span class="clearfix"></span>
 						<form class="form-primary" id="log" name="log" action="logIn.do" method="post" >
 						<div class="form-group">
-						  <input type="email" class="form-control" id="input_email" name="input_email" placeholder="Your email">
+						  <input type="email" class="form-control" id="input_email" name="input_email" placeholder="Your email" value="hdf56jsl@gmail.com">
 						</div>
 						<div class="form-group">
-						  <input type="password" class="form-control" id="input_pw" name="input_pw" placeholder="Password">
+						  <input type="password" class="form-control" id="input_pw" name="input_pw" placeholder="Password" value="12345">
 						</div>
 							<input type="button" id="logIn" class="btn btn-block btn-lg bg-white mt-4" value="로그인" >
 							<a data-toggle="modal" href="#myModal2" class="btn btn-primary btn-lg btn-block">회원가입</a>
