@@ -42,10 +42,6 @@
 			select * from BUILDING where ESTATE_NO = #{estate_no}
 		</select>
 		
-		<select id="mySelect" parameterType="HashMap" resultType="Build"> 
-			select * from (select A.*, ROWNUM rn from (select * from BUILDING order by BUILD_NO desc)A) where rn between #{start} and #{last}
-		</select>
-		
 		<select id="mySelect" parameterType="Map" resultType="Build"> 
 
 			select * from(select A.*, ROWNUM rn from(select * from BUILDING NATURAL JOIN PRICE where LNG between #{west} and #{east} order by BUILD_NO desc)A 

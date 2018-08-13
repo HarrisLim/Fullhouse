@@ -32,7 +32,7 @@ public class BuildDTO {
 
 	public BuildDTO(int build_no, String address, int buildType, String proType, int wholeFloor, int floor,
 			double jArea, double gArea, int view_count, String picPath, String reservation_time, double lat, double lng,
-			String roomTitle, String explainText, String privateMemo, String buildState, Date bu_rdate, int st_no,
+			String roomTitle, String explainText, String privateMemo, int buildState, Date bu_rdate, int st_no,
 			int estate_no, int mem_no, int addInfo_no) {
 		super();
 		this.build_no = build_no;

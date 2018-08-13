@@ -14,8 +14,11 @@ public class StaffServiceImpl implements StaffService {
 	
 	@Override
 	public void StaffInsertS(StaffDTO dto2) {
-		// TODO Auto-generated method stub
 		staffdao.StaffInsert(dto2);
+	}
+	@Override
+	public int semCheckS(String email) {
+		return staffdao.semCheck(email);
 	}
 
 }

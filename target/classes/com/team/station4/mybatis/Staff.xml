@@ -21,10 +21,12 @@
 		<result property="st_rdate" column="ST_RDATE" />
 		
 	</resultMap>
-		<!-- <select id="memSelect" resultType="Member">
-			select * from ESTATE where ESTATE_NO=#{ESTATE_NO} 
-		</select> -->
-		<insert id="staffInsert" parameterType="Staff">
+	
+		<select id="semCheck" resultType="int" parameterType= "Staff" >
+			select count(*) from STAFF where ST_EMAIL= #{st_email} 
+		</select>
+		
+		<insert id="staffInsert" parameterType= "Staff" >
 		   insert into STAFF values(ST_NO_SEQ.nextval, #{estate_no}, #{st_pic}, #{st_name}, #{st_position}, 
 		   #{st_qual}, #{st_phone}, #{st_homephone}, #{st_email}, #{st_pw}, #{st_joinpath}, '몰라', SYSDATE)
 		</insert>

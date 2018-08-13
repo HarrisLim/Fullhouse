@@ -81,31 +81,64 @@
 	                            }
 	                    });
 	            } */
-	            
-				/* window.onload = function(){
-					$('#st_pw').keyup(function(){
-						if( $('#st_pw').val() != $('#st_pwcheck').val()){
-							$('#profont').text('');
-							$('#profont').html('<b>암호틀림</b>');
-						}else{
-							$('#profont').text('');
-							$('#profont').text('암호맞음');
-						}
-					}); // st_pw keyup
-					
-					$('#st_pwcheck').keyup(function(){
-						if( $('#st_pw').val() != $('#st_pwcheck').val()){
-							$('#profont').text('');
-							$('#profont').html('<b>암호틀림</b>');
-						}else{
-							$('#profont').text('');
-							$('#profont').text('암호맞음');
-						}
-					}); // st_pwcheck keyup
-				} */
 				
+			/* $(document).ready(function() {
+				$('#st_pw').keyup(function(){
+					if( $('#st_pw').val() != $('#st_pwcheck').val()){
+						$('#profont2').text('');
+						$('#profont2').html('<b>암호틀림</b>');
+					}else{
+						$('#profont2').text('');
+						$('#profont2').text('암호맞음');
+					}
+				});  // st_pw keyup
+				
+				$('#st_pwcheck').keyup(function(){
+					if( $('#st_pw').val() != $('#st_pwcheck').val()){
+						$('#profont2').text('');
+						$('#profont2').html('<b>암호틀림</b>');
+					}else{
+						$('#profont2').text('');
+						$('#profont2').text('암호맞음');
+					}
+				});  // st_pwcheck keyup
+			}); */
+					
+			function semCheck1(){
+				
+				$.ajax({
+					type : 'POST',
+					url : "stemCheck.do",
+					data : { "st_email" : $('#st_email').val() },
+					success : function(responseData){
+						alert( 'reponseData :' + responseData.sem )
+						var data = JSON.parse(responseData.sem)
+						if( $("#st_email").val()==="" ){
+							alert(" 이메일을 등록해주세요")
+							$("#st_email").focus();
+							return;
+						}else if( data > 0){
+							alert ('중복되는 이메일 입니다. 다시 입력해 주세요')
+							return;
+						}else{
+							var input;
+							input = confirm("사용 가능한 이메일 입니다. 등록하시겠습니까?");
+							if( input ){
+								$('#st_email').attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
+								$("#semCheck").attr("disabled",true);
+							}else{
+								$("#st_email").val("");
+								$("#st_email").focus;
+								return;
+							}
+							
+						}
+					}
+				});
+			}
 			//다중 submit ( 중복검사 버튼 & 회원가입 버튼)
 			 function lrnoCheck(str) {
+					
 				var value = $('#lrno1').val();
 				value += "-";
 				value += $('#lrno2').val();
@@ -170,9 +203,12 @@
 									$("#Estate_no").val(data.estate_no).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
 									return;
 								}
+								/* if( $('#semCheck').prop("disabled") == true ){
+									$('#proin').attr('disabled' , false)
+								} */
 							}
 						});
-												
+						//$('#proin').attr('disabled' , false)
 					}else if( str == "str" ){
 						// 분할 테그 합치기
 						
@@ -210,11 +246,6 @@
 							$("#erno").focus();
 							return;
 						}
-						if( $("#lrno1").val()==="" || $("#lrno2").val()==="" || $("#lrno3").val()===""){
-							alert(" 사업자 등록번호를 등록해주세요")
-							$("#lrno1").focus();
-							return;
-						}
 						if( $("#estateaddr").val()==="" ){
 							alert(" 중개사무소 주소를 등록해주세요")
 							$("#estateaddr").focus();
@@ -245,27 +276,62 @@
 							$("#st_homephone").focus();
 							return;
 						}
-						if( $("#st_email").val()==="" ){
-							alert(" 이메일을 등록해주세요")
-							$("#st_email").focus();
-							return;
-						}
 						if( $("#st_pw").val()==="" ){
 							alert(" 비밀번호를 입력해주세요")
 							$("#st_pw").focus();
 							return;
+						}
+						//비밀번호 유효성 검사
+						if( $("#st_pw").val() != "" ){
+							
+							var pw = $('#st_pw').val();
+							var num = pw.search(/[0-9]/g);
+							var eng = pw.search(/[a-z]/ig);
+							var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+							if(pw.length < 8 || pw.length > 20){
+								alert("8자리 ~ 20자리 이내로 입력해주세요.");
+							  return false;
+							}
+							if(pw.search(/₩s/) != -1){
+								alert("비밀번호는 공백없이 입력해주세요.");
+								return false;
+							}
+							if(num < 0 || eng < 0 || spe < 0 ){
+								alert("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
+								return false;
+							}
+							/* if(!chkPwd( $.trim($('#mpassword').val()))){
+							   $('#mpassword').val('');
+							   $('#mpassword').focus();
+							   return false;
+							} */
 						}
 						if( $('#st_pw').val() != $('#st_pwcheck').val()){
 							alert("비밀번호가 같지 않습니다 다시 입력해주세요")
 							$("#st_pw").focus();
 							return;
 						}
-						
-						proInsert.action="estate.do";
-						$("#proInsert").submit();	
+						if( $('#lrCheck').prop("disabled") == false && $('#semCheck').prop("disabled") == false ){
+							alert('인증을 완료해 주세요^^')
+							return;
+						}
+						if( $('#lrCheck').prop("disabled") == true && $('#semCheck').prop("disabled") == false ){
+							alert('이메일 인증을 완료해 주세요.')
+							$("#st_email").focus();
+							return;
+						}
+						if( $('#lrCheck').prop("disabled") == false && $('#semCheck').prop("disabled") == true ){
+							alert('사업자등록번호 인증을 완료해 주세요.')
+							$("#lrno1").focus();
+						}
+						if( $('#lrCheck').prop("disabled") == true && $('#semCheck').prop("disabled") == true ){
+							alert('pro 회원가입 완료!')
+							return;
+							/* proInsert.action="estate.do";
+							$("#proInsert").submit(); */
+						}
 					}
 				}
-	            
 		</script>
 	    
 	    <style>
@@ -327,15 +393,11 @@
 								<td><input style="width:14%" id="lrno1" name="lrno1" value="4">&nbsp;-&nbsp;<input style="width:14%" id="lrno2" name="lrno2" value="5">&nbsp;-&nbsp;
 								<input style="width:14%" id="lrno3" name="lrno3" value="6">
 								<input type="hidden" id="lrno" name="lrno" value=""/>
-
-									<input type="button" id="lrCheck" name="lrCheck" class="btn btn-sm btn-outline-primary" onClick="lrnoCheck('check')" value="인증">
-									
-									<!-- <button type="button" class="btn btn-sm btn-outline-primary btn-icon disabled">
-									    <span class="btn-inner--text" >사업자등록증 첨부</span>
-									    <span class="btn-inner--icon"><i class="fas fa-user"></i></span>
-									</button> -->
+								<input type="button" id="lrCheck" name="lrCheck" class="btn btn-sm btn-outline-primary" onClick="lrnoCheck('check')" value="인증">
+								<p> 인증 확인 후 회원가입이 가능합니다.</p>
 								</td>
 							</tr>
+							
 							<tr>
 								<th rowspan="2">중개 사무소 주소</th>
 								<td><input type="text" id="postcode" value="10">
@@ -389,7 +451,10 @@
 							</tr>
 							<tr>
 								<th>이메일</th>
-								<td colspan="2"><input style="width:60%" id="st_email" name="st_email"value="test@test.com"/></td>
+								<td colspan="2"><input style="width:60%" id="st_email" name="st_email"value=""/>
+								<button type="button" id="semCheck" name="semCheck" class="btn btn-sm btn-outline-primary" onClick="semCheck1()">인증</button>
+								<p> 인증 확인 후 회원가입이 가능합니다.</p>
+								</td>
 							</tr>
 							<tr>
 								<th>휴대폰번호</th>
@@ -412,12 +477,14 @@
 							</tr> -->
 							<tr>
 								<th rowspan="2">비밀번호</th>
-								<td colspan="2"><input type="password"placeholder="비밀번호" style="width:65%" id="st_pw" name="st_pw"/></td> 
+								<td colspan="2"><input type="password"placeholder="비밀번호" style="width:65%" id="st_pw" name="st_pw"/>
+								<p> 8자 ~ 20자 내에서 특수문자 / 숫자 / 영어를 혼합하여 입력해주세요. </p>
+								</td> 
 							</tr>
 							<tr>
 								<td colspan="2">
 								<input type="password" placeholder="비밀번호 확인" style="width:65%" id="st_pwcheck" name="st_pwcheck"/>
-								<div id="profont" style="color:red;" ></div>
+								<div name="profont2" style="color:red;" ></div>
 								</td>
 							</tr>
 							<tr>
@@ -440,7 +507,7 @@
 					<p class="text-center">*공인중개사법 제18조 2의 취지에 적합한 표시의무(상호명, 등록관청에 신고된 전화번호, 소재지, 성명)를 기입하시기 바랍니다.</p>
   					<p class="text-center">이에 발생한 문제는 (주)스테이션4 에서 책임을 지지 않습니다.</p>
 					<div align="center" style="margin-top:20px;margin-bottom:50px">
-						<input id="proin" name="proin" class="btn btn-primary" value="가입 신청" type="button" onclick="lrnoCheck('str')"/>
+						<button type="button" id="proin" name="proin" class="btn btn-primary" onclick="lrnoCheck('str')">가입 신청</button>
 					</div>
 				</div>
 			</div>
