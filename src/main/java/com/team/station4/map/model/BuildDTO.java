@@ -26,14 +26,15 @@ public class BuildDTO {
 	private int st_no;
 	private int estate_no;
 	private int mem_no;
-	private int addInfo_no;
+	
 	
 	public BuildDTO() {}
+	
 
 	public BuildDTO(int build_no, String address, int buildType, String proType, int wholeFloor, int floor,
 			double jArea, double gArea, int view_count, String picPath, String reservation_time, double lat, double lng,
 			String roomTitle, String explainText, String privateMemo, int buildState, Date bu_rdate, int st_no,
-			int estate_no, int mem_no, int addInfo_no) {
+			int estate_no, int mem_no) {
 		super();
 		this.build_no = build_no;
 		this.address = address;
@@ -56,13 +57,13 @@ public class BuildDTO {
 		this.st_no = st_no;
 		this.estate_no = estate_no;
 		this.mem_no = mem_no;
-		this.addInfo_no = addInfo_no;
+		
 	}
 
 	public BuildDTO(String address, int buildType, String proType, int wholeFloor, int floor, double jArea,
 			double gArea, int view_count, String picPath, String reservation_time, double lat, double lng,
 			String roomTitle, String explainText, String privateMemo, int buildState, Date bu_rdate, int st_no,
-			int estate_no, int mem_no, int addInfo_no) {
+			int estate_no, int mem_no) {
 		super();
 		this.address = address;
 		this.buildType = buildType;
@@ -84,7 +85,7 @@ public class BuildDTO {
 		this.st_no = st_no;
 		this.estate_no = estate_no;
 		this.mem_no = mem_no;
-		this.addInfo_no = addInfo_no;
+		
 	}
 	
 	
@@ -92,7 +93,7 @@ public class BuildDTO {
 	public BuildDTO(String address, int buildType, String proType, int wholeFloor, int floor, double jArea,
 			double gArea, int view_count, String picPath, String reservation_time, double lat, double lng,
 			String roomTitle, String explainText, String privateMemo, int buildState, Date bu_rdate, int st_no,
-			int estate_no, int addInfo_no) {
+			int estate_no) {
 		super();
 		this.address = address;
 		this.buildType = buildType;
@@ -113,7 +114,7 @@ public class BuildDTO {
 		this.bu_rdate = bu_rdate;
 		this.st_no = st_no;
 		this.estate_no = estate_no;
-		this.addInfo_no = addInfo_no;
+		
 	}
 
 
@@ -313,12 +314,4 @@ public class BuildDTO {
 	}
 
 
-	public int getAddInfo_no() {
-		return addInfo_no;
-	}
-
-
-	public void setAddInfo_no(int addInfo_no) {
-		this.addInfo_no = addInfo_no;
-	}
 }

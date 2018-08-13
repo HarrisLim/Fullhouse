@@ -1,9 +1,15 @@
 ////////////////////////////////  지 도 시 작 ///////////////////////////////////////////////////////////////
 
+	var latLngArray = {};
+    //var imgSrc = "../kanu/images/custom_marker.png",
+	//var imgSrc = "../kanu/images/animat-search-color.gif",
+	//var imgSrc = "../kanu/images/markerO.gif",
+	var imgSrc = "../kanu/images/animat-diamond-color.gif",
+		imageSize = new daum.maps.Size(70, 70),
+		imageOption = {offset: new daum.maps.Point(35, 35)};
+	
+	var customMarkerImage = new daum.maps.MarkerImage(imgSrc, imageSize, imageOption);
 
-    // 이전 페이지 index
-
-$('document').ready(function(){
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = { 
 	        center: new daum.maps.LatLng(37.570707, 126.984611), // 지도의 중심좌표
@@ -14,6 +20,57 @@ $('document').ready(function(){
 	var map = new daum.maps.Map(mapContainer, mapOption),
 	    customOverlay = new daum.maps.CustomOverlay({}),
 	    infowindow = new daum.maps.InfoWindow({removable: true});
+	
+	 var clusterer = new daum.maps.MarkerClusterer({
+	        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+	        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+	        minLevel: 1, // 클러스터 할 최소 지도 레벨 
+	        gridSize: 180, //클러스터의 격자 크기
+	        minClusterSize : 1,
+	        calculator: [10, 100, 1000], 
+	        styles: [{ // calculator 각 사이 값 마다 적용될 스타일을 지정한다
+			        width : '70px', height : '70px',
+			        background: 'rgba(51, 204, 255, .8)',
+			        borderRadius: '35px',
+			        color: '#000',
+			        textAlign: 'center',
+			        fontSize: '35px',
+			        fontWeight: 'bold',
+			        lineHeight: '71px'
+			    },
+			    {
+			        width : '78px', height : '78px',
+			        background: 'rgba(255, 153, 0, .8)',
+			        borderRadius: '39px',
+			        color: '#000',
+			        textAlign: 'center',
+			        fontSize: '38px',
+			        fontWeight: 'bold',
+			        lineHeight: '79px'
+			    },
+			    {
+			        width : '90px', height : '90px',
+			        background: 'rgba(255, 51, 204, .8)',
+			        borderRadius: '45px',
+			        color: '#000',
+			        textAlign: 'center',
+			        fontSize: '40px',
+			        fontWeight: 'bold',
+			        lineHeight: '91px'
+			    },
+			    {
+			        width : '110px', height : '110px',
+			        background: 'rgba(255, 80, 80, .8)',
+			        borderRadius: '55px',
+			        color: '#000',
+			        textAlign: 'center',
+			        fontSize: '45px',
+			        fontWeight: 'bold',
+			        lineHeight: '111px'
+			        }
+			    ]
+			});
+
 	
    //////////지도 정보 가져오기 ///////////////////// 
 	var center = map.getCenter();
@@ -28,8 +85,14 @@ $('document').ready(function(){
 	$("#neLatLng").val(neLatLng);
     $("#east").val(neLatLng.getLng());
     $("#north").val(neLatLng.getLat());
-    
+
 	var size = 80;
+$('document').ready(function(){	
+    $(document).ajaxSend(function(e, xhr, options) {
+    	console.log("ajaxSend 인입");
+        xhr.setRequestHeader(header, token);
+
+    });
 	
 	 $("#map").mouseup(function(){
 	   //console.log("인포인입");
@@ -77,78 +140,39 @@ $('document').ready(function(){
 	});
 	 
 	 //클러스터러 생성
-	 $('document').ready(function(){
-		 console.log("클러스터러 인입");
+	 $('document').ready(mkClusterer());
+	 
+	 function mkClusterer(){
+		 latLngArray["north"] = $("#north").val();
+		 latLngArray["south"] = $("#south").val();
+		 latLngArray["east"] = $("#east").val();
+		 latLngArray["west"] = $("#west").val();
+		 latLngArray["pageStartNum"] = $("#pageStartNum").val()*1;
+		 latLngArray["index"] =	$("#index").val()*1;
+		 var jsonLatLng = JSON.stringify(latLngArray);
 		 $.ajax({
-		    	url : "mapClusterer.do",
-		    	type : "post",
-		    	data : {count : 500},
-			 	success : function(responseData){
-				    var position = responseData;
-			        var markers = $(position.positions).map(function(i, position) {
-			            return new daum.maps.Marker({
-			                position : new daum.maps.LatLng(position.lat, position.lng)         	
-			            });
-			        });
-			
-				        // 클러스터러에 마커들을 추가합니다
-			        	clusterer.clear();
-				        clusterer.addMarkers(markers);
-				}
+		 	contentType : "application/json",
+	    	url : "mapClusterer.do",
+	    	type : "post",
+	    	dataType : "json",
+	    	data : jsonLatLng,
+		 	success : function(responseData){
+			    var position = responseData;
+		        var markers = $(position.positions).map(function(i, position) {
+		            return new daum.maps.Marker({
+		                position : new daum.maps.LatLng(position.lat, position.lng)         	
+		            });
+		        });
+		        // 클러스터러에 마커들을 추가합니다
+	        	clusterer.clear();
+		        clusterer.addMarkers(markers);
+			},error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	       }
 		 });
-	 });
-    
+	 }
     // 마커 클러스터러를 생성합니다 
-    var clusterer = new daum.maps.MarkerClusterer({
-        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
-        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-        minLevel: 1, // 클러스터 할 최소 지도 레벨 
-        gridSize: 180, //클러스터의 격자 크기
-        minClusterSize : 1,
-        calculator: [10, 100, 1000], 
-        styles: [{ // calculator 각 사이 값 마다 적용될 스타일을 지정한다
-		        width : '70px', height : '70px',
-		        background: 'rgba(51, 204, 255, .8)',
-		        borderRadius: '35px',
-		        color: '#000',
-		        textAlign: 'center',
-		        fontSize: '35px',
-		        fontWeight: 'bold',
-		        lineHeight: '71px'
-		    },
-		    {
-		        width : '78px', height : '78px',
-		        background: 'rgba(255, 153, 0, .8)',
-		        borderRadius: '39px',
-		        color: '#000',
-		        textAlign: 'center',
-		        fontSize: '38px',
-		        fontWeight: 'bold',
-		        lineHeight: '79px'
-		    },
-		    {
-		        width : '90px', height : '90px',
-		        background: 'rgba(255, 51, 204, .8)',
-		        borderRadius: '45px',
-		        color: '#000',
-		        textAlign: 'center',
-		        fontSize: '40px',
-		        fontWeight: 'bold',
-		        lineHeight: '91px'
-		    },
-		    {
-		        width : '110px', height : '110px',
-		        background: 'rgba(255, 80, 80, .8)',
-		        borderRadius: '55px',
-		        color: '#000',
-		        textAlign: 'center',
-		        fontSize: '45px',
-		        fontWeight: 'bold',
-		        lineHeight: '111px'
-		        }
-		    ]
-		});
-
+   
     var count = 1;
     //마우스 스크롤 조정했을때 이벤트 처리
     daum.maps.event.addListener(map, 'zoom_changed', function() {
@@ -314,6 +338,35 @@ $('document').ready(function(){
  
 
  	/////////////////////////////////////////////// 지 도 끝 /////////////////////////////////////////////////////////////////////////////
+ 	//begin_text & end_text click event 
+ 	$("#begin_text, #end_text").click(function(){
+ 		if(isNaN($("#end_text").val())) {
+ 	 		$("#end_text").val(99999);
+ 	 	}
+ 	 	if(isNaN($("#begin_text").val())) {
+ 	 		$("#begin_text").val(0);
+ 	 	}
+ 		var begin = $("#begin_text").val();
+ 		var end = $("#end_text").val();
+ 	 	$("#deposit").empty().append("(보)"+begin+"만 ~ "+end+"만");
+ 	});	
+ 	
+ 	//보증금 드랍다운 메뉴 클릭
+ 	$("#deposit").click(function(){
+ 		var begin = $("#begin_text").val();
+ 		var end = $("#end_text").val();
+ 	 	$("#deposit").empty().append("(보)"+begin+"만 ~ "+end+"만");
+ 		if(isNaN(end)) {
+ 	 		$("#end_text").val(99999);
+ 	 		$("#deposit").empty().append("(보)"+begin+"만 ~ "+end+"만");
+ 	 	}
+ 	 	if(isNaN(begin)) {
+ 	 		$("#begin_text").val(0);
+ 	 		$("#deposit").empty().append("(보)"+begin+"만 ~ "+end+"만");
+ 	 	}
+ 	 	
+  	});	
+ 		
 	// 보증금 검색 0원 부터
 	$("#begin_0").click(function(){
 		if($("#begin_0").attr('class').includes("disabled")){
@@ -323,7 +376,7 @@ $('document').ready(function(){
 		$("#begin_0").css("background-color", "#3B8DE0");
 		$("#begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -337,9 +390,10 @@ $('document').ready(function(){
 		$("#end_0").addClass("disabled");
 		$("#end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
 		console.log("보증금시작 500만원 선택1");
-		if($("#end_text").val() < 500 || $("#end_text").val() === ""){
+		if($("#end_text").val()*1 < 500 || $("#end_text").val() === ""){
 			$("#end_text").val(500); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -352,9 +406,10 @@ $('document').ready(function(){
 		$("#begin_0 , #begin_500 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500").addClass("disabled");
 		$("#end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		if($("#end_text").val() < 1000 || $("#end_text").val() === ""){
+		if($("#end_text").val()*1 < 1000 || $("#end_text").val() === ""){
 			$("#end_text").val(1000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -367,9 +422,10 @@ $('document').ready(function(){
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000").addClass("disabled");
 		$("#end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		if($("#end_text").val() < 2000 || $("#end_text").val() === ""){
+		if($("#end_text").val()*1 < 2000 || $("#end_text").val() === ""){
 			$("#end_text").val(2000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -382,9 +438,10 @@ $('document').ready(function(){
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000").addClass("disabled");
 		$("#end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		if($("#end_text").val() < 3000 || $("#end_text").val() === ""){
+		if($("#end_text").val()*1 < 3000 || $("#end_text").val() === ""){
 			$("#end_text").val(3000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -397,9 +454,10 @@ $('document').ready(function(){
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000").addClass("disabled");
 		$("#end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		if($("#end_text").val() < 4000 || $("#end_text").val() === ""){
+		if($("#end_text").val()*1 < 4000 || $("#end_text").val() === ""){
 			$("#end_text").val(4000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -413,9 +471,10 @@ $('document').ready(function(){
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000").addClass("disabled");
 		$("#end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		if($("#end_text").val() < 5000 || $("#end_text").val() === ""){
+		if($("#end_text").val()*1 < 5000 || $("#end_text").val() === ""){
 			$("#end_text").val(5000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -428,9 +487,10 @@ $('document').ready(function(){
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000").addClass("disabled");
 		$("#end_6000, #end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		if($("#end_text").val() < 6000 || $("#end_text").val() === ""){
+		if($("#end_text").val()*1 < 6000 || $("#end_text").val() === ""){
 			$("#end_text").val(6000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -443,9 +503,10 @@ $('document').ready(function(){
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_8000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000").addClass("disabled");
 		$("#end_7000, #end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		if($("#end_text").val() < 7000 || $("#end_text").val() === ""){
+		if($("#end_text").val()*1 < 7000 || $("#end_text").val() === ""){
 			$("#end_text").val(7000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -458,9 +519,10 @@ $('document').ready(function(){
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_9000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000").addClass("disabled");
 		$("#end_8000, #end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		if($("#end_text").val() < 8000 || $("#end_text").val() === ""){
+		if($("#end_text").val()*1 < 8000 || $("#end_text").val() === ""){
 			$("#end_text").val(8000);
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -473,9 +535,10 @@ $('document').ready(function(){
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_10000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000").addClass("disabled");
 		$("#end_9000, #end_10000, #end_unlimited").removeClass("disabled");
-		if($("#end_text").val() < 9000 || $("#end_text").val() === ""){
+		if($("#end_text").val()*1 < 9000 || $("#end_text").val() === ""){
 			$("#end_text").val(9000);
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -488,9 +551,10 @@ $('document').ready(function(){
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000").addClass("disabled");
 		$("#end_10000, #end_unlimited").removeClass("disabled");
-		if($("#end_text").val() < 10000 || $("#end_text").val() === ""){
+		if($("#end_text").val()*1 < 10000 || $("#end_text").val() === ""){
 			$("#end_text").val(10000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -498,14 +562,15 @@ $('document').ready(function(){
 		if($("#begin_unlimited").attr('class').includes("disabled")){
 			return;
 		}
-		$("#begin_text").val("무제한");
+		$("#begin_text").val(99999);
 		$("#begin_unlimited").css("background-color", "#3B8DE0");
 		$("#begin_0 , #begin_500 , #begin_1000 , #begin_2000 , #begin_3000 , #begin_4000 , #begin_5000 , #begin_6000 , #begin_7000 , #begin_8000 , #begin_9000 , #begin_10000").css("background-color", "rgba(0,0,0,0)");
 		$("#end_0, #end_500, #end_1000, #end_2000, #end_3000, #end_4000, #end_5000, #end_6000, #end_7000, #end_8000, #end_9000, #end_10000").addClass("disabled");
 		$("#end_unlimited").removeClass("disabled");
-		if($("#end_text").val() != "무제한" || $("#end_text").val() === ""){
-			$("#end_text").val("무제한"); 
+		if($("#end_text").val()*1 != 99999 || $("#end_text").val() === ""){
+			$("#end_text").val(99999); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -518,9 +583,10 @@ $('document').ready(function(){
 		$("#end_0").css("background-color", "#3B8DE0");
 		$("#end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		if($("#begin_text").val() > 0 || $("#begin_text").val() === ""){
+		if($("#begin_text").val()*1 > 0 || $("#begin_text").val() === ""){
 			$("#begin_text").val(0); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -534,9 +600,10 @@ $('document').ready(function(){
 		$("#end_0 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500").removeClass("disabled");
 		$("#begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		if($("#begin_text").val() > 500 || $("#begin_text").val() === ""){
+		if($("#begin_text").val()*1 > 500 || $("#begin_text").val() === ""){
 			$("#begin_text").val(500); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 		
 	});
@@ -550,9 +617,10 @@ $('document').ready(function(){
 		$("#end_0 , #end_500 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000").removeClass("disabled");
 		$("#begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		if($("#begin_text").val() > 1000 || $("#begin_text").val() === ""){
+		if($("#begin_text").val()*1 > 1000 || $("#begin_text").val() === ""){
 			$("#begin_text").val(1000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 		
 	});
@@ -566,9 +634,10 @@ $('document').ready(function(){
 		$("#end_0 , #end_500 , #end_1000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000").removeClass("disabled");
 		$("#begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		if($("#begin_text").val() > 2000 || $("#begin_text").val() === ""){
+		if($("#begin_text").val()*1 > 2000 || $("#begin_text").val() === ""){
 			$("#begin_text").val(2000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -582,9 +651,10 @@ $('document').ready(function(){
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000").removeClass("disabled");
 		$("#begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		if($("#begin_text").val() > 3000 || $("#begin_text").val() === ""){
+		if($("#begin_text").val()*1 > 3000 || $("#begin_text").val() === ""){
 			$("#begin_text").val(3000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -597,9 +667,10 @@ $('document').ready(function(){
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000").removeClass("disabled");
 		$("#begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		if($("#begin_text").val() > 4000 || $("#begin_text").val() === ""){
+		if($("#begin_text").val()*1 > 4000 || $("#begin_text").val() === ""){
 			$("#begin_text").val(4000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -613,9 +684,10 @@ $('document').ready(function(){
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000").removeClass("disabled");
 		$("#begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		if($("#begin_text").val() > 5000 || $("#begin_text").val() === ""){
+		if($("#begin_text").val()*1 > 5000 || $("#begin_text").val() === ""){
 			$("#begin_text").val(5000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -628,9 +700,10 @@ $('document').ready(function(){
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_7000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000").removeClass("disabled");
 		$("#begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		if($("#begin_text").val() > 6000 || $("#begin_text").val() === ""){
+		if($("#begin_text").val()*1 > 6000 || $("#begin_text").val() === ""){
 			$("#begin_text").val(6000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -643,9 +716,10 @@ $('document').ready(function(){
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_8000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000").removeClass("disabled");
 		$("#begin_8000, #begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		if($("#begin_text").val() > 7000 || $("#begin_text").val() === ""){
+		if($("#begin_text").val()*1 > 7000 || $("#begin_text").val() === ""){
 			$("#begin_text").val(7000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -658,9 +732,10 @@ $('document').ready(function(){
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_9000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000").removeClass("disabled");
 		$("#begin_9000, #begin_10000, #begin_unlimited").addClass("disabled");
-		if($("#begin_text").val() > 8000 || $("#begin_text").val() === ""){
+		if($("#begin_text").val()*1 > 8000 || $("#begin_text").val() === ""){
 			$("#begin_text").val(8000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -674,9 +749,10 @@ $('document').ready(function(){
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_10000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000").removeClass("disabled");
 		$("#begin_10000, #begin_unlimited").addClass("disabled");
-		if($("#begin_text").val() > 9000 || $("#begin_text").val() === ""){
+		if($("#begin_text").val()*1 > 9000 || $("#begin_text").val() === ""){
 			$("#begin_text").val(9000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -690,9 +766,10 @@ $('document').ready(function(){
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000").removeClass("disabled");
 		$("#begin_unlimited").addClass("disabled");
-		if($("#begin_text").val() > 10000 || $("#begin_text").val() === ""){
+		if($("#begin_text").val()*1 > 10000 || $("#begin_text").val() === ""){
 			$("#begin_text").val(10000); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
@@ -701,20 +778,48 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_text").val("무제한");
+		$("#end_text").val(99999);
 		$("#end_unlimited").css("background-color", "#3B8DE0");
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").removeClass("disabled");
-		if($("#begin_text").val() != "무제한"){
-			$("#begin_text").val("무제한"); 
+		if($("#begin_text").val()*1 != 99999){
+			$("#begin_text").val(99999); 
 		}
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 
 	
 	////////////////////////////////////////////////////////////////////////////////
-
+	//begin_text & end_text click event 
+ 	$("#begin_rent_text, #end_rent_text").click(function(){
+ 		if(isNaN($("#end_rent_text").val())) {
+ 	 		$("#end_rent_text").val(99999);
+ 	 	}
+ 	 	if(isNaN($("#begin_rent_text").val())) {
+ 	 		$("#begin_rent_text").val(0);
+ 	 	}
+ 		var begin = $("#begin_rent_text").val();
+ 		var end = $("#end_rent_text").val();
+ 	 	$("#rent_month").empty().append("(월)"+begin+"만 ~ "+end+"만");
+ 	});	
+ 	
+ 	//보증금 드랍다운 메뉴 클릭
+ 	$("#rent_month").click(function(){
+ 		var begin = $("#begin_rent_text").val();
+ 		var end = $("#end_rent_text").val();
+ 	 	$("#rent_month").empty().append("(월)"+begin+"만 ~ "+end+"만");
+ 		if(isNaN(end)) {
+ 	 		$("#end_rent_text").val(99999);
+ 	 		$("#rent_month").empty().append("(월)"+begin+"만 ~ "+end+"만");
+ 	 	}
+ 	 	if(isNaN(begin)) {
+ 	 		$("#begin_rent_text").val(0);
+ 	 		$("#rent_month").empty().append("(월)"+begin+"만 ~ "+end+"만");
+ 	 	}
+ 	 	
+  	});	
 	
 	//월세 가격
     // 0 만원 부터
@@ -723,15 +828,12 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_rent_text").val("0원");
+		$("#begin_rent_text").val(0);
 		$("#begin_rent_0").css("background-color", "#3B8DE0");
 		$("#begin_rent_10 , #begin_rent_20 , #begin_rent_30 , #begin_rent_40 , #begin_rent_50 , #begin_rent_60 , #begin_rent_70 , #begin_rent_80 , #begin_rent_90 , #begin_rent_100, #begin_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_rent_10, #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_rent_10").click(function(){
@@ -739,16 +841,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_rent_text").val("10만원");
+		$("#begin_rent_text").val(10);
 		$("#begin_rent_10").css("background-color", "#3B8DE0");
 		$("#begin_rent_0, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_rent_0").addClass("disabled");
 		$("#end_rent_10, #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#end_rent_text").val()*1 < 10 || $("#end_rent_text").val() === ""){
+			$("#end_rent_text").val(10); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_rent_20").click(function(){
@@ -756,16 +858,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_rent_text").val("20만원");
+		$("#begin_rent_text").val(20);
 		$("#begin_rent_20").css("background-color", "#3B8DE0");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_30, #begin_rent_40, #begin_rent_50 , #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_rent_0, #end_rent_10").addClass("disabled");
 		$("#end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#end_rent_text").val()*1 < 20 || $("#end_rent_text").val() === ""){
+			$("#end_rent_text").val(20); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_rent_30").click(function(){
@@ -773,16 +875,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_rent_text").val("30만원");
+		$("#begin_rent_text").val(30);
 		$("#begin_rent_30").css("background-color", "#3B8DE0");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_rent_0, #end_rent_10, #end_rent_20").addClass("disabled");
 		$("#end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#end_rent_text").val()*1 < 30 || $("#end_rent_text").val() === ""){
+			$("#end_rent_text").val(30); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_rent_40").click(function(){
@@ -790,16 +892,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_rent_text").val("40만원");
+		$("#begin_rent_text").val(40);
 		$("#begin_rent_40").css("background-color", "#3B8DE0");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_rent_0, #end_rent_10, #end_rent_20, #end_rent_30").addClass("disabled");
 		$("#end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#end_rent_text").val()*1 < 40 || $("#end_rent_text").val() === ""){
+			$("#end_rent_text").val(40); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_rent_50").click(function(){
@@ -807,16 +909,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_rent_text").val("50만원");
+		$("#begin_rent_text").val(50);
 		$("#begin_rent_50").css("background-color", "#3B8DE0");
 		$("#begin_rent_0 , #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_rent_0, #end_rent_10, #end_rent_20, #end_rent_30, #end_rent_40").addClass("disabled");
 		$("#end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#end_rent_text").val()*1 < 50 || $("#end_rent_text").val() === ""){
+			$("#end_rent_text").val(50); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_rent_60").click(function(){
@@ -824,16 +926,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_rent_text").val("60만원");
+		$("#begin_rent_text").val(60);
 		$("#begin_rent_60").css("background-color", "#3B8DE0");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_rent_0, #end_rent_10, #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50").addClass("disabled");
 		$("#end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#end_rent_text").val()*1 < 60 || $("#end_rent_text").val() === ""){
+			$("#end_rent_text").val(60); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_rent_70").click(function(){
@@ -841,16 +943,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_rent_text").val("70만원");
+		$("#begin_rent_text").val(70);
 		$("#begin_rent_70").css("background-color", "#3B8DE0");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_rent_0, #end_rent_10, #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60").addClass("disabled");
 		$("#end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#end_rent_text").val()*1 < 70 || $("#end_rent_text").val() === ""){
+			$("#end_rent_text").val(70); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_rent_80").click(function(){
@@ -858,16 +960,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_rent_text").val("80만원");
+		$("#begin_rent_text").val(80);
 		$("#begin_rent_80").css("background-color", "#3B8DE0");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent50, #begin_rent_60, #begin_rent_70, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_rent_0, #end_rent_10, #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70").addClass("disabled");
 		$("#end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#end_rent_text").val()*1 < 80 || $("#end_rent_text").val() === ""){
+			$("#end_rent_text").val(80); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_rent_90").click(function(){
@@ -875,16 +977,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_rent_text").val("90만원");
+		$("#begin_rent_text").val(90);
 		$("#begin_rent_90").css("background-color", "#3B8DE0");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_100, #begin_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_rent_0, #end_rent_10, #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80").addClass("disabled");
 		$("#end_rent_90, #end_rent_100, #end_rent_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#end_rent_text").val()*1 < 90 || $("#end_rent_text").val() === ""){
+			$("#end_rent_text").val(90); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_rent_100").click(function(){
@@ -892,16 +994,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_rent_text").val("100만원");
+		$("#begin_rent_text").val(100);
 		$("#begin_rent_100").css("background-color", "#3B8DE0");
 		$("#begin_rent_0 , #begin_rent_10 , #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#end_rent_0, #end_rent_10, #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90").addClass("disabled");
 		$("#end_rent_100, #end_rent_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#end_rent_text").val()*1 < 100 || $("#end_rent_text").val() === ""){
+			$("#end_rent_text").val(100); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#begin_rent_unlimited").click(function(){
@@ -909,16 +1011,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#begin_rent_text").val("무제한");
+		$("#begin_rent_text").val(9999);
 		$("#begin_rent_unlimited").css("background-color", "#3B8DE0");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100").css("background-color", "rgba(0,0,0,0)");
 		$("#end_rent_0, #end_rent_10, #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100").addClass("disabled");
 		$("#end_rent_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#end_rent_text").val()*1 < 9999 || $("#end_rent_text").val() === ""){
+			$("#end_rent_text").val(9999); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	// 보증금 0원 까지
@@ -927,15 +1029,15 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_rent_text").val("0원");
+		$("#end_rent_text").val(0);
 		$("#end_rent_0").css("background-color", "#3B8DE0");
 		$("#end_rent_10, #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#begin_rent_text").val()*1 != 0 || $("#begin_rent_text").val() === ""){
+			$("#begin_rent_text").val(0); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_rent_10").click(function(){
@@ -943,17 +1045,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_rent_text").val("10만원");
+		$("#end_rent_text").val(10);
 		$("#end_rent_10").css("background-color", "#3B8DE0");
 		$("#end_rent_0, #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_rent_0, #begin_rent_10").removeClass("disabled");
 		$("#begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
-		
+		if($("#begin_rent_text").val()*1 > 10 || $("#begin_rent_text").val() === ""){
+			$("#begin_rent_text").val(10); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_rent_20").click(function(){
@@ -961,17 +1062,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_rent_text").val("20만원");
+		$("#end_rent_text").val(20);
 		$("#end_rent_20").css("background-color", "#3B8DE0");
 		$("#end_rent_0 , #end_rent_10 , #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_rent_10, #begin_rent_20").removeClass("disabled");
 		$("#begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
-		
+		if($("#begin_rent_text").val()*1 > 20 || $("#begin_rent_text").val() === ""){
+			$("#begin_rent_text").val(20); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_rent_30").click(function(){
@@ -979,16 +1079,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_rent_text").val("30만원");
+		$("#end_rent_text").val(30);
 		$("#end_rent_30").css("background-color", "#3B8DE0");
 		$("#end_rent_0, #end_rent_10, #end_rent_20, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30").removeClass("disabled");
 		$("#begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#begin_rent_text").val()*1 > 30 || $("#begin_rent_text").val() === ""){
+			$("#begin_rent_text").val(30); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_rent_40").click(function(){
@@ -996,16 +1096,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_rent_text").val("40만원");
+		$("#end_rent_text").val(40);
 		$("#end_rent_40").css("background-color", "#3B8DE0");
 		$("#end_rent_0 , #end_rent_10 , #end_rent_20, #end_rent_30, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40").removeClass("disabled");
 		$("#begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#begin_rent_text").val()*1 > 40 || $("#begin_rent_text").val() === ""){
+			$("#begin_rent_text").val(40); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_rent_50").click(function(){
@@ -1013,16 +1113,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_rent_text").val("50만원");
+		$("#end_rent_text").val(50);
 		$("#end_rent_50").css("background-color", "#3B8DE0");
 		$("#end_rent_0 , #end_rent_10 , #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50").removeClass("disabled");
 		$("#begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#begin_rent_text").val()*1 > 50 || $("#begin_rent_text").val() === ""){
+			$("#begin_rent_text").val(50); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_rent_60").click(function(){
@@ -1030,16 +1130,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_rent_text").val("60만원");
+		$("#end_rent_text").val(60);
 		$("#end_rent_60").css("background-color", "#3B8DE0");
 		$("#end_rent_0 , #end_rent_10, #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_60").removeClass("disabled");
 		$("#begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#begin_rent_text").val()*1 > 60 || $("#begin_rent_text").val() === ""){
+			$("#begin_rent_text").val(60); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_rent_70").click(function(){
@@ -1047,16 +1147,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_rent_text").val("70만원");
+		$("#end_rent_text").val(70);
 		$("#end_rent_70").css("background-color", "#3B8DE0");
 		$("#end_rent_0 , #end_rent_10 , #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_80, #end_rent_90, #end_rent_100, #end_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_70").removeClass("disabled");
 		$("#begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#begin_rent_text").val()*1 > 70 || $("#begin_rent_text").val() === ""){
+			$("#begin_rent_text").val(70); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_rent_80").click(function(){
@@ -1064,16 +1164,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_rent_text").val("80만원");
+		$("#end_rent_text").val(80);
 		$("#end_rent_80").css("background-color", "#3B8DE0");
 		$("#end_rent_0 , #end_rent_10 , #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_90, #end_rent_100, #end_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80").removeClass("disabled");
 		$("#begin_rent_90, #begin_rent_100, #begin_rent_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#begin_rent_text").val()*1 > 80 || $("#begin_rent_text").val() === ""){
+			$("#begin_rent_text").val(80); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_rent_90").click(function(){
@@ -1081,16 +1181,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_rent_text").val("90만원");
+		$("#end_rent_text").val(90);
 		$("#end_rent_90").css("background-color", "#3B8DE0");
 		$("#end_rent_0 , #end_rent_10, #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_100, #end_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90").removeClass("disabled");
 		$("#begin_rent_100, #begin_rent_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#begin_rent_text").val()*1 > 90 || $("#begin_rent_text").val() === ""){
+			$("#begin_rent_text").val(90); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_rent_100").click(function(){
@@ -1098,16 +1198,16 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_rent_text").val("100만원");
+		$("#end_rent_text").val(100);
 		$("#end_rent_100").css("background-color", "#3B8DE0");
 		$("#end_rent_0 , #end_rent_10 , #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_unlimited").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100").removeClass("disabled");
 		$("#begin_rent_unlimited").addClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#begin_rent_text").val()*1 > 100 || $("#begin_rent_text").val() === ""){
+			$("#begin_rent_text").val(100); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
 	$("#end_rent_unlimited").click(function(){
@@ -1115,18 +1215,18 @@ $('document').ready(function(){
 			//alert("선택할 수 없습니다.");
 			return;
 		}
-		$("#end_rent_text").val("무제한");
+		$("#end_rent_text").val(9999);
 		$("#end_rent_unlimited").css("background-color", "#3B8DE0");
 		$("#end_rent_0, #end_rent_10, #end_rent_20, #end_rent_30, #end_rent_40, #end_rent_50, #end_rent_60, #end_rent_70, #end_rent_80, #end_rent_90, #end_rent_100").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_rent_0, #begin_rent_10, #begin_rent_20, #begin_rent_30, #begin_rent_40, #begin_rent_50, #begin_rent_60, #begin_rent_70, #begin_rent_80, #begin_rent_90, #begin_rent_100, #begin_rent_unlimited").removeClass("disabled");
-		$.ajax({
-			url : "json.do",
-			type : "post",
-			data : {begin : $("#begin_rent_text").val(), end : $("#end_rent_text").val}
-		});
+		if($("#begin_rent_text").val()*1 > 9999 || $("#begin_rent_text").val() === ""){
+			$("#begin_rent_text").val(9999); 
+		}
+		$("#rent_month").empty().append("(월)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
 	
-	// 추가 사항 체크 박스 
+	// 추가 사항  주차, 반려동물 체크 박스 
 	var options = [];
 	$('.option_ckeck').on( 'click', function( event ) {
 	   
@@ -1146,8 +1246,110 @@ $('document').ready(function(){
 	   $( event.target ).blur();
 	      
 	   console.log( options );
-	   return false;
+	   checkBox(options);
+	   return false
 	});
+	//checkBox체크
+	function checkBox(options){
+		$("#parking").val("");
+		$("#animal").val("");
+		if(options.includes("parking")){
+			$("#parking").val(1);
+			
+		}else{
+			$("#parking").val("");
+		}
+		if(options.includes("animal")){
+			$("#animal").val(1);
+		}else{
+			$("#animal").val("");
+		}
+		options = [];
+		console.log("parkingValue: "+$("#parking").val()+"animalValue: "+$("#animal").val());
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
+		
+	}	
+	
+    // 추가 사항 평수 체크 박스  라디오 요소처럼 동작시킬 체크박스 그룹 셀렉터
+	
+	$('.option_ckeck1').on( 'click', function( event ) {
+		var area = "";
+		$("#startArea").val("");
+		$("#endArea").val("");
+		var $target = $( event.currentTarget ),
+		$inp = $target.find( 'input' )
+		        
+		if (!$inp.prop('checked')) {
+			$('input[type="checkbox"][name="group"]').prop('checked', false);
+			$inp.prop('checked', true);
+			area = $target.attr( 'data-value' );
+		}else{
+        	$inp.prop('checked', false);
+        	area = "";
+        }
+		
+		if(area ==="under5"){
+			$("#startArea").val(0);
+			$("#endArea").val(16.5);
+		}else if(area ==="under10"){
+			$("#startArea").val(16.5);
+			$("#endArea").val(33.3);
+		}else if(area ==="over10"){
+			$("#startArea").val(33.3);
+			$("#endArea").val(9999.9);
+		}else{
+			$("#startArea").val("");
+			$("#endArea").val("");
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
+		return false;
+    });
+	
+	// 추가 사항 층수 체크 박스 
+	var floor = null;
+	$('.option_ckeck2').on( 'click', function( event ) {
+		$("#startFloor").val("");
+		$("#endFloor").val("");
+		var $target = $( event.currentTarget ),
+		$inp = $target.find( 'input' ),
+		val = $target.attr( 'data-value' )
+        
+		if (!$inp.prop('checked')) {
+			$('input[type="checkbox"][name="group1"]').prop('checked', false);
+			$inp.prop('checked', true);
+			floor = $target.attr( 'data-value' );
+		}else{
+        	$inp.prop('checked', false);
+        	floor = "";
+        }
+		
+		if(floor ==="groundFloor"){
+			$("#startFloor").val(-1);
+			$("#endFloor").val(-1);
+		}else if(floor ==="BottomFloor"){
+			$("#startFloor").val(1);
+			$("#endFloor").val(3);
+		}else if(floor ==="middleFloor"){
+			$("#startFloor").val(4);
+			$("#endFloor").val(6);
+		}else if(floor ==="heightFloor"){
+			$("#startFloor").val(7);
+			$("#endFloor").val(19);
+		}else if(floor ==="topFloor"){
+			$("#startFloor").val(19);
+			$("#endFloor").val(99);
+		}else if(floor ==="topRoom"){
+			$("#startFloor").val(100);
+			$("#endFloor").val(100);
+		}else{
+			$("#startFloor").val("");
+			$("#endFloor").val("");
+		}
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
+		return false;
+    });
+	
+	
 	
 	// 보증금 드랍박스 hide 안되게
 	$(function() {
@@ -1190,6 +1392,12 @@ $('document').ready(function(){
 	 $("#kind_of_sale").change(function (){
 		 console.log("매물종류 변경");
 	 });
+	// 전체
+	$("#all_rent").click( function () {
+		  var arc = $("#all_rent").text();
+		  $("#kind_of_sale").empty().append(arc);
+		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
+	});
 	// 월세
 	$("#month_rent").click( function () {
 		  var arc = $("#month_rent").text();
@@ -1253,8 +1461,8 @@ $('document').ready(function(){
 		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
     // 1.5룸
-	$("#room_count_1.5").click( function () {
-		  var arc = $("#room_count_1.5").text();
+	$("#room_count_15").click( function () {
+		  var arc = $("#room_count_15").text();
 		  $("#kind_of_room").empty().append(arc);
 		  pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 	});
@@ -1374,7 +1582,32 @@ function heart(that){
 	}else {
 		$(that).children().children().removeClass().addClass("fa fa-heart-o fa-2x");
 	}
+	var build_no = $(that).next().find( '[name = build_no]');
+	var seq = build_no.val();
+	console.log("build_no: "+seq);
+	$.ajax({
+		url : "heart.do",
+		type : "POST",
+		data : {"seq" : seq}
+
+	});
+	
 }
+
+//매물 클릭
+function buildContent(that){
+	var build_no = $(that).children().children().children().find('[name=build_no]');
+	console.log("매물 클릭 build_no.val()");
+	var seq = build_no.val();
+	console.log("build_no: "+seq);
+	$.ajax({
+		url : "recentList.do",
+		type : "POST",
+		data : {"seq" : seq}
+
+	});
+}
+
 
 //하트 마우스 오버
 function heartMouseOver(that){
@@ -1387,14 +1620,35 @@ function heartMouseOut(that){
 }
 
 //매물 마우스 오버시 백컬러 변경
-function backColor(that){
-	$(that).css('background-color', '#D2E5FF');
+var customMarker;
+
+function getterLatLng(that){
+//	$(that).one("mouseover", function(){
+		$(that).css('background-color', '#D2E5FF');
+		var lng = $(that).find( '[name="lng"]' );
+		var lat = $(that).find( '[name="lat"]' );
+		var targetLng = lng.val()*1;
+		var targetLat = lat.val()*1;
+		//console.log("targetLng2: "+targetLng+"targetLat: "+targetLat);
+		var coords = new daum.maps.LatLng(targetLat, targetLng);
+	    customMarker = new daum.maps.Marker({
+	    	position: coords,
+	    	image: customMarkerImage
+	    });
+	    customMarker.setMap(map);
+	    //map.setCenter(coords);
+//	});
 }
+
 
 //매물 마우스 아웃 백컬러 변경
 function buildMouseOut(that){
-	$(that).css('background-color', '#00ff0000');
-	//e6e6e6
+//	$(that).one("mouseout", function(){
+		//console.log("매물 마우스아웃");
+		customMarker.setMap(null);
+		clusterer.removeMarker(customMarker);
+		$(that).css('background-color', '#00ff0000');
+//	});
 }
 
 //search 태우는곳
@@ -1410,32 +1664,147 @@ function search (){
 }
 //보증금 부터~ 입력창
 function beginKeyUp(){
-	if(isNaN($("#end_text").val())) $("#end_text").val(99999);
-	if(isNaN($("#begin_text").val())) $("#begin_text").val(0);
+	if(isNaN($("#end_text").val())){
+		$("#end_text").val(99999);
+	}
+	if(isNaN($("#begin_text").val())) {
+		$("#begin_text").val(0);
+	}
 	var end = $("#end_text").val();
 	var begin = $("#begin_text").val();
 	setTimeout(function() {
 		if(end < begin && !isNaN(end) && !isNaN(begin)) $("#end_text").val(begin);
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 		}, 1000);
-
+	
 }
 //보증금 ~까지 입력창
 function endKeyUp(){
-	if(isNaN($("#end_text").val())) $("#end_text").val(99999);
-	if(isNaN($("#begin_text").val())) $("#begin_text").val(0);
+	if(isNaN($("#end_text").val())) {
+		$("#end_text").val(9999);
+	}
+	if(isNaN($("#begin_text").val())) {
+		$("#begin_text").val(0);
+	}
 	var end = $("#end_text").val();
 	var begin = $("#begin_text").val();
 	setTimeout(function() {
 		if(end < begin && !isNaN(end) && !isNaN(begin)) $("#begin_text").val(end);
+		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 		}, 1000);
-
+	
 }
-//보증금, 월세 숫자만 입력 받을 수 있게 하는 메서드
+//월세 부터~ 입력창
+function beginRentKeyUp(){
+	if(isNaN($("#end_rent_text").val())){
+		$("#end_rent_text").val(9999);
+	}
+	if(isNaN($("#begin_rent_text").val())) {
+		$("#begin_rent_text").val(0);
+	}
+	var end = $("#end_rent_text").val();
+	var begin = $("#begin_rent_text").val();
+	setTimeout(function() {
+		if(end < begin && !isNaN(end) && !isNaN(begin)) $("#end_rent_text").val(begin);
+		$("#rent_month").empty().append("(보)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
+		}, 1000);
+	
+}
+//월세 ~까지 입력창
+function endRentKeyUp(){
+	if(isNaN($("#end_rent_text").val())) {
+		$("#end_rent_text").val(9999);
+	}
+	if(isNaN($("#begin_rent_text").val())) {
+		$("#begin_rent_text").val(0);
+	}
+	var end = $("#end_rent_text").val();
+	var begin = $("#begin_rent_text").val();
+	setTimeout(function() {
+		if(end < begin && !isNaN(end) && !isNaN(begin)) $("#begin_rent_text").val(end);
+		$("#rent_month").empty().append("(보)"+$("#begin_rent_text").val()+"만 ~ "+$("#end_rent_text").val()+"만");
+		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
+		}, 1000);
+	
+}
+//보증금 숫자만 입력 받을 수 있게 하는 메서드
 function onlyNumber(obj) {
-	if(isNaN($("#end_text").val())) $("#end_text").val(99999);
-	if(isNaN($("#begin_text").val())) $("#begin_text").val(0);
+	if(isNaN($("#end_text").val())) {
+		$("#end_text").val(99999);
+
+	}
+	if(isNaN($("#begin_text").val())) {
+		$("#begin_text").val(0);
+
+	}
     $(obj).keyup(function(){
          $(this).val($(this).val().replace(/[^0-9]/g,""));
-    }); 
+
+    });
+	var end = $("#end_text").val();
+	var begin = $("#begin_text").val();
+    
+    $("#deposit").empty().append("(보)"+begin+"만 ~ "+end+"만");
 
 }
+
+//보증금 숫자만 입력 받을 수 있게 하는 메서드
+function onlyRentNumber(obj) {
+	if(isNaN($("#end_text").val())) {
+		$("#end_text").val(99999);
+
+	}
+	if(isNaN($("#begin_text").val())) {
+		$("#begin_text").val(0);
+
+	}
+    $(obj).keyup(function(){
+         $(this).val($(this).val().replace(/[^0-9]/g,""));
+
+    });
+	var end = $("#end_text").val();
+	var begin = $("#begin_text").val();
+    
+    $("#deposit").empty().append("(보)"+begin+"만 ~ "+end+"만");
+
+}
+
+//관심목록 - 찜한방 클릭시
+$("#heartRoom").click(function(){
+	console.log("찜한방 클릭 인입");
+	var email = "1234@gmail.com";
+	$.ajax({
+		url : "heartRoom.do",
+		type : "POST",
+		data : {email : email},
+		success : function (responseData){
+			var data = JSON.parse(resonseData);
+			console.log("찜목록 success: "+data.list.length);
+		}
+	});
+});
+
+
+
+	
+
+
+
+
+// 토큰 생성
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$(function() {
+	
+    $(document).ajaxSend(function(e, xhr, options) {
+    	console.log("dd");
+        xhr.setRequestHeader(header, token);
+
+    });
+
+});
+
+

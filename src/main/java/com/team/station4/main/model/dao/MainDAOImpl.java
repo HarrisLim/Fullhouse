@@ -47,5 +47,12 @@ public class MainDAOImpl implements MainDAO {
 		String Name = sqlSession.selectOne(ns + ".memName", dto);
 		return Name;
 	}
-	
+
+	@Override
+	public MainDTO securitygetUsersByID(String mem_email) {
+		// TODO Auto-generated method stub
+		MainDTO securitygetUsersByID = sqlSession.selectOne(ns + ".securitygetUsersByID", mem_email);
+		
+		return securitygetUsersByID;
+	}
 }

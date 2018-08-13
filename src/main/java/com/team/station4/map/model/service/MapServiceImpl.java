@@ -120,8 +120,12 @@ public class MapServiceImpl implements MapService {
 		 // 35.12310061655682, 129.05650821802078 // 부산
 		 // 37.792602855680975, 126.5212847590806 //강화도
 		 Random r = new Random();
-		 double start = 34.36648681811837;
-		 double end = 38.56840795178768;
+		 //전국
+		 //double start = 34.36648681811837;
+		 //double end = 38.56840795178768;
+		 //수도권
+		 double start = 37.35787318799519;
+		 double end = 37.8347415116356;
 		 double range = end-start;
 		 for (int i=0; i<count; i++) {
 			 double lat = r.nextDouble() * range + start;
@@ -135,8 +139,13 @@ public class MapServiceImpl implements MapService {
 	 public List<Double>randomLng(int count){
 		 List<Double>randomLng = new ArrayList<Double>();
 		 Random r = new Random();
-		 double start = 126.09912791740395;
-		 double end = 130.525309690136;
+		 //전국
+		 //double start = 126.09912791740395;
+		 //double end = 130.525309690136;
+		 //수도권
+		 double start = 126.60845644761866;
+		 double end = 127.65287076386323;
+		 
 		 double range = end-start;
 		 for (int i=0; i<count; i++) {
 			 double lng = r.nextDouble() * range + start;
@@ -161,13 +170,79 @@ public class MapServiceImpl implements MapService {
 	 public int countService() {
 		 return dao.count();
 	 }
-
 	 
 	/* jsl */
 	@Override
 	public int countBuildService(Map hm) {
 		return dao.countBuild(hm);
 	}
-	 
 	
+	 
+	 @Override
+	 public List<BuildDTO>clusterListService(Map map){
+		 return dao.clusterList(map);
+	 }
+	 
+	 @Override
+	 public void InsertAddInfoService(HashMap addInfo) {
+		 dao.InsertAddInfo(addInfo);
+	 }
+
+	@Override
+	public int myMaxService() {
+		return dao.myMax();
+	}
+
+	@Override
+	public void memHotUpdateService(int buildNo) {
+		dao.memHotUpdate(buildNo);
+	}
+
+	@Override
+	public int memHotSelectService(int buildNo) {
+		return dao.memHotSelect(buildNo);
+	}
+
+	@Override
+	public void memHotDeleteService(int buildNo) {
+		dao.memHotDelete(buildNo);
+		
+	}
+
+	@Override
+	public String myHotService() {
+		return dao.myHot();
+	}
+
+	@Override
+	public BuildDTO hotListService(int parseInt) {
+		return dao.hotList(parseInt);
+		
+	}
+
+	@Override
+	public String myRecentService() {
+		return dao.myRecent();
+	}
+
+	@Override
+	public BuildDTO recentListService(int parseInt) {
+		// TODO Auto-generated method stub
+		return dao.recentList(parseInt);
+	}
+
+	@Override
+	public int memRecentSelectService(String buildNo) {
+		return dao.memRecentSelect(buildNo);
+	}
+
+	@Override
+	public void memRecentUpdateService(String reRecent) {
+		dao.memRecentUpdate(reRecent);	
+	}
+
+	@Override
+	public List<BuildDTO> hotListServicePaging(Map<String, Object> jsonLatLng) {
+		return dao.hotListPaging(jsonLatLng);
+	}
 }

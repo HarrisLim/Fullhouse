@@ -7,15 +7,30 @@
 	<name>Fullhouse</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
+	
 	<properties>
 		<java-version>1.6</java-version>
-		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
+		<org.springframework-version>3.2.8.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	<dependencies>
 	
-<!-- (1) tomcat-dbcp -->
+	<!-- Spring Security -->
+
+	<dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-web</artifactId>
+	    <version>3.2.3.RELEASE</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-config</artifactId>
+	    <version>3.2.3.RELEASE</version>
+	</dependency>
+	
+	<!-- (1) tomcat-dbcp -->
     <dependency>
       <groupId>org.apache.tomcat</groupId>
       <artifactId>tomcat-dbcp</artifactId>
@@ -42,30 +57,31 @@
       <artifactId>spring-test</artifactId>
       <version>${org.springframework-version}</version>
     </dependency>
+    
 <!-- (5) commons-fileupload --> 
 	<dependency>
 		<groupId>commons-fileupload</groupId>
 		<artifactId>commons-fileupload</artifactId>
 		<version>1.2.1</version> 
 	</dependency>
-<!-- (6) commons-io -->
+	<!-- (6) commons-io -->
 	<dependency>
 	    <groupId>commons-io</groupId>
 	    <artifactId>commons-io</artifactId>
 	    <version>2.5</version>
 	</dependency>
 	
-<!-- (7) jackson --> 
+<!-- 	(7) jackson  -->
 	<dependency> 
 		<groupId>org.codehaus.jackson</groupId> 
 		<artifactId>jackson-core-lgpl</artifactId> 
-		<version>1.9.1</version> 
+		<version>1.9.12</version> 
 	</dependency>	
 	
 	<dependency> 
 		<groupId>org.codehaus.jackson</groupId> 
 		<artifactId>jackson-mapper-asl</artifactId> 
-		<version>1.9.1</version> 
+		<version>1.9.12</version> 
 	</dependency>
 	
 <!-- (8) json View  -->	
@@ -85,25 +101,33 @@
 	    <groupId>com.googlecode.json-simple</groupId>
 	    <artifactId>json-simple</artifactId>
 	    <version>1.1</version>
-	</dependency>	
-	  <!-- Spring -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${org.springframework-version}</version>
-			<exclusions>
-				<!-- Exclude Commons Logging in favor of SLF4j -->
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				 </exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${org.springframework-version}</version>
-		</dependency>
+	</dependency>
+	
+	<dependency> <groupId>com.fasterxml.jackson.core</groupId> 
+		<artifactId>jackson-annotations</artifactId> 
+		<version>2.9.5</version> 
+	</dependency>
+
+
+	
+	<!-- Spring -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context</artifactId>
+		<version>${org.springframework-version}</version>
+		<exclusions>
+			<!-- Exclude Commons Logging in favor of SLF4j -->
+			<exclusion>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+			 </exclusion>
+		</exclusions>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc</artifactId>
+		<version>${org.springframework-version}</version>
+	</dependency>
 				
 		<!-- AspectJ -->
 		<dependency>
@@ -180,7 +204,38 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-	
+		
+	<!-- Excel Read/Write 를 위한 Dependency 추가 -->
+	    <dependency>
+	        <groupId>org.apache.poi</groupId>
+	        <artifactId>poi</artifactId>
+	        <version>3.11</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.apache.poi</groupId>
+	        <artifactId>poi-ooxml</artifactId>
+	        <version>3.11</version>
+	    </dependency>
+    
+    
+		<!-- MultipartHttpServletRequset -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+ 
+		<dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.2.2</version>
+		</dependency>
+ 		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.9</version>
+		</dependency>
+		
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
