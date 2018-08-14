@@ -25,8 +25,6 @@ public class ManageroomDAOImpl implements ManageroomDAO {
 
 	@Override
 	public List<BuildDTO> mrBuildSelect(Map hm) {
-		System.out.println("1: "+hm.get("start"));
-		System.out.println("2: "+hm.get("buildDTO"));
 		return sqlSession.selectList(ns+".map.mySelectEstate", hm);
 	}
 
@@ -38,7 +36,6 @@ public class ManageroomDAOImpl implements ManageroomDAO {
 
 	@Override
 	public List<PriceDTO> mrPriceSelect(BuildDTO buildDTO) {
-		System.out.println("build_no in dao : "+ buildDTO.getBuild_no());
 		return sqlSession.selectList(ns+".price.mySelectBuild", buildDTO);
 	}
 
@@ -58,23 +55,27 @@ public class ManageroomDAOImpl implements ManageroomDAO {
 	}
 
 	@Override
+	public void mrDeleteRequest(int build_no) {
+		sqlSession.delete(ns+".request.myDelete", build_no);
+	}
+
+	@Override
+	public void mrDeleteAddinfo(int build_no) {
+		sqlSession.delete(ns+".addinfo.myDelete", build_no);
+	}
+
+	@Override
 	public void mrDeleteBuild(int build_no) {
 		sqlSession.delete(ns+".map.myDelete", build_no);
 	}
 
 	@Override
 	public List<BuildDTO> mrSearchBuildNoSelect(Map<String, Object> hm) {
-		System.out.println("aaSN: "+ hm.get("start"));
-		System.out.println("bbSN: "+ hm.get("last"));
-		System.out.println("ccSN: "+ hm.get("buildState"));
 		return sqlSession.selectList(ns+".map.mySearchNoSelect", hm);
 	}
 
 	@Override
 	public List<BuildDTO> mrSearchBuildTitleSelect(Map<String, Object> hm) {
-		System.out.println("aa: "+ hm.get("start"));
-		System.out.println("bb: "+ hm.get("last"));
-		System.out.println("cc: "+ hm.get("buildState"));
 		return sqlSession.selectList(ns+".map.mySearchTitleSelect", hm);
 	}
 

@@ -475,16 +475,16 @@
 	    function addPrice(kind){
 	    	if(kind==='sell'){ // 매매
 		    	if(!document.getElementById("addSellPrice")){
-	    			$("#addPrice").append("<div id='addSellPrice' style='margin:10px'><span class='badge badge-lg badge-pill badge-primary' style='padding:10px'>매매</span><input style='padding:5px 10px 5px 10px; margin:0 10px 0 30px' name='salePrice' placeholder='매매'>&nbsp;만원&nbsp;&nbsp;&nbsp;&nbsp; <button class='btn btn-sm btn-danger sell' name='sellF' onclick='removeThis(this)'> X </button><br></div>");
+	    			$("#addPrice").append("<div id='addSellPrice' style='margin:10px'><span class='badge badge-lg badge-pill badge-primary' style='padding:10px'>매매</span><input style='padding:5px 10px 5px 10px; margin:0 10px 0 30px' onkeyup='checkNumber(this, \"int\")' name='salePrice' placeholder='매매'>&nbsp;만원&nbsp;&nbsp;&nbsp;&nbsp; <button class='btn btn-sm btn-danger sell' name='sellF' onclick='removeThis(this)'> X </button><br></div>");
 	    			$("#addSellBtn").attr("disabled", "");
 		    	}
 	    	}else if(kind==='deposit'){ // 전세 
 		    	if(!document.getElementById("addDepositPrice")){
-	    			$("#addPrice").append("<div id='addDepositPrice' style='margin:10px'><span class='badge badge-lg badge-pill badge-primary' style='padding:10px'>전세</span><input style='padding:5px 10px 5px 10px; margin:0 10px 0 30px' name='lease' placeholder='전세'>&nbsp;만원&nbsp;&nbsp;&nbsp;&nbsp; <button class='btn btn-sm btn-danger' name='depositF' onclick='removeThis(this)'> X </button><br></div>");
+	    			$("#addPrice").append("<div id='addDepositPrice' style='margin:10px'><span class='badge badge-lg badge-pill badge-primary' style='padding:10px'>전세</span><input onkeyup='checkNumber(this, \"int\")' style='padding:5px 10px 5px 10px; margin:0 10px 0 30px' name='lease' placeholder='전세'>&nbsp;만원&nbsp;&nbsp;&nbsp;&nbsp; <button class='btn btn-sm btn-danger' name='depositF' onclick='removeThis(this)'> X </button><br></div>");
 	    			$("#addDepositBtn").attr("disabled", "");
 		    	}
 	    	}else{ // 월세
-	    		$("#addPrice").append("<div class='addMonthlyPrice' style='margin:10px'><span class='badge badge-lg badge-pill badge-primary' style='padding:10px'>월세</span><input style='padding:5px 10px 5px 10px; margin:0 10px 0 30px' name='monthly' placeholder='보증금'>&nbsp;/&nbsp;<input style='padding:5px 10px 5px 10px; margin:0 10px 0 10px' name='deposit' placeholder='월세'>&nbsp;만원&nbsp;&nbsp;&nbsp;&nbsp; <button class='btn btn-sm btn-danger' name='monthlyF' onclick='removeThis(this)'> X </button><br></div>");
+	    		$("#addPrice").append("<div class='addMonthlyPrice' style='margin:10px'><span class='badge badge-lg badge-pill badge-primary' style='padding:10px'>월세</span><input onkeyup='checkNumber(this, \"int\")' style='padding:5px 10px 5px 10px; margin:0 10px 0 30px' name='monthly' placeholder='보증금'>&nbsp;/&nbsp;<input onkeyup='checkNumber(this, \"int\")' style='padding:5px 10px 5px 10px; margin:0 10px 0 10px' name='deposit' placeholder='월세'>&nbsp;만원&nbsp;&nbsp;&nbsp;&nbsp; <button class='btn btn-sm btn-danger' name='monthlyF' onclick='removeThis(this)'> X </button><br></div>");
 	    	}
 	    }
 	    

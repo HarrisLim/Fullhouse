@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
   <head>
+	  <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	  <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at  the highest level of quality.                             ">
@@ -15,10 +18,23 @@
     <link type="text/css" href="../assets/css/theme.css" rel="stylesheet">
     <!-- Demo CSS - No need to use these in your project -->
     <link type="text/css" href="../assets/css/demo.css" rel="stylesheet">
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <!-- paging.js -->
   	<script type="text/javascript" src="../kanu/js/paging.js"></script>
     
     <script>
+	    
+	 // 토큰 생성
+	    var token = $("meta[name='_csrf']").attr("content");
+	    var header = $("meta[name='_csrf_header']").attr("content");
+	    $(function() {
+	        $(document).ajaxSend(function(e, xhr, options) {
+	        	console.log("dd");
+	            xhr.setRequestHeader(header, token);
+	        });
+	    });
+
+	    
     	function showStateList(state){
     		for(var i=0; i<5; i++){
     			if(i===state) $("#T"+i).css("display", '');
@@ -46,7 +62,8 @@
 	  	        }
 	  	    });
     	}
-    	function deleteBuild(x){
+    	function deleteBuild(x, state, value, clickedState){
+    		console.log("state: "+ state+", value: "+ value+", clickedState: "+ clickedState);
     		if(confirm("정말로 삭제하시겠습니까? 복구할 수 없습니다.")){
     			var build_no = $(x).parents().prev().val();
         		
@@ -56,7 +73,8 @@
     	  	        url: 'deletebuild.do',
     	  	        success: function(json) {
     	  	       		if(json===1) alert("삭제되었습니다.");
-    	  	       		location.reload();
+    	  	       		search(state, value, clickedState);
+//     	  	       		location.reload();
     	  	        },error:function(request,status,error){
     	  	          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
     	  	       }
@@ -90,11 +108,11 @@
 				}
    				html+='</td>';
    				html+='<td>';
-				html+='<img src="../'+response.buildList[i].picPath+'" class="img-thumbnail" style="width:230px;height:150px">';
+				html+='<img src="'+response.buildList[i].picPath+'" class="img-thumbnail" style="width:230px;height:150px">';
 				html+='</td>';
 				html+='<td style="font-size:15px">';
 					html+=''+response.buildList[i].proType+'';
-					if(response.mapList[Object.keys(response.mapList)[i]][0].monthly!==0){
+					if(response.mapList[Object.keys(response.mapList)[i]] [0].monthly!==0){
 						html+=' 월세 '+response.mapList[Object.keys(response.mapList)[i]][0].monthly+' / '+response.mapList[Object.keys(response.mapList)[i]][0].deposit;
 					}else if(response.mapList[Object.keys(response.mapList)[i]][0].monthly===0 && response.mapList[Object.keys(response.mapList)[i]][0].lease!==0){
 						html+=' 전세 '+response.mapList[Object.keys(response.mapList)[i]][0].lease;
@@ -105,8 +123,8 @@
 				html+=''+response.buildList[i].roomTitle+'';
 				html+='</td>';
 				html+='<td>';
-				html+='<textarea rows="5" cols="40" placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30">'+response.buildList[i].privateMemo+'</textarea>';
-				html+='</td>';
+				html+='<textarea style="border-radius:5px" rows="5" cols="40" placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30">'+response.buildList[i].privateMemo+'</textarea>';
+				html+='</td>'
 				html+='<td style="font-size:15px">';
 				html+='<p style="text-align:left;margin-left:10px">업로드: '+response.buildList[i].bu_rdate+'<br>';
 				html+='조회수: '+response.buildList[i].view_count +'<br>';
@@ -114,7 +132,7 @@
 				html+='<input type="hidden" value="'+response.buildList[i].build_no+'">';
 				html+='<div class="btn-group" role="group">';
 				html+='<button class="btn btn-sm btn-outline-dark" onclick="updatePrivateMemo(this)">수정</button>';
-				html+='<button class="btn btn-sm btn-outline-dark" onclick="deleteBuild(this)">삭제</button>';
+				html+='<button class="btn btn-sm btn-outline-dark" onclick="deleteBuild(this, document.getElementById(\'selectedState\').value, document.getElementById(\'searching\').value, document.getElementById(\'nowState\').value)">삭제</button>';
 				html+='<button class="btn btn-sm btn-outline-dark" onclick="alert("여기에 5,000원 결제하는 결제시스템 넣자")">광고재등록</button>';
 				html+='</div>';
 				html+='</td>';
@@ -123,11 +141,14 @@
     		}
     	}
     	function search(state, value, clickedState, index, pageStartNum){
-    		
+    		console.log("commo1n");
     		// buildingNo이 공백이면 ""으로 인식해서 numberException발생, 그래서 buildingTitle로 변환해줘야한다. (검색어 없이 다른 탭을 클릭했을 때 오류수정)
     		var hot = state; // buildno or title or memo
     		if(hot==="buildingNo" && value==="") hot = "buildingTitle";
 
+    		if(state===undefined) state="buildingNo";
+    		if(value===undefined) value="";
+    		
 			clickedState = parseInt(clickedState);
     		arr={};
     		arr.hot = hot;
@@ -165,7 +186,7 @@
 					}
     				var html = '';
     				
-    				html+='<p style="float:right;font-size:17px;margin:5px 20px 5px 0px ">'+clickedStateName+' 매물: '+response.count+'</p>';
+    				html+='<p style="float:right;font-size:17px;margin:5px 20px 5px 0px ">검색된 '+clickedStateName+' 매물: '+response.count+'</p>';
     				html += '<table class="table talbe-hover align-items-center"  style="margin-bottom:0px" id="T0">';
 	       				html+='<tbody>';
 
@@ -199,15 +220,180 @@
 					paging+="<li class='page-item'><a class='page-link' onclick='pageNext("+response.pagingVo.index+","+response.pagingVo.pageStartNum+","+response.pagingVo.total+","+response.pagingVo.listCnt+","+response.pagingVo.pageCnt+", 1, "+clickedState+", \""+value+"\", \""+state+"\");'>&rsaquo;</a></li>";
 					paging+="</ul>";
 					paging+="</div>";
-					
+
+					var idxP = response.pagingVo.index+1;
 		       		$("#manageBuildingP").empty().append(html);
 		       	 	// 전체 크기 중 해당 탭안의 매물개수만큼 undefined가 생기는 현상을 어케잡는지 모르겠어서, 정규식으로 제거.
 		       		var regex = /.*undefined/g;
 		       		$("#manageBuildingP").html($("#manageBuildingP").html().replace(regex, ''));
 		       		$("#manageBuildingP").append(paging);
+					$(".pageIndex"+idxP).addClass("page-item active");
     			}
     		});
     	}
+    	function makeActive(idx){
+    		for(var i=1; i<=5; i++){
+    			if(i===idx) {
+    				$("#btn"+i).addClass("active");
+    				continue;
+    			}
+    			$("#btn"+i).removeClass("active");
+    		}
+    	}
+
+	    function checkNumber(x){
+	    	if($("#selectedState").val() === "buildingNo"){
+		    	var regexp = /[^0-9]/g;
+		    	v = $(x).val();
+		    	if(regexp.test(v) ) {
+		    		alert("매물번호를 선택하셔서, 숫자만 입력이 가능합니다.");
+		    		$(x).val(v.replace(regexp,''));
+		    	}
+	    	}
+	    }
+	    function updateVerify(x, d, theNum){
+	    	var st_no = $(x).parents().parents().parents().parents().prev().val();
+	    	if(d==1){
+	    		st_no = theNum;
+	    		$.ajax({
+    	  	        type: 'POST',
+    	  	        data: {"st_no" : st_no},
+    	  	        url: 'updateverify.do',
+    	  	        success: function(responseData) {
+    	  	       		var staffListSize = Object.keys(responseData.staffList).length;
+    	  	       		var html = '';
+    	  	       		for(var i=0; i<staffListSize; i++){
+	    	  	       		html += '<input type="hidden" value="'+responseData.staffList[i].st_no+'">'
+	    	  	       		html += '<div class="col-lg-4" align="center" style="margin:20px 0px 20px 0px">';
+	    	  	       		html += '<div class="card" style="width: 18rem;">'
+	    	  	       		html += '<img class="card-img-top" src="'+responseData.staffList[i].st_pic+'" style="width:286px;height:190px">'
+	    	  	       		html += '<ul class="list-group list-group-flush">';
+						    if(responseData.staffList[i].st_qual === "대표공인중개사")
+						    	html += '<li class="list-group-item staffName" style="font-size:20px"><p style="float:left;margin:0px">*</p>'+responseData.staffList[i].st_name+'('+responseData.staffList[i].st_position+')<p style="float:right;margin:0px">*</p></li>';
+						    else if(responseData.staffList[i].verify === 0)
+						    	html += '<li class="list-group-item staffName" style="font-size:20px">'+responseData.staffList[i].st_name+'('+responseData.staffList[i].st_position+')<button style="float:right" class="btn btn-sm btn-outline-danger" onmouseover="$(this).text(\'인증\').addClass(\'btn-outline-primary\').removeClass(\'btn-outline-danger\')" onmouseout="$(this).text(\'미인증\').addClass(\'btn-outline-danger\').removeClass(\'btn-outline-primary\')" onclick="updateVerify(this)">미인증</button></li>';
+						    else if(responseData.staffList[i].verify === 1)	
+						    	html += '<li class="list-group-item staffName" style="font-size:20px">'+responseData.staffList[i].st_name+'('+responseData.staffList[i].st_position+')<button style="float:right" class="btn btn-sm btn-outline-primary" disabled>인증 완료</button></li>';
+					    	html += '<li class="list-group-item" style="font-size:15px">'+responseData.staffList[i].st_email+'</li>';
+					    	html += '<li class="list-group-item" style="font-size:15px">'+responseData.staffList[i].st_phone+'</li>';
+					    	html += '<li class="list-group-item" style="font-size:15px">'+responseData.staffList[i].st_homephone+'</li>';
+					    	html += '<li onclick="deleteStaff(this)" onmouseover="$(this).css(\'cursor\', \'pointer\')" class="list-group-item" style="font-size:15px;color:red;background-color:rgba(255,0,0,0.2)"><strong>삭제</strong></li>';
+	    	  	       		html += '</ul>';
+	    	  	       		html += '</div>';
+	    	  	       		html += '</div>';
+    	  	       		}
+    	  	       		$("#manageStaff").empty().append(html);
+    	  	       		
+    	  	        },error:function(request,status,error){
+    	  	          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    	  	       }
+    	  	    });	
+	    	}else{
+		    	if(confirm("본인의 공인중개사 직원이 맞습니까 ?")){
+		    		$.ajax({
+	    	  	        type: 'POST',
+	    	  	        data: {"st_no" : st_no},
+	    	  	        url: 'updateverify.do',
+	    	  	        success: function(responseData) {
+	    	  	       		alert("인증되었습니다.");
+	    	  	       		var staffListSize = Object.keys(responseData.staffList).length;
+	    	  	       		var html = '';
+	    	  	       		for(var i=0; i<staffListSize; i++){
+		    	  	       		html += '<input type="hidden" value="'+responseData.staffList[i].st_no+'">'
+		    	  	       		html += '<div class="col-lg-4" align="center" style="margin:20px 0px 20px 0px">';
+		    	  	       		html += '<div class="card" style="width: 18rem;">'
+		    	  	       		html += '<img class="card-img-top" src="'+responseData.staffList[i].st_pic+'" style="width:286px;height:190px">'
+		    	  	       		html += '<ul class="list-group list-group-flush">';
+							    if(responseData.staffList[i].st_qual === "대표공인중개사")
+							    	html += '<li class="list-group-item staffName" style="font-size:20px"><p style="float:left;margin:0px">*</p>'+responseData.staffList[i].st_name+'('+responseData.staffList[i].st_position+')<p style="float:right;margin:0px">*</p></li>';
+							    else if(responseData.staffList[i].verify === 0)
+							    	html += '<li class="list-group-item staffName" style="font-size:20px">'+responseData.staffList[i].st_name+'('+responseData.staffList[i].st_position+')<button style="float:right" class="btn btn-sm btn-outline-danger" onmouseover="$(this).text(\'인증\').addClass(\'btn-outline-primary\').removeClass(\'btn-outline-danger\')" onmouseout="$(this).text(\'미인증\').addClass(\'btn-outline-danger\').removeClass(\'btn-outline-primary\')" onclick="updateVerify(this)">미인증</button></li>';
+							    else if(responseData.staffList[i].verify === 1)	
+							    	html += '<li class="list-group-item staffName" style="font-size:20px">'+responseData.staffList[i].st_name+'('+responseData.staffList[i].st_position+')<button style="float:right" class="btn btn-sm btn-outline-primary" disabled>인증 완료</button></li>';
+						    	html += '<li class="list-group-item" style="font-size:15px">'+responseData.staffList[i].st_email+'</li>';
+						    	html += '<li class="list-group-item" style="font-size:15px">'+responseData.staffList[i].st_phone+'</li>';
+						    	html += '<li class="list-group-item" style="font-size:15px">'+responseData.staffList[i].st_homephone+'</li>';
+						    	html += '<li onclick="deleteStaff(this)" onmouseover="$(this).css(\'cursor\', \'pointer\')" class="list-group-item" style="font-size:15px;color:red;background-color:rgba(255,0,0,0.2)"><strong>삭제</strong></li>';
+		    	  	       		html += '</ul>';
+		    	  	       		html += '</div>';
+		    	  	       		html += '</div>';
+	    	  	       		}
+							
+	    	  	       		$("#manageStaff").empty().append(html);
+	    	  	       		  
+	    	  	       		
+	    	  	       		
+	    	  	        },error:function(request,status,error){
+	    	  	          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    	  	       }
+	    	  	    });	
+		    	}else{
+		    		return;
+		    	}
+	    	}
+	    }
+	    function deleteStaff(x){
+	    	var st_no = $(x).parents().parents().parents().prev().val();
+	    	var st_name = $(x).parents().parents().parents().prev().prev().val();
+	    	var estate_no = $(x).parents().parents().parents().prev().prev().prev().val();
+	    	var map = {};
+	    	map.st_no = st_no;
+	    	map.st_name = st_name;
+	    	map.estate_no = estate_no;
+	    	map = JSON.stringify(map);
+	    	
+	    	if(confirm("직원 ["+st_name+"]을(를) 삭제하시겠습니까? \n"+st_name+"님이 올린 매물도 함께 삭제됩니다.")){
+	    		$.ajax({
+	    			contentType : "application/json",
+	    			dataType : "json",
+    	  	        type: 'POST',
+    	  	        data: map,
+    	  	        url: 'deletestaff.do',
+    	  	        success: function(responseData) {
+    	  	        	if(responseData===1) alert("삭제되었습니다.");
+    	  	        	updateVerify(x, 1, 2);
+    	  	        },error:function(request,status,error){
+      	  	          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+     	  	       }
+	    		});
+	    	}else{
+	    		return;
+	    	}
+	    }
+	    function doneCall(x){
+	    	var request_no = $(x).parents().next().val();
+	    	
+	    	if(confirm("연락완료 처리를 하시면 목록에서 삭제됩니다.\n연락완료 처리를 하시겠습니까?")){
+	    		$.ajax({
+	    			dataType : "json",
+    	  	        type: 'POST',
+    	  	        data: {"request_no": request_no},
+    	  	        url: 'donecall.do',
+    	  	        success: function(responseData) {
+						var requestListSize = Object.keys(responseData.requestList).length
+						var html='';
+						for(var i=0; i<Object.keys(responseData.requestList).length; i++){
+			  				html+='<tr style="text-align:center">';
+			  				html+='<th style="vertical-align: middle">'+responseData.requestList[i].ROOMTITLE+'</th>';
+	  						html+='<th style="vertical-align: middle">'+responseData.requestList[i].REQ_NAME+'</th>';
+	  						html+='<th style="vertical-align: middle">'+responseData.requestList[i].REQ_PHONE+'</th>';
+  							html+='<th style="vertical-align: middle">'+responseData.requestList[i].REQ_RDATE+'</th>';
+	  						html+='<th><button class="btn btn-sm btn-outline-primary" onclick="doneCall(this)">연락완료</button></th>';
+	  						html+='<input type="hidden" value="'+responseData.requestList[i].REQUEST_NO+'">';
+			  				html+='</tr>';
+						}
+						
+						$("#requestTbody").empty().append(html);
+    	  	        },error:function(request,status,error){
+      	  	          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+     	  	       }
+	    		});
+	    	}else{
+	    		return;
+	    	}
+	    }
+	    
+    	// list 상단에 undefined가 나타나는 것 삭제. 
     	window.onload = function() {
 	       	var regex = /^((?!undefined).)*$/g;
 	       	$("#manageBuildingP").html().replace(regex, '');
@@ -240,23 +426,22 @@
 					  <br>
 						 <div align="right">
 				       		<p style="float:left;font-size:20px;margin:5px 20px 5px 0px ">총 등록된 매물: ${count }</p>
-							<select>
+							<select id="selectedState" onchange="document.getElementById('searching').value=''; search('buildingNo', 0, 0, 0, 1);">
 							  <option value="buildingNo">매물번호</option>
 							  <option value="buildingTitle">제목</option>
-							  <option value="buildingMemo">메모</option>
+							  <option value="buildingMemo">메모</option> 
 							</select>
-							<input placeholder="검색해주세요" style="padding:5px" id="searching" onkeyup="search(document.getElementById('searching').previousSibling.previousSibling.value, this.value, $('#nowState').val())">
-							<button type="button" class="btn btn-sm btn-outline-dark">검색</button> 
+							<input placeholder="검색해주세요" style="padding:5px;border-radius:5px" id="searching"  onkeyup="checkNumber(this); search(document.getElementById('searching').previousSibling.previousSibling.value, this.value, $('#nowState').val())">
 						</div>
 						<div class="btn-group" role="group" style="width:100%; margin:10px 0 10px 0">
-					        <button type="button" class="btn btn-outline-dark" style="width:100%" onclick="search(document.getElementById('searching').previousSibling.previousSibling.value, document.getElementById('searching').value, 0); $('#nowState').val('0');">전체</button>
-					        <button type="button" class="btn btn-outline-dark" style="width:100%" onclick="search(document.getElementById('searching').previousSibling.previousSibling.value, document.getElementById('searching').value, 1); $('#nowState').val('1');">광고 진행</button>
-					        <button type="button" class="btn btn-outline-dark" style="width:100%" onclick="search(document.getElementById('searching').previousSibling.previousSibling.value, document.getElementById('searching').value, 2); $('#nowState').val('2');">광고 종료</button>
-					        <button type="button" class="btn btn-outline-dark" style="width:100%" onclick="search(document.getElementById('searching').previousSibling.previousSibling.value, document.getElementById('searching').value, 3); $('#nowState').val('3');">거래 완료</button>
-					        <button type="button" class="btn btn-outline-dark" style="width:100%" onclick="search(document.getElementById('searching').previousSibling.previousSibling.value, document.getElementById('searching').value, 4); $('#nowState').val('4');">검수 반려</button>
+					        <button id="btn1" type="button" class="btn btn-outline-dark active" style="width:100%" onclick="search(document.getElementById('searching').previousSibling.previousSibling.value, document.getElementById('searching').value, 0); $('#nowState').val('0'); makeActive(1)">전체</button>
+					        <button id="btn2" type="button" class="btn btn-outline-dark" style="width:100%" onclick="search(document.getElementById('searching').previousSibling.previousSibling.value, document.getElementById('searching').value, 1); $('#nowState').val('1'); makeActive(2)">광고 진행</button>
+					        <button id="btn3" type="button" class="btn btn-outline-dark" style="width:100%" onclick="search(document.getElementById('searching').previousSibling.previousSibling.value, document.getElementById('searching').value, 2); $('#nowState').val('2'); makeActive(3)">광고 종료</button>
+					        <button id="btn4" type="button" class="btn btn-outline-dark" style="width:100%" onclick="search(document.getElementById('searching').previousSibling.previousSibling.value, document.getElementById('searching').value, 3); $('#nowState').val('3'); makeActive(4)">거래 완료</button>
+					        <button id="btn5" type="button" class="btn btn-outline-dark" style="width:100%" onclick="search(document.getElementById('searching').previousSibling.previousSibling.value, document.getElementById('searching').value, 4); $('#nowState').val('4'); makeActive(5)">검수 반려</button>
 				       	</div>
 				       	<div id="manageBuildingP">
-				       	<p style="float:right;font-size:17px;margin:5px 20px 5px 0px ">[전체] 매물: ${count }</p>
+				       	<p style="float:right;font-size:17px;margin:5px 20px 5px 0px ">검색된 [전체] 매물: ${count }</p>
 				       		<table class="table talbe-hover align-items-center"  style="margin-bottom:0px" id="T0">
 				       			<tbody>
 				       				<c:if test="${empty buildList }">
@@ -286,7 +471,7 @@
 					       						</c:choose>
 					       					</td>
 					       					<td>
-					       						<img src="../${build.picPath }" class="img-thumbnail" style="width:230px;height:150px">
+					       						<img src="${build.picPath }" class="img-thumbnail" style="width:230px;height:150px">
 					       					</td>
 					       					<td style="font-size:15px">
 					       						${build.proType }
@@ -305,7 +490,7 @@
 					       						${build.roomTitle }
 					       					</td>
 					       					<td>
-					       						<textarea rows="5" cols="40" placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30">${build.privateMemo }</textarea>
+					       						<textarea style="border-radius:5px" rows="5" cols="40" placeholder="[메모]&#10;등록자만 볼 수 있는 비공개 메모입니다." rows="3" cols="30">${build.privateMemo }</textarea>
 					       					</td>
 					       					<td style="font-size:15px">
 					       						<p style="text-align:left;margin-left:10px">업로드: ${build.bu_rdate }<br>
@@ -314,7 +499,7 @@
 												<input type="hidden" value="${build.build_no }">
 												<div class="btn-group" role="group">
 													<button class="btn btn-sm btn-outline-dark" onclick="updatePrivateMemo(this)">수정</button>
-													<button class="btn btn-sm btn-outline-dark" onclick="deleteBuild(this)">삭제</button>
+													<button class="btn btn-sm btn-outline-dark" onclick="deleteBuild(this, $('#selectedState').val(), document.getElementById('searching').value, $('#nowState').val())">삭제</button>
 													<button class="btn btn-sm btn-outline-dark" onclick="alert('여기에 5,000원 결제하는 결제시스템 넣자 ')">광고재등록</button>
 												</div>
 					       					</td>
@@ -363,45 +548,39 @@
 					  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 					  <br>
 						  <div class="container">
-							  <div class="row">
-							  	<div class="col-lg-4" align="center">
+							  <div class="row" id="manageStaff">
+							  <c:forEach items="${staffList}" var="staff"> 
+							  <input type="hidden" value="${staff.estate_no }">
+							  <input type="hidden" value="${staff.st_name }">
+							  <input type="hidden" value="${staff.st_no }">
+							  	<div class="col-lg-4" align="center" style="margin:20px 0px 20px 0px">
 								  <div class="card" style="width: 18rem;">
-									  <img class="card-img-top" src="../kanu/slidephotos/images/a.jpg">
+									  <img class="card-img-top" src=${staff.st_pic } style="width:286px;height:190px">
 									  <ul class="list-group list-group-flush">
-									    <li class="list-group-item" style="font-size:20px">박종석 (큰형)</li>
-									    <li class="list-group-item" style="font-size:15px">bigbro@gmail.com</li>
-									    <li class="list-group-item" style="font-size:15px">010-1234-5678</li>
-									    <li class="list-group-item" style="font-size:15px">02-1234-5678</li>
+									  <c:choose>
+										  <c:when test="${staff.st_qual eq '대표공인중개사'}">
+									  		<li class="list-group-item staffName" style="font-size:20px"><p style="float:left;margin:0px">*</p>${staff.st_name }(${staff.st_position })<p style="float:right;margin:0px">*</p></li>
+										  </c:when>
+										 <c:when test="${staff.verify eq 0 }">
+										  	<li class="list-group-item staffName" style="font-size:20px">${staff.st_name }(${staff.st_position })<button style="float:right" class="btn btn-sm btn-outline-danger" onmouseover="$(this).text('인증').addClass('btn-outline-primary').removeClass('btn-outline-danger')" onmouseout="$(this).text('미인증').addClass('btn-outline-danger').removeClass('btn-outline-primary')" onclick="updateVerify(this)">미인증</button></li>
+										 </c:when>
+										 <c:when test="${staff.verify eq 1 }">
+										  	<li class="list-group-item staffName" style="font-size:20px">${staff.st_name }(${staff.st_position })<button style="float:right" class="btn btn-sm btn-outline-primary" disabled>인증 완료</button></li>
+										 </c:when>
+									  </c:choose>
+									    <li class="list-group-item" style="font-size:15px">${staff.st_email }</li>
+									    <li class="list-group-item" style="font-size:15px">${staff.st_phone }</li>
+									    <li class="list-group-item" style="font-size:15px">${staff.st_homephone }</li>
+									    <li onclick="deleteStaff(this)" onmouseover="$(this).css('cursor', 'pointer')" class="list-group-item" style="font-size:15px;color:red;background-color:rgba(255,0,0,0.2)"><strong>삭제</strong></li>
 									  </ul>
 									</div>
-								</div>
-							  	<div class="col-lg-4" align="center">
-								  <div class="card" style="width: 18rem;">
-									  <img class="card-img-top" src="../kanu/slidephotos/images/b.jpg">
-									  <ul class="list-group list-group-flush">
-									    <li class="list-group-item" style="font-size:20px">박승균 (작은형)</li>
-									    <li class="list-group-item" style="font-size:15px">smallbro@gmail.com</li>
-									    <li class="list-group-item" style="font-size:15px">010-1234-1234</li>
-									    <li class="list-group-item" style="font-size:15px">02-1234-1234</li>
-									  </ul>
-									</div>
-								</div><div class="col-lg-4" align="center">
-								  <div class="card" style="width: 18rem;">
-									  <img class="card-img-top" src="../kanu/slidephotos/images/c.jpg">
-									  <ul class="list-group list-group-flush">
-									    <li class="list-group-item" style="font-size:20px">임정수 (막내)</li>
-									    <li class="list-group-item" style="font-size:15px">youngerbro@gmail.com</li>
-									    <li class="list-group-item" style="font-size:15px">010-5678-5678</li>
-									    <li class="list-group-item" style="font-size:15px">02-5678-5678</li>
-									  </ul>
-									</div>
-								</div>
+								</div>				  
+							  </c:forEach>
 							</div>
 						</div>
 					  </div>
 					  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-					  	연락요청이 있을 시에, 위에 연락요청 탭에 숫자 나오게 못하나 ?
-					  	<table class="table table-striped">
+					  	<table class="table table-striped" style="margin-top: 30px;">
 					  		<thead>
 					  			<tr style="text-align:center">
 					  				<th>매물제목</th>
@@ -410,13 +589,17 @@
 					  				<td>연락요청일자</td>
 					  			</tr>
 					  		</thead>
-					  		<tbody>
-					  			<tr>
-					  				<th>매물제목넣자 (링크 걸고)</th>
-					  				<th>여기에 이름 넣고 </th>
-					  				<td>여기에 번호 넣자</td>
-					  				<td>여기에 연락요청일자</td>
-					  			</tr>
+					  		<tbody id="requestTbody">
+					  			<c:forEach items="${requestList}" var="request">
+					  				<tr style="text-align:center">
+					  					<th style="vertical-align: middle">${request.ROOMTITLE }</th>
+					  					<th style="vertical-align: middle">${request.REQ_NAME }</th>
+					  					<th style="vertical-align: middle">${request.REQ_PHONE }</th>
+					  					<th style="vertical-align: middle">${request.REQ_RDATE }</th>
+					  					<th><button class="btn btn-sm btn-outline-primary" onclick="doneCall(this)">연락완료</button></th>
+					  					<input type="hidden" value="${request.REQUEST_NO }">
+					  				</tr>
+					  			</c:forEach>
 					  		</tbody>
 					  	</table>
 					  </div>

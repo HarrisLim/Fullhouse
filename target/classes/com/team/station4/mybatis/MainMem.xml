@@ -36,8 +36,11 @@
 		</select>
 		
 		<insert id="memInsert" parameterType="Member">
-		   insert into MEMBER values(MEM_NO_SEQ.nextval, #{mem_email}, #{mem_pw}, '#1'||#{mem_name}, #{mem_phone}, SYSDATE)
+		   insert into MEMBER values(MEM_NO_SEQ.nextval, #{mem_email}, #{mem_pw}, '#1'||#{mem_name}, #{mem_phone}, null, SYSDATE, null)
 		</insert>
 		
+		<select id="Security" resultType="Member" parameterType="String">
+			select * from MEMBER where mem_email=#{mem_email}			
+		</select>
 		
 	</mapper>

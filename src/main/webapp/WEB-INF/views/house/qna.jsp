@@ -120,6 +120,8 @@
 		}
 		
 		function showContent(i){
+// 			$(".questionBody").css("display","none");
+// 			$("#content"+i).css("display","");
 			$("#content"+i).toggle();
 		}
 		
@@ -166,7 +168,7 @@
 					<a href="javascript:callFunction(2);"> 
 					<div align="left" id="myDIV1" class="col-lg-8">
 						<hr>
-					    Q. 아이디 를 변경할수 없나요?<i class="fas fa-angle-down" style="float:right;color:black"></i>
+					    Q. 아이디를 변경할수 없나요?<i class="fas fa-angle-down" style="float:right;color:black"></i>
 						<div id="myDIV2" style="display:none">
 					    	<p style="color:black; padding:10px 20px 0 20px">아이디는 회원의 고유 계정으로 활용되는 수단으로 변경 및 수정이 불가합니다.  </p>
 					    </div> 
@@ -347,35 +349,39 @@
 			</div>
 		</div>
 	</section>
-	<section class="slice slice-xl" style="margin-bottom:-80px;display:none" id="myQuestion">
+	<section class="slice" style="margin-bottom:-80px;display:none" id="myQuestion">
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-lg-7">
 				<table>
 					<tbody>
+						<c:forEach items="${qnaList }" var="qna" varStatus="loop">
 						<tr>
-						<td style="padding:0 15px 38px 0;font-size:30px;">1.</td>
-						<td><input class="form-control" value="제목" onclick="showContent(1)" style="width:550px" readonly><br><br></td>
+							<td style="padding:0 15px 38px 0;font-size:30px;">${loop.index +1}</td>
+							<td><input onmouseover="$(this).css('cursor', 'pointer')" class="form-control" value="${qna.subject }" onclick="showContent($(this).parents().prev()[0].childNodes[0].nodeValue)" style="width:550px" readonly><br><br></td>
 						</tr>
+						<tr class="questionBody">
+							<td colspan="2">
+								<div id="content${loop.index +1}" style="display:none">
+									<textarea rows="10" class="form-control" style="margin-bottom:20px" resize="none" readonly> - 질문 내용 - &#10;&#10;${qna.content }</textarea>
+									<div style="background-color:rgba(200,200,240,0.1);margin-bottom:40px; height:100px" class="form-control"><strong> - 답변 - </strong><br><br>${qna.reply }</div>
+								</div>
+							</td>
+						</tr>
+						</c:forEach>
 					</tbody>
 				</table>
-					
-					<div id="content1" style="display:none">
-						<textarea rows="20" class="form-control" style="margin-bottom:20px" resize="none" readonly>내용 ~</textarea>
-						<div style="background-color:rgba(200,200,240,0.1); height:200px" class="form-control">여기에 댓글과 대댓글</div>
-						<button class="btn btn-block btn-outline-primary" style="float:right;margin-top:10px">댓글 입력</button>
-					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<section class="slice slice-xl" style="margin-bottom:-80px;display:none" id="askQuestion">
+	<section class="slice" style="margin-bottom:-80px;display:none" id="askQuestion">
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-lg-7">
 					<input placeholder="궁금한 것을 물어보세요 :)" class="form-control"><br><br>
 					<textarea rows="20" class="form-control" placeholder="내용을 입력해주세요." style="margin-bottom:20px"></textarea>
-					<button class="btn btn-block btn-outline-primary" style="float:right;margin-top:10px">문의</button>
+					<button class="btn btn-block btn-outline-primary" style="float:right;margin-top:10px" onclick="question()">문의</button>
 				</div>
 			</div>
 		</div>

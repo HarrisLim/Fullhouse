@@ -35,7 +35,6 @@
 			}else if( str == "in" ){ //  회원 가입 버튼
 				//	체크 박스 의 갯수를 불러와 비교후에 넘어가기
 				if( $("input[name=chkBox]:checked").length == 5){
-					alert("전부 체크 되어있구나~ 넘어가 즈 ㅇ ㅏ !!")
 					toJoin.action="projoin.do";
 					$("#toJoin").submit();
 				}else{

@@ -117,6 +117,32 @@
 				</when>
 			</choose>
 		</select>
+		<select id="selectDeleteList" parameterType="Map" resultType="Build">
+			select BUILD_NO from BUILDING where ST_NO=#{st_no} and ESTATE_NO=#{estate_no}
+		</select>
+		<delete id="deleteAddinfo" parameterType="Build">
+			delete from ADDINFO where build_no=#{build_no}
+		</delete>
+		<delete id="deletePrice" parameterType="Build">
+			delete from PRICE where build_no=#{build_no}
+		</delete>
+		<delete id="deleteRequest" parameterType="Build">
+			delete from REQUEST where build_no=#{build_no}
+		</delete>
+		<delete id="deleteReservation" parameterType="Build">
+			delete from RESERVATION where build_no=#{build_no}
+		</delete>
+		<delete id="deleteBuilding" parameterType="Map">
+			delete from BUILDING where ST_NO=#{st_no} and ESTATE_NO=${estate_no}
+		</delete>
+		<delete id="deleteStaff" parameterType="Map">
+			delete from STAFF where ST_NO=#{st_no} and ESTATE_NO=${estate_no}
+		</delete>
+		<select id="selectBuildRequest" parameterType="int" resultType="build">
+			select * from building where estate_no = #{estate_no}
+		</select>
+		
+		
 		
 		<select id="mySelect" parameterType="Map" resultType="Build"> 
 
@@ -367,7 +393,7 @@
 		
 		<!-- 	찜 목록 삭제 업데이트를 위한 멤버 테이블의 찜목록 값 확인 -->
 		<select id="myHotSelect" parameterType="int" resultType="int">
-			select count(*) from MEMBER where HOT like '%'||','||#{buildNo}||'%'
+			select count(*) from MEMBER where MEM_EMAIL = '1234@gmail.com' AND HOT like '%'||','||#{buildNo}||'%'
 		</select>
 		
 		<!-- 	관심목록 - 찜한 방  리스트 뽑기를 위한 멤버 테이블의 찜목록 값 확인 -->
@@ -377,13 +403,14 @@
 		
 		<!-- 	관심목록 - 찜한 방  리스트 뽑기 -->
 		<select id="myHotListPaging" parameterType="HashMap" resultType="Build">
-			select * from(select * from BUILDING where 1=1 and BUILD_NO in
-			
-			<foreach item="list" index="index" collection="list"
-				open = "(" separator="," close=")">
-			 		#{list}
-			 </foreach>
-			order by BUILD_NO desc) where rownum between #{start} and #{last}
+			select * from (select A.*, ROWNUM rn from(select * from BUILDING where 1=1 and BUILD_NO in
+<!-- 			<if test="list != null"> -->
+				<foreach item="list" index="index" collection="list"
+					open = "(" separator="," close=")">
+				 		#{list}
+				 </foreach>
+<!-- 			 </if> -->
+			order by BUILD_NO desc)A) where rn between #{start} and #{last}
 			 
 		</select>
 		
@@ -400,8 +427,8 @@
 		
 		<!-- 	찜 목록 삭제 업데이트를 위한 멤버 테이블의 찜목록 값 확인 -->
 		<select id="myRecentSelect" parameterType="String" resultType="int">
-				<!-- select count(*) from MEMBER where RECENTLIST like '%'||','||#{buildNo}||'%' -->
-				select count(RECENTLIST) from MEMBER where MEM_EMAIL = '1234@gmail.com' 
+				select count(*) from MEMBER where MEM_EMAIL = '1234@gmail.com' AND RECENTLIST like '%'||','||#{buildNo}||'%'
+<!-- 				select count(RECENTLIST) from MEMBER where MEM_EMAIL = '1234@gmail.com'  -->
 		</select>
 		
 		<!-- 	관심목록 - 찜한 방  리스트 뽑기를 위한 멤버 테이블의 최근 본 매물 값 확인 -->
@@ -413,5 +440,12 @@
 		<select id="myRecentList" parameterType="int" resultType="Build">
 			select * from BUILDING where BUILD_NO = #{parseInt}
 		</select>
+		
+		<!-- 	Build_no로 price 뽑기 -->
+		<select id="myPriceSelect" parameterType="Build" resultType="Price">
+			select * from PRICE where BUILD_NO = #{build_no}
+		</select>
+		
+		
 		
 	</mapper>

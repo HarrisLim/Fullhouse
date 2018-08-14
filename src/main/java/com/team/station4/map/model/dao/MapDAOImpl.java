@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.vo.PagingVo;
+import com.team.station4.room.model.RequestDTO;
+import com.team.station4.uploadroom.model.PriceDTO;
 
 @Repository
 public class MapDAOImpl implements MapDAO {
@@ -134,6 +136,68 @@ public class MapDAOImpl implements MapDAO {
 	@Override
 	public int countBuild(Map hm) {
 		return sqlsession.selectOne(ns+".myCountBuild", hm);
+	}
+
+
+	@Override
+	public List<BuildDTO> selectDeleteList(Map hm) {
+		return sqlsession.selectList(ns+".selectDeleteList", hm);
+	}
+
+
+	@Override
+	public void deleteAddinfo(BuildDTO buildDTO) {
+		sqlsession.delete(ns+".deleteAddinfo", buildDTO);
+	}
+
+
+	@Override
+	public void deletePrice(BuildDTO buildDTO) {
+		sqlsession.delete(ns+".deletePrice", buildDTO);
+	}
+
+
+	@Override
+	public void deleteRequest(BuildDTO buildDTO) {
+		sqlsession.delete(ns+".deleteRequest", buildDTO);
+	}
+
+
+	@Override
+	public void deleteReservation(BuildDTO buildDTO) {
+		sqlsession.delete(ns+".deleteReservation", buildDTO);
+	}
+
+
+	@Override
+	public void deleteBuilding(Map hm) {
+		sqlsession.delete(ns+".deleteBuilding", hm);
+	}
+
+
+	@Override
+	public void deleteStaff(Map hm) {
+		sqlsession.delete(ns+".deleteStaff", hm);
+	}
+
+
+	@Override
+	public List<BuildDTO> selectBuildRequest(int estate_no) {
+		return sqlsession.selectList(ns+".selectBuildRequest", estate_no);
+	}
+
+	@Override
+	public Map<String, Object> selectRequest(Map rMap) {
+		return sqlsession.selectOne("com.team.station4.request.selectRequest", rMap);
+	}
+
+	@Override
+	public void deleteRequestDoneCall(int request_no) {
+		sqlsession.delete("com.team.station4.request.myDeleteDoneCall", request_no);
+	}
+	
+	public List<PriceDTO> priceSelect(BuildDTO BuildDTO) {
+		return sqlsession.selectList(ns+".myPriceSelect", BuildDTO);
 	}
 
 }

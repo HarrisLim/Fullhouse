@@ -3,6 +3,8 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+  	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
     <title>마커 클러스터러 사용하기</title>
     <center>
 			<br/><br/><br/><a id="requestLatLng" href="#">30,000개 추가 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -27,6 +29,16 @@ $('document').ready(function (){
     var map = new daum.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
         center : new daum.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
         level : 10 // 지도의 확대 레벨 
+    });
+    
+ // 토큰 생성
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $(function() {
+    	
+        $(document).ajaxSend(function(e, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
     });
     
     $("#map").mouseup(function(){

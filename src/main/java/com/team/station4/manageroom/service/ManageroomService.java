@@ -15,6 +15,8 @@ public interface ManageroomService {
 	void mrPrivateMemoUpdateService(Map<String, Object> map);
 	void mrDeleteReservationService(int build_no);
 	void mrDeletePriceService(int build_no);
+	void mrDeleteRequestService(int build_no);
+	void mrDeleteAddinfoService(int build_no);
 	void mrDeleteBuildService(int build_no);
 	List<BuildDTO> mrSearchBuildNoSelectService(Map<String, Object> hm);
 	List<BuildDTO> mrSearchBuildTitleSelectService(Map<String, Object> hm);

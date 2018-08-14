@@ -1,14 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
     
 <head>
 	<meta name="google-signin-scope" content="profile email">
 	<meta name="google-signin-client_id" content="69570195917-qamvmgijh74iq624fdgdgcttra3u41fq.apps.googleusercontent.com">
+	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	
 </head>
 <script type="text/javascript">
-	// 비밀번호 확인 스크립트
+	// 토큰 
+	var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$(function() {
+		$(document).ajaxSend(function(e, xhr, options) {
+		    xhr.setRequestHeader(header, token);
+		});
+	});
+		
+	// 비밀번호 확인
 	window.onload = function(){
 		$('#inputPw1').keyup(function(){
 			if( $('#inputPw1').val() != $('#inputPw2').val()){
@@ -34,9 +48,14 @@
 		$("#logIn").click(function(){
 			if( $("#input_email").val() === "" ){
 				alert("이메일 주소가 비어있습니다. 적어 주세요.")
+				return;
 			}else if( $("#input_password").val() === "" ){
 				alert("비밀번호가 비어있습니다. 채워 주세요.")
-			}else{
+				return;
+			}
+			$("#log").submit();
+		});
+			/* else{
 				$.ajax({
 					type:'POST',
 					url:'empwCheck.do',
@@ -54,12 +73,9 @@
 							alert ( '비밀번호가 틀렸습니다 다시 입력해 주세요.' )
 							return;
 						}
-						
 					}
-					
 				});
-			}
-		});
+			} */
 		// mem_pw : $('#input_pw').val()
 		// 이메일 주소 중복 체크
 		$('#inputEmail').keyup(function(){
@@ -69,7 +85,6 @@
 				url:'emCheck.do',
 				data:{ mem_email : $("#inputEmail").val() },
 				success : function(responseData){
-					//alert(responseData.email);
 					var data = responseData.email;
 					
 					if( $("#inputEmail").val() != data ){
@@ -119,10 +134,21 @@
 		});
 		
 	}
+/* <sec:authorize access="isAnonymous()">
 
+	<a href="${CONTEXT }/j_spring_security_check">로그인</a>
+
+</sec:authorize>
+
+<sec:authorize access="isAuthenticated()">
+
+	<a href="${CONTEXT }/j_spring_security_logout">로그아웃</a>
+
+</sec:authorize> */
 
 </script>
-    
+
+
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark py-4">
 	<div class="container">
 		<img src="../kanu/main/로고.png" class="avatar avatar-sm bg-#00000000" style="background-color:transparent">
@@ -149,10 +175,33 @@
 	            	<a class="nav-link text-dark" href="../house/proterms.do">공인중개사 회원가입</a>
 	            </li>
 	            <li>
-	            	<a id="xxxxx" class="nav-link text-dark" data-toggle="modal" href="#myModal">회원가입 및 로그인</a>
-	            	<%-- <c:if test="${memName ne null}">
-	            		<a id="xxxxx" class="nav-link text-dark" data-toggle="modal" href="#myModal">${sessionScope.memName}님</a>
-	            	</c:if> --%>
+	            	<sec:authorize access="isAnonymous()">
+	            		<a id="xxxxx" class="nav-link text-dark" data-toggle="modal" href="<c:url value="#myModal"/>">회원가입 및 로그인</a>
+	            	</sec:authorize>
+	            	<sec:authorize access="isAuthenticated()">
+						<form:form action="../logout" method="POST">
+							<div class="dropdown">
+							<c:if test="${sessionScope.type eq 'mem'}">
+							    <button type="button" class="nav-link text-dark dropdown-toggle" id="logout" name="logout" value="title" 
+							    	aria-expanded="true" data-toggle="dropdown">${sessionScope.mem.mem_name.substring(2)} 님</button>
+							</c:if>
+							<c:if test="${sessionScope.type eq 'staff'}">
+							    <button type="button" class="nav-link text-dark dropdown-toggle" id="logout" name="logout" value="title" 
+							    	aria-expanded="true" data-toggle="dropdown">${sessionScope.st.st_name.substring(2)} 님</button>
+							</c:if>
+							    <ul id="mytype" class="dropdown-menu" role="menu" aria-labelledby="searchType">
+							        <li role="presentation" align="">
+							            <button type="button" role="menuitem" tabindex="-1">
+							            <a class="text-dark nav-item"href="../house/myinfo.do">내 계정</a></button>
+							        </li>
+							        <li role="presentation">
+										<input type="submit" class="text-dark nav-item" role="menuitem" tabindex="-1" value="로그 아웃"/>
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+									</li>
+							    </ul>		
+						    </div>
+						</form:form>
+					</sec:authorize>
 	            </li>
 			</ul>
            	<div class="modal" id="myModal" tabindex="-1" >
@@ -165,19 +214,21 @@
 		          		<img src="../assets/images/brand/icon.png"  style="width: 100px;">
 			            <h4 class="heading h2 text-white pt-2 pb-4">환영 합니다</h4>
 			            <span class="clearfix"></span>
-						<form class="form-primary" id="log" name="log" action="logIn.do" method="post" >
+						<form class="form-primary" id="log" name="log" action="../j_spring_security_check" method="post" >
 						<div class="form-group">
-						  <input type="email" class="form-control" id="input_email" name="input_email" placeholder="Your email" value="hdf56jsl@gmail.com">
+						  <input type="email" class="form-control" id="input_email" name="mem_email" placeholder="Your email" value="haha4498@gmail.com">
 						</div>
 						<div class="form-group">
-						  <input type="password" class="form-control" id="input_pw" name="input_pw" placeholder="Password" value="12345">
+						  <input type="password" class="form-control" id="input_pw" name="mem_pw" placeholder="Password" value="12345">
 						</div>
 							<input type="button" id="logIn" class="btn btn-block btn-lg bg-white mt-4" value="로그인" >
 							<a data-toggle="modal" href="#myModal2" class="btn btn-primary btn-lg btn-block">회원가입</a>
 							<div class="row">
+							 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 								<div class="col-sm-6"><a id="kakao-login-btn"></a></div>
 								<div class="g-signin2 col-lg-6 text-center" data-onsuccess="onSignIn" style="width:205px;height:50px"></div>
 							</div>
+							
 						<script type='text/javascript'>
 						//<![CDATA[
 						// 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -252,7 +303,7 @@
 					          <h1>회원가입</h1>
 					        </div>
 					        <div class="col-md-12 col-md-offset-3">
-					          <form role="form" id="memInsert" name="memInsert" action="./memInsert.do" method="post">
+					          <form role="form" id="memInsert" name="memInsert" action="./memInsert.do?" method="post">
 					            <div class="form-group">
 					              <label for="inputEmail">이메일 주소</label>
 					              <input type="email" class="form-control" id="inputEmail" name="mem_email" placeholder="이메일 주소">
@@ -277,6 +328,8 @@
 					              <div class="input-group">
 					                <input type="tel" class="form-control" id="phone" name="mem_phone" placeholder="- 없이 입력해 주세요">
 					              </div>
+					              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+
 					                <!-- <span class="input-group-btn">
 					                  <button class="btn btn-success">인증번호 전송<i class="fa fa-mail-forward spaceLeft"></i></button>
 					                </span>

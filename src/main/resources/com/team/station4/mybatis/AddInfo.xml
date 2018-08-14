@@ -39,6 +39,9 @@
 	<select id="mySelect" resultType="int">
 		select max(addinfo_no) from ADDINFO
 	</select>
+	<delete id="myDelete" parameterType="int">
+		delete from ADDINFO where build_no = #{build_no}
+	</delete>
 		
 	</mapper>
 

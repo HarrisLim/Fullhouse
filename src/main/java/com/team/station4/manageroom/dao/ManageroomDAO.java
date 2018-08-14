@@ -15,6 +15,8 @@ public interface ManageroomDAO {
 	void mrPrivateMemoUpdate(Map<String, Object> map);
 	void mrDeleteReservation(int build_no);
 	void mrDeletePrice(int build_no);
+	void mrDeleteRequest(int build_no);
+	void mrDeleteAddinfo(int build_no);
 	void mrDeleteBuild(int build_no);  
 	List<BuildDTO> mrSearchBuildNoSelect(Map<String, Object> hm);
 	List<BuildDTO> mrSearchBuildTitleSelect(Map<String, Object> hm);
