@@ -222,10 +222,16 @@ function ajaxList(index, pageStartNum){
 					html +="<div class ='itemList' style='width:95%;height:145px;border:1px solid gray;margin:5px;margin-left:12px;' onmouseover='getterLatLng(this)' onmouseout='buildMouseOut(this)' onclick='buildContent(this)'>";
 					html +="<div class='RoomItem-icons' style='float:right;margin:15px;' onClick='heart(this)'>";
 					html +="<span class='room-favorite' >";
-					html +="<i id='icon_heart' class='fa fa-heart-o fa-2x' style='color:gray' onmouseover='heartMouseOver(this)' onmouseout='heartMouseOut(this)'></i>";
+					if($("#flag").val() == '1'){
+						console.log("ajax에서 heart.flag 밸류값1일때: "+$("#flag").val());
+						html +="<i id='icon_heart' class='fa fa-heart fa-2x' style='color:red' onmouseover='heartMouseOver(this)' onmouseout='heartMouseOut(this)'></i>";
+					}else{
+						console.log("ajax에서 heart.flag 밸류값0일때: "+$("#flag").val());
+						html +="<i id='icon_heart' class='fa fa-heart-o fa-2x' style='color:gray' onmouseover='heartMouseOver(this)' onmouseout='heartMouseOut(this)'></i>";
+					}
 					html +="</span>";
 					html +="</div>";
-					html +="<a href='#' target='_blank' style='color:black' >";
+					html +="<a href='room.do?buildNo="+data.list[i].build_no+"' target='_self' style='color:black' >";
 					html +="<div class='RoomItem-preview' style='width:120px;height:145px;float:left' >";
 					html +="<div class='RoomItem-preview__image' ></div>";
 					html +="<div class='RoomItem-preview__image' style='background-image:url("+data.list[i].picPath+");width:100%;height:135px;margin:5px;' ></div>";
@@ -236,8 +242,18 @@ function ajaxList(index, pageStartNum){
 					html +="<div class='RoomItem-header' >";
 					html +="<div class='RoomItem-price' style='font-size:2em;margin-bottom:-10px;margin-top:10px;width:60%;float:left' >";
 					html +="<p>";
-					html +="<span class='RoomItem-price__type' style='margin-left:25px;' >월세</span>";
-					html +="<span class='RoomsItem-price__title is-0' >7000 / 60</span>";
+					
+					if(data.priceMap[Object.keys(data.priceMap)[i]][0].monthly !== 0){
+						html +="<span class='RoomItem-price__type' style='margin-left:25px;' >월세</span>";
+						html +="<span class='RoomsItem-price__title is-0' >"+data.priceMap[Object.keys(data.priceMap)[i]][0].deposit+" / "+data.priceMap[Object.keys(data.priceMap)[i]][0].monthly+"</span>";
+					}else if(data.pricdMap[Object.keys(data.priceMap)[i]][0].montly === 0 && data.priceMap[Object.keys(data.priceMap)[i]][0].deposit != 0){
+						html +="<span class='RoomItem-price__type' style='margin-left:25px;' >전세</span>";
+						html +="<span class='RoomsItem-price__title is-0' >"+data.priceMap[Object.keys(data.priceMap)[i]][0].deposit+"</span>";
+					}else if(data.priceMap[Object.keys(data.priceMap)[i]][0].salePrice !== 0 && data.priceMap[Object.keys(data.priceMap)[i]][0].monthly === 0 && data.priceMap[Object.keys(data.priceMap)[i]][0].deposit === 0){
+						html +="<span class='RoomItem-price__type' style='margin-left:25px;' >매매</span>";
+						html +="<span class='RoomsItem-price__title is-0' >"+data.priceMap[Object.keys(data.priceMap)[i]][0].salePrice+"</span>";
+					}
+				
 					html +="</p>";
 					html +="</div>";
 					html +="<span class='room-visited' >";

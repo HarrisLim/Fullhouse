@@ -1,11 +1,19 @@
 ////////////////////////////////  지 도 시 작 ///////////////////////////////////////////////////////////////
 	var latLngArray = {};
 	var markers = [];
+	var marker;
+	var position;
 	var imgSrc = "../kanu/images/animat-diamond-color.gif",
 		imageSize = new daum.maps.Size(70, 70),
 		imageOption = {offset: new daum.maps.Point(35, 35)};
 	
 	var customMarkerImage = new daum.maps.MarkerImage(imgSrc, imageSize, imageOption);
+	
+	var imgSrc1 = "../kanu/images/staticMarker1.png",
+	imageSize1 = new daum.maps.Size(40, 50),
+	imageOption1 = {offset: new daum.maps.Point(20, 25)};
+
+	var customMarkerImage1 = new daum.maps.MarkerImage(imgSrc1, imageSize1, imageOption1);
 
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = { 
@@ -45,43 +53,6 @@
 
 	var size = 80;
 	
-	 function mkClusterer(flag){
-//		 markers.removeMarker();
-		 
-		 console.log("mkMarker 인입");
-		 latLngArray["north"] = $("#north").val();
-		 latLngArray["south"] = $("#south").val();
-		 latLngArray["east"] = $("#east").val();
-		 latLngArray["west"] = $("#west").val();
-		 latLngArray["pageStartNum"] = $("#pageStartNum").val()*1;
-		 latLngArray["index"] =	$("#index").val()*1;
-		 latLngArray["flag"] = flag;
-		 var jsonLatLng = JSON.stringify(latLngArray);
-		 $.ajax({
-		 	contentType : "application/json",
-	    	url : "mapMarker.do",
-	    	type : "post",
-	    	dataType : "json",
-	    	data : jsonLatLng,
-		 	success : function(responseData){
-			    var position = responseData;
-			    
-
-		        var marker = $(position.positions).map(function(i, position) {
-		                new daum.maps.Marker({
-		            	map : map,
-		                position : new daum.maps.LatLng(position.lat, position.lng)         	
-		            });
-		        });
-		        markers.push(marker);
-		        clusterer.clear();
-		        clusterer.addMarkers(marker);
-		        
-			},error:function(request,status,error){
-		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	       }
-		 });
-	 }
 	 
 $('document').ready(function(){	
     $(document).ajaxSend(function(e, xhr, options) {
@@ -90,11 +61,6 @@ $('document').ready(function(){
 
     });
 	
-    $(".fa fa-heart-o fa-2x").removeClass().addClass("fa fa-heart fa-2x");
-	 
-	 //document ready 이후 맵 마커 생성 (관심목록 클릭시)
-	 $('document').ready(mkClusterer(0));
- 
     
  // 주소-좌표 변환 객체를 생성합니다
     var geocoder = new daum.maps.services.Geocoder();
@@ -134,8 +100,6 @@ $('document').ready(function(){
 	 	    });    
  		});
 
- 
-
  	/////////////////////////////////////////////// 지 도 끝 /////////////////////////////////////////////////////////////////////////////
  	//begin_text & end_text click event 
  
@@ -155,6 +119,10 @@ $('document').ready(function(){
 		//e6e6e6
 	});
 	
+	 //document ready 이후 맵 마커 생성 (관심목록 클릭시)
+	 $('document').ready(mkClusterer(0));
+
+//document . ready 끝	
 });	
 
 //좋아요 하트 버튼 동작
@@ -171,9 +139,7 @@ function heart(that){
 		url : "heart.do",
 		type : "POST",
 		data : {"seq" : seq}
-
 	});
-	
 }
 
 //하트 마우스 오버
@@ -220,15 +186,23 @@ function buildMouseOut(that){
 //관심목록 - 찜한방 클릭시
 $("#heartRoom").click(function(){
 	console.log("찜한방 클릭 인입");
+	$("#flag").val(1);
 	var email = "1234@gmail.com";
+    for ( var i = 0; i < markers.length; i++ ) {
+        markers[i].setMap(null);
+   } 
 	mkClusterer(1);
+	console.log("찜한방 클릭시 마크클러스터 나오고 난뒤");
 	$.ajax({
 		url : "heartRoom.do",
 		type : "POST",
 		data : {email : email},
 		success : function (responseData){
 			var data = responseData;
-			console.log("찜목록 success: "+data.list.length);
+			$("#total").val(data.page.total);
+			$("#pageCnt").val(data.page.pageCnt);
+			$("#listCnt").val(data.page.listCnt);
+			console.log("찜목록 success: 페이징정보 total: "+$("#total").val()+", listCnt: "+ $("#listCnt").val()+", pageCnt: "+$("#pageCnt").val());
 			pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 		}
 	});
@@ -237,7 +211,11 @@ $("#heartRoom").click(function(){
 //관심목록 - 최근 본방 클릭시
 $("#recentRoom").click(function(){
 	console.log("최근 본 방 클릭 인입");
+	$("#flag").val(2);
 	var email = "1234@gmail.com";
+    for ( var i = 0; i < markers.length; i++ ) {
+        markers[i].setMap(null);
+   } 
 	mkClusterer(0);
 	$.ajax({
 		url : "recentRoom.do",
@@ -245,7 +223,10 @@ $("#recentRoom").click(function(){
 		data : {email : email},
 		success : function (responseData){
 			var data = responseData;
-			console.log("찜목록 success: "+data.list.length);
+			$("#total").val(data.page.total);
+			$("#pageCnt").val(data.page.pageCnt);
+			$("#listCnt").val(data.page.listCnt);
+			console.log("최근본방 목록 success: 페이징정보 total: "+$("#total").val()+", listCnt: "+ $("#listCnt").val()+", pageCnt: "+$("#pageCnt").val());
 			pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 		}
 	});
@@ -255,13 +236,42 @@ $("#recentRoom").click(function(){
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 $(function() {
-	
     $(document).ajaxSend(function(e, xhr, options) {
-    	console.log("dd");
         xhr.setRequestHeader(header, token);
-
     });
-
 });
 
+function mkClusterer(flag){
 
+	 latLngArray["north"] = $("#north").val();
+	 latLngArray["south"] = $("#south").val();
+	 latLngArray["east"] = $("#east").val();
+	 latLngArray["west"] = $("#west").val();
+	 latLngArray["pageStartNum"] = $("#pageStartNum").val()*1;
+	 latLngArray["index"] =	$("#index").val()*1;
+	 latLngArray["flag"] = flag;
+	 var jsonLatLng = JSON.stringify(latLngArray);
+	 $.ajax({
+	 	contentType : "application/json",
+   	url : "mapMarker.do",
+   	type : "post",
+   	dataType : "json",
+   	data : jsonLatLng,
+	 	success : function(responseData){
+		   position = responseData;
+    
+		    for(var i=0; i<position.positions.length; i++){
+		    	//console.log("position2 포문: "+position.positions[i].lat+", i: "+i);
+		    	var coords = new daum.maps.LatLng(position.positions[i].lat, position.positions[i].lng);
+		    	marker = new daum.maps.Marker({
+			    	position: coords,
+			    	image: customMarkerImage1
+		    	});
+		    	marker.setMap(map);		    	
+		    	markers.push(marker);
+		    }
+		},error:function(request,status,error){
+	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+	 });
+}

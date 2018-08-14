@@ -1594,7 +1594,7 @@ function heart(that){
 	
 }
 
-//매물 클릭
+//매물 클릭(방검색 에서만)
 function buildContent(that){
 	var build_no = $(that).children().children().children().find('[name=build_no]');
 	console.log("매물 클릭 build_no.val()");
@@ -1787,24 +1787,21 @@ $("#heartRoom").click(function(){
 	});
 });
 
-
-
-	
-
-
-
-
-// 토큰 생성
+//토큰 생성
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 $(function() {
 	
     $(document).ajaxSend(function(e, xhr, options) {
-    	console.log("dd");
         xhr.setRequestHeader(header, token);
-
     });
-
 });
+
+	
+
+
+
+
+
 
 

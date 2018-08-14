@@ -112,7 +112,7 @@
 				html+='</td>';
 				html+='<td style="font-size:15px">';
 					html+=''+response.buildList[i].proType+'';
-					if(response.mapList[Object.keys(response.mapList)[i]][0].monthly!==0){
+					if(response.mapList[Object.keys(response.mapList)[i]] [0].monthly!==0){
 						html+=' 월세 '+response.mapList[Object.keys(response.mapList)[i]][0].monthly+' / '+response.mapList[Object.keys(response.mapList)[i]][0].deposit;
 					}else if(response.mapList[Object.keys(response.mapList)[i]][0].monthly===0 && response.mapList[Object.keys(response.mapList)[i]][0].lease!==0){
 						html+=' 전세 '+response.mapList[Object.keys(response.mapList)[i]][0].lease;

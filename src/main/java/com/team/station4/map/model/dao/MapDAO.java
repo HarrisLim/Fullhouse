@@ -7,6 +7,7 @@ import java.util.Map;
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.vo.PagingVo;
 import com.team.station4.room.model.RequestDTO;
+import com.team.station4.uploadroom.model.PriceDTO;
 
 public interface MapDAO {
 
@@ -44,5 +45,6 @@ public interface MapDAO {
 	int memRecentSelect(String buildNo);
 	void memRecentUpdate(String reRecent);
 	List<BuildDTO> hotListPaging(Map<String, Object> jsonLatLng);
+	List<PriceDTO> priceSelect(BuildDTO dto);
 	
 }

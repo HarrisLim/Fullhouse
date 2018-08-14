@@ -26,6 +26,7 @@ import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.model.dao.MapDAO;
 import com.team.station4.map.vo.PagingVo;
 import com.team.station4.room.model.RequestDTO;
+import com.team.station4.uploadroom.model.PriceDTO;
 
 @Service
 public class MapServiceImpl implements MapService {
@@ -297,4 +298,7 @@ public class MapServiceImpl implements MapService {
 		dao.deleteRequestDoneCall(request_no);
 	}
 	
+	public List<PriceDTO> priceSelectService(BuildDTO dto) {
+		return dao.priceSelect(dto);
+	}
 }

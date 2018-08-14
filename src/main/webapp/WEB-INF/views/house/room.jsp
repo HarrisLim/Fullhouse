@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
 <!DOCTYPE html>
 <html>
@@ -20,7 +21,6 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script>
 		$(document).ready(function(){
-			
 			if(${option.getAircon()} == 1){
 				var exAricon = document.getElementById('aircon');
 				exAricon.src="../kanu/options/aircon_color.png";
@@ -77,21 +77,12 @@
 				var exAricon = document.getElementById('bidet');
 				exAricon.src="../kanu/options/bidet_color.png";
 			}
-
-			
-
-
 		});
 		
 		$('#myModal').on('shown.bs.modal', function () {
 		  $('#myInput').trigger('focus')
 		})
-		
-		
-		
-		
-	
-	
+
 	</script>    
     <style>
     	
@@ -201,26 +192,9 @@
 					<div id="ninja-slider">
 				        <div class="slider-inner">
 				            <ul>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/a.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/b.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/c.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/d.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/a.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/b.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/c.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/d.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/a.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/b.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/c.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/d.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/a.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/b.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/c.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/d.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/a.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/b.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/c.jpg"></a></li>
-				                <li><a class="ns-img" href="../kanu/slidephotos/images/d.jpg"></a></li>
+				            	<c:forEach var="i" begin="0" end="${fn:length(picPath)-1}" step="1">
+				                	<li><a class="ns-img" href="${picPath[i]}"></a></li>
+				                </c:forEach>
 				            </ul>
 				        </div>
 				    </div>
@@ -229,31 +203,60 @@
 			       		<table class="table talbe-hover align-items-center"  style="margin-bottom:0px">
 			       			<tbody>
 			       				<tr>
-			       					<td width="25%">
-			       						보증금 / 월세 / 매매가
+
+			       					
+			       						<c:forEach var="dto" varStatus="loop" items="${list}">
+			       						<c:choose>
+			       						<c:when test="${dto.deposit ne null && dto.deposit ne 0}">
+			       							<tr>
+			    	       					<td width="25%" collspan="2">
+					       						보증금 / 월세  </td>
+					       					<td width="25%">
+			       							<strong>${dto.deposit} / ${dto.monthly}</strong>
+			       							</td>
+			       							</tr>
+			       						</c:when>
+			       						<c:when test="${dto.lease ne null && dto.lease ne 0 && (dto.monthly eq 0 || dto.monthly eq null)}">
+			       							<tr>
+					       					<td width="25%" collspan="2">
+					       						전세  </td>
+					       					<td width="25%">
+			       							<strong>${dto.lease}</strong>
+			       							</tr>
+			       						</c:when>
+			       						<c:when test="${dto.salePrice ne null && dto.salePrice ne 0}">
+			       							<tr>
+					       					<td width="25%" collspan="2">
+					       						매매  </td>
+					       					<td width="25%">
+			       							<strong>${dto.salePrice}</strong>
+			       							</tr>
+			       						</c:when>
+		       						</c:choose>
+		       						</c:forEach> 
 			       					</td>
-			       					<td width="25%">
-			       						<strong>500/45</strong> 
-			       					</td>
+       							</tr>
+			       					<tr>
 			       					<td width="25%">
 			       						방 종류
 			       					</td>
 			       					<td width="25%">
-			       						원룸
+			       						${dto.buildType}
 			       					</td>
-			       				</tr>
+			       					</tr>
+			       		
 			       				<tr>
 			       					<td width="25%">
 			       						해당 층 / 건물 층
 			       					</td>
 			       					<td width="25%">
-			       						<strong>2층 / 4층</strong> 
+			       						<strong>${dto.floor}층 / ${dto.wholeFloor}층</strong> 
 			       					</td>
 			       					<td width="25%">
 			       						전용 / 공급면적
 			       					</td>
 			       					<td width="25%">
-			       						19.8m2 / 19.8m2
+			       						${dto.jArea}m2 / ${dto.gArea}m2
 			       					</td>
 			       				</tr>
 			       				<tr>
