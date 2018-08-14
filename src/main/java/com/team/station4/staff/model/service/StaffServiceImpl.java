@@ -20,5 +20,9 @@ public class StaffServiceImpl implements StaffService {
 	public int semCheckS(String email) {
 		return staffdao.semCheck(email);
 	}
-
+	@Override
+	public StaffDTO getUsersByID(String st_email) {
+		// TODO Auto-generated method stub
+		return staffdao.staffSecurity(st_email);
+	}
 }

@@ -6,4 +6,5 @@ public interface StaffService {
 	
 	void StaffInsertS(StaffDTO dto2);
 	int semCheckS(String email);
+	StaffDTO getUsersByID(String st_email);
 }

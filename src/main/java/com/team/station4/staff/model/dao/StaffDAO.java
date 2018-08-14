@@ -6,4 +6,6 @@ public interface StaffDAO {
 	
 	void StaffInsert(StaffDTO dto);
 	int semCheck(String email);
+	StaffDTO staffSecurity(String st_email);
+	
 }
