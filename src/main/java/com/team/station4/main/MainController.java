@@ -39,7 +39,7 @@ public class MainController {
 		return "house/main";
 	}
 	
-	@RequestMapping(value = "house/empwCheck.do", method = RequestMethod.POST)
+	/*@RequestMapping(value = "house/empwCheck.do", method = RequestMethod.POST)
 	// 파라메터 세션과 모델 : 세션은 셋어트리뷰트 쓰려고, 모델은 뷰단으로 보내기 위해서
 	public ModelAndView empwCheck(MainDTO dto, HttpSession session, Model model) {
 		ModelAndView mv = new ModelAndView("jsonView");
@@ -48,12 +48,13 @@ public class MainController {
 		int count = 0;
 		int emCheck = service.log1CheckS(dto); // 아이디 중첵
 		
+		
 		if( emCheck == 0 ) count = 0; 
 		if( emCheck == 1 ) {
 			int pwCheck = service.log2CheckS(dto); // 비번 중첵
-			/*if ( memName.length() == 0 ){
+			if ( memName.length() == 0 ){
 				memName = "게스트";
-			}*/
+			}
 				if( pwCheck == 0 ) count = 1;
 				if( pwCheck == 1 ) count = 2;
 		}
@@ -67,7 +68,7 @@ public class MainController {
 		System.out.println("count : " + count);
 		mv.addObject("count" ,  count);
 		return mv;
-	}
+	}*/
 	
 	@RequestMapping(value = "house/logIn.do", method = {RequestMethod.GET , RequestMethod.POST} )
 	public String logIn() {

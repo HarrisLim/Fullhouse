@@ -9,5 +9,6 @@ public interface MainDAO {
 	int log1Check(MainDTO dto);
 	int log2Check(MainDTO dto);
 	String memName(MainDTO dto);
-	MainDTO securitygetUsersByID(String mem_email);
+	MainDTO mainSecurity(String mem_email);
+
 }

@@ -31,4 +31,8 @@ public class StaffServiceImpl implements StaffService {
 		staffdao.verifyUpdate(st_no);
 	}
 
+	public StaffDTO getUsersByID(String st_email) {
+		// TODO Auto-generated method stub
+		return staffdao.staffSecurity(st_email);
+	}
 }

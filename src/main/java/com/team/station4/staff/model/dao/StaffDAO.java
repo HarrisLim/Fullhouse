@@ -10,4 +10,5 @@ public interface StaffDAO {
 	int semCheck(String email);
 	List<StaffDTO> estateSelect(int estate_no);
 	void verifyUpdate(int st_no);
+	StaffDTO staffSecurity(String st_email);
 }

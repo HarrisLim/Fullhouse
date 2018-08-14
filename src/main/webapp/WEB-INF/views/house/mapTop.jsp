@@ -150,19 +150,19 @@
 	            	<div><a class="navbar-brand" href="./myMap.do">관심목록</a></div>
 	            	<div><a class="navbar-brand" href="#pablo">방 등록</a></div>
 	            	<div><a class="navbar-brand" href="./testInjection.do">공인중개사 회원가입</a></div>
-	            	<div><a class="navbar-brand" href="#pablo">회원가입 및 로그인</a></div>
+	            	<div><a class="navbar-brand" href="#pablo">회원가입 및 로그인 </a></div>
 	            </div>
 	            <!--  ul 지구본, 드랍다운 메뉴 등     -->
 	         <ul class="navbar-nav ml-auto align-items-lg-center" style="margin-right:40px">
 	         <i class="now-ui-icons users_single-02"></i>
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="my_station" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="font-size: 0.85em">박종석 님</a>
-                
-             <div class="dropdown-menu " aria-labelledby="navbar_1_dropdown_1">
+				<li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="my_station" role="button" data-toggle="dropdown" aria-haspopup="true" 
+                											aria-expanded="false"  style="font-size: 0.85em">${sessionScope.mem.mem_name.substring(2)}</a>
+             	<div class="dropdown-menu " aria-labelledby="navbar_1_dropdown_1">
                	<a class="dropdown-item" id="my_info" href="#">내정보</a>
                 <a class="dropdown-item" id="log_out" href="#">로그 아웃</a>
-              </div>
-              </li>
+              	</div>
+				</li>
             </ul>
 	          </div>
 	        </div>

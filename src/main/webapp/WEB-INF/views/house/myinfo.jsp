@@ -64,7 +64,7 @@
 							</tr>
 							<tr>
 								<th>성명</th>
-								<td><input value="text" style="width:100%"></td>
+								<td><input value="${sessionScope.mem.mem_name.substring(2)}" style="width:100%"></td>
 							</tr>
 							<tr>
 								<th>이메일</th>

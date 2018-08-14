@@ -20,6 +20,15 @@
 
 	    
 		<script>
+		// 토큰 
+		var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$(function() {
+			$(document).ajaxSend(function(e, xhr, options) {
+			    xhr.setRequestHeader(header, token);
+			});
+		});
+		
 			// 다음 주소찾기 
 			function execDaumPostcode() {
 		        new daum.Postcode({
@@ -111,7 +120,7 @@
 					url : "stemCheck.do",
 					data : { "st_email" : $('#st_email').val() },
 					success : function(responseData){
-						alert( 'reponseData :' + responseData.sem )
+						
 						var data = JSON.parse(responseData.sem)
 						if( $("#st_email").val()==="" ){
 							alert(" 이메일을 등록해주세요")
@@ -326,9 +335,9 @@
 						}
 						if( $('#lrCheck').prop("disabled") == true && $('#semCheck').prop("disabled") == true ){
 							alert('pro 회원가입 완료!')
-							return;
-							/* proInsert.action="estate.do";
-							$("#proInsert").submit(); */
+							
+							proInsert.action="estate.do";
+							$("#proInsert").submit();
 						}
 					}
 				}
@@ -500,6 +509,7 @@
 					                    </select>
 									</div>
 								</td>
+								
 							</tr>
 						</tbody>
 					</table>
@@ -507,6 +517,7 @@
 					<p class="text-center">*공인중개사법 제18조 2의 취지에 적합한 표시의무(상호명, 등록관청에 신고된 전화번호, 소재지, 성명)를 기입하시기 바랍니다.</p>
   					<p class="text-center">이에 발생한 문제는 (주)스테이션4 에서 책임을 지지 않습니다.</p>
 					<div align="center" style="margin-top:20px;margin-bottom:50px">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						<button type="button" id="proin" name="proin" class="btn btn-primary" onclick="lrnoCheck('str')">가입 신청</button>
 					</div>
 				</div>

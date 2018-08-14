@@ -49,10 +49,11 @@ public class MainDAOImpl implements MainDAO {
 	}
 
 	@Override
-	public MainDTO securitygetUsersByID(String mem_email) {
+	public MainDTO mainSecurity(String mem_email) {
 		// TODO Auto-generated method stub
-		MainDTO securitygetUsersByID = sqlSession.selectOne(ns + ".securitygetUsersByID", mem_email);
-		
-		return securitygetUsersByID;
+		MainDTO security = sqlSession.selectOne(ns + ".Security", mem_email);
+		System.out.println(" 값 : " + security);
+		return security;
 	}
+	
 }
