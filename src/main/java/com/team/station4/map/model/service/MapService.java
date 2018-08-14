@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.vo.PagingVo;
+import com.team.station4.uploadroom.model.PriceDTO;
 
 public interface MapService {
 	
@@ -37,4 +38,6 @@ public interface MapService {
 	int memRecentSelectService(String buildNo);
 	void memRecentUpdateService(String reRecent);
 	List<BuildDTO> hotListServicePaging(Map<String, Object> jsonLatLng);
+	List<PriceDTO> priceSelectService(BuildDTO dto);
+	
 }

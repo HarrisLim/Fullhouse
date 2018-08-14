@@ -34,7 +34,7 @@ public class ManageroomController {
 	
 	private BuildDTO buildDTO = new BuildDTO();
 	HashMap<BuildDTO, List<PriceDTO>> mapList = new HashMap<BuildDTO, List<PriceDTO>>();
-	Set<BuildDTO> set = new HashSet<>();
+	Set<BuildDTO> set = new HashSet<BuildDTO>();
 	List<BuildDTO> buildList;
 	
 	@RequestMapping(value="house/manageroom.do", method=RequestMethod.GET)

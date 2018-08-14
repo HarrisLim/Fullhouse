@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.vo.PagingVo;
+import com.team.station4.uploadroom.model.PriceDTO;
 
 @Repository
 public class MapDAOImpl implements MapDAO {
@@ -134,6 +135,12 @@ public class MapDAOImpl implements MapDAO {
 	@Override
 	public int countBuild(Map hm) {
 		return sqlsession.selectOne(ns+".myCountBuild", hm);
+	}
+
+
+	@Override
+	public List<PriceDTO> priceSelect(BuildDTO BuildDTO) {
+		return sqlsession.selectList(ns+".myPriceSelect", BuildDTO);
 	}
 
 }

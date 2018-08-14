@@ -23,14 +23,14 @@
 			.itemList a:hover { font-weight:bold;color:gray; }
 		</style>
 	<c:forEach var="dto" items="${list}">	
-		<div class ="itemList" style="width:95%;height:145px;border:1px solid gray;margin:5px;margin-left:12px;" onmouseover="getterLatLng(this)" onmouseout="buildMouseOut(this)" onclick="buildContent(this)">
+		<div class ="itemList" style="width:95%;height:145px;border:1px solid gray;margin:5px;margin-left:12px;" onmouseover="getterLatLng(this)" onmouseout="buildMouseOut(this)" >
 			<!-- 관심목록 추가 하트모양 -->
 			<div class="RoomItem-icons" style="float:right;margin:15px;" onClick="heart(this)" id="test1">
 				<span class="room-favorite" >
 					<i id="icon_heart" class="fa fa-heart-o fa-2x" style="color:gray" onmouseover="$(this).css('color', 'red')" onmouseout="$(this).css('color', 'gray')"></i>
 				</span>
 			</div>
-			<a href="#" target="_blank" style="color:black" >
+			<a href="room.do?buildNo=${dto.getBuild_no()}" target="_self" style="color:black" >
 				<div class="RoomItem-preview" style="width:120px;height:145px;float:left" >
 					<div class="RoomItem-preview__image" ></div>
 					<div class="RoomItem-preview__image" style="background-image:url(${dto.picPath});width:100%;height:135px;margin:5px;" ></div>
@@ -41,8 +41,21 @@
 						<div class="RoomItem-header" >
 							<div class="RoomItem-price" style="font-size:2em;margin-bottom:-10px;margin-top:10px;width:60%;float:left" >
 								<p>
-									<span class="RoomItem-price__type" style="margin-left:25px;" >월세</span>
-									<span class="RoomsItem-price__title is-0" >7000 / 60</span>
+								<c:choose>
+									<c:when test="${priceMap.get(dto).get(0).monthly ne 0}">
+										<span class="RoomItem-price__type" style="margin-left:25px;" >월세</span>
+										<span class="RoomsItem-price__title is-0" >${priceMap.get(dto).get(0).deposit} / ${priceMap.get(dto).get(0).monthly}</span>
+									</c:when>
+									<c:when test="${priceMap.get(dto).get(0).monthly eq 0 && priceMap.get(dto).get(0).lease ne 0}">
+										<span class="RoomItem-price__type" style="margin-left:25px;" >전세</span>
+										<span class="RoomsItem-price__title is-0" >${priceMap.get(dto).get(0).deposit}</span>
+									</c:when>
+									<c:when test="">
+										<span class="RoomItem-price__type" style="margin-left:25px;" >매매</span>
+										<span class="RoomsItem-price__title is-0" >${priceMap.get(dto).get(0).salePrice}</span>
+									</c:when>
+								</c:choose>
+									
 								</p>
 							</div>
 							<span class="room-visited" >

@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.model.service.MapService;
 import com.team.station4.map.vo.PagingVo;
+import com.team.station4.uploadroom.model.PriceDTO;
 
 @Controller
 public class MapController {
@@ -48,10 +49,26 @@ public class MapController {
 		hm.put("east", 127.2456203269095);
 
 		List<BuildDTO> list =service.mapListService(hm);
+		//List<PriceDTO> priceList = new ArrayList<PriceDTO>();
+		HashMap<BuildDTO, List<PriceDTO>> priceMap = new HashMap<BuildDTO, List<PriceDTO>>();
 		int count = service.countClusterService(hm);
 		pagingVo.setTotal(count);
+		
+		for(int i=0; i<list.size(); i++) {
+			String [] picPath = list.get(i).getPicPath().split(",");
+			list.get(i).setPicPath(picPath[0]);
+		}
 
+		for(BuildDTO dto : list) {
+			List<PriceDTO> price =  service.priceSelectService(dto);
+			priceMap.put(dto, price);
+			System.out.println("priceList내용: "+price.get(0).getBuild_no()+", deposit: "+price.get(0).getDeposit()+", monthly: "+price.get(0).getMonthly()+", lease: "+price.get(0).getLease());
+		}
+		
+		
+	
 		mv.setViewName("house/map");
+		mv.addObject("priceMap", priceMap);
 		mv.addObject("count", count);
 		mv.addObject("list", list);
 		mv.addObject("page", pagingVo);
@@ -73,23 +90,23 @@ public class MapController {
 		//flag 0 은 방검색 페이지 제이슨 데이터 처리
 		if(flag == 0) {
 			if(jsonLatLng.get("beginDeposit") != null && Integer.parseInt((String)jsonLatLng.get("beginDeposit")) > 0) {
-				String begin = jsonLatLng.get("beginDeposit")+"0000";
-				jsonLatLng.put("beginDeposit",Long.parseLong(begin));  
+				String begin = jsonLatLng.get("beginDeposit").toString();
+				jsonLatLng.put("beginDeposit", Integer.parseInt(begin));  
 			}
 			if(jsonLatLng.get("endDeposit") != null && Integer.parseInt((String)jsonLatLng.get("endDeposit")) > 0) {
-				String end = jsonLatLng.get("endDeposit")+"0000";
-				jsonLatLng.put("endDeposit",Long.parseLong(end)); 
+				String end = jsonLatLng.get("endDeposit").toString();
+				jsonLatLng.put("endDeposit", Integer.parseInt(end)); 
 			}
 			System.out.println("jsonLatLng:beginDeposit: "+jsonLatLng.get("beginDeposit")+", endDeposit: "+jsonLatLng.get("endDeposit"));
 			System.out.println("jsonLatLng:");
 			
 			if(jsonLatLng.get("beginRent") != null && Integer.parseInt((String)jsonLatLng.get("beginRent")) > 0) {
-				String begin = jsonLatLng.get("beginRent")+"0000";
-				jsonLatLng.put("beginRent",Integer.parseInt(begin));  
+				String begin = jsonLatLng.get("beginRent").toString();
+				jsonLatLng.put("beginRent", Integer.parseInt(begin));  
 			}
 			if(jsonLatLng.get("endRent") != null && Integer.parseInt((String)jsonLatLng.get("endRent")) > 0) {
-				String end = jsonLatLng.get("endRent")+"0000";
-				jsonLatLng.put("endRent",Integer.parseInt(end)); 
+				String end = jsonLatLng.get("endRent").toString();
+				jsonLatLng.put("endRent", Integer.parseInt(end)); 
 			}
 			System.out.println("jsonLatLng:beginRent: "+jsonLatLng.get("beginRent")+", endRent: "+jsonLatLng.get("endRent"));
 			
@@ -99,40 +116,100 @@ public class MapController {
 			pagingVo.setPageStartNum((Integer)jsonLatLng.get("pageStartNum"));
 			jsonLatLng.put("start", pagingVo.getStart());
 			jsonLatLng.put("last", pagingVo.getLast());
-			
-			
-	
+				
 			List<BuildDTO> list =service.mapListService(jsonLatLng);
+			for(int i=0; i<list.size(); i++) {
+				String [] picPath = list.get(i).getPicPath().split(",");
+				list.get(i).setPicPath(picPath[0]);
+			}
+
+			HashMap<BuildDTO, List<PriceDTO>> priceMap = new HashMap<BuildDTO, List<PriceDTO>>();  
+			for(BuildDTO dto : list) {
+				List<PriceDTO>price = service.priceSelectService(dto);
+				priceMap.put(dto, price);
+			} 
+			
 			
 			pagingVo.setTotal(service.countClusterService(jsonLatLng));
 			System.out.println("pagingVo.getPageLastNum: "+pagingVo.getPageLastNum());
 			mv.addObject("list", list);
+			mv.addObject("priceMap", priceMap);
 			mv.addObject("pagingVo", pagingVo);
 			//mapClusterer(jsonLatLng);
 			return mv;
-		//flag 1 은 방검색 페이지 - 찜한방 제이슨 데이터 처리	 (최근본방은 10개 에서 제일 처음본방이 사라지므로 paging 필요없음)
-		}else {
+		//flag 1 은 방검색 페이지 - 찜한방 제이슨 데이터 처리	
+		}else if(flag == 1){
 			ModelAndView mv = new ModelAndView("jsonView");
-			System.out.println("파스인트된 flag 관심목록: "+flag);
+			
 			PagingVo pagingVo = new PagingVo();
 			pagingVo.setIndex((Integer)jsonLatLng.get("index"));
 			pagingVo.setPageStartNum((Integer)jsonLatLng.get("pageStartNum"));
+			
 			jsonLatLng.put("start", pagingVo.getStart());
 			jsonLatLng.put("last", pagingVo.getLast());
-			List<Integer> list = new ArrayList<Integer>();
+			List<Integer> listHot = new ArrayList<Integer>();
 			String hot = service.myHotService();
 			String [] hotArray = hot.split(",");
 			for(String hotStr : hotArray) {
 				if(hotStr.length() != 0) {
-					list.add(Integer.parseInt(hotStr));
+					listHot.add(Integer.parseInt(hotStr));
 				}
 			}
-			jsonLatLng.put("list", list);
-			List<BuildDTO>dto = service.hotListServicePaging(jsonLatLng);
-			for(BuildDTO build : dto) {
-				System.out.println("dto: "+build.getAddress()+", build_no: "+build.getBuild_no());
+			jsonLatLng.put("list", listHot);
+			int total = listHot.size();
+			pagingVo.setTotal(total);
+			System.out.println("파스인트된 flag 찜목록: "+flag+", index: "+pagingVo.getIndex()+", pageStartNum: "+pagingVo.getPageStartNum()+", pageLastNum: "+pagingVo.getPageLastNum()+", total: "+pagingVo.getTotal());
+			List<BuildDTO>list = service.hotListServicePaging(jsonLatLng);
+			for(int i=0; i<list.size(); i++) {
+				String [] picPath = list.get(i).getPicPath().split(",");
+				list.get(i).setPicPath(picPath[0]);
 			}
-			mv.addObject("list", dto);
+
+			HashMap<BuildDTO, List<PriceDTO>> priceMap = new HashMap<BuildDTO, List<PriceDTO>>();  
+			for(BuildDTO dto : list) {
+				List<PriceDTO>price = service.priceSelectService(dto);
+				priceMap.put(dto, price);
+			} 
+
+			mv.addObject("list", list);
+			mv.addObject("priceMap", priceMap);
+			mv.addObject("pagingVo", pagingVo);
+			return mv;
+		//flag 2 은 방검색 페이지 - 최근 본 방 제이슨 데이터 처리
+		}else {
+			ModelAndView mv = new ModelAndView("jsonView");
+			
+			PagingVo pagingVo = new PagingVo();
+			pagingVo.setIndex((Integer)jsonLatLng.get("index"));
+			pagingVo.setPageStartNum((Integer)jsonLatLng.get("pageStartNum"));
+			
+			jsonLatLng.put("start", pagingVo.getStart());
+			jsonLatLng.put("last", pagingVo.getLast());
+			List<Integer> listRecent = new ArrayList<Integer>();
+			String recent = service.myRecentService();
+			String [] recentArray = recent.split(",");
+			for(String recentStr : recentArray) {
+				if(recentStr.length() != 0) {
+					listRecent.add(Integer.parseInt(recentStr));
+				}
+			}
+			jsonLatLng.put("list", listRecent);
+			int total = listRecent.size();
+			pagingVo.setTotal(total);
+			System.out.println("파스인트된 flag 관심목록: "+flag+", index: "+pagingVo.getIndex()+", pageStartNum: "+pagingVo.getPageStartNum()+", pageLastNum: "+pagingVo.getPageLastNum()+", total: "+pagingVo.getTotal());
+			List<BuildDTO>list = service.hotListServicePaging(jsonLatLng);
+			for(int i=0; i<list.size(); i++) {
+				String [] picPath = list.get(i).getPicPath().split(",");
+				list.get(i).setPicPath(picPath[0]);
+			}
+
+			HashMap<BuildDTO, List<PriceDTO>> priceMap = new HashMap<BuildDTO, List<PriceDTO>>();  
+			for(BuildDTO dto : list) {
+				List<PriceDTO>price = service.priceSelectService(dto);
+				priceMap.put(dto, price);
+			} 
+			mv.addObject("list", list);
+			mv.addObject("priceMap", priceMap);
 			mv.addObject("pagingVo", pagingVo);
 			return mv;
 		}
@@ -147,22 +224,22 @@ public class MapController {
 		System.out.println("클러스터:south: "+map.get("south")+", north: "+map.get("north")+", east: "+map.get("east")+", west: "+map.get("west"));
 		
 		if(map.get("beginDeposit") != null && Integer.parseInt((String)map.get("beginDeposit")) > 0) {
-			String begin = map.get("beginDeposit")+"0000";
-			map.put("beginDeposit",Long.parseLong(begin));  
+			String begin = map.get("beginDeposit").toString();
+			map.put("beginDeposit", Integer.parseInt(begin));  
 		}
 		if(map.get("endDeposit") != null && Integer.parseInt((String)map.get("endDeposit")) > 0) {
-			String end = map.get("endDeposit")+"0000";
-			map.put("endDeposit",Long.parseLong(end)); 
+			String end = map.get("endDeposit").toString();
+			map.put("endDeposit", Integer.parseInt(end));  
 		}
 		System.out.println("클러스터:beginDeposit: "+map.get("beginDeposit")+", endDeposit: "+map.get("endDeposit"));
 		
 		if(map.get("beginRent") != null && Integer.parseInt((String)map.get("beginRent")) > 0) {
-			String begin = map.get("beginRent")+"0000";
-			map.put("beginRent",Integer.parseInt(begin));  
+			String begin = map.get("beginRent").toString();
+			map.put("beginRent", Integer.parseInt(begin));  
 		}
 		if(map.get("endRent") != null && Integer.parseInt((String)map.get("endRent")) > 0) {
-			String end = map.get("endRent")+"0000";
-			map.put("endRent",Integer.parseInt(end)); 
+			String end = map.get("endRent").toString();
+			map.put("endRent", Integer.parseInt(end));  
 		}
 		System.out.println("map:beginRent: "+map.get("beginRent")+", endRent: "+map.get("endRent"));
 		
@@ -193,15 +270,15 @@ public class MapController {
 	/*하트 (즐겨찾기) 추가*/
 	@RequestMapping(value="house/heart.do", method=RequestMethod.POST)	
 	public void heart(@RequestParam("seq") int buildNo ) {
-		
+		System.out.println("하트추가 인입");
 		int count = service.memHotSelectService(buildNo);
 		System.out.println("buildNo: "+buildNo+", count: "+count);
 		if(count != 1) {
-			System.out.println("하트추가");
 			service.memHotUpdateService(buildNo); //하트 추가
+			System.out.println("하트추가: "+service.myHotService());
 		}else {
-			System.out.println("하트삭제");
 			service.memHotDeleteService(buildNo); //하트 삭제
+			System.out.println("하트삭제: "+service.myHotService());
 		}
 	}
 	
@@ -209,7 +286,7 @@ public class MapController {
 	@RequestMapping(value="house/recentList.do", method=RequestMethod.POST)	
 	public void recentList(@RequestParam("seq") String buildNo ) {
 		String recent = service.myRecentService();
-		System.out.println("리센트 확인: "+recent+", 빌드번호 확인: "+buildNo);
+		System.out.println("최근본 페이지 추가 인입 리센트 확인: "+recent+", 빌드번호 확인: "+buildNo);
 		//recentList 목록이 있는지 검사 0이면 최근본목록 없으니 그냥 등록 1이면 최근본목록+ 추가로 본목록, 추가로 본 목록이 최근목록에 있으면 recent는 기존 목록처리
 		int count = service.memRecentSelectService(buildNo);
 		if (count < 1) {
@@ -246,20 +323,36 @@ public class MapController {
 		List<BuildDTO> list = new ArrayList();
 		
 		String recent = service.myRecentService();
-		String [] hotSplit = recent.split(",");
-		for(String hs : hotSplit) {
-			//System.out.println("hs: "+hs+", hs.length: "+hs.length());
-			if(hs.length() > 0) {
-				list.add(service.recentListService(Integer.parseInt(hs)));
+		if(recent != null ) {
+			String [] hotSplit = recent.split(",");
+			for(String hs : hotSplit) {
+				//System.out.println("hs: "+hs+", hs.length: "+hs.length());
+				if(hs.length() > 0) {
+					list.add(service.recentListService(Integer.parseInt(hs)));
+				}
 			}
+			int total = list.size();
+			System.out.println("list: "+list);
+			for(int i=0; i<list.size(); i++) {
+				String [] picPath = list.get(i).getPicPath().split(",");
+				list.get(i).setPicPath(picPath[0]);
+			}
+
+			HashMap<BuildDTO, List<PriceDTO>> priceMap = new HashMap<BuildDTO, List<PriceDTO>>();  
+			for(BuildDTO dto : list) {
+				List<PriceDTO>price = service.priceSelectService(dto);
+				priceMap.put(dto, price);
+			}
+			mv.setViewName("house/myMap");
+			mv.addObject("priceMap", priceMap);
+			mv.addObject("total", total);
+			mv.addObject("list", list);
+			mv.addObject("page", pagingVo);
+			return mv;
+		}else {
+			System.out.println("최근 본방 없음");
+			return mv;
 		}
-		int total = list.size();
-		System.out.println("list: "+list);
-		mv.addObject("total", total);
-		mv.setViewName("house/myMap");
-		mv.addObject("list", list);
-		mv.addObject("page", pagingVo);
-		return mv;
 	}
 
 	/* 마커 생성(관심목록-0, 찜한방-1)  */
@@ -273,66 +366,95 @@ public class MapController {
 		if(flag == 0) {
 			System.out.println("flag 관심목록: "+flag);
 			String recent = service.myRecentService();
-			String [] recentSplit = recent.split(",");
-			for(String resultRecent : recentSplit) {
-				if(resultRecent.length() > 0) {
-					BuildDTO dto = service.recentListService(Integer.parseInt(resultRecent));
-					hm.put("lat", dto.getLat());
-					hm.put("lng", dto.getLng());
-					list.add(hm);
+			if(recent != null) {
+				String [] recentSplit = recent.split(",");
+				for(String resultRecent : recentSplit) {
+					if(resultRecent.length() > 0) {
+						BuildDTO dto = service.recentListService(Integer.parseInt(resultRecent));
+						hm.put("lat", dto.getLat());
+						hm.put("lng", dto.getLng());
+						list.add(hm);
+					}
+					if(hm.size() == 2) {
+						hm = new HashMap<String, Object>();
+					}
 				}
-				if(hm.size() == 2) {
-					hm = new HashMap<String, Object>();
-				}
+				mv.addObject("positions", list);
+				return mv;
+			}else {
+				System.out.println("관심목록 없음");
+				return mv;
 			}
-			mv.addObject("positions", list);
-			return mv;
 		}else {
 			System.out.println("flag 찜한 방: "+flag);
 			String hot = service.myHotService();
-			String [] hotSplit = hot.split(",");
-			for(String resultHot : hotSplit) {
-				if(resultHot.length() > 0) {
-					BuildDTO dto = service.hotListService(Integer.parseInt(resultHot));
-					hm.put("lat", dto.getLat());
-					hm.put("lng", dto.getLng());
-					list.add(hm);
+			if(hot != null) {
+				String [] hotSplit = hot.split(",");
+				for(String resultHot : hotSplit) {
+					if(resultHot.length() > 0) {
+						BuildDTO dto = service.hotListService(Integer.parseInt(resultHot));
+						hm.put("lat", dto.getLat());
+						hm.put("lng", dto.getLng());
+						list.add(hm);
+					}
+					if(hm.size() == 2) {
+						hm = new HashMap<String, Object>();
+					}
 				}
-				if(hm.size() == 2) {
-					hm = new HashMap<String, Object>();
-				}
+				mv.addObject("positions", list);
+				return mv;
+			}else {
+				System.out.println("찜한방 없음");
+				return mv;
 			}
-			mv.addObject("positions", list);
-			return mv;
 		}
+
 		
 	}
 		
 	/*관심목록 - 찜한 방 클릭시*/
 	@RequestMapping(value="house/heartRoom.do", method=RequestMethod.POST)	
 	public ModelAndView heartRoom(@RequestParam("email") String email, PagingVo pagingVo) {
-		ArrayList<BuildDTO> list = new ArrayList<BuildDTO>();
-		
+		ArrayList<Integer> BuildNumlist = new ArrayList<Integer>();
+		HashMap<String, Object>hm = new HashMap<String, Object>();
 		ModelAndView mv = new ModelAndView("jsonView");
 		String hot = service.myHotService();
 		System.out.println("찜한방 입장: "+email+"hot: "+hot);
-		String [] hotSplit = hot.split(",");
-		for(String hs : hotSplit) {
-			System.out.println("hs: "+hs);
-			if(hs.length() > 0) {
-				BuildDTO dto = service.recentListService(Integer.parseInt(hs));
-				list.add(dto);
+		if(hot != null) {
+			String [] hotSplit = hot.split(",");
+			for(String hs : hotSplit) {
+				System.out.println("hs: "+hs);
+				if(hs.length() > 0) {
+					BuildNumlist.add(Integer.parseInt(hs));
+				}
 			}
+			int total = BuildNumlist.size();
+			hm.put("list", BuildNumlist);
+			hm.put("start", pagingVo.getStart());
+			hm.put("last", pagingVo.getLast());
+			List<BuildDTO> list = service.hotListServicePaging(hm);
+			for(int i=0; i<list.size(); i++) {
+				String [] picPath = list.get(i).getPicPath().split(",");
+				list.get(i).setPicPath(picPath[0]);
+			}
+
+			pagingVo.setTotal(total);
+			System.out.println("찜한방 에서 list.size(): "+list.size()+", index: "+pagingVo.getIndex()+", pageStartNum: "+pagingVo.getPageStartNum()+", pageLastNum: "+pagingVo.getPageLastNum()+", listCnt: "+pagingVo.getListCnt()+", listCnt: "+pagingVo.getLast());
 			
+			HashMap<BuildDTO, List<PriceDTO>> priceMap = new HashMap<BuildDTO, List<PriceDTO>>();  
+			for(BuildDTO dto : list) {
+				List<PriceDTO>price = service.priceSelectService(dto);
+				priceMap.put(dto, price);
+			}
+			mv.addObject("priceMap", priceMap);
+			mv.addObject("total", total);
+			mv.addObject("list", list);
+			mv.addObject("page", pagingVo);
+			return mv;
+		}else {
+			System.out.println("찜한방 클릭시 찜한방 없음");
+			return mv;
 		}
-		int total = list.size();
-		pagingVo.setTotal(total);
-		
-		System.out.println("list: "+list+"list.size(): "+list.size());
-		mv.addObject("total", total);
-		mv.addObject("list", list);
-		mv.addObject("page", pagingVo);
-		return mv;
 	}
 	
 	/*관심목록 - 최근 본 방 클릭시*/
@@ -345,25 +467,62 @@ public class MapController {
 		
 		String recent = service.myRecentService();
 		System.out.println("관심목록 클릭: "+email+"recent: "+recent);
-		String [] recentSplit = recent.split(",");
-		for(String hs : recentSplit) {
-			System.out.println("hs: "+hs);
-			if(hs.length() > 0) {
-				BuildDTO dto = service.recentListService(Integer.parseInt(hs));
-				list.add(dto);
+		if(recent != null) {
+			String [] recentSplit = recent.split(",");
+			for(String hs : recentSplit) {
+				System.out.println("hs: "+hs);
+				if(hs.length() > 0) {
+					BuildDTO dto = service.recentListService(Integer.parseInt(hs));
+					list.add(dto);
+				}
 			}
+			for(int i=0; i<list.size(); i++) {
+				String [] picPath = list.get(i).getPicPath().split(",");
+				list.get(i).setPicPath(picPath[0]);
+			}
+
+			int total = list.size();
+			pagingVo.setTotal(total);
+			
+			System.out.println("관심목록-최근본방 클릭: list: "+list+"list.size(): "+list.size());
+			mv.addObject("total", total);
+			mv.addObject("list", list);
+			mv.addObject("page", pagingVo);
+			return mv;
+		}else {
+			System.out.println("관심목록-최근본방 클릭, 최근본방 없음");
+			return mv;
 		}
-		int total = list.size();
-		pagingVo.setTotal(total);
-		
-		System.out.println("list: "+list+"list.size(): "+list.size());
-		mv.addObject("total", total);
-		mv.addObject("list", list);
-		mv.addObject("page", pagingVo);
-		return mv;
 	}
 	
 	//////////////// myMap.do 끝(관심목록) ///////////////////////////////////
+	/* 검색 list 목록 클릭시 방 상세 정보페이지 표시 */
+	@RequestMapping(value="house/room.do")
+	public ModelAndView roomContent(@RequestParam("buildNo")int buildNo) {
+		System.out.println("room.do인입");
+		ModelAndView mv = new ModelAndView();
+		String view = "house/room";
+		BuildDTO dto = service.recentListService(buildNo);
+
+		List<PriceDTO> price = service.priceSelectService(dto);
+
+		String [] picPath = dto.getPicPath().split(",");
+		for(int i=0; i<picPath.length; i++) {
+			System.out.println("picPath[]: "+picPath[i]);
+		}
+		mv.setViewName(view);
+		mv.addObject("picPath", picPath);
+		mv.addObject("dto", dto);
+		mv.addObject("list", price);
+		System.out.println("priceMap: "+price.get(0).getDeposit()+", size: "+price.size());
+		return mv;
+	}
+	
+	
+	
+	
+	
+	
 		
 	/* 방추가 페이지 */
 	@RequestMapping(value="house/testInjection.do")
@@ -436,8 +595,12 @@ public class MapController {
 				e.printStackTrace();
 			}
 			
+			String picPath = "../kanu/roomimg/"+(ran.nextInt(10)+1)+".jpeg,../kanu/roomimg/"+(ran.nextInt(10)+1)
+					+".jpeg,../kanu/roomimg/"+(ran.nextInt(10)+1)+".jpeg,../kanu/roomimg/"+(ran.nextInt(10)+1)+".jpeg,../kanu/roomimg/"+(ran.nextInt(10)+1)
+					+".jpeg,../kanu/roomimg/"+(ran.nextInt(10)+1)+".jpeg,../kanu/roomimg/"+(ran.nextInt(10)+1)+".jpeg";
+			
 			dto = new BuildDTO(addressList.get(i), ran.nextInt(4)+1,  propertyStr, ran.nextInt(20)+1, ran.nextInt(20)+1, 121.1, 100.8, ran.nextInt(100), 
-					"../kanu/roomimg/"+(ran.nextInt(10)+1)+".jpeg", "2018년 3월 5일", locationLat.get(i), locationLng.get(i), roomTitle, explainText, "2번째 매물 등록", ran.nextInt(4)+1, sqlDate, 1, 1);
+					picPath, "2018년 3월 5일", locationLat.get(i), locationLng.get(i), roomTitle, explainText, "2번째 매물 등록", ran.nextInt(4)+1, sqlDate, 1, 1);
 			service.insertInjectionService(dto);
 			System.out.println("lat:"+locationLat.get(i)+", lng:"+locationLng.get(i));
 			
@@ -448,9 +611,9 @@ public class MapController {
 		
 		for (int i=0; i<count-max; i++) {
 			price = new HashMap<String, Object>();
-			price.put("lease", ran.nextInt(900000000)+5000000);
-			price.put("monthly", ran.nextInt(2000000)+1);
-			price.put("deposit", ran.nextInt(500000000)+5000000);
+			price.put("lease", ran.nextInt(90000)+1000);
+			price.put("monthly", ran.nextInt(200)+10);
+			price.put("deposit", ran.nextInt(50000)+500);
 			price.put("build_no", (max+1)+i);
 			System.out.println("lease: "+price.get("lease")+", monthly: "+price.get("monthly")+", deposit: "+price.get("deposit")+", build_no: "+price.get("build_no"));
 			service.insertPriceService(price);

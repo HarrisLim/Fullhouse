@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class RoomController {
 
-	@RequestMapping(value="house/room.do", method=RequestMethod.GET)
-	public String uploadroom() {
-		return "house/room";
-	}
+//	@RequestMapping(value="house/room.do", method=RequestMethod.GET)
+//	public String uploadroom() {
+//		return "house/room";
+//	}
 }

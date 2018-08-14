@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.model.dao.MapDAO;
 import com.team.station4.map.vo.PagingVo;
+import com.team.station4.uploadroom.model.PriceDTO;
 
 @Service
 public class MapServiceImpl implements MapService {
@@ -244,5 +245,10 @@ public class MapServiceImpl implements MapService {
 	@Override
 	public List<BuildDTO> hotListServicePaging(Map<String, Object> jsonLatLng) {
 		return dao.hotListPaging(jsonLatLng);
+	}
+
+	@Override
+	public List<PriceDTO> priceSelectService(BuildDTO dto) {
+		return dao.priceSelect(dto);
 	}
 }
