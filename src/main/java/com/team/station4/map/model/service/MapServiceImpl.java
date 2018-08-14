@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.model.dao.MapDAO;
 import com.team.station4.map.vo.PagingVo;
+import com.team.station4.room.model.RequestDTO;
 
 @Service
 public class MapServiceImpl implements MapService {
@@ -245,4 +246,55 @@ public class MapServiceImpl implements MapService {
 	public List<BuildDTO> hotListServicePaging(Map<String, Object> jsonLatLng) {
 		return dao.hotListPaging(jsonLatLng);
 	}
+
+	@Override
+	public List<BuildDTO> selectDeleteListService(Map hm) {
+		return dao.selectDeleteList(hm);
+	}
+
+	@Override
+	public void deleteAddinfoService(BuildDTO buildDTO) {
+		dao.deleteAddinfo(buildDTO);
+	}
+
+	@Override
+	public void deletePriceService(BuildDTO buildDTO) {
+		dao.deletePrice(buildDTO);
+	}
+
+	@Override
+	public void deleteRequestService(BuildDTO buildDTO) {
+		dao.deleteRequest(buildDTO);
+	}
+
+	@Override
+	public void deleteReservationService(BuildDTO buildDTO) {
+		dao.deleteReservation(buildDTO);
+	}
+
+	@Override
+	public void deleteBuildingService(Map hm) {
+		dao.deleteBuilding(hm);
+	}
+
+	@Override
+	public void deleteStaffService(Map hm) {
+		dao.deleteStaff(hm);
+	}
+
+	@Override
+	public List<BuildDTO> selectBuildRequestService(int estate_no) {
+		return dao.selectBuildRequest(estate_no);
+	}
+
+	@Override
+	public Map<String, Object> selectRequestService(Map rMap) {
+		return dao.selectRequest(rMap);
+	}
+
+	@Override
+	public void deleteRequestDoneCallService(int request_no) {
+		dao.deleteRequestDoneCall(request_no);
+	}
+	
 }

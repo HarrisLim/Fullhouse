@@ -1,5 +1,7 @@
 package com.team.station4.staff.model.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,5 +26,12 @@ public class StaffDAOImpl implements StaffDAO {
 		int sem = sqlSession.selectOne(ns + ".semCheck", email);
 		return sem;
 	}
-
+	@Override
+	public List<StaffDTO> estateSelect(int estate_no) {
+		return sqlSession.selectList(ns+".mySelect", estate_no);
+	}
+	@Override
+	public void verifyUpdate(int st_no) {
+		sqlSession.update(ns+".myUpdateVerify", st_no);
+	}
 }

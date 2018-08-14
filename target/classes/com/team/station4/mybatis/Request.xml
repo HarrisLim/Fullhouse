@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 	<mapper namespace="com.team.station4.request"> <!-- DTO아직 안잡아줬습니다 !- 2018.08.10 정수  -->
-	
+
 	<resultMap type="Request" id="Request">
 		<result property="request_no" column="REQUEST_NO" />
 		<result property="req_phone" column="REQ_PHONE" />
@@ -11,6 +11,15 @@
 		<result property="req_rdate" column="REQ_RDATE" />
 		<result property="build_no" column="BUILD_NO" />
 	</resultMap>
+	<delete id="myDelete" parameterType="int">
+		delete from REQUEST where build_no = #{build_no}
+	</delete>
+	<delete id="myDeleteDoneCall" parameterType="int">
+		delete from REQUEST where request_no = #{request_no}
+	</delete>
+	<select id="selectRequest" parameterType="Map" resultType="HashMap">
+		select * from request r join building b on b.build_no = r.build_no where estate_no = #{estate_no} and r.build_no=#{build_no}
+	</select>
 	</mapper>
 
 	

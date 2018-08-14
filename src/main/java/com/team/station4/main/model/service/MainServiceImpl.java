@@ -39,6 +39,6 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public MainDTO getUsersByID(String mem_email) {
 		// TODO Auto-generated method stub
-		return mainDao.securitygetUsersByID(mem_email);
+		return maindao.securitygetUsersByID(mem_email);
 	}
 }

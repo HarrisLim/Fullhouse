@@ -18,6 +18,7 @@
 		<result property="st_pw" column="ST_PW" />
 		<result property="st_joinpath" column="ST_JOINPATH" />
 		<result property="st_media" column="ST_MEDIA" />
+		<result property="verify" column="VERIFY" />
 		<result property="st_rdate" column="ST_RDATE" />
 		
 	</resultMap>
@@ -30,5 +31,11 @@
 		   insert into STAFF values(ST_NO_SEQ.nextval, #{estate_no}, #{st_pic}, #{st_name}, #{st_position}, 
 		   #{st_qual}, #{st_phone}, #{st_homephone}, #{st_email}, #{st_pw}, #{st_joinpath}, '몰라', SYSDATE)
 		</insert>
+		<select id="mySelect" parameterType="int" resultType="Staff">
+			select * from STAFF where ESTATE_NO=#{estate_no}
+		</select>
+		<update id="myUpdateVerify" parameterType="int">
+			update STAFF set VERIFY = 1 where ST_NO=#{st_no}
+		</update>
 		
 	</mapper>

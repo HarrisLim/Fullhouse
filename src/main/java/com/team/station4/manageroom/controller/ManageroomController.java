@@ -1,5 +1,6 @@
 package com.team.station4.manageroom.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -22,6 +23,9 @@ import com.team.station4.manageroom.service.ManageroomService;
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.model.service.MapService;
 import com.team.station4.map.vo.PagingVo;
+import com.team.station4.room.model.RequestDTO;
+import com.team.station4.staff.model.StaffDTO;
+import com.team.station4.staff.model.service.StaffService;
 import com.team.station4.uploadroom.model.PriceDTO;
 import com.team.station4.uploadroom.model.service.UploadroomService;
 
@@ -31,14 +35,18 @@ public class ManageroomController {
 	private ManageroomService mrService;
 	@Autowired
 	private MapService mService;
+	@Autowired
+	private StaffService sfService;
 	
 	private BuildDTO buildDTO = new BuildDTO();
 	HashMap<BuildDTO, List<PriceDTO>> mapList = new HashMap<BuildDTO, List<PriceDTO>>();
-	Set<BuildDTO> set = new HashSet<>();
+	Set<BuildDTO> set = new HashSet<BuildDTO>();
 	List<BuildDTO> buildList;
 	
 	@RequestMapping(value="house/manageroom.do", method=RequestMethod.GET)
 	public ModelAndView manageroom(PagingVo pagingVo) {
+		
+		// 매물관리
 		ModelAndView mv = new ModelAndView();
 
 		Map<String, Object> hm = new HashMap<String, Object>();
@@ -65,8 +73,13 @@ public class ManageroomController {
 		int count = mService.countBuildService(hm); // 이거 동적으로 가져오게 하자. 
 		pagingVo.setTotal(count);
 		
-//		System.out.println("mapList.size() : "+mapList.size());
-//		System.out.println("buildList.size() : "+buildList.size());
+		
+		// 직원관리 
+		List<StaffDTO> staffList = sfService.estateSelectService(estateNo); // 아직은 estateNo은 임시로. 세션받으면 그 때 처리하자.
+		for(StaffDTO s: staffList) s.setSt_name(s.getSt_name().substring(2)); // 이름 앞에 있는 프로토콜 제거
+		
+		mv.addObject("requestList", getBuildRequestList(estateNo));		
+		mv.addObject("staffList", staffList);
 		mv.addObject("buildList", buildList);
 		mv.addObject("count", count);
 		mv.addObject("mapList", mapList);
@@ -89,6 +102,8 @@ public class ManageroomController {
 		System.out.println("build_no헤: "+ build_no);
 		mrService.mrDeleteReservationService(build_no);
 		mrService.mrDeletePriceService(build_no);
+		mrService.mrDeleteRequestService(build_no);
+		mrService.mrDeleteAddinfoService(build_no);
 		mrService.mrDeleteBuildService(build_no);
 		return 1;
 	}
@@ -163,6 +178,60 @@ public class ManageroomController {
 		return mv;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="house/updateverify.do", method=RequestMethod.POST)
+	public ModelAndView updateVerify(@RequestParam("st_no") int st_no) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("jsonView");
+		sfService.verifyUpdateService(st_no);
+		int estateNo = 1;
+		List<StaffDTO> staffList = sfService.estateSelectService(estateNo); // 아직은 estateNo은 임시로. 세션받으면 그 때 처리하자.
+		for(StaffDTO s: staffList) s.setSt_name(s.getSt_name().substring(2)); // 이름 앞에 있는 프로토콜 제거
+		mv.addObject("staffList", staffList);
+		return mv;
+	}
+
+	@ResponseBody
+	@RequestMapping(value="house/deletestaff.do", method=RequestMethod.POST)
+	public int deleteStaff(@RequestBody Map<String, Object> map) {
+		List<BuildDTO> buildDeleteList = mService.selectDeleteListService(map);
+		for(int i=0; i<buildDeleteList.size(); i++) {
+			mService.deleteAddinfoService(buildDeleteList.get(i));
+			mService.deletePriceService(buildDeleteList.get(i));
+			mService.deleteRequestService(buildDeleteList.get(i));
+			mService.deleteReservationService(buildDeleteList.get(i));
+		}
+		mService.deleteBuildingService(map);
+		mService.deleteStaffService(map);
+		return 1;
+	}
+
+	@ResponseBody
+	@RequestMapping(value="house/donecall.do", method=RequestMethod.POST)
+	public ModelAndView doneCall(@RequestParam("request_no") int request_no) {
+		ModelAndView mv = new ModelAndView();
+		mService.deleteRequestDoneCallService(request_no);
+		int estateNo = 1;
+		
+
+		mv.setViewName("jsonView");
+		mv.addObject("requestList", getBuildRequestList(estateNo));
+		
+		return mv;
+	}
 	
+	
+	List<Map<String, Object>> getBuildRequestList(int estate_no){
+		List<BuildDTO> buildRequestList = mService.selectBuildRequestService(estate_no); // 아직은 estateNo은 임시로. 세션받으면 그 때 처리하자.
+		List<Map<String, Object>> requestList = new ArrayList<Map<String, Object>>();
+		for(int i=0; i<buildRequestList.size(); i++) {
+			Map<String, Object> rMap = new HashMap<String, Object>();
+			rMap.put("estate_no", estate_no);
+			rMap.put("build_no", buildRequestList.get(i).getBuild_no());
+			if(mService.selectRequestService(rMap)!=null)
+				requestList.add(mService.selectRequestService(rMap));
+		}
+		return requestList;
+	}
 }
 

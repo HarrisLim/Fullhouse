@@ -117,6 +117,32 @@
 				</when>
 			</choose>
 		</select>
+		<select id="selectDeleteList" parameterType="Map" resultType="Build">
+			select BUILD_NO from BUILDING where ST_NO=#{st_no} and ESTATE_NO=#{estate_no}
+		</select>
+		<delete id="deleteAddinfo" parameterType="Build">
+			delete from ADDINFO where build_no=#{build_no}
+		</delete>
+		<delete id="deletePrice" parameterType="Build">
+			delete from PRICE where build_no=#{build_no}
+		</delete>
+		<delete id="deleteRequest" parameterType="Build">
+			delete from REQUEST where build_no=#{build_no}
+		</delete>
+		<delete id="deleteReservation" parameterType="Build">
+			delete from RESERVATION where build_no=#{build_no}
+		</delete>
+		<delete id="deleteBuilding" parameterType="Map">
+			delete from BUILDING where ST_NO=#{st_no} and ESTATE_NO=${estate_no}
+		</delete>
+		<delete id="deleteStaff" parameterType="Map">
+			delete from STAFF where ST_NO=#{st_no} and ESTATE_NO=${estate_no}
+		</delete>
+		<select id="selectBuildRequest" parameterType="int" resultType="build">
+			select * from building where estate_no = #{estate_no}
+		</select>
+		
+		
 		
 		<select id="mySelect" parameterType="Map" resultType="Build"> 
 

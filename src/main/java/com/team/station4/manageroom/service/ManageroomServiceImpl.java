@@ -54,6 +54,16 @@ public class ManageroomServiceImpl implements ManageroomService {
 	}
 
 	@Override
+	public void mrDeleteRequestService(int build_no) {
+		mrDAO.mrDeleteRequest(build_no);
+	}
+	
+	@Override
+	public void mrDeleteAddinfoService(int build_no) {
+		mrDAO.mrDeleteAddinfo(build_no);
+	}
+
+	@Override
 	public void mrDeleteBuildService(int build_no) {
 		mrDAO.mrDeleteBuild(build_no);
 	}
@@ -72,5 +82,6 @@ public class ManageroomServiceImpl implements ManageroomService {
 	public List<BuildDTO> mrSearchBuildMemoSelectService(Map<String, Object> hm) {
 		return mrDAO.mrSearchBuildMemoSelect(hm);
 	}
+	
 	
 }

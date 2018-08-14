@@ -17,6 +17,7 @@
 	<dependencies>
 	
 	<!-- Spring Security -->
+
 	<dependency>
 	    <groupId>org.springframework.security</groupId>
 	    <artifactId>spring-security-web</artifactId>
@@ -63,7 +64,6 @@
 		<artifactId>commons-fileupload</artifactId>
 		<version>1.2.1</version> 
 	</dependency>
-	
 	<!-- (6) commons-io -->
 	<dependency>
 	    <groupId>commons-io</groupId>

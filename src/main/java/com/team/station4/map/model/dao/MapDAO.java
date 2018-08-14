@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.vo.PagingVo;
+import com.team.station4.room.model.RequestDTO;
 
 public interface MapDAO {
 
@@ -19,6 +20,16 @@ public interface MapDAO {
 	
 	/* jsl */
 	int countBuild(Map hm);
+	List<BuildDTO> selectDeleteList(Map hm);
+	void deleteAddinfo(BuildDTO buildDTO);
+	void deletePrice(BuildDTO buildDTO);
+	void deleteRequest(BuildDTO buildDTO);
+	void deleteReservation(BuildDTO buildDTO);
+	void deleteBuilding(Map hm);
+	void deleteStaff(Map hm);
+	List<BuildDTO> selectBuildRequest(int estate_no);
+	Map<String, Object> selectRequest(Map rMap);
+	void deleteRequestDoneCall(int request_no);
 	
 	List<BuildDTO>clusterList(Map hm);
 	void InsertAddInfo(HashMap addInfo);

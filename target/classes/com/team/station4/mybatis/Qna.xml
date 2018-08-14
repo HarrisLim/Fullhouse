@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="com.team.station4.qna">
+	
+	<resultMap type="Qna" id="Qna">
+		<result property="qna_no" column="QNA_NO" />
+		<result property="subject" column="SUBJECT" />
+		<result property="content" column="CONTENT" />
+		<result property="qna_rdate" column="QNA_RDATE" />
+		<result property="reply" column="REPLY" />
+		<result property="questioner" column="QUESTIONER" />
+	</resultMap>
+	<insert id="myInsert" parameterType="String">
+	</insert>
+	<select id="selectQna" parameterType="String" resultType="Qna">
+		select * from QNA where questioner = #{email}
+	</select>
+		
+	</mapper>
+
+	

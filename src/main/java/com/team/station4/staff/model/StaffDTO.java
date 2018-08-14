@@ -16,13 +16,14 @@ public class StaffDTO {
 	private String st_pw;
 	private String st_joinpath;
 	private String st_media;
+	private int verify;
 	private Date st_rdate;
 	
 	public StaffDTO() {}
 
 	public StaffDTO(int st_no, int estate_no, String st_pic, String st_name, String st_position, String st_qual,
 			String st_phone, String st_homephone, String st_email, String st_pw, String st_joinpath, String st_media,
-			Date st_rdate) {
+			int verify, Date st_rdate) {
 		super();
 		this.st_no = st_no;
 		this.estate_no = estate_no;
@@ -36,6 +37,7 @@ public class StaffDTO {
 		this.st_pw = st_pw;
 		this.st_joinpath = st_joinpath;
 		this.st_media = st_media;
+		this.verify = verify;
 		this.st_rdate = st_rdate;
 	}
 
@@ -133,6 +135,14 @@ public class StaffDTO {
 
 	public void setSt_media(String st_media) {
 		this.st_media = st_media;
+	}
+	
+	public int getVerify() {
+		return verify;
+	}
+
+	public void setVerify(int verify) {
+		this.verify = verify;
 	}
 
 	public Date getSt_rdate() {
