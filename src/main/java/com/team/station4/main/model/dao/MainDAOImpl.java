@@ -55,5 +55,16 @@ public class MainDAOImpl implements MainDAO {
 		System.out.println(" 값 : " + security);
 		return security;
 	}
+	@Override
+	public int chkPw(MainDTO dto) {
+		// TODO Auto-generated method stub
+		int count = sqlSession.selectOne(ns + ".chkPw" , dto);
+		return count;
+	}
+	@Override
+	public void changeInfo(MainDTO dto) {
+		// TODO Auto-generated method stub
+		sqlSession.update(ns + ".changeInfo", dto);
+	}
 	
 }

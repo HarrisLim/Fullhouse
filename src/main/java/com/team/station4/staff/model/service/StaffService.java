@@ -11,4 +11,5 @@ public interface StaffService {
 	List<StaffDTO> estateSelectService(int estate_no);
 	void verifyUpdateService(int st_no);
 	StaffDTO getUsersByID(String st_email);
+	void pwChangeS(StaffDTO change2);
 }

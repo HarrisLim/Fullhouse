@@ -15,20 +15,10 @@
 	    <link type="text/css" href="../assets/css/theme.css" rel="stylesheet">
 	    <!-- Demo CSS - No need to use these in your project -->
 	    <link type="text/css" href="../assets/css/demo.css" rel="stylesheet">
-	    <link href="../kanu/slidephotos/js-image-slider.css" rel="stylesheet" type="text/css" />
-	    <script src="../kanu/slidephotos/js-image-slider.js" type="text/javascript"></script>
+	    <!-- <link href="../kanu/slidephotos/js-image-slider.css" rel="stylesheet" type="text/css" />
+	    <script src="../kanu/slidephotos/js-image-slider.js" type="text/javascript"></script> -->
     
-    <script>
-		$(document).ready(function(){
-			$("#modifyBtn").click(function() {
-				$("#certiPhone").css("display","");
-				$("#certiPhoneBtn").css("display","");
-				$("#modifyBtn").text("인증"); // 인증번튼 누르면 실제로 핸드폰번호로 인증메시지 보내는 거 할건데, "인증"으로 바꾸는 부분에서 class추가해서 class에 기능 추가해서 위의 "변경"버튼과 구분하자.
-				$(".phoneNum").removeAttr("readonly");
-				$(".phoneNum").css("background","white");
-			});
-		});
-	</script>
+    <script></script>
     
     <style>
 		th{
@@ -54,9 +44,11 @@
 		<div class="container">
 			<div class="justify-content-center">
 				<div class="pt-lg-md">
+					<form:form id="myinfo" action="./myinfoUp.do" method="POST">
 					<h3 class="h1 mb-5">내 계정</h3>
 					<hr size="5" color="black">
 					<table>
+						
 						<tbody>
 							<tr>
 								<th>프로필</th>
@@ -64,36 +56,40 @@
 							</tr>
 							<tr>
 								<th>성명</th>
-								<td><input value="${sessionScope.mem.mem_name.substring(2)}" style="width:100%"></td>
+								<td><input id="myName" name="mem_name" value="${sessionScope.mem.mem_name.substring(2)}" style="background:rgba(200,200,240,0.1); width:100%" readonly></td>
 							</tr>
 							<tr>
 								<th>이메일</th>
-								<td><input value="demo" style="background:rgba(200,200,240,0.1); width:100%" readonly></td>
+								<td><input id="myEmail" name="mem_email" value="${sessionScope.mem.mem_email}" style="background:rgba(200,200,240,0.1); width:100%" readonly></td>
 							</tr>
 							<tr>
 								<th rowspan="2">휴대폰번호</th>
-								<td><input class="phoneNum" value="010" readonly>&nbsp;-&nbsp;<input class="phoneNum" value="3333" readonly>&nbsp;-&nbsp;<input class="phoneNum" value="2222" readonly></td>
-								<td><button id="modifyBtn" class="btn btn-outline-primary">변경</button></td>
+								<td><input class="phoneNum" id="p1" value="" readonly>&nbsp;-&nbsp;<input class="phoneNum" id="p2" value="" readonly>&nbsp;-&nbsp;<input class="phoneNum" id="p3" value="" readonly></td>
+								<!-- <td><button id="modifyBtn" class="btn btn-outline-primary">변경</button></td> -->
+								<input id="mPhone" name="mem_phone" type="hidden" value="${sessionScope.mem.mem_phone}"/>
 							</tr>
 							<tr>
 								<td id="certiPhone" style="display:none"><input placeholder="인증번호 입력해주세요" style="width:100%"></td>
 								<td id="certiPhoneBtn" style="display:none"><button class="btn btn-outline-primary">인증번호 확인</button></td>
-							</tr>
+							</tr> 
 							<tr>
 								<th rowspan="3">비밀번호 변경</th>
-								<td><input placeholder="현재 비밀번호" style="width:100%"></td> 
+								<td><input id="nowPw" name="nowPw" placeholder="현재 비밀번호" style="width:100%" value=""></td> 
 							</tr>
 							<tr>
-								<td><input placeholder="변경될 비밀번호" style="width:100%"></td>
+								<td><input id="changePw1" name="mem_pw" placeholder="변경될 비밀번호" style="width:100%" value=""></td>
 							</tr>
 							<tr>
-								<td><input placeholder="변경될 비밀번호 확인" style="width:100%"></td>
+								<td><input id="changePw2" name="changePw2" placeholder="변경될 비밀번호 확인" style="width:100%" value=""></td>
 							</tr>
 						</tbody>
 					</table>
 					<div align="center" style="margin-top:20px;margin-bottom:50px">
-						<input class="btn btn-dark" value="취소">&nbsp;&nbsp;<input class="btn btn-primary" value="확인">
+						<button type="button" id="myinfoB2" class="btn btn-dark" >취소</button>
+						&nbsp;&nbsp;
+						<button type="button" id="myinfoB1" class="btn btn-primary">확인</button>
 					</div>
+					</form:form>
 				</div>
 			</div>
 		</div>

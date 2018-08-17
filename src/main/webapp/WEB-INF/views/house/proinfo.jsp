@@ -21,7 +21,7 @@
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	
 	<script>
-		$(document).ready(function(){
+/* 		$(document).ready(function(){
 			$("#modifyBtn").click(function() {
 				$("#certiPhone").css("display","");
 				$("#certiPhoneBtn").css("display","");
@@ -29,7 +29,15 @@
 				$(".phoneNum").removeAttr("readonly");
 				$(".phoneNum").css("background","white");
 			});
-		});
+		}); */
+		/* bd 에서 스태프 정보 가져오기
+		$(function(){
+		 $.ajax({
+			 type:'POST',
+			 url:
+		 })
+			
+		} */
 		
 		// 다음 주소찾기 
 		function execDaumPostcode() {
@@ -73,6 +81,96 @@
 	            }
 	        }).open();
 	    }
+		
+		$(function(){
+			//공인중개사 값 채우기
+			
+			
+			// 폰 번호 나눠 넣기 ~
+			var str = $('#stPhone').val();
+			var sharePh = str.split("-", 3);
+			
+			$("#p1").val(sharePh[0]);
+			$("#p2").val(sharePh[1]);
+			$("#p3").val(sharePh[2]);
+			
+			var str2 = $('#stHomePhone').val();
+			var sharePh2 = str2.split("-", 3);
+			
+			$("#op1").val(sharePh[0]);
+			$("#op2").val(sharePh[1]);
+			$("#op3").val(sharePh[2]);
+			
+			var str3 = $('#lrno').val();
+			var sharePh3 = str3.split("-");
+			
+			$("#lrno1").val(sharePh[0]);
+			$("#lrno2").val(sharePh[1]);
+			$("#lrno3").val(sharePh[2]);
+			
+			var str4 = $('#estateaddr').val();
+			var sharePh4 = str4.split("-");
+			
+			$("#postcode").val(sharePh[0]);
+			$("#address1").val(sharePh[1]);
+			$("#address2").val(sharePh[2]);
+			
+			
+			
+			//프로 내 계정 정보 변경 전 정보확인 스크립트
+			$('#proinfoB1').click(function(){
+				alert(" 내계정 바꿔보까~?")
+				
+				if( $('#nowPw').val() == "" ){
+					alert ("현재 비밀번호가 비어있습니다! 확인해주세요. ")
+					$('#nowPw').focus();
+					return;
+				}
+				if( $('#changePw1').val() == "" || $('#changePw12').val() == "" ){
+					alert ("변경할 비밀번호가 비어 있습니다! 확인해주세요.")
+					$('#changePw1').focus();
+					return;
+				}
+				
+				var value2 = $('#postcode').val();
+				value2 += "-";
+				value2 += $('#estateaddr1').val();
+				value2 += "-";
+				value2 += $('#estateaddr2').val();
+				$('#estateaddr').val(value2);
+				
+				var arr = {};
+				arr['st_email'] = $('#st_Email').val();
+				arr['st_pw'] = $('#nowPw').val();
+				arr['estateaddr'] = $('#estateaddr').val();
+				arr['estate_no'] = $('#estate_no').val();
+				var array = JSON.stringify(arr);
+				$.ajax({
+					contentType:'application/json', 
+					type:'POST',
+					dataType:'json',
+					url:'chkproinfo.do',
+					data: array,
+					success : function(responseData){
+						alert ( "responseData.count : " + responseData.count )
+						if( responseData.count == 0) {
+							alert ( '현재 비밀번호가 틀립니다.' )
+							return;
+						}else{
+							if( $('#changePw1').val() != $('#changePw2').val() ){
+								alert( '변경할 비밀번호가 동일 하지 않습니다.' )
+								$('#changePw1').focus();
+								return;
+							}else{
+								alert( '??' )
+							}
+						}
+					}
+				})
+				/* proinfo.action="changeproinfo.do";
+				$("#proinfo").submit(); */
+			});
+		});
 	</script>
 	<style>
 		th{
@@ -102,97 +200,111 @@
 			</div>
 		</div>
 	</section>
-    <section class="" name="buildinginfo"> 
-		<div class="container">
-			<div class="justify-content-center">
-				<div class="pt-lg-md">
-					<h2 class="h3 mb-4">공인중개소 정보</h2>
-					<hr size="5" color="black">
-					<table>
-						<tbody>
-							<tr>
-								<th>중개사무소명</th>
-								<td colspan="2"><input value="스테이션4중개사무소" style="background:rgba(200,200,240,0.1); width:100%" readonly></td>
-							</tr>
-							<tr>
-								<th>중개등록번호</th>
-								<td colspan="2"><input value="123-456-123456789" style="background:rgba(200,200,240,0.1); width:100%" readonly></td>
-							</tr>
-							<tr>
-								<th>사업자 등록번호</th>
-								<td colspan="2"><input class="phoneNum" value="1234" readonly>&nbsp;-&nbsp;<input class="phoneNum" value="5678" readonly>&nbsp;-&nbsp;<input class="phoneNum" value="123245567" readonly></td>
-							</tr>
-							<tr>
-								<th rowspan="2">중개사무소 주소</th>
-								<td><input type="text" id="postcode" value="48060"></td>
-								<td><input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"></td>
-							</tr>
-							<tr>
-								<td><input type="text" id="address" style="width:100%" value="부산 해운대구 APEC로 30 (우동, 벡스코제2전시장)"></td>
-								<td><input type="text" id="address2" style="width:100%" value="바다가고 싶다"> </td> 
-							</tr>
-							<tr>
-								<th>공인중개사 대표자명</th>
-								<td colspan="2"><input style="background:rgba(200,200,240,0.1); width:100%" value="임정수" readonly></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</section>
-	<section class="" name="staffinfo"> 
-		<div class="container">
-			<div class="justify-content-center">
-				<div class="pt-lg-md">
-					<h2 class="h3 mb-4">직원 정보</h2>
-					<hr size="5" color="black">
-					<table>
-						<tbody>
-							<tr>
-								<th>프로필</th>
-								<td>사진 변경하는 거 넣자.</td>
-							</tr>
-							<tr>
-								<th>성명</th>
-								<td><input value="text" style="width:100%"></td>
-							</tr>
-							<tr>
-								<th>이메일</th>
-								<td><input value="text@.text.com" style="background:rgba(200,200,240,0.1); width:100%" readonly></td>
-							</tr>
-							<tr>
-								<th rowspan="2">휴대폰번호</th>
-								<td><input class="phoneNum" value="010" readonly>&nbsp;-&nbsp;<input class="phoneNum" value="3333" readonly>&nbsp;-&nbsp;<input class="phoneNum" value="2222" readonly></td>
-								<td><button id="modifyBtn" class="btn btn-outline-primary">변경</button></td>
-							</tr>
-							<tr>
-								<td id="certiPhone" style="display:none"><input placeholder="인증번호 입력해주세요" style="width:100%"></td>
-								<td id="certiPhoneBtn" style="display:none"><button class="btn btn-outline-primary">인증번호 확인</button></td>
-							</tr>
-							<tr>
-								<th>대표번호</th>
-								<td><input value="02">&nbsp;-&nbsp;<input value="1234">&nbsp;-&nbsp;<input value="1234"></td>
-							</tr>
-							<tr>
-								<th rowspan="3">비밀번호 변경</th>
-								<td><input placeholder="현재 비밀번호" style="width:100%"></td> 
-							</tr>
-							<tr>
-								<td><input placeholder="변경될 비밀번호" style="width:100%"></td>
-							</tr>
-							<tr>
-								<td><input placeholder="변경될 비밀번호 확인" style="width:100%"></td>
-							</tr>
-						</tbody>
-					</table>
-					<div align="center" style="margin-top:20px;margin-bottom:50px">
-						<input class="btn btn-dark" value="취소">&nbsp;&nbsp;<input class="btn btn-primary" value="확인">
+	<form id="proinfo" method="POST">
+	    <section class="" name="buildinginfo"> 
+			<div class="container">
+				<div class="justify-content-center">
+					<div class="pt-lg-md">
+						<h2 class="h3 mb-4">공인중개소 정보</h2>
+						<hr size="5" color="black">
+						<table>
+							<tbody>
+								<tr>
+									<th>중개사무소명</th>
+									<td colspan="2"><input id="estate_name" name="estate_name" value="${estate.estate_name}" style="background:rgba(200,200,240,0.1); width:100%" readonly></td>
+								</tr>
+								<tr>
+									<th>중개등록번호</th>
+									<td colspan="2"><input id="erno" name="erno" value="${estate.erno}" style="background:rgba(200,200,240,0.1); width:100%" readonly></td>
+								</tr>
+								<tr>
+									<th>사업자 등록번호</th>
+									<td colspan="2"><input id="lrno1" name="lrno1" class="phoneNum" value="" readonly>
+									&nbsp;-&nbsp;<input id="lrno2" name="lrno2" class="phoneNum" value="" readonly>
+									&nbsp;-&nbsp;<input id="lrno3" name="lrno3" class="phoneNum" value="" readonly>
+									<input type="text" id="lrno" name="lrno" class="phoneNum" value="${estate.lrno}" readonly></td>
+								</tr>
+								<tr>
+									<th rowspan="2">중개사무소 주소</th>
+									<td><input type="text" id="postcode" value="48060"></td>
+									<td><input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"></td>
+								</tr>
+								<tr>
+									<td><input type="text" id="address1" style="width:100%" value=""></td>
+									<td><input type="text" id="address2" style="width:100%" value=""> </td>
+									<td><input type="text" id="estateaddr"  name="estateaddr" style="width:100%" value="${estate.estateaddr}"> </td> 
+								</tr>
+								<tr>
+									<th>공인중개사 대표자명</th>
+									<td colspan="2"><input id="owner_name" name="owner_name" style="background:rgba(200,200,240,0.1); width:100%" value="${estate.owner_name}" readonly></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+		<section class="" name="staffinfo"> 
+			<div class="container">
+				<div class="justify-content-center">
+					<div class="pt-lg-md">
+						<h2 class="h3 mb-4">직원 정보</h2>
+						<hr size="5" color="black">
+						<table>
+							<tbody>
+								<tr>
+									<th>프로필</th>
+									<td>사진 변경하는 거 넣자.</td>
+									<td><input type="text" id="Estate_no" name="Estate_no" value="${sessionScope.st.estate_no}" style="background:rgba(200,200,240,0.1); width:100%" readonly/></td>
+								</tr>
+								<tr>
+									<th>성명</th>
+									<td><input id="st_name" name="st_name" value="${sessionScope.st.st_name.substring(2)}" style="background:rgba(200,200,240,0.1); width:100%" readonly></td>
+								</tr>
+								<tr>
+									<th>이메일</th>
+									<td><input id="st_email" name="st_email" value="${sessionScope.st.st_email}" style="background:rgba(200,200,240,0.1); width:100%" readonly></td>
+								</tr>
+								<tr>
+									<th rowspan="2">휴대폰번호</th>
+									<td><input id="p1" class="phoneNum" value="" readonly>
+									&nbsp;-&nbsp;<input id="p2" class="phoneNum" value="" readonly>
+									&nbsp;-&nbsp;<input id="p3" class="phoneNum" value="" readonly>
+									<input type="text" id="stPhone" class="phoneNum" value="${sessionScope.st.st_phone}" readonly></td>
+									<!-- <td><button id="modifyBtn" class="btn btn-outline-primary">변경</button></td> -->
+								</tr>
+								<tr>
+									<td id="certiPhone" style="display:none"><input placeholder="인증번호 입력해주세요" style="width:100%"></td>
+									<td id="certiPhoneBtn" style="display:none"><button class="btn btn-outline-primary">인증번호 확인</button></td>
+								</tr>
+								<tr>
+									<th>대표번호</th>
+									<td><input id="op1" value="">
+									&nbsp;-&nbsp;<input id="op2" value="">
+									&nbsp;-&nbsp;<input id="op3" value="">
+									<input type="text" id="stHomePhone" class="phoneNum" value="${sessionScope.st.st_homephone}" readonly></td>
+								</tr>
+								<tr>
+									<th rowspan="3">비밀번호 변경</th>
+									<td><input id="nowPw" name="nowPw" placeholder="현재 비밀번호" style="width:100%"></td> 
+								</tr>
+								<tr>
+									<td><input id="changePw1" name="st_pw" placeholder="변경될 비밀번호" style="width:100%"></td>
+								</tr>
+								<tr>
+									<td><input id="changePw2" name="changePw2" placeholder="변경될 비밀번호 확인" style="width:100%"></td>
+								</tr>
+							</tbody>
+						</table>
+						<div align="center" style="margin-top:20px;margin-bottom:50px">
+							<input type="button" id="proinfoB2" class="btn btn-dark" value="취소">&nbsp;&nbsp;
+							<input type="button" id="proinfoB1" class="btn btn-primary" value="확인">
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</form>
     </main>
     <%@ include file="footer.jsp" %>
     <!-- Core -->

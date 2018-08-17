@@ -31,4 +31,14 @@ public class EstateServiceImpl implements EstateService {
 		// TODO Auto-generated method stub
 		return estatedao.lrselect(dto);
 	}
+	@Override
+	public EstateDTO proOutputS(int eno) {
+		// TODO Auto-generated method stub
+		return estatedao.proOutput(eno);
+	}
+	@Override
+	public void addrChangeS(EstateDTO change1) {
+		// TODO Auto-generated method stub
+		estatedao.addrChange(change1);
+	}
 }

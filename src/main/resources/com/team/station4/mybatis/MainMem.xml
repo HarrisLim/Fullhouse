@@ -43,4 +43,13 @@
 			select * from MEMBER where mem_email=#{mem_email}			
 		</select>
 		
+		<select id="chkPw" resultType="int" parameterType="Member">
+			select Count(*) from MEMBER where mem_email=#{mem_email} and mem_pw=#{mem_pw} 
+		</select>
+		
+		<update id="changeInfo" parameterType="Member">
+			update MEMBER set mem_pw=#{mem_pw} where MEM_EMAIL=#{mem_email}
+		</update>
 	</mapper>
+	
+

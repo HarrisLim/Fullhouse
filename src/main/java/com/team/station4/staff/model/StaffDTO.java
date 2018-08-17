@@ -145,14 +145,6 @@ public class StaffDTO {
 		this.verify = verify;
 	}
 
-	public int getVerify() {
-		return verify;
-	}
-
-	public void setVerify(int verify) {
-		this.verify = verify;
-	}
-
 	public Date getSt_rdate() {
 		return st_rdate;
 	}

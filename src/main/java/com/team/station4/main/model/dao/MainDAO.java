@@ -10,5 +10,6 @@ public interface MainDAO {
 	int log2Check(MainDTO dto);
 	String memName(MainDTO dto);
 	MainDTO mainSecurity(String mem_email);
-
+	int chkPw(MainDTO dto);
+	void changeInfo(MainDTO dto);
 }

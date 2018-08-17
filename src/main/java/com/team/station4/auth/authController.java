@@ -39,7 +39,7 @@ public class authController {
 		String ab = userDetail.getUsername();
 		
 		System.out.println("ab : " + ab);
-		MainDTO mem = mainService.getUsersByID(ab);
+		MainDTO mem = mainService.getUsersByID(ab); 
 		if( mem != null ) {
 			session.setAttribute("mem", mem);
 			model.addAttribute("mem", mem);
@@ -55,5 +55,28 @@ public class authController {
 		mv.setViewName("house/main");
 		return mv;
 	}
+	@RequestMapping(value = "/house/fails.do", method = RequestMethod.GET)
+	public ModelAndView fails() {
+		System.out.println("로그인 실패 fails");
+		ModelAndView mv = new ModelAndView();
+		int flag = 3;
+		mv.addObject("flag" , flag );
+		mv.setViewName("house/main");
+		return mv;
+		
+	}
+	@RequestMapping(value = "/house/fails2.do", method = RequestMethod.GET)
+	public ModelAndView fails2() {
+		ModelAndView mv = new ModelAndView();
+		System.out.println( "로그인이 필요한 서비스 입니다." );
+		int count = 2;
+		
+		mv.addObject("count", count);
+		mv.setViewName("house/main");
+		return mv;
+	}
+	
+	
+	
 }
 
