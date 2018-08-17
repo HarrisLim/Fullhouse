@@ -37,4 +37,16 @@ public class EstateDAOImpl implements EstateDAO {
 		EstateDTO erno = sqlSession.selectOne(ns+".esSelect2", dto);
 		return erno;
 	}
+	@Override
+	public EstateDTO proOutput(int eno) {
+		
+		EstateDTO dto = sqlSession.selectOne(ns+ ".proOutput", eno);
+		System.out.println("dto : "+ dto);
+		return dto;
+	}
+	@Override
+	public void addrChange(EstateDTO change1) {
+		// TODO Auto-generated method stub
+		sqlSession.update(ns + ".addrChange", change1);
+	}
 }

@@ -11,4 +11,5 @@ public interface StaffDAO {
 	List<StaffDTO> estateSelect(int estate_no);
 	void verifyUpdate(int st_no);
 	StaffDTO staffSecurity(String st_email);
+	void pwChange(StaffDTO change2);
 }

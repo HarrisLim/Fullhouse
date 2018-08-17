@@ -1,8 +1,6 @@
 package com.team.station4.main;
 
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,16 +21,42 @@ public class MainController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	// 메인 페이지 이동
 	@RequestMapping(value = "house/main.do", method = RequestMethod.GET)
 	public String index() {
+		
 		return "house/main";
 	}
-	
+	//내정보 페이지 이동
 	@RequestMapping(value = "house/myinfo.do", method = RequestMethod.GET)
 	public String myinfo() {
 		return "house/myinfo";
 	}
+	//내정보 업데이트전 중복 체크
+	@RequestMapping(value = "house/chkPw.do", method = RequestMethod.POST)
+	public ModelAndView chkPw(MainDTO dto) {
+		ModelAndView mv = new ModelAndView("jsonView");
+		int count = -1;
+		count = service.chkPwS(dto);
+		System.out.println("count : " + count);
+		
+		mv.addObject("count", count);
+		return mv;
+	}
+	// 내 정보 비번 변경 업데이트 
+	@RequestMapping(value = "house/myinfoUp.do", method = RequestMethod.POST)
+	public ModelAndView myinfoUp(MainDTO dto) {
+		ModelAndView mv = new ModelAndView();
+		service.changeInfoS(dto);
+		int count = 0;
+		count = service.chkPwS(dto);
+		
+		mv.addObject("count", count);
+		mv.setViewName("house/myinfo");
+		return mv;
+	}
 	
+	// 멤버 등록
 	@RequestMapping(value = "house/memInsert.do", method = RequestMethod.POST)
 	public String memInsert(MainDTO dto) {
 		service.memberInsertS(dto);
@@ -74,7 +98,7 @@ public class MainController {
 	public String logIn() {
 		return "house/main";
 	}
-	
+	// 로그인 이메일 중복 체크 
 	@RequestMapping(value = "house/emCheck.do", method = {RequestMethod.GET , RequestMethod.POST} )
 	public ModelAndView emCheck(MainDTO dto) {
 		

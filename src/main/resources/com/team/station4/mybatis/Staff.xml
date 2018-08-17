@@ -35,11 +35,17 @@
 		   insert into STAFF values(ST_NO_SEQ.nextval, #{estate_no}, #{st_pic}, '#2'||#{st_name}, #{st_position}, 
 		   #{st_qual}, #{st_phone}, #{st_homephone}, #{st_email}, #{st_pw}, #{st_joinpath}, 'null', 0, SYSDATE)
 		</insert>
+		
 		<select id="mySelect" parameterType="int" resultType="Staff">
 			select * from STAFF where ESTATE_NO=#{estate_no}
 		</select>
+		
 		<update id="myUpdateVerify" parameterType="int">
 			update STAFF set VERIFY = 1 where ST_NO=#{st_no}
+		</update>
+		
+		<update id="pwChange" parameterType="Staff">
+			update STAFF set ST_PW=#{st_pw} where ST_NO=#{st_no}
 		</update>
 		
 	</mapper>

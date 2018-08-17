@@ -38,8 +38,17 @@ public class MainServiceImpl implements MainService {
 	}
 	@Override
 	public MainDTO getUsersByID(String mem_email) {
-		System.out.println(" 이메일 : " + mem_email );
 		// TODO Auto-generated method stub
 		return maindao.mainSecurity(mem_email);
+	}
+	@Override
+	public int chkPwS(MainDTO dto) {
+		// TODO Auto-generated method stub
+		return maindao.chkPw(dto);
+	}
+	@Override
+	public void changeInfoS(MainDTO dto) {
+		// TODO Auto-generated method stub
+		maindao.changeInfo(dto);
 	}
 }

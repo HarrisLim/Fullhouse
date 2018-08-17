@@ -6,7 +6,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.team.station4.main.model.MainDTO;
 import com.team.station4.staff.model.StaffDTO;
 
 @Repository
@@ -41,5 +40,10 @@ public class StaffDAOImpl implements StaffDAO {
 		StaffDTO security = sqlSession.selectOne(ns + ".Security", st_email);
 		System.out.println(" 값 : " + security);
 		return security;
+	}
+	@Override
+	public void pwChange(StaffDTO change2) {
+		// TODO Auto-generated method stub
+		sqlSession.update(ns + ".pwChange", change2);
 	}
 }
