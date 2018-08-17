@@ -1,6 +1,7 @@
 package com.team.station4.map.model.service;
 
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,8 @@ public interface MapService {
 	List<BuildDTO> selectBuildRequestService(int estate_no);
 	Map<String, Object> selectRequestService(Map rMap);
 	void deleteRequestDoneCallService(int request_no);
+	List<BuildDTO> selectBuildAllService(Map<String, Object> hm);
+	int countBuildAllService();
 	
 	List<BuildDTO>clusterListService(Map map);
 	void InsertAddInfoService(HashMap addInfo);
@@ -51,4 +54,14 @@ public interface MapService {
 	List<BuildDTO> hotListServicePaging(Map<String, Object> jsonLatLng);
 	List<PriceDTO> priceSelectService(BuildDTO dto);
 	
+	/* admin 그래프 */
+		/* 매물현황 */
+	int selectBuildPieService(Map<String, Object> buildPieMap);
+	int selectBuildBarService(Map<String, Object> buildBarMap);
+	int selectBuildLineService(Map<String, Object> buildLineMap);
+		/* 매출현황 */
+	int selectBuildBarYearService(Map<String, Object> buildBarYearMap);
+	int selectBuildBarMonthService(Map<String, Object> buildBarMonthMap);
+	int selectBuildLineYearService(Map<String, Object> buildLineYearMap);
+	int selectBuildLineDayService(Map<String, Object> buildLineDayMap);
 }

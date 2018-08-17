@@ -11,13 +11,35 @@
 		<result property="qna_rdate" column="QNA_RDATE" />
 		<result property="reply" column="REPLY" />
 		<result property="questioner" column="QUESTIONER" />
+		<result property="done" column="DONE" />
 	</resultMap>
-	<insert id="myInsert" parameterType="String">
-	</insert>
+	<delete id="myDelete" parameterType="int">
+		delete from QNA where QNA_NO = #{qna_no}
+	</delete>
 	<select id="selectQna" parameterType="String" resultType="Qna">
 		select * from QNA where questioner = #{email}
 	</select>
-		
+	<insert id="insertQna" parameterType="Map">
+		insert into qna values(QNA_NO_SEQ.nextval, #{subject}, #{contentBody}, sysdate, '아직 답글이 없습니다.', #{email}, 0)
+	</insert>
+	<select id="selectQnaAll" parameterType="Map" resultType="Qna">
+		select * from QNA
+		<choose>
+			<when test="done == 0">
+				where done=0
+			</when>
+			<when test="done == 1">
+				where done=1
+			</when>
+		</choose>
+	</select>
+	<update id="updaterReply" parameterType="int">
+		update QNA set reply=#{reply}, done=1 where QNA_NO=#{qna_no}
+	</update>
+	
 	</mapper>
 
+
+
+		
 	

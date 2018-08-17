@@ -1,17 +1,45 @@
-/**
- * 
- */
 
 window.onload=function(){
+   			var pie = document.getElementById('pieChart').getContext('2d');
 		   	var bar = document.getElementById('barChart').getContext('2d');
-		   	var pie = document.getElementById('pieChart').getContext('2d');
 		   	var center = document.getElementById('centerChart').getContext('2d');
 		   	var gangwondo = document.getElementById('gangwondoChart').getContext('2d');
 		   	var chungcheongdo = document.getElementById('chungcheongdoChart').getContext('2d');
 		   	var jollado = document.getElementById('jolladoChart').getContext('2d');
 		   	var gyeongsangdo = document.getElementById('gyeongsangdoChart').getContext('2d');
 		   	var jejudo = document.getElementById('jejudoChart').getContext('2d');
-		   	
+
+		   	var pieChart = new Chart(pie, {
+		   		type: 'pie',
+				data: {
+					datasets: [{
+						data: [$("#buildPie1").val(), $("#buildPie2").val(), $("#buildPie3").val()],
+						backgroundColor: [
+							'red',
+							'skyblue',
+							'blue',
+						],
+						label: 'Dataset 1'
+					}],
+					labels: [
+						'전세',
+						'반전세',
+						'월세'
+					]
+				},
+				options: {
+					responsive: true,
+					legend: {
+			            labels: {
+		                	fontSize: 30
+			            }
+			        }, 
+			        tooltips: {
+			            titleFontSize: 30,
+			            bodyFontSize: 30
+			        }
+				}
+		   	});
 		   	var barChart = new Chart(bar, {
 				type: 'bar',
 				data: {
@@ -19,7 +47,7 @@ window.onload=function(){
 					datasets: [{
 						label: '등록 건수',
 						backgroundColor: 'skyblue',
-						data: [12, 19, 3, 5, 2, 3, 22],
+						data: [$("#buildPie1").val(), $("#buildPie2").val(), $("#buildPie3").val(), $("#buildPie4").val(), $("#buildPie5").val(), $("#buildPie6").val(), $("#buildPie7").val()],
 						fill: false,
 					}]
 				},
@@ -52,59 +80,28 @@ window.onload=function(){
 			        }
 				}
 			});
-		   	var pieChart = new Chart(pie, {
-		   		type: 'pie',
-				data: {
-					datasets: [{
-						data: [12, 19, 3],
-						backgroundColor: [
-							'red',
-							'skyblue',
-							'blue',
-						],
-						label: 'Dataset 1'
-					}],
-					labels: [
-						'전세',
-						'반전세',
-						'월세'
-					]
-				},
-				options: {
-					responsive: true,
-					legend: {
-			            labels: {
-		                	fontSize: 30
-			            }
-			        }, 
-			        tooltips: {
-			            titleFontSize: 30,
-			            bodyFontSize: 30
-			        }
-				}
-		   	});
 		   	var centerChart = new Chart(center, {
 				type: 'line',
 				data: {
-					labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+					labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'],
 					datasets: [{
-						label: '서울',
+						label: '서울특별시',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [12, 19, 3, 5, 2, 3, 20, 34, 20, 1, 34, 22],
+						data: [$("#buildLine11").val(), $("#buildLine12").val(), $("#buildLine13").val(), $("#buildLine14").val(), $("#buildLine15").val(), $("#buildLine16").val(), $("#buildLine17").val(), $("#buildLine18").val()],
 						fill: false,
 					}, {
 						label: '경기도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [11, 8, 5, 3, 6, 24, 3, 12, 32, 34, 11, 20],
+						data: [$("#buildLine21").val(), $("#buildLine22").val(), $("#buildLine23").val(), $("#buildLine24").val(), $("#buildLine25").val(), $("#buildLine26").val(), $("#buildLine27").val(), $("#buildLine28").val()],
 					}, {
-						label: '인천',
+						label: '인천광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [21, 5, 14, 7, 2, 24, 3, 45, 23, 24, 11, 29],
+						data: [$("#buildLine31").val(), $("#buildLine32").val(), $("#buildLine33").val(), $("#buildLine34").val(), $("#buildLine35").val(), $("#buildLine36").val(), $("#buildLine37").val(), $("#buildLine38").val()],
 					}]
 				},
 				options: {
@@ -139,12 +136,12 @@ window.onload=function(){
 		   	var gangwondoChart = new Chart(gangwondo, {
 				type: 'line',
 				data: {
-					labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+					labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'],
 					datasets: [{
 						label: '강원도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [12, 19, 3, 5, 2, 3, 20, 34, 20, 1, 34, 22],
+						data: [$("#buildLine41").val(), $("#buildLine42").val(), $("#buildLine43").val(), $("#buildLine44").val(), $("#buildLine45").val(), $("#buildLine46").val(), $("#buildLine47").val(), $("#buildLine48").val()],
 						fill: false,
 					}]
 				},
@@ -180,31 +177,31 @@ window.onload=function(){
 		   	var chungcheongdoChart = new Chart(chungcheongdo, {
 				type: 'line',
 				data: {
-					labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+					labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'],
 					datasets: [{
 						label: '충청남도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [12, 19, 3, 5, 2, 3, 20, 34, 20, 1, 34, 22],
+						data: [$("#buildLine51").val(), $("#buildLine52").val(), $("#buildLine53").val(), $("#buildLine54").val(), $("#buildLine55").val(), $("#buildLine56").val(), $("#buildLine57").val(), $("#buildLine58").val()],
 						fill: false,
 					}, {
 						label: '충청북도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [11, 8, 5, 3, 6, 24, 3, 12, 32, 34, 11, 20],
+						data: [$("#buildLine61").val(), $("#buildLine62").val(), $("#buildLine63").val(), $("#buildLine64").val(), $("#buildLine65").val(), $("#buildLine66").val(), $("#buildLine67").val(), $("#buildLine68").val()],
 					}, {
 						label: '대전광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [21, 5, 14, 7, 2, 24, 3, 45, 23, 24, 11, 29],
+						data: [$("#buildLine71").val(), $("#buildLine72").val(), $("#buildLine73").val(), $("#buildLine74").val(), $("#buildLine75").val(), $("#buildLine76").val(), $("#buildLine77").val(), $("#buildLine78").val()],
 					}, {
 						label: '세종특별자치시',
 						fill: false,
 						backgroundColor: 'black',
 						borderColor: 'black',
-						data: [42, 12, 12, 13, 33, 44, 33, 21, 52, 35, 23, 15],
+						data: [$("#buildLine81").val(), $("#buildLine82").val(), $("#buildLine83").val(), $("#buildLine84").val(), $("#buildLine85").val(), $("#buildLine86").val(), $("#buildLine87").val(), $("#buildLine88").val()],
 					}]
 				},
 				options: {
@@ -239,25 +236,25 @@ window.onload=function(){
 		   	var jolladoChart = new Chart(jollado, {
 				type: 'line',
 				data: {
-					labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+					labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'],
 					datasets: [{
 						label: '전라북도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [12, 19, 3, 5, 2, 3, 20, 34, 20, 1, 34, 22],
+						data: [$("#buildLine91").val(), $("#buildLine92").val(), $("#buildLine93").val(), $("#buildLine94").val(), $("#buildLine95").val(), $("#buildLine96").val(), $("#buildLine97").val(), $("#buildLine98").val()],
 						fill: false,
 					}, {
 						label: '전라남도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [11, 8, 5, 3, 6, 24, 3, 12, 32, 34, 11, 20],
+						data: [$("#buildLine101").val(), $("#buildLine102").val(), $("#buildLine103").val(), $("#buildLine104").val(), $("#buildLine105").val(), $("#buildLine106").val(), $("#buildLine107").val(), $("#buildLine108").val()],
 					}, {
 						label: '광주광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [21, 5, 14, 7, 2, 24, 3, 45, 23, 24, 11, 29],
+						data: [$("#buildLine111").val(), $("#buildLine112").val(), $("#buildLine113").val(), $("#buildLine114").val(), $("#buildLine115").val(), $("#buildLine116").val(), $("#buildLine117").val(), $("#buildLine118").val()],
 					}]
 				},
 				options: {
@@ -292,37 +289,37 @@ window.onload=function(){
 		   	var gyeongsangdoChart = new Chart(gyeongsangdo, {
 				type: 'line',
 				data: {
-					labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+					labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'],
 					datasets: [{
 						label: '경상남도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [12, 19, 3, 5, 2, 3, 20, 34, 20, 1, 34, 22],
+						data: [$("#buildLine121").val(), $("#buildLine122").val(), $("#buildLine123").val(), $("#buildLine124").val(), $("#buildLine125").val(), $("#buildLine126").val(), $("#buildLine127").val(), $("#buildLine128").val()],
 						fill: false,
 					}, {
 						label: '경상북도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [11, 8, 5, 3, 6, 24, 3, 12, 32, 34, 11, 20],
+						data: [$("#buildLine131").val(), $("#buildLine132").val(), $("#buildLine133").val(), $("#buildLine134").val(), $("#buildLine135").val(), $("#buildLine136").val(), $("#buildLine137").val(), $("#buildLine138").val()],
 					}, {
 						label: '대구광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [21, 5, 14, 7, 2, 24, 3, 45, 23, 24, 11, 29],
+						data: [$("#buildLine141").val(), $("#buildLine142").val(), $("#buildLine143").val(), $("#buildLine144").val(), $("#buildLine145").val(), $("#buildLine146").val(), $("#buildLine147").val(), $("#buildLine148").val()],
 					}, {
 						label: '부산광역시',
 						fill: false,
 						backgroundColor: 'black',
 						borderColor: 'black',
-						data: [1, 23, 12, 8, 45, 2, 34, 12, 35, 12, 22, 9],
+						data: [$("#buildLine151").val(), $("#buildLine152").val(), $("#buildLine153").val(), $("#buildLine154").val(), $("#buildLine155").val(), $("#buildLine156").val(), $("#buildLine157").val(), $("#buildLine158").val()],
 					}, {
 						label: '울산광역시',
 						fill: false,
 						backgroundColor: 'pink',
 						borderColor: 'pink',
-						data: [95, 9, 24, 42, 24, 53, 75, 8, 12, 23, 1, 43],
+						data: [$("#buildLine161").val(), $("#buildLine162").val(), $("#buildLine163").val(), $("#buildLine164").val(), $("#buildLine165").val(), $("#buildLine166").val(), $("#buildLine167").val(), $("#buildLine168").val()],
 					}]
 				},
 				options: {
@@ -357,12 +354,12 @@ window.onload=function(){
 		   	var jejudoChart = new Chart(jejudo, {
 				type: 'line',
 				data: {
-					labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+					labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'],
 					datasets: [{
-						label: '제주도',
+						label: '제주특별자치도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [12, 19, 3, 5, 2, 3, 20, 34, 20, 1, 34, 22],
+						data: [$("#buildLine171").val(), $("#buildLine172").val(), $("#buildLine173").val(), $("#buildLine174").val(), $("#buildLine175").val(), $("#buildLine176").val(), $("#buildLine177").val(), $("#buildLine178").val()],
 						fill: false,
 					}]
 				},
@@ -401,41 +398,37 @@ window.onload=function(){
 		   	$("#pieChart").css("height","50%");
 		   	$(".chartWrapper").attr("align","center");
 
+		   	
+		   	
+		   	
 		   		/*  여기부터 매출현황  */
 			
  		   	var yearBar = document.getElementById('yearBarChart').getContext('2d');
  		   	var monthBar = document.getElementById('monthBarChart').getContext('2d');
- 		   	var weekBar = document.getElementById('weekBarChart').getContext('2d');
  		   	var dayBar = document.getElementById('dayBarChart').getContext('2d');
 		   	
  		   	var centerYearSales = document.getElementById('centerYearSalesChart').getContext('2d');
  		   	var centerMonthSales = document.getElementById('centerMonthSalesChart').getContext('2d');
- 		   	var centerWeekSales = document.getElementById('centerWeekSalesChart').getContext('2d');
  		   	var centerDaySales = document.getElementById('centerDaySalesChart').getContext('2d');
 
  		   	var gangwondoYearSales = document.getElementById('gangwondoYearSalesChart').getContext('2d');
  		   	var gangwondoMonthSales = document.getElementById('gangwondoMonthSalesChart').getContext('2d');
- 		   	var gangwondoWeekSales = document.getElementById('gangwondoWeekSalesChart').getContext('2d');
  		   	var gangwondoDaySales = document.getElementById('gangwondoDaySalesChart').getContext('2d');
 
  		   	var chungcheongdoYearSales = document.getElementById('chungcheongdoYearSalesChart').getContext('2d');
  		   	var chungcheongdoMonthSales = document.getElementById('chungcheongdoMonthSalesChart').getContext('2d');
- 		   	var chungcheongdoWeekSales = document.getElementById('chungcheongdoWeekSalesChart').getContext('2d');
  		   	var chungcheongdoDaySales = document.getElementById('chungcheongdoDaySalesChart').getContext('2d');
 
  		   	var jolladoYearSales = document.getElementById('jolladoYearSalesChart').getContext('2d');
  		   	var jolladoMonthSales = document.getElementById('jolladoMonthSalesChart').getContext('2d');
- 		   	var jolladoWeekSales = document.getElementById('jolladoWeekSalesChart').getContext('2d');
  		   	var jolladoDaySales = document.getElementById('jolladoDaySalesChart').getContext('2d');
 
  		   	var gyeongsangdoYearSales = document.getElementById('gyeongsangdoYearSalesChart').getContext('2d');
  		   	var gyeongsangdoMonthSales = document.getElementById('gyeongsangdoMonthSalesChart').getContext('2d');
- 		   	var gyeongsangdoWeekSales = document.getElementById('gyeongsangdoWeekSalesChart').getContext('2d');
  		   	var gyeongsangdoDaySales = document.getElementById('gyeongsangdoDaySalesChart').getContext('2d');
 
  		   	var jejudoYearSales = document.getElementById('jejudoYearSalesChart').getContext('2d');
  		   	var jejudoMonthSales = document.getElementById('jejudoMonthSalesChart').getContext('2d');
- 		   	var jejudoWeekSales = document.getElementById('jejudoWeekSalesChart').getContext('2d');
  		   	var jejudoDaySales = document.getElementById('jejudoDaySalesChart').getContext('2d');
 
   		   var yearBarChart = new Chart(yearBar, {
@@ -445,7 +438,7 @@ window.onload=function(){
  					datasets: [{
  						label: '매출 (년 단위) ',
  						backgroundColor: 'skyblue',
- 						data: [2891, 5893, 12034],
+ 						data: [$("#buildBarYear1").val(), $("#buildBarYear2").val(), $("#buildBarYear3").val()],
  						fill: false,
  					}]
  				},
@@ -477,7 +470,8 @@ window.onload=function(){
  			            }
  			        }
  				}
- 			});	
+ 			});
+  		   // 현재 월까지만 하려고 현재 월까지만 받아오는데, json 안에서 동적으로 처리하는 법을 모르겠다. 
  		   var monthBarChart = new Chart(monthBar, {
 				type: 'bar',
 				data: {
@@ -485,47 +479,7 @@ window.onload=function(){
 					datasets: [{
 						label: '매출 (월 단위) ',
 						backgroundColor: 'skyblue',
-						data: [52, 23, 78, 65, 46, 120, 233, 422],
-						fill: false,
-					}]
-				},
-				options: {
-					responsive: true,
-					tooltips: {
-						mode: 'index',
-						intersect: false,
-					},
-					hover: {
-						mode: 'nearest',
-						intersect: true
-					},
-					scales: {
-						xAxes: [{
-							display: true
-						}],
-						yAxes: [{
-							display: true,
-							scaleLabel: {
-								display: true,
-								labelString: '매출액'
-							}
-						}]
-					},
-					legend: {
-			            labels: {
-		                	fontSize: 15
-			            }
-			        }
-				}
-			});	
- 		   var weekBarChart = new Chart(weekBar, {
-				type: 'bar',
-				data: {
-					labels: ['1주', '2주', '3주', '4주', '5주', '6주', '7주', '8주', '9주', '10주', '11주', '12주', '13주', '14주', '15주', '16주', '17주', '18주', '19주', '20주', '21주', '22주', '23주', '24주', '25주', '26주', '27주', '28주', '29주', '30주'],
-					datasets: [{
-						label: '매출 (주 단위) ',
-						backgroundColor: 'skyblue',
-						data: [5, 6, 4, 6, 10, 11, 5, 2, 3, 3 ,4, 1, 3, 9, 0, 10, 15, 8, 6, 4, 14, 12, 13, 6, 7, 4, 7, 8, 4, 10],
+						data: [$("#buildBarMonth1").val(), $("#buildBarMonth2").val(), $("#buildBarMonth3").val(), $("#buildBarMonth4").val(), $("#buildBarMonth5").val(), $("#buildBarMonth6").val(), $("#buildBarMonth7").val(), $("#buildBarMonth8").val()],
 						fill: false,
 					}]
 				},
@@ -565,7 +519,7 @@ window.onload=function(){
 					datasets: [{
 						label: '매출 (일 단위) ',
 						backgroundColor: 'skyblue',
-						data: [2, 5, 4, 5, 3, 6, 1],
+						data: [$("#buildBarDay1").val(), $("#buildBarDay2").val(), $("#buildBarDay3").val(), $("#buildBarDay4").val(), $("#buildBarDay5").val(), $("#buildBarDay6").val(), $("#buildBarDay7").val()],
 						fill: false,
 					}]
 				},
@@ -603,23 +557,23 @@ window.onload=function(){
 				data: {
 					labels: ['2016년', '2017년', '2018년'],
 					datasets: [{
-						label: '서울',
+						label: '서울특별시',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [124, 344, 523],
+						data: [$("#buildLineYear11").val(), $("#buildLineYear12").val(), $("#buildLineYear13").val()],
 						fill: false,
 					}, {
 						label: '경기도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [123, 213, 123],
+						data: [$("#buildLineYear21").val(), $("#buildLineYear22").val(), $("#buildLineYear23").val()],
 					}, {
-						label: '인천',
+						label: '인천광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [100, 122, 231],
+						data: [$("#buildLineYear31").val(), $("#buildLineYear32").val(), $("#buildLineYear33").val()],
 					}]
 				},
 				options: {
@@ -656,76 +610,23 @@ window.onload=function(){
 				data: {
 					labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'],
 					datasets: [{
-						label: '서울',
+						label: '서울특별시',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [12, 23, 34, 33, 23, 12, 24, 23],
+						data: [$("#buildLineMonth11").val(), $("#buildLineMonth12").val(), $("#buildLineMonth13").val(), $("#buildLineMonth14").val(), $("#buildLineMonth15").val(), $("#buildLineMonth16").val(), $("#buildLineMonth17").val(), $("#buildLineMonth18").val()],
 						fill: false,
 					}, {
 						label: '경기도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [12, 13, 23, 31, 12, 3, 42, 12],
+						data: [$("#buildLineMonth21").val(), $("#buildLineMonth22").val(), $("#buildLineMonth23").val(), $("#buildLineMonth24").val(), $("#buildLineMonth25").val(), $("#buildLineMonth26").val(), $("#buildLineMonth27").val(), $("#buildLineMonth28").val()],
 					}, {
-						label: '인천',
+						label: '인천광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [10, 12, 1, 4, 5, 12, 9, 10],
-					}]
-				},
-				options: {
-					responsive: true,
-					tooltips: {
-						mode: 'index',
-						intersect: false,
-					},
-					hover: {
-						mode: 'nearest',
-						intersect: true
-					},
-					scales: {
-						xAxes: [{
-							display: true
-						}],
-						yAxes: [{
-							display: true,
-							scaleLabel: {
-								display: true,
-								labelString: '등록 건수'
-							}
-						}]
-					},
-					legend: {
-			            labels: {
-		                	fontSize: 15
-			            }
-			        }
-				}
-			});
-		  var centerWeekSalesChart = new Chart(centerWeekSales, {
-				type: 'line',
-				data: {
-					labels: ['1주', '2주', '3주', '4주', '5주', '6주', '7주', '8주', '9주', '10주', '11주', '12주', '13주', '14주', '15주', '16주', '17주', '18주', '19주', '20주', '21주', '22주', '23주', '24주', '25주', '26주', '27주', '28주', '29주', '30주'],
-					datasets: [{
-						label: '서울',
-						backgroundColor: 'red',
-						borderColor: 'red',
-						data: [5, 6, 4, 6, 10, 11, 5, 2, 3, 3 ,4, 1, 3, 9, 0, 10, 15, 8, 6, 4, 14, 12, 13, 6, 7, 4, 7, 8, 4, 10],
-						fill: false,
-					}, {
-						label: '경기도',
-						fill: false,
-						backgroundColor: 'blue',
-						borderColor: 'blue',
-						data: [2, 2, 3, 7, 19, 6, 4, 3, 1, 2 ,4, 5, 6, 4, 10, 12, 5, 4, 3, 7, 12, 11, 15, 8, 5, 3, 5, 2, 1, 11],
-					}, {
-						label: '인천',
-						fill: false,
-						backgroundColor: 'green',
-						borderColor: 'green',
-						data: [1, 2, 3, 5, 12, 13, 5, 7, 7, 5 ,5, 2, 3, 4, 2, 14, 10, 9, 8, 3, 4, 1, 3, 12, 2, 4, 4, 5, 8, 4],
+						data: [$("#buildLineMonth31").val(), $("#buildLineMonth32").val(), $("#buildLineMonth33").val(), $("#buildLineMonth34").val(), $("#buildLineMonth35").val(), $("#buildLineMonth36").val(), $("#buildLineMonth37").val(), $("#buildLineMonth38").val()],
 					}]
 				},
 				options: {
@@ -762,23 +663,23 @@ window.onload=function(){
 				data: {
 					labels: ['월', '화', '수', '목', '금', '토', '일'],
 					datasets: [{
-						label: '서울',
+						label: '서울특별시',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [1, 4, 8, 6, 2, 5, 4],
+						data: [$("#buildLineDay11").val(), $("#buildLineDay12").val(), $("#buildLineDay13").val(), $("#buildLineDay14").val(), $("#buildLineDay15").val(), $("#buildLineDay16").val(), $("#buildLineDay17").val()],
 						fill: false,
 					}, {
 						label: '경기도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [2, 3, 2, 1, 4, 5, 2],
+						data: [$("#buildLineDay21").val(), $("#buildLineDay22").val(), $("#buildLineDay23").val(), $("#buildLineDay24").val(), $("#buildLineDay25").val(), $("#buildLineDay26").val(), $("#buildLineDay27").val()],
 					}, {
-						label: '인천',
+						label: '인천광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [1, 0, 2, 3, 6, 2, 2],
+						data: [$("#buildLineDay31").val(), $("#buildLineDay32").val(), $("#buildLineDay33").val(), $("#buildLineDay34").val(), $("#buildLineDay35").val(), $("#buildLineDay36").val(), $("#buildLineDay37").val()],
 					}]
 				},
 				options: {
@@ -820,7 +721,7 @@ window.onload=function(){
 						label: '강원도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [563, 1023, 2413],
+						data: [$("#buildLineYear41").val(), $("#buildLineYear42").val(), $("#buildLineYear43").val()],
 						fill: false,
 					}]
 				},
@@ -861,48 +762,7 @@ window.onload=function(){
 						label: '강원도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [12, 23, 34, 33, 23, 12, 24, 23],
-						fill: false,
-					}]
-				},
-				options: {
-					responsive: true,
-					tooltips: {
-						mode: 'index',
-						intersect: false,
-					},
-					hover: {
-						mode: 'nearest',
-						intersect: true
-					},
-					scales: {
-						xAxes: [{
-							display: true
-						}],
-						yAxes: [{
-							display: true,
-							scaleLabel: {
-								display: true,
-								labelString: '등록 건수'
-							}
-						}]
-					},
-					legend: {
-			            labels: {
-		                	fontSize: 15
-			            }
-			        }
-				}
-			});
- 		  var gangwondoWeekSalesChart = new Chart(gangwondoWeekSales, {
-				type: 'line',
-				data: {
-					labels: ['1주', '2주', '3주', '4주', '5주', '6주', '7주', '8주', '9주', '10주', '11주', '12주', '13주', '14주', '15주', '16주', '17주', '18주', '19주', '20주', '21주', '22주', '23주', '24주', '25주', '26주', '27주', '28주', '29주', '30주'],
-					datasets: [{
-						label: '강원도',
-						backgroundColor: 'red',
-						borderColor: 'red',
-						data: [5, 6, 4, 6, 10, 11, 5, 2, 3, 3 ,4, 1, 3, 9, 0, 10, 15, 8, 6, 4, 14, 12, 13, 6, 7, 4, 7, 8, 4, 10],
+						data: [$("#buildLineMonth41").val(), $("#buildLineMonth42").val(), $("#buildLineMonth43").val(), $("#buildLineMonth44").val(), $("#buildLineMonth45").val(), $("#buildLineMonth46").val(), $("#buildLineMonth47").val(), $("#buildLineMonth48").val()],
 						fill: false,
 					}]
 				},
@@ -943,7 +803,7 @@ window.onload=function(){
 						label: '강원도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [1, 4, 8, 6, 2, 5, 4],
+						data: [$("#buildLineDay41").val(), $("#buildLineDay42").val(), $("#buildLineDay43").val(), $("#buildLineDay44").val(), $("#buildLineDay45").val(), $("#buildLineDay46").val(), $("#buildLineDay47").val()],
 						fill: false,
 					}]
 				},
@@ -985,26 +845,26 @@ window.onload=function(){
 						label: '충청남도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [320, 400, 450],
+						data: [$("#buildLineYear51").val(), $("#buildLineYear52").val(), $("#buildLineYear53").val()],
 						fill: false,
 					}, {
 						label: '충청북도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [300, 200, 320],
+						data: [$("#buildLineYear61").val(), $("#buildLineYear62").val(), $("#buildLineYear63").val()],
 					}, {
 						label: '대전광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [30, 120, 230],
+						data: [$("#buildLineYear71").val(), $("#buildLineYear72").val(), $("#buildLineYear73").val()],
 					}, {
 						label: '세종특별자치시',
 						fill: false,
 						backgroundColor: 'black',
 						borderColor: 'black',
-						data: [42, 112, 122],
+						data: [$("#buildLineYear81").val(), $("#buildLineYear82").val(), $("#buildLineYear83").val()],
 					}]
 				},
 				options: {
@@ -1044,85 +904,26 @@ window.onload=function(){
 						label: '충청남도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [12, 19, 3, 5, 2, 3, 20, 34],
+						data: [$("#buildLineMonth51").val(), $("#buildLineMonth52").val(), $("#buildLineMonth53").val(), $("#buildLineMonth54").val(), $("#buildLineMonth55").val(), $("#buildLineMonth56").val(), $("#buildLineMonth57").val(), $("#buildLineMonth58").val()],
 						fill: false,
 					}, {
 						label: '충청북도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [11, 8, 5, 3, 6, 24, 3, 12],
+						data: [$("#buildLineMonth61").val(), $("#buildLineMonth62").val(), $("#buildLineMonth63").val(), $("#buildLineMonth64").val(), $("#buildLineMonth65").val(), $("#buildLineMonth66").val(), $("#buildLineMonth67").val(), $("#buildLineMonth68").val()],
 					}, {
 						label: '대전광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [21, 5, 14, 7, 2, 24, 3, 45],
+						data: [$("#buildLineMonth71").val(), $("#buildLineMonth72").val(), $("#buildLineMonth73").val(), $("#buildLineMonth74").val(), $("#buildLineMonth75").val(), $("#buildLineMonth76").val(), $("#buildLineMonth77").val(), $("#buildLineMonth78").val()],
 					}, {
 						label: '세종특별자치시',
 						fill: false,
 						backgroundColor: 'black',
 						borderColor: 'black',
-						data: [42, 12, 12, 13, 33, 44, 33, 21],
-					}]
-				},
-				options: {
-					responsive: true,
-					tooltips: {
-						mode: 'index',
-						intersect: false,
-					},
-					hover: {
-						mode: 'nearest',
-						intersect: true
-					},
-					scales: {
-						xAxes: [{
-							display: true
-						}],
-						yAxes: [{
-							display: true,
-							scaleLabel: {
-								display: true,
-								labelString: '등록 건수'
-							}
-						}]
-					},
-					legend: {
-			            labels: {
-		                	fontSize: 15
-			            }
-			        }
-				}
-			});
-		  var chungcheongdoWeekSalesChart = new Chart(chungcheongdoWeekSales, {
-				type: 'line',
-				data: {
-					labels: ['1주', '2주', '3주', '4주', '5주', '6주', '7주', '8주', '9주', '10주', '11주', '12주', '13주', '14주', '15주', '16주', '17주', '18주', '19주', '20주', '21주', '22주', '23주', '24주', '25주', '26주', '27주', '28주', '29주', '30주'],
-					datasets: [{
-						label: '충청남도',
-						backgroundColor: 'red',
-						borderColor: 'red',
-						data: [12, 19, 3, 5, 2, 3, 20, 34, 31, 32, 1, 4, 5, 23, 23, 45 ,1, 3 ,2 ,53, 23, 9, 30, 12, 3, 24, 7, 27, 26 ,40 ],
-						fill: false,
-					}, {
-						label: '충청북도',
-						fill: false,
-						backgroundColor: 'blue',
-						borderColor: 'blue',
-						data: [2, 9, 13, 15, 12, 13, 10, 24, 21, 22, 11, 14, 15, 13, 13, 25 ,31, 23 ,12 ,23, 13, 29, 1, 2, 13, 34, 17, 17, 16 ,20 ],
-					}, {
-						label: '대전광역시',
-						fill: false,
-						backgroundColor: 'green',
-						borderColor: 'green',
-						data: [22, 19, 33, 54, 27, 42, 21, 24, 11, 2, 21, 41, 2, 13, 33, 55 ,13, 33 ,22 ,3, 33, 29, 3, 1, 33, 2, 27, 2, 2 ,4 ],
-					}, {
-						label: '세종특별자치시',
-						fill: false,
-						backgroundColor: 'black',
-						borderColor: 'black',
-						data: [32, 39, 23, 50, 20, 35, 23, 31, 25, 31, 12, 23, 42, 31, 35, 24 ,16, 32 ,23 ,5, 3, 3, 20, 52, 33, 14, 17, 7, 46 ,30 ],
+						data: [$("#buildLineMonth81").val(), $("#buildLineMonth82").val(), $("#buildLineMonth83").val(), $("#buildLineMonth84").val(), $("#buildLineMonth85").val(), $("#buildLineMonth86").val(), $("#buildLineMonth87").val(), $("#buildLineMonth88").val()],
 					}]
 				},
 				options: {
@@ -1162,26 +963,26 @@ window.onload=function(){
 						label: '충청남도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [12, 19, 3, 5, 2, 3, 20],
+						data: [$("#buildLineDay51").val(), $("#buildLineDay52").val(), $("#buildLineDay53").val(), $("#buildLineDay54").val(), $("#buildLineDay55").val(), $("#buildLineDay56").val(), $("#buildLineDay57").val()],
 						fill: false,
 					}, {
 						label: '충청북도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [11, 8, 5, 3, 6, 24, 3],
+						data: [$("#buildLineDay61").val(), $("#buildLineDay62").val(), $("#buildLineDay63").val(), $("#buildLineDay64").val(), $("#buildLineDay65").val(), $("#buildLineDay66").val(), $("#buildLineDay67").val()],
 					}, {
 						label: '대전광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [21, 5, 14, 7, 2, 24, 3],
+						data: [$("#buildLineDay71").val(), $("#buildLineDay72").val(), $("#buildLineDay73").val(), $("#buildLineDay74").val(), $("#buildLineDay75").val(), $("#buildLineDay76").val(), $("#buildLineDay77").val()],
 					}, {
 						label: '세종특별자치시',
 						fill: false,
 						backgroundColor: 'black',
 						borderColor: 'black',
-						data: [42, 12, 12, 13, 33, 44, 33],
+						data: [$("#buildLineDay81").val(), $("#buildLineDay82").val(), $("#buildLineDay83").val(), $("#buildLineDay84").val(), $("#buildLineDay85").val(), $("#buildLineDay86").val(), $("#buildLineDay87").val()],
 					}]
 				},
 				options: {
@@ -1222,20 +1023,20 @@ window.onload=function(){
 						label: '전라북도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [320, 400, 450],
+						data: [$("#buildLineYear91").val(), $("#buildLineYear92").val(), $("#buildLineYear93").val()],
 						fill: false,
 					}, {
 						label: '전라남도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [300, 200, 320],
+						data: [$("#buildLineYear101").val(), $("#buildLineYear102").val(), $("#buildLineYear103").val()],
 					}, {
 						label: '광주광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [30, 120, 230],
+						data: [$("#buildLineYear111").val(), $("#buildLineYear112").val(), $("#buildLineYear113").val()],
 					}]
 				},
 				options: {
@@ -1275,73 +1076,20 @@ window.onload=function(){
 						label: '전라북도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [12, 19, 3, 5, 2, 3, 20, 34],
+						data: [$("#buildLineMonth91").val(), $("#buildLineMonth92").val(), $("#buildLineMonth93").val(), $("#buildLineMonth94").val(), $("#buildLineMonth95").val(), $("#buildLineMonth96").val(), $("#buildLineMonth97").val(), $("#buildLineMonth98").val()],
 						fill: false,
 					}, {
 						label: '전라남도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [11, 8, 5, 3, 6, 24, 3, 12],
+						data: [$("#buildLineMonth101").val(), $("#buildLineMonth102").val(), $("#buildLineMonth103").val(), $("#buildLineMonth104").val(), $("#buildLineMonth105").val(), $("#buildLineMonth106").val(), $("#buildLineMonth107").val(), $("#buildLineMonth108").val()],
 					}, {
 						label: '광주광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [21, 5, 14, 7, 2, 24, 3, 45],
-					}]
-				},
-				options: {
-					responsive: true,
-					tooltips: {
-						mode: 'index',
-						intersect: false,
-					},
-					hover: {
-						mode: 'nearest',
-						intersect: true
-					},
-					scales: {
-						xAxes: [{
-							display: true
-						}],
-						yAxes: [{
-							display: true,
-							scaleLabel: {
-								display: true,
-								labelString: '등록 건수'
-							}
-						}]
-					},
-					legend: {
-			            labels: {
-		                	fontSize: 15
-			            }
-			        }
-				}
-			});
-		  var jolladoWeekSalesChart = new Chart(jolladoWeekSales, {
-				type: 'line',
-				data: {
-					labels: ['1주', '2주', '3주', '4주', '5주', '6주', '7주', '8주', '9주', '10주', '11주', '12주', '13주', '14주', '15주', '16주', '17주', '18주', '19주', '20주', '21주', '22주', '23주', '24주', '25주', '26주', '27주', '28주', '29주', '30주'],
-					datasets: [{
-						label: '전라북도',
-						backgroundColor: 'red',
-						borderColor: 'red',
-						data: [12, 19, 3, 5, 2, 3, 20, 34, 31, 32, 1, 4, 5, 23, 23, 45 ,1, 3 ,2 ,53, 23, 9, 30, 12, 3, 24, 7, 27, 26 ,40 ],
-						fill: false,
-					}, {
-						label: '전라남도',
-						fill: false,
-						backgroundColor: 'blue',
-						borderColor: 'blue',
-						data: [2, 9, 13, 15, 12, 13, 10, 24, 21, 22, 11, 14, 15, 13, 13, 25 ,31, 23 ,12 ,23, 13, 29, 1, 2, 13, 34, 17, 17, 16 ,20 ],
-					}, {
-						label: '광주광역시',
-						fill: false,
-						backgroundColor: 'green',
-						borderColor: 'green',
-						data: [22, 19, 33, 54, 27, 42, 21, 24, 11, 2, 21, 41, 2, 13, 33, 55 ,13, 33 ,22 ,3, 33, 29, 3, 1, 33, 2, 27, 2, 2 ,4 ],
+						data: [$("#buildLineMonth111").val(), $("#buildLineMonth112").val(), $("#buildLineMonth113").val(), $("#buildLineMonth114").val(), $("#buildLineMonth115").val(), $("#buildLineMonth116").val(), $("#buildLineMonth117").val(), $("#buildLine118").val()],
 					}]
 				},
 				options: {
@@ -1381,20 +1129,20 @@ window.onload=function(){
 						label: '전라북도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [12, 19, 3, 5, 2, 3, 20],
+						data: [$("#buildLineDay91").val(), $("#buildLineDay92").val(), $("#buildLineDay93").val(), $("#buildLineDay94").val(), $("#buildLineDay95").val(), $("#buildLineDay96").val(), $("#buildLineDay97").val()],
 						fill: false,
 					}, {
 						label: '전라남도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [11, 8, 5, 3, 6, 24, 3],
+						data: [$("#buildLineDay101").val(), $("#buildLineDay102").val(), $("#buildLineDay103").val(), $("#buildLineDay104").val(), $("#buildLineDay105").val(), $("#buildLineDay106").val(), $("#buildLineDay107").val()],
 					}, {
 						label: '광주광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [21, 5, 14, 7, 2, 24, 3],
+						data: [$("#buildLineDay111").val(), $("#buildLineDay112").val(), $("#buildLineDay113").val(), $("#buildLineDay114").val(), $("#buildLineDay115").val(), $("#buildLineDay116").val(), $("#buildLineDay117").val()],
 					}]
 				},
 				options: {
@@ -1436,32 +1184,32 @@ window.onload=function(){
 						label: '경상남도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [320, 400, 450],
+						data: [$("#buildLineYear121").val(), $("#buildLineYear122").val(), $("#buildLineYear123").val()],
 						fill: false,
 					}, {
 						label: '경삭북도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [300, 200, 320],
+						data: [$("#buildLineYear131").val(), $("#buildLineYear132").val(), $("#buildLineYear133").val()],
 					}, {
 						label: '대구광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [30, 120, 230],
+						data: [$("#buildLineYear141").val(), $("#buildLineYear142").val(), $("#buildLineYear143").val()],
 					}, {
 						label: '부산광역시',
 						fill: false,
 						backgroundColor: 'black',
 						borderColor: 'black',
-						data: [40, 130, 120],
+						data: [$("#buildLineYear151").val(), $("#buildLineYear152").val(), $("#buildLineYear153").val()],
 					}, {
 						label: '울산광역시',
 						fill: false,
 						backgroundColor: 'pink',
 						borderColor: 'pink',
-						data: [42, 112, 122],
+						data: [$("#buildLineYear161").val(), $("#buildLineYear162").val(), $("#buildLineYear163").val()],
 					}]
 				},
 				options: {
@@ -1501,97 +1249,32 @@ window.onload=function(){
 						label: '경상남도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [23, 12, 40, 21, 42, 34, 12, 34],
+						data: [$("#buildLineMonth121").val(), $("#buildLineMonth122").val(), $("#buildLineMonth123").val(), $("#buildLineMonth124").val(), $("#buildLineMonth125").val(), $("#buildLineMonth126").val(), $("#buildLineMonth127").val(), $("#buildLineMonth128").val()],
 						fill: false,
 					}, {
 						label: '경삭북도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [30, 20, 32, 32, 1 ,12, 23, 42],
+						data: [$("#buildLineMonth131").val(), $("#buildLineMonth132").val(), $("#buildLineMonth133").val(), $("#buildLineMonth134").val(), $("#buildLineMonth135").val(), $("#buildLineMonth136").val(), $("#buildLineMonth137").val(), $("#buildLineMonth138").val()],
 					}, {
 						label: '대구광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [30, 12, 20, 13, 34, 59, 23, 20],
+						data: [$("#buildLineMonth141").val(), $("#buildLineMonth142").val(), $("#buildLineMonth143").val(), $("#buildLineMonth144").val(), $("#buildLineMonth145").val(), $("#buildLineMonth146").val(), $("#buildLineMonth147").val(), $("#buildLineMonth148").val()],
 					}, {
 						label: '부산광역시',
 						fill: false,
 						backgroundColor: 'black',
 						borderColor: 'black',
-						data: [4, 10, 42, 34, 10, 50, 28, 12],
+						data: [$("#buildLineMonth151").val(), $("#buildLineMonth152").val(), $("#buildLineMonth153").val(), $("#buildLineMonth154").val(), $("#buildLineMonth155").val(), $("#buildLineMonth156").val(), $("#buildLineMonth157").val(), $("#buildLineMonth158").val()],
 					}, {
 						label: '울산광역시',
 						fill: false,
 						backgroundColor: 'pink',
 						borderColor: 'pink',
-						data: [42, 12, 22, 12, 23, 19, 8, 25],
-					}]
-				},
-				options: {
-					responsive: true,
-					tooltips: {
-						mode: 'index',
-						intersect: false,
-					},
-					hover: {
-						mode: 'nearest',
-						intersect: true
-					},
-					scales: {
-						xAxes: [{
-							display: true
-						}],
-						yAxes: [{
-							display: true,
-							scaleLabel: {
-								display: true,
-								labelString: '등록 건수'
-							}
-						}]
-					},
-					legend: {
-			            labels: {
-		                	fontSize: 15
-			            }
-			        }
-				}
-			});
-		  var gyeongsangdoWeekSalesChart = new Chart(gyeongsangdoWeekSales, {
-				type: 'line',
-				data: {
-					labels: ['1주', '2주', '3주', '4주', '5주', '6주', '7주', '8주', '9주', '10주', '11주', '12주', '13주', '14주', '15주', '16주', '17주', '18주', '19주', '20주', '21주', '22주', '23주', '24주', '25주', '26주', '27주', '28주', '29주', '30주'],
-					datasets: [{
-						label: '경상남도',
-						backgroundColor: 'red',
-						borderColor: 'red',
-						data: [20, 4, 5, 4, 32, 23, 10, 32, 12, 14, 19, 12, 34, 32, 20, 25, 28, 20, 23, 29, 21, 23, 24, 35, 39, 20, 31, 39, 20, 40],
-						fill: false,
-					}, {
-						label: '경삭북도',
-						fill: false,
-						backgroundColor: 'blue',
-						borderColor: 'blue',
-						data: [23, 2, 15, 24, 22, 13, 20, 22, 2, 4, 9, 2, 14, 2, 20, 15, 38, 30, 13, 49, 11, 33, 34, 25, 19, 30, 21, 19, 10, 30],
-					}, {
-						label: '대구광역시',
-						fill: false,
-						backgroundColor: 'green',
-						borderColor: 'green',
-						data: [2, 23, 15, 42, 52, 53, 62, 16, 25, 35, 49, 2, 4, 14, 18, 16, 21, 26, 57, 35, 23, 38, 55, 37, 57, 37, 45, 14, 40, 30],
-					}, {
-						label: '부산광역시',
-						fill: false,
-						backgroundColor: 'black',
-						borderColor: 'black',
-						data: [12, 12, 23, 2, 42, 33, 34, 2, 57, 48, 46, 36, 45, 67, 45, 45, 26, 34, 56, 5, 1, 53, 56, 23, 4, 10, 12, 29, 30, 10],
-					}, {
-						label: '울산광역시',
-						fill: false,
-						backgroundColor: 'pink',
-						borderColor: 'pink',
-						data: [40, 34, 25, 14, 36, 24, 23, 23, 24, 19, 17, 15, 64, 35, 23, 25, 45, 34, 25, 75, 54, 25, 35, 36, 36, 26, 45, 59, 2, 23],
+						data: [$("#buildLineMonth161").val(), $("#buildLineMonth162").val(), $("#buildLineMonth163").val(), $("#buildLineMonth164").val(), $("#buildLineMonth165").val(), $("#buildLineMonth166").val(), $("#buildLineMonth167").val(), $("#buildLineMonth168").val()],
 					}]
 				},
 				options: {
@@ -1631,32 +1314,32 @@ window.onload=function(){
 						label: '경상남도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [20, 4, 5, 4, 32, 23, 10],
+						data: [$("#buildLineDay121").val(), $("#buildLineDay122").val(), $("#buildLineDay123").val(), $("#buildLineDay124").val(), $("#buildLineDay125").val(), $("#buildLineDay126").val(), $("#buildLineDay127").val()],
 						fill: false,
 					}, {
 						label: '경삭북도',
 						fill: false,
 						backgroundColor: 'blue',
 						borderColor: 'blue',
-						data: [23, 2, 15, 24, 22, 13, 20],
+						data: [$("#buildLineDay131").val(), $("#buildLineDay132").val(), $("#buildLineDay133").val(), $("#buildLineDay134").val(), $("#buildLineDay135").val(), $("#buildLineDay136").val(), $("#buildLineDay137").val()],
 					}, {
 						label: '대구광역시',
 						fill: false,
 						backgroundColor: 'green',
 						borderColor: 'green',
-						data: [2, 23, 15, 42, 52, 53, 62],
+						data: [$("#buildLineDay141").val(), $("#buildLineDay142").val(), $("#buildLineDay143").val(), $("#buildLineDay144").val(), $("#buildLineDay145").val(), $("#buildLineDay146").val(), $("#buildLineDay147").val()],
 					}, {
 						label: '부산광역시',
 						fill: false,
 						backgroundColor: 'black',
 						borderColor: 'black',
-						data: [12, 12, 23, 2, 42, 33, 34],
+						data: [$("#buildLineDay151").val(), $("#buildLineDay152").val(), $("#buildLineDay153").val(), $("#buildLineDay154").val(), $("#buildLineDay155").val(), $("#buildLineDay156").val(), $("#buildLineDay157").val()],
 					}, {
 						label: '울산광역시',
 						fill: false,
 						backgroundColor: 'pink',
 						borderColor: 'pink',
-						data: [40, 34, 25, 14, 36, 24, 23],
+						data: [$("#buildLineDay161").val(), $("#buildLineDay162").val(), $("#buildLineDay163").val(), $("#buildLineDay164").val(), $("#buildLineDay165").val(), $("#buildLineDay166").val(), $("#buildLineDay167").val()],
 					}]
 				},
 				options: {
@@ -1694,10 +1377,10 @@ window.onload=function(){
 				data: {
 					labels: ['2016년', '2017년', '2018년'],
 					datasets: [{
-						label: '제주도',
+						label: '제주특별자치도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [563, 1023, 2413],
+						data: [$("#buildLineYear171").val(), $("#buildLineYear172").val(), $("#buildLineYear173").val()],
 						fill: false,
 					}]
 				},
@@ -1735,51 +1418,10 @@ window.onload=function(){
 				data: {
 					labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'],
 					datasets: [{
-						label: '제주도',
+						label: '제주특별자치도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [12, 23, 34, 33, 23, 12, 24, 23],
-						fill: false,
-					}]
-				},
-				options: {
-					responsive: true,
-					tooltips: {
-						mode: 'index',
-						intersect: false,
-					},
-					hover: {
-						mode: 'nearest',
-						intersect: true
-					},
-					scales: {
-						xAxes: [{
-							display: true
-						}],
-						yAxes: [{
-							display: true,
-							scaleLabel: {
-								display: true,
-								labelString: '등록 건수'
-							}
-						}]
-					},
-					legend: {
-			            labels: {
-		                	fontSize: 15
-			            }
-			        }
-				}
-			});
- 		  var jejudoWeekSalesChart = new Chart(jejudoWeekSales, {
-				type: 'line',
-				data: {
-					labels: ['1주', '2주', '3주', '4주', '5주', '6주', '7주', '8주', '9주', '10주', '11주', '12주', '13주', '14주', '15주', '16주', '17주', '18주', '19주', '20주', '21주', '22주', '23주', '24주', '25주', '26주', '27주', '28주', '29주', '30주'],
-					datasets: [{
-						label: '제주도',
-						backgroundColor: 'red',
-						borderColor: 'red',
-						data: [5, 6, 4, 6, 10, 11, 5, 2, 3, 3 ,4, 1, 3, 9, 0, 10, 15, 8, 6, 4, 14, 12, 13, 6, 7, 4, 7, 8, 4, 10],
+						data: [$("#buildLineMonth171").val(), $("#buildLineMonth172").val(), $("#buildLineMonth173").val(), $("#buildLineMonth174").val(), $("#buildLineMonth175").val(), $("#buildLineMonth176").val(), $("#buildLineMonth177").val(), $("#buildLineMonth178").val()],
 						fill: false,
 					}]
 				},
@@ -1817,10 +1459,10 @@ window.onload=function(){
 				data: {
 					labels: ['월', '화', '수', '목', '금', '토', '일'],
 					datasets: [{
-						label: '제주도',
+						label: '제주특별자치도',
 						backgroundColor: 'red',
 						borderColor: 'red',
-						data: [1, 4, 8, 6, 2, 5, 4],
+						data: [$("#buildLineDay171").val(), $("#buildLineDay172").val(), $("#buildLineDay173").val(), $("#buildLineDay174").val(), $("#buildLineDay175").val(), $("#buildLineDay176").val(), $("#buildLineDay177").val()],
 						fill: false,
 					}]
 				},
@@ -1897,6 +1539,6 @@ window.onload=function(){
 	   			$("#fourth").css("display", "");
 	   		});
 	   		
-	   		$(".year, .week, .day").css("display", "none");
+	   		$(".year, .day").css("display", "none");
 }
 

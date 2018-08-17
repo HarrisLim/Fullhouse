@@ -216,10 +216,10 @@
 			            <span class="clearfix"></span>
 						<form class="form-primary" id="log" name="log" action="../j_spring_security_check" method="post" >
 						<div class="form-group">
-						  <input type="email" class="form-control" id="input_email" name="mem_email" placeholder="Your email" value="haha4498@gmail.com">
+						  <input type="email" class="form-control" id="input_email" name="mem_email" placeholder="Your email" value="harris@gmail.com">
 						</div>
 						<div class="form-group">
-						  <input type="password" class="form-control" id="input_pw" name="mem_pw" placeholder="Password" value="12345">
+						  <input type="password" class="form-control" id="input_pw" name="mem_pw" placeholder="Password" value="1234">
 						</div>
 							<input type="button" id="logIn" class="btn btn-block btn-lg bg-white mt-4" value="로그인" >
 							<a data-toggle="modal" href="#myModal2" class="btn btn-primary btn-lg btn-block">회원가입</a>

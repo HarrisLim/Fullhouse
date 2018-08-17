@@ -8,10 +8,11 @@
            http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
 	<http auto-config='true'  use-expressions="true" access-denied-page="/house/denied.jsp"> 
-			
+		
 		<intercept-url pattern="/house/main.do" access="permitAll" /> 
 		<intercept-url pattern="/resources/**" access="permitAll" />
-		<intercept-url pattern="/house/admin.do" access="hasRole('ADMIN')" /> 
+		<intercept-url pattern="/house/admin.do" access="hasRole('ADMIN')" />
+		 
 		
 			<form-login login-page="/house/main.do"         	
 				default-target-url="/house/login.do"      	

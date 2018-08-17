@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
   <head>
+	  <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+	  <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at  the highest level of quality.                             ">
@@ -34,6 +37,11 @@
 		   text-align: center; 
 		}
 		
+		tr::before {
+		  content: '';
+		  display: block;
+		  height: 15px;
+		}
 	</style>
 	
 	<style>
@@ -47,7 +55,18 @@
 	
 		
 	<script type="text/javascript">
-		
+
+	 // 토큰 생성
+	    var token = $("meta[name='_csrf']").attr("content");
+	    var header = $("meta[name='_csrf_header']").attr("content");
+	    $(function() {
+	        $(document).ajaxSend(function(e, xhr, options) {
+	        	console.log("dd");
+	            xhr.setRequestHeader(header, token);
+	        });
+	    });
+
+	    
 		function answerToggle(){
 			$("#myDIV2").css("display", "none");
 	        $("#myDIV4").css("display", "none");
@@ -99,36 +118,113 @@
 			$("#myQuestion").css("display", "none");
 			$("#askQuestion").css("display", "none");
 		}
-		function myQuestion(){
-			$("#memberTab").css("display", "none");
-			$("#buildingTab").css("display", "none");
-			$("#payTab").css("display", "none");
-			answerToggle();
-			
-			$("#myQuestion").css("display", "");
-			$("#askQuestion").css("display", "none");
+		function myQuestion(type){
+			if(type.length===0) alert("로그인 후 이용할 수 있는 서비스입니다.");
+			else {
+				$("#memberTab").css("display", "none");
+				$("#buildingTab").css("display", "none");
+				$("#payTab").css("display", "none");
+				answerToggle();
+				
+				$("#myQuestion").css("display", "");
+				$("#askQuestion").css("display", "none");
+				$("#emptyQuestionList").css("width",$('#wholeTap').width()-100);
+			}
 		}
 		
-		function askQuestion(){
-			$("#memberTab").css("display", "none");
-			$("#buildingTab").css("display", "none");
-			$("#payTab").css("display", "none");
-			answerToggle();
-			
-			$("#myQuestion").css("display", "none");
-			$("#askQuestion").css("display", "");
+		function askQuestion(type){
+			if(type.length===0) alert("로그인 후 이용할 수 있는 서비스입니다.");
+			else {
+				$("#memberTab").css("display", "none");
+				$("#buildingTab").css("display", "none");
+				$("#payTab").css("display", "none");
+				answerToggle();
+				
+				$("#myQuestion").css("display", "none");
+				$("#askQuestion").css("display", "");
+			}
 		}
 		
 		function showContent(i){
-// 			$(".questionBody").css("display","none");
-// 			$("#content"+i).css("display","");
-			$("#content"+i).toggle();
+			$("#content"+i).slideToggle();
 		}
-		
 		function callFunction(i){
-	        $("#myDIV"+i).toggle();
+	        $("#myDIV"+i).slideToggle();
 		}
 		
+		function question(subject, contentBody){
+			var map={};
+			map.subject = subject;
+			map.contentBody = contentBody;
+			map = JSON.stringify(map);
+			
+	    	$.ajax({
+	  	        type: 'POST',
+	  	        dataType: 'JSON',
+	  	      	contentType:'application/json; charset=utf-8',
+	  	        data: map,
+	  	        url: 'question.do',
+	  	        success: function(response) {
+	  	       		if(response===1) alert("문의를 성공적으로 마쳤습니다.\n[내 질문]에서 확인할 수 있습니다.");
+	  	       		location.reload();
+	  	        },error:function(request,status,error){
+  	  	          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+ 	  	       }
+	  	    });
+		}
+		
+		function deleteMyQuestion(x){
+			if(confirm("정말 삭제하시겠습니까?")){
+				$.ajax({
+		  	        type: 'POST',
+		  	        dataType: 'JSON',
+		  	        data: {"qna_no":x},
+		  	        url: 'deletemyquestion.do',
+		  	        success: function(response) {
+		  	       		alert("삭제되었습니다.");
+		  	       		var qnaListSize = Object.keys(response.qnaList).length;
+		  	       		var html = '';
+		  	       		for(var i=0; i<qnaListSize; i++){
+			  	       		html+='<tr>';
+			  	       		html+='<td style="padding:0 15px 0 0;font-size:30px;">'+(qnaListSize-i)+'</td>';
+			  	       		html+='<td><button type="button" class="btn btn-secondary btn-animated btn-animated-y" onclick="showContent($(this).parents().prev()[0].childNodes[0].nodeValue)" style="width:550px;height:50px">';
+			  	       		html+='<span class="btn-inner--hidden">클릭하면 펼치고 접을 수 있습니다. </span>';
+			  	       		html+='<span class="btn-inner--visible">'+response.qnaList[i].subject+'</span>';
+			  	       		html+='<br><br>';
+			  	       		html+='</td>';
+			  	       		html+='<td>';
+			  	       		html+='<input type="hidden" value="'+response.qnaList[i].qna_no+'">';
+			  	       		html+='<button class="btn btn-sm btn-outline-danger" style="margin: 0 0 0px 10px;" onclick="deleteMyQuestion($(this).prev().val())">삭제</button>';
+			  	       		html+='</td>';
+			  	       		html+='</tr>';
+			  	       		html+='<tr class="questionBody">';
+			  	       		html+='<td colspan="2">';
+			  	       		html+='<div id="content'+(qnaListSize-i)+'" style="display:none">';
+			  	       		html+='<textarea rows="10" class="form-control" style="margin:20px" resize="none" readonly> - 질문 내용 - &#10;&#10;'+response.qnaList[i].content+'</textarea>';
+			  	       		html+='<div style="background-color:rgba(200,200,240,0.1);margin:20px; height:100px" class="form-control"><strong> - 답변 - </strong><br><br>'+response.qnaList[i].reply+'</div>';
+			  	       		html+='</div>';
+			  	       		html+='</td>';
+			  	       		html+='</tr>';
+		  	       		}
+						$("#questionTBody").empty().append(html);
+		  	        },error:function(request,status,error){
+	  	  	          console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	 	  	       }
+		  	    });
+			}else{
+				return;
+			}
+		}
+
+    	function makeActive(idx){
+    		for(var i=1; i<=6; i++){
+    			if(i===idx) {
+    				$("#btn"+i).addClass("active");
+    				continue;
+    			}
+    			$("#btn"+i).removeClass("active");
+    		}
+    	}
 		
 	</script>	
   </head>
@@ -141,10 +237,7 @@
 				<div class="col-lg-7">
 					<div class="text-center pt-lg-md">
 						<h2 class="heading h1 mb-4">자주 묻는 질문 </h2>
-						<div class="input-group">
-							<input type="text" class="form-control" placeholder="이곳에 궁금한 점을 검색해 보세요!"	aria-describedby="basic-addon2">								 
-						</div>
-					</div>
+ 					</div>
 				</div>
 			</div>
 		</div>
@@ -155,13 +248,13 @@
 			<div class="row justify-content-center" align="center">
 				<div class="col-lg-12" > 
 				<div>
-					<div class="btn-group" role="group" aria-label="...">
-					  <button type="button" onclick="doDisplay()" class="btn btn-block btn-outline-tertiary mt-5">전체질문</button>
-					  <button type="button" onclick="showMemberTab()" class="btn btn-block btn-outline-tertiary mt-5">회원정보 / 계정관리</button>
-					  <button type="button" onclick="showBuildingTab()" class="btn btn-block btn-outline-tertiary mt-5">매물 / 광고 관리</button>
-					  <button type="button" onclick="showPayTab()" class="btn btn-block btn-outline-tertiary mt-5">상품 / 결제 관리</button>
-					  <button type="button" onclick="myQuestion()" class="btn btn-block btn-outline-tertiary mt-5"><strong>내 질문</strong></button>
-					  <button type="button" onclick="askQuestion()" class="btn btn-block btn-outline-tertiary mt-5"><strong>직접문의</strong></button>
+					<div id="wholeTap" class="btn-group" role="group" aria-label="...">
+					  <button id="btn1" type="button" onclick="doDisplay(); makeActive(1);" class="btn btn-block btn-outline-tertiary mt-5 active">전체질문</button>
+					  <button id="btn2" type="button" onclick="showMemberTab(); makeActive(2);" class="btn btn-block btn-outline-tertiary mt-5">회원정보 / 계정관리</button>
+					  <button id="btn3" type="button" onclick="showBuildingTab(); makeActive(3);" class="btn btn-block btn-outline-tertiary mt-5">매물 / 광고 관리</button>
+					  <button id="btn4" type="button" onclick="showPayTab(); makeActive(4);" class="btn btn-block btn-outline-tertiary mt-5">상품 / 결제 관리</button>
+					  <button id="btn5" type="button" onclick="myQuestion('${type}'); makeActive(5);" class="btn btn-block btn-outline-tertiary mt-5"><strong>내 질문</strong></button>
+					  <button id="btn6" type="button" onclick="askQuestion('${type}'); makeActive(6);" class="btn btn-block btn-outline-tertiary mt-5"><strong>직접문의</strong></button>
 					</div>
 				</div>
 				<section id="memberTab">
@@ -354,21 +447,41 @@
 			<div class="row justify-content-center">
 				<div class="col-lg-7">
 				<table>
-					<tbody>
-						<c:forEach items="${qnaList }" var="qna" varStatus="loop">
-						<tr>
-							<td style="padding:0 15px 38px 0;font-size:30px;">${loop.index +1}</td>
-							<td><input onmouseover="$(this).css('cursor', 'pointer')" class="form-control" value="${qna.subject }" onclick="showContent($(this).parents().prev()[0].childNodes[0].nodeValue)" style="width:550px" readonly><br><br></td>
-						</tr>
-						<tr class="questionBody">
-							<td colspan="2">
-								<div id="content${loop.index +1}" style="display:none">
-									<textarea rows="10" class="form-control" style="margin-bottom:20px" resize="none" readonly> - 질문 내용 - &#10;&#10;${qna.content }</textarea>
-									<div style="background-color:rgba(200,200,240,0.1);margin-bottom:40px; height:100px" class="form-control"><strong> - 답변 - </strong><br><br>${qna.reply }</div>
-								</div>
-							</td>
-						</tr>
-						</c:forEach>
+					<tbody id="questionTBody">
+						<c:choose>
+							<c:when test="${empty qnaList }">
+								<tr>
+									<td><button id="emptyQuestionList" type="button" onclick="askQuestion('${type}');makeActive(6);" class="btn btn-secondary btn-animated btn-animated-y" style="width:550px;height:50px">
+										<span class="btn-inner--hidden">질문하시려면 저를 클릭해주세요 :)</span>
+										<span class="btn-inner--visible">현재 질문 내역이 없습니다.</span>
+									</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="i" begin="0" end="${fn:length(qnaList)-1}" step="1">
+									<tr>
+										<td style="padding:0 15px 0 0;font-size:30px;">${fn:length(qnaList)-(i)}</td>
+										<td><button type="button" class="btn btn-secondary btn-animated btn-animated-y" onclick="showContent($(this).parents().prev()[0].childNodes[0].nodeValue)" style="width:550px;height:50px">
+											<span class="btn-inner--hidden">클릭하면 펼치고 접을 수 있습니다. </span>
+											<span class="btn-inner--visible">${qnaList[i].subject }</span>
+											<br><br>
+										</td>
+										<td>
+											<input type="hidden" value="${qnaList[i].qna_no }">
+											<button class="btn btn-sm btn-outline-danger" style="margin: 0 0 0px 10px;" onclick="deleteMyQuestion($(this).prev().val())">삭제</button>
+										</td>
+									</tr>
+									<tr class="questionBody">
+										<td colspan="2">
+											<div id="content${fn:length(qnaList)-(i)}" style="display:none">
+												<textarea rows="10" class="form-control" style="margin:20px" resize="none" readonly> - 질문 내용 - &#10;&#10;${qnaList[i].content }</textarea>
+												<div style="background-color:rgba(200,200,240,0.1);margin:20px; height:100px" class="form-control"><strong> - 답변 - </strong><br><br>${qnaList[i].reply }</div>
+											</div>
+										</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 					</tbody>
 				</table>
 				</div>
@@ -379,9 +492,9 @@
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-lg-7">
-					<input placeholder="궁금한 것을 물어보세요 :)" class="form-control"><br><br>
-					<textarea rows="20" class="form-control" placeholder="내용을 입력해주세요." style="margin-bottom:20px"></textarea>
-					<button class="btn btn-block btn-outline-primary" style="float:right;margin-top:10px" onclick="question()">문의</button>
+					<input id="subject" placeholder="궁금한 것을 물어보세요 :)" class="form-control"><br><br>
+					<textarea id="contentBody" rows="20" class="form-control" placeholder="내용을 입력해주세요." style="margin-bottom:20px"></textarea>
+					<button class="btn btn-block btn-outline-primary" style="float:right;margin-top:10px" onclick="question(document.getElementById('subject').value, document.getElementById('contentBody').value)">문의</button>
 				</div>
 			</div>
 		</div>

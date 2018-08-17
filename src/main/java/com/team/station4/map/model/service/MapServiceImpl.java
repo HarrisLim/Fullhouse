@@ -301,4 +301,53 @@ public class MapServiceImpl implements MapService {
 	public List<PriceDTO> priceSelectService(BuildDTO dto) {
 		return dao.priceSelect(dto);
 	}
+
+	
+	/* admin 그래프 */
+		/* 매물현황 */
+	@Override
+	public int selectBuildPieService(Map<String, Object> buildPieMap) {
+		return dao.selectBuildPie(buildPieMap);
+	}
+
+	@Override
+	public int selectBuildBarService(Map<String, Object> buildBarMap) {
+		return dao.selectBuildBar(buildBarMap);
+	}
+
+	@Override
+	public int selectBuildLineService(Map<String, Object> buildLineMap) {
+		return dao.selectBuildLine(buildLineMap);
+	}
+
+		/* 매출현황 */
+	@Override
+	public int selectBuildBarYearService(Map<String, Object> buildBarYearMap) {
+		return dao.selectBuildBarYear(buildBarYearMap);
+	}
+
+	@Override
+	public int selectBuildBarMonthService(Map<String, Object> buildBarMonthMap) {
+		return dao.selectBuildBarMonth(buildBarMonthMap);
+	}
+
+	@Override
+	public int selectBuildLineYearService(Map<String, Object> buildLineYearMap) {
+		return dao.selectBuildLineYear(buildLineYearMap);
+	}
+
+	@Override
+	public int selectBuildLineDayService(Map<String, Object> buildLineDayMap) {
+		return dao.selectBuildLineDay(buildLineDayMap);
+	}
+	@Override
+	public List<BuildDTO> selectBuildAllService(Map<String, Object> hm) {
+		return dao.selectBuildAll(hm);
+	}
+
+	@Override
+	public int countBuildAllService() {
+		return dao.countBuildAll();
+	}
+
 }

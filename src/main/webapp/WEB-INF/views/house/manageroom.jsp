@@ -144,6 +144,7 @@
     		console.log("commo1n");
     		// buildingNo이 공백이면 ""으로 인식해서 numberException발생, 그래서 buildingTitle로 변환해줘야한다. (검색어 없이 다른 탭을 클릭했을 때 오류수정)
     		var hot = state; // buildno or title or memo
+    		var nowType = $("#nowType").val(); // 현재 로그인 타입 
     		if(hot==="buildingNo" && value==="") hot = "buildingTitle";
 
     		if(state===undefined) state="buildingNo";
@@ -189,8 +190,13 @@
     				html+='<p style="float:right;font-size:17px;margin:5px 20px 5px 0px ">검색된 '+clickedStateName+' 매물: '+response.count+'</p>';
     				html += '<table class="table talbe-hover align-items-center"  style="margin-bottom:0px" id="T0">';
 	       				html+='<tbody>';
-
-	       					if(Object.keys(response.buildList).length===0){
+		       				if(nowType!=="mem" && nowType!=="staff"){
+		       					html+='<tr>';
+       							html+='<td rowspan="5" style="text-align:center;font-size:25px">';
+   	   							html+='로그인 후 이용할 수 있습니다.';
+	       						html+='</td>';
+	       						html+='</tr>';
+		       				}else if(Object.keys(response.buildList).length===0){
 		       					html+='<tr>';
 	       							html+='<td rowspan="5" style="text-align:center;font-size:25px">';
 	    	   							html+='등록된 매물이 없습니다.';
@@ -372,7 +378,7 @@
     	  	        success: function(responseData) {
 						var requestListSize = Object.keys(responseData.requestList).length
 						var html='';
-						for(var i=0; i<Object.keys(responseData.requestList).length; i++){
+						for(var i=0; i<requestListSize; i++){
 			  				html+='<tr style="text-align:center">';
 			  				html+='<th style="vertical-align: middle">'+responseData.requestList[i].ROOMTITLE+'</th>';
 	  						html+='<th style="vertical-align: middle">'+responseData.requestList[i].REQ_NAME+'</th>';
@@ -392,7 +398,15 @@
 	    		return;
 	    	}
 	    }
-	    
+	    function checkLogin(type, verify){
+	    	if(type.length===3 && verify===1){ // member일 떄 
+	    		alert("공인중개사만 이용할 수 있습니다.");
+	    		location.reload();
+	    	}else if(type.length===0){
+	    		alert("로그인 후 이용할 수 있습니다.");
+	    		location.reload();
+	    	}
+	    }
     	// list 상단에 undefined가 나타나는 것 삭제. 
     	window.onload = function() {
 	       	var regex = /^((?!undefined).)*$/g;
@@ -417,8 +431,8 @@
 					<nav>
 					  <div class="nav nav-tabs" id="nav-tab" role="tablist">
 					    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">매물관리</a>
-					    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">직원관리</a>
-					    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">연락 요청</a>
+					    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false" onclick="checkLogin('${type}', 1)">직원관리</a>
+					    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false" onclick="checkLogin('${type}')">연락 요청</a>
 					  </div>
 					</nav>
 					<div class="tab-content" id="nav-tabContent">
@@ -440,17 +454,27 @@
 					        <button id="btn4" type="button" class="btn btn-outline-dark" style="width:100%" onclick="search(document.getElementById('searching').previousSibling.previousSibling.value, document.getElementById('searching').value, 3); $('#nowState').val('3'); makeActive(4)">거래 완료</button>
 					        <button id="btn5" type="button" class="btn btn-outline-dark" style="width:100%" onclick="search(document.getElementById('searching').previousSibling.previousSibling.value, document.getElementById('searching').value, 4); $('#nowState').val('4'); makeActive(5)">검수 반려</button>
 				       	</div>
+				       	<input type="hidden" value="${type }" id="nowType">
 				       	<div id="manageBuildingP">
 				       	<p style="float:right;font-size:17px;margin:5px 20px 5px 0px ">검색된 [전체] 매물: ${count }</p>
 				       		<table class="table talbe-hover align-items-center"  style="margin-bottom:0px" id="T0">
 				       			<tbody>
-				       				<c:if test="${empty buildList }">
+				       			<c:choose>
+				       				<c:when test="${type ne 'mem' && type ne 'staff'}">
 				       					<tr>
 				       						<td rowspan="5" style="text-align:center;font-size:25px">
-				       							등록된 매물이 없습니다.
+				       							로그인 후 이용할 수 있습니다.  
 				       						</td>
 				       					</tr> 
-				       				</c:if>
+				       				</c:when>
+				       				<c:when test="${empty buildList}">
+				       					<tr>
+				       						<td rowspan="5" style="text-align:center;font-size:25px">
+				       							등록된 매물이 없습니다. 
+				       						</td>
+				       					</tr> 
+				       				</c:when>
+				       			</c:choose>
 					       			<c:forEach items="${buildList }" var="build">
 						       			<tr>
 					       					<td style="width:100px;font-size:15px">
@@ -590,6 +614,11 @@
 					  			</tr>
 					  		</thead>
 					  		<tbody id="requestTbody">
+					  			<c:if test="${empty requestList }">
+					  				<tr style="text-align:center">
+					  					<th colspan="5"> 연락요청이 없습니다. </th>
+					  				</tr>
+					  			</c:if>
 					  			<c:forEach items="${requestList}" var="request">
 					  				<tr style="text-align:center">
 					  					<th style="vertical-align: middle">${request.ROOMTITLE }</th>

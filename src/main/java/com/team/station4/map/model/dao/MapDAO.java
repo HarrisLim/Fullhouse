@@ -1,5 +1,6 @@
 package com.team.station4.map.model.dao;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,8 @@ public interface MapDAO {
 	List<BuildDTO> selectBuildRequest(int estate_no);
 	Map<String, Object> selectRequest(Map rMap);
 	void deleteRequestDoneCall(int request_no);
+	List<BuildDTO> selectBuildAll(Map<String, Object> hm);
+	int countBuildAll();
 	
 	List<BuildDTO>clusterList(Map hm);
 	void InsertAddInfo(HashMap addInfo);
@@ -47,4 +50,14 @@ public interface MapDAO {
 	List<BuildDTO> hotListPaging(Map<String, Object> jsonLatLng);
 	List<PriceDTO> priceSelect(BuildDTO dto);
 	
+	/* admin 그래프 */
+		/* 매물현황 */
+	int selectBuildPie(Map<String, Object> buildPieMap);
+	int selectBuildBar(Map<String, Object> buildBarMap);
+	int selectBuildLine(Map<String, Object> buildLineMap);
+		/* 매출현황 */
+	int selectBuildBarYear(Map<String, Object> buildBarYearMap);
+	int selectBuildBarMonth(Map<String, Object> buildBarMonthMap);
+	int selectBuildLineYear(Map<String, Object> buildLineYearMap);
+	int selectBuildLineDay(Map<String, Object> buildLineDayMap);
 }
