@@ -22,10 +22,14 @@ import javax.imageio.ImageIO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.team.station4.estate.model.EstateDTO;
+import com.team.station4.main.model.MainDTO;
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.model.dao.MapDAO;
 import com.team.station4.map.vo.PagingVo;
 import com.team.station4.room.model.RequestDTO;
+import com.team.station4.staff.model.StaffDTO;
+import com.team.station4.uploadroom.model.AddInfoDTO;
 import com.team.station4.uploadroom.model.PriceDTO;
 
 @Service
@@ -114,65 +118,7 @@ public class MapServiceImpl implements MapService {
 		 System.out.print("\n" + str + "\n");
 	 }
 	 
-	 @Override
-	 public List<Double>randomLat(int count){
-		 List<Double>randomLat = new ArrayList<Double>();
-		 // 38.56840795178768, 130.525309690136 //고성
-		 // 34.36648681811837, 126.09912791740395 //진도
-		 // 35.12310061655682, 129.05650821802078 // 부산
-		 // 37.792602855680975, 126.5212847590806 //강화도
-		 Random r = new Random();
-		 //전국
-		 //double start = 34.36648681811837;
-		 //double end = 38.56840795178768;
-		 //수도권
-		 double start = 37.35787318799519;
-		 double end = 37.8347415116356;
-		 double range = end-start;
-		 for (int i=0; i<count; i++) {
-			 double lat = r.nextDouble() * range + start;
-			 System.out.println("lat: "+lat);
-			 randomLat.add(lat);
-		 }
-		 return randomLat;
-	 }
-	 
-	 @Override
-	 public List<Double>randomLng(int count){
-		 List<Double>randomLng = new ArrayList<Double>();
-		 Random r = new Random();
-		 //전국
-		 //double start = 126.09912791740395;
-		 //double end = 130.525309690136;
-		 //수도권
-		 double start = 126.60845644761866;
-		 double end = 127.65287076386323;
-		 
-		 double range = end-start;
-		 for (int i=0; i<count; i++) {
-			 double lng = r.nextDouble() * range + start;
-			 System.out.println("lng: "+lng);
-			 randomLng.add(lng);
-		 }
 
-		 return randomLng;
-	 }
-	 
-	 @Override
-	 public void insertInjectionService(BuildDTO dto) {
-		 dao.insertInjection(dto);
-	 }
-	 
-	 @Override
-	 public void insertPriceService(HashMap price) {
-		 dao.insertPrice(price);
-	 }
-	 
-	 @Override
-	 public int countService() {
-		 return dao.count();
-	 }
-	 
 	/* jsl */
 	@Override
 	public int countBuildService(Map hm) {
@@ -185,35 +131,26 @@ public class MapServiceImpl implements MapService {
 		 return dao.clusterList(map);
 	 }
 	 
-	 @Override
-	 public void InsertAddInfoService(HashMap addInfo) {
-		 dao.InsertAddInfo(addInfo);
-	 }
 
 	@Override
-	public int myMaxService() {
-		return dao.myMax();
+	public void memHotUpdateService(HashMap<String, Object> hm) {
+		dao.memHotUpdate(hm);
 	}
 
 	@Override
-	public void memHotUpdateService(int buildNo) {
-		dao.memHotUpdate(buildNo);
+	public int memHotSelectService(HashMap<String, Object> hm) {
+		return dao.memHotSelect(hm);
 	}
 
 	@Override
-	public int memHotSelectService(int buildNo) {
-		return dao.memHotSelect(buildNo);
-	}
-
-	@Override
-	public void memHotDeleteService(int buildNo) {
-		dao.memHotDelete(buildNo);
+	public void memHotDeleteService(HashMap<String, Object> hm) {
+		dao.memHotDelete(hm);
 		
 	}
 
 	@Override
-	public String myHotService() {
-		return dao.myHot();
+	public String myHotService(String email) {
+		return dao.myHot(email);
 	}
 
 	@Override
@@ -223,8 +160,8 @@ public class MapServiceImpl implements MapService {
 	}
 
 	@Override
-	public String myRecentService() {
-		return dao.myRecent();
+	public String myRecentService(String email) {
+		return dao.myRecent(email);
 	}
 
 	@Override
@@ -234,13 +171,13 @@ public class MapServiceImpl implements MapService {
 	}
 
 	@Override
-	public int memRecentSelectService(String buildNo) {
-		return dao.memRecentSelect(buildNo);
+	public int memRecentSelectService(HashMap<String, Object> hm) {
+		return dao.memRecentSelect(hm);
 	}
 
 	@Override
-	public void memRecentUpdateService(String reRecent) {
-		dao.memRecentUpdate(reRecent);	
+	public void memRecentUpdateService(HashMap<String, Object> hm) {
+		dao.memRecentUpdate(hm);	
 	}
 
 	@Override
@@ -301,4 +238,53 @@ public class MapServiceImpl implements MapService {
 	public List<PriceDTO> priceSelectService(BuildDTO dto) {
 		return dao.priceSelect(dto);
 	}
+
+	
+	/* admin 그래프 */
+		/* 매물현황 */
+	@Override
+	public int selectBuildPieService(Map<String, Object> buildPieMap) {
+		return dao.selectBuildPie(buildPieMap);
+	}
+
+	@Override
+	public int selectBuildBarService(Map<String, Object> buildBarMap) {
+		return dao.selectBuildBar(buildBarMap);
+	}
+
+	@Override
+	public int selectBuildLineService(Map<String, Object> buildLineMap) {
+		return dao.selectBuildLine(buildLineMap);
+	}
+
+		/* 매출현황 */
+	@Override
+	public int selectBuildBarYearService(Map<String, Object> buildBarYearMap) {
+		return dao.selectBuildBarYear(buildBarYearMap);
+	}
+
+	@Override
+	public int selectBuildBarMonthService(Map<String, Object> buildBarMonthMap) {
+		return dao.selectBuildBarMonth(buildBarMonthMap);
+	}
+
+	@Override
+	public int selectBuildLineYearService(Map<String, Object> buildLineYearMap) {
+		return dao.selectBuildLineYear(buildLineYearMap);
+	}
+
+	@Override
+	public int selectBuildLineDayService(Map<String, Object> buildLineDayMap) {
+		return dao.selectBuildLineDay(buildLineDayMap);
+	}
+	@Override
+	public List<BuildDTO> selectBuildAllService(Map<String, Object> hm) {
+		return dao.selectBuildAll(hm);
+	}
+
+	@Override
+	public int countBuildAllService() {
+		return dao.countBuildAll();
+	}
+
 }

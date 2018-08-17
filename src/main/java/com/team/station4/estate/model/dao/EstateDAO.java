@@ -8,4 +8,6 @@ public interface EstateDAO {
 	EstateDTO procheck(EstateDTO dto);
 	EstateDTO esselect(EstateDTO dto);
 	EstateDTO lrselect(EstateDTO dto);
+	EstateDTO proOutput(int eno);
+	void addrChange(EstateDTO change1);
 }

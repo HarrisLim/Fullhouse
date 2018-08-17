@@ -31,6 +31,11 @@
 		</param-value>
 	</context-param>
 	
+	<!-- 세션 시간 관리 -->
+	<session-config>
+	    <session-timeout>30</session-timeout>
+	</session-config>
+	
 	<!-- Security filter 추가 -->
 	
 	<listener>

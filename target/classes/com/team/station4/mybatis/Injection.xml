@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.team.station4.injection">
+
+
+	<!--빌드넘버 최대값 구하는 쿼리문 -->
+	<select id="myMax" resultType="int">
+		select count(BUILD_NO) from BUILDING
+	</select>
+	
+	<!--  resultInjection   -->
+	<insert id="myInjection" parameterType="Build">
+		insert into BUILDING values (BUILD_NO_SEQ.nextval, #{address}, #{buildType}, #{proType}, #{wholeFloor}, #{floor}, #{jArea}, #{gArea}, 0, 
+		#{picPath}, null, #{lat}, #{lng}, #{roomTitle}, #{explainText}, #{privateMemo}, #{buildState}, #{bu_rdate}, #{st_no}, #{estate_no}, null)
+	</insert>
+	
+	<select id="myCount" resultType="int">
+		select count(*) from BUILDING
+	</select>
+		
+	<insert id="myInsertPrice" parameterType="HashMap">
+		insert into PRICE values(PRICE_NO_SEQ.nextval, #{lease}, null, #{monthly}, #{deposit}, #{build_no})
+	</insert>
+				
+	<insert id="myInsertAddInfo" parameterType="HashMap">
+		insert into ADDINFO values(ADDINFO_NO_SEQ.nextval, #{costfee}, #{internet}, #{cost_tv}, #{cleanfee}, #{waterfee}, 
+		#{gas}, #{electricity}, #{parking}, #{elevator}, #{heat}, #{animal}, SYSDATE, #{aircon}, #{washing}, #{bed}, #{desk}, #{closet}, 
+		#{option_tv}, #{fridge}, #{shoerack}, #{gasstove}, #{induction}, #{microwave}, #{doorlock}, #{bidet}, #{build_no})
+	</insert>
+
+</mapper>

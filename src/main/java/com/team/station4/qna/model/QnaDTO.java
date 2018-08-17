@@ -9,10 +9,11 @@ public class QnaDTO {
 	private Date qna_rdate;
 	private String reply;
 	private String questioner;
+	private int done;
 	
 	QnaDTO(){}
 
-	public QnaDTO(int qna_no, String subject, String content, Date qna_rdate, String reply, String questioner) {
+	public QnaDTO(int qna_no, String subject, String content, Date qna_rdate, String reply, String questioner, int done) {
 		super();
 		this.qna_no = qna_no;
 		this.subject = subject;
@@ -20,6 +21,7 @@ public class QnaDTO {
 		this.qna_rdate = qna_rdate;
 		this.reply = reply;
 		this.questioner = questioner;
+		this.done = done;
 	}
 
 	public int getQna_no() {
@@ -68,7 +70,16 @@ public class QnaDTO {
 
 	public void setQuestioner(String questioner) {
 		this.questioner = questioner;
-	};
+	}
+
+	public int getDone() {
+		return done;
+	}
+
+	public void setDone(int done) {
+		this.done = done;
+	}
+
 	
 	
 }

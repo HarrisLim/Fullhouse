@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="com.team.station4.bp">
+		<resultMap type="Price" id="Price">
+			<result property="priceno" column="PRICENO" />
+			<result property="lease" column="LEASE" />
+			<result property="salePrice" column="SALEPRICE" />
+			<result property="monthly" column="MONTHLY" />
+			<result property="deposit" column="DEPOSIT" />
+			<result property="build_no" column="BUILD_NO" />
+		</resultMap>
+		
+		<resultMap id="Build" type="Build">
+			<result property="build_no" column="BUILD_NO" />
+			<result property="address" column="ADDRESS"/>
+			<result property="buildType" column="BUILDTYPE" />
+			<result property="proType" column="PROTYPE" />
+			<result property="wholeFloor" column="WHOLEFLOOR" />
+			<result property="floor" column="FLOOR" />
+			<result property="jArea" column="JAREA" />
+			<result property="gArea" column="GAREA" />
+			<result property="view_count" column="VIEW_COUNT" />
+			<result property="picPath" column="PICPATH" />
+			<result property="reservation_time" column="RESERVATION_TIME" />
+			<result property="lat" column="LAT" />
+			<result property="lng" column="LNG" />
+			<result property="roomTitle" column="ROOMTITLE" />
+			<result property="explainText" column="EXPLAINTEXT" />
+			<result property="privateMemo" column="PRIVATEMEMO" />
+			<result property="buildState" column="BUILDSTATE" />
+			<result property="bu_rdate" column="BU_RDATE" />
+			<result property="st_no" column="ST_NO" />
+			<result property="estate_no" column="ESTATE_NO" />
+			<result property="mem_no" column="MEM_NO" />
+			<collection property="priceDTO" javaType="java.util.ArrayList" resultMap="Pirce"> </collection>
+		</resultMap>
+		
+		<select id="mySelect" parameterType="Map" resultType="Build"> 
+			select * from(
+			select ads.*, ROWNUM rn from(
+			select a.build_no, a.address, a.proType, a.wholeFloor, a.floor, a.jArea, a.gArea, a.view_count, a.lat, a.lng, a.picPath, a.roomTitle, a.explainText, a.privateMemo, b.deposit, b.salePrice, 
+			b.monthly, b.lease, a.estate_no, c.parking, c.animal, a.BUILDTYPE from 
+			BUILDING a, PRICE b, ADDINFO c where a.build_no(+)=b.build_no and a.build_no = c.build_no and b.build_no=c.build_no AND a.LNG between #{west} and #{east} order by a.BUILD_NO desc) ads 
+			where LAT between #{south} and #{north}
+			<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
+			<if test="proType != null and proType != '전체' ">
+				AND PROTYPE=#{proType}
+			</if>
+			
+			<!-- 매물 종류 -->
+			<choose>
+			<when test="buildType != null and buildType == '월세' ">
+				 AND BUILDTYPE=1
+			</when>
+			<when test="buildType != null and buildType == '전세' ">
+				 AND BUILDTYPE=2
+			</when>
+			<when test="buildType != null and buildType == '매매' ">
+				 AND BUILDTYPE=3
+			</when>
+			<when test="buildType != null and buildType == '월세or전세' ">
+				 AND BUILDTYPE=4
+			</when>
+			</choose>
+			
+			<!-- 거래 종류 -->			
+			<choose>
+				<when test="kind_of_trade != null and kind_of_trade == '중개' ">
+					 AND ESTATE_NO between 1 and 999999
+				</when>
+				<when test="kind_of_trade != null and kind_of_trade == '직거래' ">
+					 AND MEM_NO between 1 and 999999
+				</when>
+
+			</choose>
+			
+			<!-- 보증금 -->	
+			<if test="beginDeposit != null and endDeposit != null" >
+				AND DEPOSIT between #{beginDeposit} and #{endDeposit}
+			</if>
+			
+			<!-- 월세-->	
+			<if test="beginRent != null and endRent != null" >
+				AND MONTHLY between #{beginRent} and #{endRent}
+			</if>
+			
+			<!-- 주차 -->	
+			<if test="parking != null" >
+				AND PARKING = #{parking}
+			</if>
+			
+			<!-- 반려동물 -->	
+			<if test="animal != null " >
+				AND ANIMAL = #{animal}
+			</if>
+			
+			<!-- 층수 -->	
+			<if test="startFloor != null and endFloor != null" >
+				AND FLOOR between #{startFloor} and #{endFloor}
+			</if>
+			
+			<!-- 전용면적 -->	
+			<if test="startArea != null and endArea != null" >
+				AND GAREA between #{startArea} and #{endArea}
+			</if>
+			)where rn between #{start} and #{last}
+		</select>
+
+		
+		
+		
+		</mapper>

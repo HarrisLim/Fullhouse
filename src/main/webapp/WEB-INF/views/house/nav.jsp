@@ -21,9 +21,92 @@
 		    xhr.setRequestHeader(header, token);
 		});
 	});
+	
+	// 내 계정 스크립트	
+	$(function(){
 		
-	// 비밀번호 확인
+		// 폰 번호 나눠 넣기 ~
+		var phone = $('#mPhone').val();
+		var sharePh = phone.split("-", 3);
+		for ( var i in sharePh){
+			console.log(sharePh[i]);
+		}
+		$("#p1").val(sharePh[0]);
+		$("#p2").val(sharePh[1]);
+		$("#p3").val(sharePh[2]);
+		
+		//내 계정 정보 변경 전 정보확인 스크립트
+		$('#myinfoB1').click(function(){
+			alert(" 내계정 바꿔보까~?")
+			
+			if( $('#nowPw').val() == "" ){
+				alert ("현재 비밀번호가 비어있습니다! 확인해주세요. ")
+				$('#nowPw').focus();
+				return;
+			}
+			if( $('#changePw1').val() == "" || $('#changePw12').val() == "" ){
+				alert ("변경할 비밀번호가 비어 있습니다! 확인해주세요.")
+				$('#changePw1').focus();
+				return;
+			}
+			$.ajax({
+				type:'POST',
+				url:'chkPw.do',
+				data:{ mem_email : $('#myEmail').val() , mem_pw : $('#nowPw').val() },
+				success : function(responseData){
+					alert ( "responseData.count : " + responseData.count )
+					if( responseData.count == 0) {
+						alert ( '현재 비밀번호가 틀립니다.' )
+						return;
+					}else{
+						if( $('#changePw1').val() != $('#changePw2').val() ){
+							alert( '변경할 비밀번호가 동일 하지 않습니다.' )
+							$('#changePw1').focus();
+							return;
+						}else{
+							$("#myinfo").submit();
+							alert( '변경 완료 ^^' )
+						}
+					}
+				}
+			})
+		});
+	});
+	// 로그인 실패시 로그인창 활성화
 	window.onload = function(){
+		
+		
+		
+		// 프로 회원가입 비번 중복 체크 
+		$(document).ready(function() {
+			$('#st_pw').keyup(function(){
+				if( $('#st_pw').val() != $('#st_pwcheck').val()){
+					$('#profont2').text('');
+					$('#profont2').html('<b>암호틀림</b>');
+				}else{
+					$('#profont2').text('');
+					$('#profont2').text('암호맞음');
+				}
+			});  // st_pw keyup
+			
+			$('#st_pwcheck').keyup(function(){
+				if( $('#st_pw').val() != $('#st_pwcheck').val()){
+					$('#profont2').text('');
+					$('#profont2').html('<b>암호틀림</b>');
+				}else{
+					$('#profont2').text('');
+					$('#profont2').text('암호맞음');
+				}
+			});  // st_pwcheck keyup
+		});
+		// 로그인 실패시...
+		function showLogin(type){
+			if(type==='1')
+				$("#logA").click(); 
+		}
+		
+		(function() { showLogin($("#whenFail").val()); }());
+		// 비번 중복 체크
 		$('#inputPw1').keyup(function(){
 			if( $('#inputPw1').val() != $('#inputPw2').val()){
 				$('#font2').text('');
@@ -49,7 +132,7 @@
 			if( $("#input_email").val() === "" ){
 				alert("이메일 주소가 비어있습니다. 적어 주세요.")
 				return;
-			}else if( $("#input_password").val() === "" ){
+			}else if( $("#input_pw").val() === "" ){
 				alert("비밀번호가 비어있습니다. 채워 주세요.")
 				return;
 			}
@@ -77,6 +160,7 @@
 				});
 			} */
 		// mem_pw : $('#input_pw').val()
+		
 		// 이메일 주소 중복 체크
 		$('#inputEmail').keyup(function(){
 			
@@ -135,15 +219,10 @@
 		
 	}
 /* <sec:authorize access="isAnonymous()">
-
 	<a href="${CONTEXT }/j_spring_security_check">로그인</a>
-
 </sec:authorize>
-
 <sec:authorize access="isAuthenticated()">
-
 	<a href="${CONTEXT }/j_spring_security_logout">로그아웃</a>
-
 </sec:authorize> */
 
 </script>
@@ -162,13 +241,18 @@
 	            <li class="nav-item active" >
 	              <a class="nav-link text-dark" href="../house/myinfo.do">FHS Pro</a>
 	            </li>
+	            <sec:authorize access="isAuthenticated()">
+		            <li class="nav-item active" >
+		              <a class="nav-link text-dark" href="../house/uploadroom.do">방 등록</a>
+		            </li>
+	            </sec:authorize>
 	            <li class="nav-item dropdown">
 	              <a class="nav-link dropdown-toggle text-dark" href="#" id="navbar_main_dropdown_1" role="button" data-toggle="dropdown" 
 	              												aria-haspopup="true" aria-expanded="false">검색</a>
 	              <div class="dropdown-menu " aria-labelledby="navbar_1_dropdown_1">
 	                <a class="dropdown-item text-dark" href="../house/map.do">방 검색</a>
-	                <a class="dropdown-item text-dark" href="../house/uploadroom.do">방 등록</a>
-	                <a class="dropdown-item text-dark" href="../house/room.do">관심 목록</a>
+	                <a class="dropdown-item text-dark" href="../house/myMap.do">관심 목록</a>
+	                <!-- <a class="dropdown-item text-dark" href="../house/uploadroom.do">방 등록</a> -->
 	              </div>
 	            </li>
 	            <li class="nav-item" >
@@ -176,29 +260,39 @@
 	            </li>
 	            <li>
 	            	<sec:authorize access="isAnonymous()">
-	            		<a id="xxxxx" class="nav-link text-dark" data-toggle="modal" href="<c:url value="#myModal"/>">회원가입 및 로그인</a>
+	            		<a id="logA" class="nav-link text-dark" data-toggle="modal" href="<c:url value="#myModal"/>">회원가입 및 로그인</a>
 	            	</sec:authorize>
 	            	<sec:authorize access="isAuthenticated()">
 						<form:form action="../logout" method="POST">
 							<div class="dropdown">
-							<c:if test="${sessionScope.type eq 'mem'}">
-							    <button type="button" class="nav-link text-dark dropdown-toggle" id="logout" name="logout" value="title" 
-							    	aria-expanded="true" data-toggle="dropdown">${sessionScope.mem.mem_name.substring(2)} 님</button>
-							</c:if>
-							<c:if test="${sessionScope.type eq 'staff'}">
-							    <button type="button" class="nav-link text-dark dropdown-toggle" id="logout" name="logout" value="title" 
-							    	aria-expanded="true" data-toggle="dropdown">${sessionScope.st.st_name.substring(2)} 님</button>
-							</c:if>
-							    <ul id="mytype" class="dropdown-menu" role="menu" aria-labelledby="searchType">
-							        <li role="presentation" align="">
-							            <button type="button" role="menuitem" tabindex="-1">
-							            <a class="text-dark nav-item"href="../house/myinfo.do">내 계정</a></button>
-							        </li>
-							        <li role="presentation">
-										<input type="submit" class="text-dark nav-item" role="menuitem" tabindex="-1" value="로그 아웃"/>
-										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-									</li>
-							    </ul>		
+								<c:if test="${sessionScope.type eq 'mem'}">
+								    <button type="button" class="nav-link text-dark dropdown-toggle" id="logout" name="logout" value="title" 
+								    	aria-expanded="true" data-toggle="dropdown">${sessionScope.mem.mem_name.substring(2)} 님</button>
+								    	<ul id="mytype" class="dropdown-menu" role="menu" aria-labelledby="searchType">
+								        <li role="presentation">
+								            <button type="button" role="menuitem" tabindex="-1">
+								            <a class="text-dark nav-item"href="../house/myinfo.do">내 계정</a></button>
+								        </li>
+								        <li role="presentation">
+											<input type="submit" class="text-dark nav-item" role="menuitem" tabindex="-1" value="로그 아웃"/>
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+										</li>
+								    </ul>
+								</c:if>
+								<c:if test="${sessionScope.type eq 'staff'}">
+								    <button type="button" class="nav-link text-dark dropdown-toggle" id="logout" name="logout" value="title" 
+								    	aria-expanded="true" data-toggle="dropdown">${sessionScope.st.st_name.substring(2)} 님</button>
+								    	<ul id="mytype" class="dropdown-menu" role="menu" aria-labelledby="searchType">
+								        <li role="presentation">
+								            <button type="button" role="menuitem" tabindex="-1">
+								            <a class="text-dark nav-item"href="../house/proinfo.do">내 계정</a></button>
+								        </li>
+								        <li role="presentation">
+											<input type="submit" class="text-dark nav-item" role="menuitem" tabindex="-1" value="로그 아웃"/>
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+										</li>
+								    </ul>
+								</c:if>
 						    </div>
 						</form:form>
 					</sec:authorize>
@@ -216,10 +310,10 @@
 			            <span class="clearfix"></span>
 						<form class="form-primary" id="log" name="log" action="../j_spring_security_check" method="post" >
 						<div class="form-group">
-						  <input type="email" class="form-control" id="input_email" name="mem_email" placeholder="Your email" value="haha4498@gmail.com">
+						  <input type="email" class="form-control" id="input_email" name="mem_email" placeholder="Your email" value="harris@gmail.com">
 						</div>
 						<div class="form-group">
-						  <input type="password" class="form-control" id="input_pw" name="mem_pw" placeholder="Password" value="12345">
+						  <input type="password" class="form-control" id="input_pw" name="mem_pw" placeholder="Password" value="1234">
 						</div>
 							<input type="button" id="logIn" class="btn btn-block btn-lg bg-white mt-4" value="로그인" >
 							<a data-toggle="modal" href="#myModal2" class="btn btn-primary btn-lg btn-block">회원가입</a>

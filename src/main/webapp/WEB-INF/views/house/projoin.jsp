@@ -90,29 +90,7 @@
 	                            }
 	                    });
 	            } */
-				
-			/* $(document).ready(function() {
-				$('#st_pw').keyup(function(){
-					if( $('#st_pw').val() != $('#st_pwcheck').val()){
-						$('#profont2').text('');
-						$('#profont2').html('<b>암호틀림</b>');
-					}else{
-						$('#profont2').text('');
-						$('#profont2').text('암호맞음');
-					}
-				});  // st_pw keyup
-				
-				$('#st_pwcheck').keyup(function(){
-					if( $('#st_pw').val() != $('#st_pwcheck').val()){
-						$('#profont2').text('');
-						$('#profont2').html('<b>암호틀림</b>');
-					}else{
-						$('#profont2').text('');
-						$('#profont2').text('암호맞음');
-					}
-				});  // st_pwcheck keyup
-			}); */
-					
+	            
 			function semCheck1(){
 				
 				$.ajax({
@@ -309,11 +287,6 @@
 								alert("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
 								return false;
 							}
-							/* if(!chkPwd( $.trim($('#mpassword').val()))){
-							   $('#mpassword').val('');
-							   $('#mpassword').focus();
-							   return false;
-							} */
 						}
 						if( $('#st_pw').val() != $('#st_pwcheck').val()){
 							alert("비밀번호가 같지 않습니다 다시 입력해주세요")
@@ -399,8 +372,9 @@
 							</tr>
 							<tr>
 								<th>사업자 등록번호</th>
-								<td><input style="width:14%" id="lrno1" name="lrno1" value="4">&nbsp;-&nbsp;<input style="width:14%" id="lrno2" name="lrno2" value="5">&nbsp;-&nbsp;
-								<input style="width:14%" id="lrno3" name="lrno3" value="6">
+								<td><input style="width:14%" id="lrno1" name="lrno1" value="4">
+								&nbsp;-&nbsp;<input style="width:14%" id="lrno2" name="lrno2" value="5">
+								&nbsp;-&nbsp;<input style="width:14%" id="lrno3" name="lrno3" value="6">
 								<input type="hidden" id="lrno" name="lrno" value=""/>
 								<input type="button" id="lrCheck" name="lrCheck" class="btn btn-sm btn-outline-primary" onClick="lrnoCheck('check')" value="인증">
 								<p> 인증 확인 후 회원가입이 가능합니다.</p>

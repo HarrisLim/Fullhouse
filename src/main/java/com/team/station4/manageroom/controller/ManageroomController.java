@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.team.station4.main.model.MainDTO;
 import com.team.station4.manageroom.service.ManageroomService;
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.model.service.MapService;
@@ -42,22 +44,42 @@ public class ManageroomController {
 	HashMap<BuildDTO, List<PriceDTO>> mapList = new HashMap<BuildDTO, List<PriceDTO>>();
 	Set<BuildDTO> set = new HashSet<BuildDTO>();
 	List<BuildDTO> buildList;
+	int estateNo = -1;
+	int memNo = -1;
+	String type = "";
+	
+	public void whoIs(HttpSession session) {
+		estateNo=-1; memNo=-1; type=""; // clear
+		
+		type = (String)session.getAttribute("type");
+		if(type!=null) {
+			if(type.equals("mem")) {
+				MainDTO seMemberDTO = (MainDTO)session.getAttribute("mem");
+				System.out.println("seMemberDTO: "+ seMemberDTO);
+				if(seMemberDTO.getMem_email().equals("harris@gmail.com")) return; // admin일 때, 
+				memNo = seMemberDTO.getMem_no();
+			}else { // type == "staff"
+				StaffDTO seStaffDTO = (StaffDTO)session.getAttribute("st");
+				estateNo = seStaffDTO.getEstate_no();
+			}	
+		}
+	}
 	
 	@RequestMapping(value="house/manageroom.do", method=RequestMethod.GET)
-	public ModelAndView manageroom(PagingVo pagingVo) {
+	public ModelAndView manageroom(PagingVo pagingVo, HttpSession session) {
 		
 		// 매물관리
 		ModelAndView mv = new ModelAndView();
 
 		Map<String, Object> hm = new HashMap<String, Object>();
-		System.out.println("111: " + pagingVo.getStart());
-		System.out.println("222: " + pagingVo.getLast());
 		hm.put("start", pagingVo.getStart());
 		hm.put("last", pagingVo.getLast());
 		
+		whoIs(session);
+		
 		mv.setViewName("house/manageroom");
-		int estateNo = 1; // 일단 1로 셋팅해놓자. 로그인 세션이 될 때까지.
 		buildDTO.setEstate_no(estateNo);
+		buildDTO.setMem_no(memNo);
 		hm.put("buildDTO", buildDTO);
 		buildList = mrService.mrBuildSelectService(hm);
 		
@@ -69,16 +91,19 @@ public class ManageroomController {
 			mapList.put(buildList.get(i), priceList);
 			set.add(buildList.get(i));
 		}
-		
-		int count = mService.countBuildService(hm); // 이거 동적으로 가져오게 하자. 
+		int count = 0;
+		if(estateNo==-1 && memNo==-1) count = mService.countBuildAllService();
+		else count = mService.countBuildService(hm); // 이거 동적으로 가져오게 하자.
+			
 		pagingVo.setTotal(count);
 		
 		
 		// 직원관리 
-		List<StaffDTO> staffList = sfService.estateSelectService(estateNo); // 아직은 estateNo은 임시로. 세션받으면 그 때 처리하자.
+		List<StaffDTO> staffList = sfService.estateSelectService(estateNo); 
 		for(StaffDTO s: staffList) s.setSt_name(s.getSt_name().substring(2)); // 이름 앞에 있는 프로토콜 제거
 		
-		mv.addObject("requestList", getBuildRequestList(estateNo));		
+		mv.addObject("requestList", getBuildRequestList(estateNo));
+		mv.addObject("type", type);
 		mv.addObject("staffList", staffList);
 		mv.addObject("buildList", buildList);
 		mv.addObject("count", count);
@@ -111,7 +136,7 @@ public class ManageroomController {
 	/* 매물검색 ajax */
 	@ResponseBody
 	@RequestMapping(value="house/searchbuild.do", method=RequestMethod.POST)
-	public ModelAndView deleteBuild(@RequestBody Map<String, Object> arr) {
+	public ModelAndView deleteBuild(@RequestBody Map<String, Object> arr, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		Map<String, Object> hm = new HashMap<String, Object>();
 		
@@ -120,7 +145,10 @@ public class ManageroomController {
 		if(buildList!=null) buildList.removeAll(buildList);
 		if(set!=null) set.removeAll(set);
 		
-		int estateNo = 1; // 임시, 세션으로 받자. 
+		whoIs(session);
+		
+		System.out.println("testtest: "+estateNo+", "+memNo);
+		buildDTO.setMem_no(memNo);
 		buildDTO.setEstate_no(estateNo);
 		PagingVo pagingVo = new PagingVo();
 		
@@ -131,10 +159,10 @@ public class ManageroomController {
 		hm.put("start", pagingVo.getStart());
 		hm.put("last", pagingVo.getLast());
 
-		System.out.println("start: "+ pagingVo.getStart());
-		System.out.println("last: "+ pagingVo.getLast());
-		System.out.println("clickedState: "+ arr.get("clickedState"));
-		System.out.println("hot: "+ arr.get("hot"));
+//		System.out.println("start: "+ pagingVo.getStart());
+//		System.out.println("last: "+ pagingVo.getLast());
+//		System.out.println("clickedState: "+ arr.get("clickedState"));
+//		System.out.println("hot: "+ arr.get("hot"));
 		hm.put("buildState", arr.get("clickedState"));
 		
 		String strValue = "";
@@ -156,21 +184,43 @@ public class ManageroomController {
 			buildDTO.setPrivateMemo(strValue); // 메모검색 
 			buildList = mrService.mrSearchBuildMemoSelectService(hm);
 		}
-
-		System.out.println("before buildList: ");
-		for(BuildDTO s: buildList) {
-			System.out.println("buildList: "+ s);
-		}
 		
-		int count = mService.countBuildService(hm); // 이거 동적으로 가져오게 하자. 
+		int count = 0;
+		if(estateNo==-1 && memNo==-1) count = mService.countBuildAllService();
+		else count = mService.countBuildService(hm); // 이거 동적으로 가져오게 하자.
 		pagingVo.setTotal(count);
+		
 		for(int i=0; i<buildList.size(); i++) {
 			buildDTO.setBuild_no(buildList.get(i).getBuild_no());
 			List<PriceDTO> priceList = mrService.mrPriceSelectService(buildDTO);
-			System.out.println("priceList: "+priceList.size());
 			mapList.put(buildList.get(i), priceList);
 			set.add(buildList.get(i));
 		}
+		
+		
+		if(estateNo==-1&&memNo==-1) {
+			System.out.println("hihihi");
+			if(mapList!=null) mapList.keySet().removeAll(set);
+			if(buildList!=null) buildList.removeAll(buildList);
+			if(set!=null) set.removeAll(set);
+			
+			hm.put("buildDTO", buildDTO);
+			buildList = mService.selectBuildAllService(hm); 
+			mapList = new HashMap<BuildDTO, List<PriceDTO>>();
+			Set<BuildDTO> set = new HashSet<BuildDTO>();
+			
+			// buildList하나당 price가 여러개니까 2차원배열을 사용해서 jsp로 데이터전송, 인접리스트같은 느낌으로 넣었다. 
+			for(int i=0; i<buildList.size(); i++) {
+				buildDTO.setBuild_no(buildList.get(i).getBuild_no());
+				List<PriceDTO> priceList = mrService.mrPriceSelectService(buildDTO);
+				System.out.println("priceList: "+priceList.size());
+				mapList.put(buildList.get(i), priceList);
+				set.add(buildList.get(i));
+			}
+		}
+		
+		
+		mv.addObject("type", type);
 		mv.addObject("mapList", mapList);
 		mv.addObject("count", count);
 		mv.addObject("buildList", buildList);
@@ -180,12 +230,14 @@ public class ManageroomController {
 	
 	@ResponseBody
 	@RequestMapping(value="house/updateverify.do", method=RequestMethod.POST)
-	public ModelAndView updateVerify(@RequestParam("st_no") int st_no) {
+	public ModelAndView updateVerify(@RequestParam("st_no") int st_no, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("jsonView");
 		sfService.verifyUpdateService(st_no);
-		int estateNo = 1;
-		List<StaffDTO> staffList = sfService.estateSelectService(estateNo); // 아직은 estateNo은 임시로. 세션받으면 그 때 처리하자.
+		
+		whoIs(session);
+		
+		List<StaffDTO> staffList = sfService.estateSelectService(estateNo);
 		for(StaffDTO s: staffList) s.setSt_name(s.getSt_name().substring(2)); // 이름 앞에 있는 프로토콜 제거
 		mv.addObject("staffList", staffList);
 		return mv;
@@ -208,11 +260,11 @@ public class ManageroomController {
 
 	@ResponseBody
 	@RequestMapping(value="house/donecall.do", method=RequestMethod.POST)
-	public ModelAndView doneCall(@RequestParam("request_no") int request_no) {
+	public ModelAndView doneCall(@RequestParam("request_no") int request_no, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		mService.deleteRequestDoneCallService(request_no);
-		int estateNo = 1;
 		
+		whoIs(session);
 
 		mv.setViewName("jsonView");
 		mv.addObject("requestList", getBuildRequestList(estateNo));
@@ -222,7 +274,7 @@ public class ManageroomController {
 	
 	
 	List<Map<String, Object>> getBuildRequestList(int estate_no){
-		List<BuildDTO> buildRequestList = mService.selectBuildRequestService(estate_no); // 아직은 estateNo은 임시로. 세션받으면 그 때 처리하자.
+		List<BuildDTO> buildRequestList = mService.selectBuildRequestService(estate_no);
 		List<Map<String, Object>> requestList = new ArrayList<Map<String, Object>>();
 		for(int i=0; i<buildRequestList.size(); i++) {
 			Map<String, Object> rMap = new HashMap<String, Object>();

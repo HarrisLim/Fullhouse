@@ -1,5 +1,6 @@
 package com.team.station4.map.model.dao;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,9 +9,13 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.team.station4.estate.model.EstateDTO;
+import com.team.station4.main.model.MainDTO;
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.vo.PagingVo;
 import com.team.station4.room.model.RequestDTO;
+import com.team.station4.staff.model.StaffDTO;
+import com.team.station4.uploadroom.model.AddInfoDTO;
 import com.team.station4.uploadroom.model.PriceDTO;
 
 @Repository
@@ -19,10 +24,11 @@ public class MapDAOImpl implements MapDAO {
 	@Autowired
 	SqlSessionTemplate sqlsession;
 	private String ns = "com.team.station4.map";
+	private String bp = "com.team.station4.bp";
 	
 	@Override
 	public List<BuildDTO> mapList(Map jsonLatLng){
-		return sqlsession.selectList(ns+".mySelect", jsonLatLng);
+		return sqlsession.selectList(bp+".mySelect", jsonLatLng);
 	}
 	
 	
@@ -42,58 +48,32 @@ public class MapDAOImpl implements MapDAO {
 	}
 	
 	@Override
-	public void insertInjection(BuildDTO dto) {
-		sqlsession.insert(ns+".myInjection", dto);
-	}
-	
-	@Override
-	public void insertPrice(HashMap price) {
-		sqlsession.insert(ns+".myInsertPrice", price);
-	}
-	
-	@Override
-	public int count() {
-		return sqlsession.selectOne(ns+".myCount");
-	}
-	
-	@Override
 	public List<BuildDTO>clusterList(Map hm){
 		return sqlsession.selectList(ns+".myClusterList", hm);
-	}
-	
-	@Override
-	public void InsertAddInfo(HashMap addInfo) {
-		sqlsession.insert(ns+".myInsertAddInfo", addInfo);
-	}
-
-
-	@Override
-	public int myMax() {
-		return sqlsession.selectOne(ns+".myMax");
 	}
 
 	///// 아래부터 찜 관련 ///////////
 	@Override
-	public void memHotUpdate(int buildNo) {
-		sqlsession.update(ns+".myMemHotUpdate", buildNo);
+	public void memHotUpdate(HashMap<String, Object> hm) {
+		sqlsession.update(ns+".myMemHotUpdate", hm);
 	}
 
 
 	@Override
-	public int memHotSelect(int buildNo) {
-		return sqlsession.selectOne(ns+".myHotSelect", buildNo);
+	public int memHotSelect(HashMap<String, Object> hm) {
+		return sqlsession.selectOne(ns+".myHotSelect", hm);
 	}
 
 
 	@Override
-	public void memHotDelete(int buildNo) {
-		sqlsession.update(ns+".myMemHotDelete", buildNo);	
+	public void memHotDelete(HashMap<String, Object> hm) {
+		sqlsession.update(ns+".myMemHotDelete", hm);	
 	}
 
 
 	@Override
-	public String myHot() {
-		return sqlsession.selectOne(ns+".myHot");
+	public String myHot(String email) {
+		return sqlsession.selectOne(ns+".myHot", email);
 	}
 
 
@@ -103,8 +83,8 @@ public class MapDAOImpl implements MapDAO {
 	}
 
 	@Override
-	public String myRecent() {
-		return sqlsession.selectOne(ns+".myRecent");
+	public String myRecent(String email) {
+		return sqlsession.selectOne(ns+".myRecent", email);
 	}
 
 
@@ -115,14 +95,14 @@ public class MapDAOImpl implements MapDAO {
 
 
 	@Override
-	public int memRecentSelect(String buildNo) {
-		return sqlsession.selectOne(ns+".myRecentSelect", buildNo);
+	public int memRecentSelect(HashMap<String, Object> hm) {
+		return sqlsession.selectOne(ns+".myRecentSelect", hm);
 	}
 
 
 	@Override
-	public void memRecentUpdate(String reRecent) {
-		sqlsession.update(ns+".myMemRecentUpdate", reRecent);
+	public void memRecentUpdate(HashMap<String, Object> hm) {
+		sqlsession.update(ns+".myMemRecentUpdate", hm);
 	}
 
 
@@ -199,5 +179,61 @@ public class MapDAOImpl implements MapDAO {
 	public List<PriceDTO> priceSelect(BuildDTO BuildDTO) {
 		return sqlsession.selectList(ns+".myPriceSelect", BuildDTO);
 	}
+
+	/* admin 그래프 */
+		/* 매물현황 */
+	@Override
+	public int selectBuildPie(Map<String, Object> buildPieMap) {
+		return sqlsession.selectOne(ns+".selectBuildPie", buildPieMap);
+	}
+
+
+	@Override
+	public int selectBuildBar(Map<String, Object> buildBarMap) {
+		return sqlsession.selectOne(ns+".selectBuildBar", buildBarMap);
+	}
+
+
+	@Override
+	public int selectBuildLine(Map<String, Object> buildLineMap) {
+		return sqlsession.selectOne(ns+".selectBuildLine", buildLineMap);
+	}
+
+		/* 매출현황 */
+	@Override
+	public int selectBuildBarYear(Map<String, Object> buildBarYearMap) {
+		return sqlsession.selectOne(ns+".selectBuildBarYear", buildBarYearMap);
+	}
+
+
+	@Override
+	public int selectBuildBarMonth(Map<String, Object> buildBarMonthMap) {
+		return sqlsession.selectOne(ns+".selectBuildBarMonth", buildBarMonthMap);
+	}
+
+
+	@Override
+	public int selectBuildLineYear(Map<String, Object> buildLineYearMap) {
+		return sqlsession.selectOne(ns+".selectBuildLineYear", buildLineYearMap);
+	}
+
+
+	@Override
+	public int selectBuildLineDay(Map<String, Object> buildLineDayMap) {
+		return sqlsession.selectOne(ns+".selectBuildLineDay", buildLineDayMap);
+	}
+
+
+	@Override
+	public List<BuildDTO> selectBuildAll(Map<String, Object> hm) {
+		return sqlsession.selectList(ns+".mySelectAll", hm);                                             
+	}
+
+
+	@Override
+	public int countBuildAll() {
+		return sqlsession.selectOne(ns+".myCountAll");
+	}
+
 
 }

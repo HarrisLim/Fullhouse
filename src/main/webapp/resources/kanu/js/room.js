@@ -5,7 +5,65 @@
 ////////////////////////////////  지 도 시 작 ///////////////////////////////////////////////////////////////
 
 
+
+
+function heart(that){
+	var seq = $("#build_no").val();
+	console.log("build_no: "+seq);
+	$.ajax({
+		url : "heart.do",
+		type : "POST",
+		data : {"seq" : seq},
+		success : function(){
+			console.log("찜클릭 성공");
+			var html = "<button class='btn btn-outline-tertiary' id='heart' onClick='heart(this)' style='background-color:red;' disabled>찜 완료! </button>&nbsp;&nbsp;&nbsp;";
+			$("#heart_div").empty().append(html);
+		}
+	});
+	
+}
+
+function viewCount(that){
+	var seq = $("#build_no").val();
+	console.log("build_no: "+seq);
+	$.ajax({
+		url : "viewCount.do",
+		type : "POST",
+		data : {"seq" : seq},
+		success : function(responseData){
+			var data = responseData.flag;
+			$('#count_view').val(data);
+			console.log(data);
+			if(data <= 0){
+				alter("매물 신고가 실패 하였습니다. 이미 신고 처리된 매물 입니다.");
+			}else{
+				var html = "매물 신고 접수가 완료되었습니다. 확인 후 메일 답변 드리도록 하겠습니다.<br>해당 매물 신고 건수 : "+$('#count_view').val()*1+"건.";
+				$("#message").empty().append(html);
+			}
+		}
+	});
+	
+}
+
+
 $('document').ready(function(){
+	//최근본방 등록(방검색 에서만)
+	(function buildContent(){
+		var seq = $("#build_no").val()*1;
+		console.log("최근본방 등록 메서드 build_no: "+seq);
+		if($("#email").val() == null){
+			return false;
+		}else{
+			$.ajax({
+				url : "recentList.do",
+				type : "POST",
+				data : {"seq" : seq}
+		
+			});
+		}
+	})()
+
+	
 	// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
 	var floatPosition = parseInt($("#floatMenu").css('top'));
 	// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
@@ -33,7 +91,9 @@ $('document').ready(function(){
 //
 //	// 지도를 생성합니다    
 //	var map = new daum.maps.Map(mapContainer, mapOption); 
-	
+	var lat = $("#lat").val();
+	var lng = $("#lng").val();
+	console.log("lat: "+lat+", lng: "+lng);
 	var imgSrc = "../kanu/images/custom_marker.png",
 		imageSize = new daum.maps.Size(122, 122),
 		imageOption = {offset: new daum.maps.Point(61, 61)};
@@ -42,7 +102,7 @@ $('document').ready(function(){
 	
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = { 
-	        center: new daum.maps.LatLng(37.570707, 126.984611), // 지도의 중심좌표
+	        center: new daum.maps.LatLng(lat, lng), // 지도의 중심좌표
 	        level: 5, // 지도의 확대 레벨
 	        maxLevel: 8
 	    };
@@ -50,9 +110,13 @@ $('document').ready(function(){
 	var map = new daum.maps.Map(mapContainer, mapOption),
 	    customOverlay = new daum.maps.CustomOverlay({}),
 	    infowindow = new daum.maps.InfoWindow({removable: true});
-	
+	map.setZoomable(false);
+	var mapTypeControl = new daum.maps.MapTypeControl();
+	map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);
+	var zoomControl = new daum.maps.ZoomControl();
+	map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
  // 주소로 좌표를 검색합니다
-	var addr = '경기 성남시 분당구 판교로227번길 6';
+	var addr = $("#address").val();
 	var geocoder = new daum.maps.services.Geocoder();
 	geocoder.addressSearch(addr, function(result, status) {
         // 정상적으로 검색이 완료됐으면 
@@ -519,7 +583,31 @@ $('document').ready(function(){
 	///////////////////////////////////////////////////////////
 	/////////////////////  옵    션   /////////////////////////////
 	
-
+	$("#call_back").click(function(){
+		var phone = $("#mem_phone").val();
+		var name = $("#name").val();
+		var build_no = $("#build_no").val();
+		console.log("인입"+phone+", "+name+", "+build_no);
+		$.ajax({
+			url : "requestInsert.do",
+			type : "POST",
+			data : {"phone" : phone, "name" : name, "build_no" : build_no},
+			success : function(responseData){
+				var data = responseData;
+				if(data.requestCount*1 < 1){
+					var html = "<button class='btn btn-primary' data-toggle='modal' data-target='#requestcalling' disabled>연락 요청 완료!!</button>";
+					$("#abx").empty().append(html);
+					$("#requestcalling").modal('hide');
+				}else{
+					$("#requestcalling").modal('hide');
+					alert("이미 연락요청한 매물입니다.");
+				}
+			}
+		});
+		
+		
+		
+	});
 	
 	
 	

@@ -219,7 +219,7 @@ function ajaxList(index, pageStartNum){
 
 			if(data.length != 0){
 				for(var i=0; i<data.list.length; i++){
-					html +="<div class ='itemList' style='width:95%;height:145px;border:1px solid gray;margin:5px;margin-left:12px;' onmouseover='getterLatLng(this)' onmouseout='buildMouseOut(this)' onclick='buildContent(this)'>";
+					html +="<div class ='itemList' style='width:95%;height:145px;border:1px solid gray;margin:5px;margin-left:12px;' onmouseover='getterLatLng(this)' onmouseout='buildMouseOut(this)' >";
 					html +="<div class='RoomItem-icons' style='float:right;margin:15px;' onClick='heart(this)'>";
 					html +="<span class='room-favorite' >";
 					if($("#flag").val() == '1'){

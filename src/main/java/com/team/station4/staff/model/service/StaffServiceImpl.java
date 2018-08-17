@@ -35,4 +35,9 @@ public class StaffServiceImpl implements StaffService {
 		// TODO Auto-generated method stub
 		return staffdao.staffSecurity(st_email);
 	}
+	@Override
+	public void pwChangeS(StaffDTO change2) {
+		// TODO Auto-generated method stub
+		staffdao.pwChange(change2);
+	}
 }

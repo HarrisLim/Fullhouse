@@ -28,5 +28,10 @@
 		<insert id="proInsert" parameterType="Estate">
 		   insert into ESTATE values(ESTATE_NO_SEQ.nextval, 0, #{estate_name}, #{erno}, #{lrno}, #{estateaddr}, #{owner_name})
 		</insert>
-		
+		<select id="proOutput" resultType="Estate" parameterType="int">
+			select * from ESTATE where ESTATE_NO=#{estate_no}
+		</select>
+		<update id="addrChange" parameterType="Estate">
+			update ESTATE set ESTATEADDR=#{estateaddr} where ESTATE_NO=#{estate_no}
+		</update>
 	</mapper>
