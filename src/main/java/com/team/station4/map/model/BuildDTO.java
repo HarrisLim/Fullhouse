@@ -1,6 +1,9 @@
 package com.team.station4.map.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
+
+import com.team.station4.uploadroom.model.PriceDTO;
 
 public class BuildDTO {
 
@@ -26,7 +29,7 @@ public class BuildDTO {
 	private int st_no;
 	private int estate_no;
 	private int mem_no;
-	
+	private ArrayList<PriceDTO>priceDTO;
 	
 	public BuildDTO() {}
 	
@@ -115,6 +118,27 @@ public class BuildDTO {
 		this.st_no = st_no;
 		this.estate_no = estate_no;
 		
+	}
+
+	
+	public ArrayList<PriceDTO> getPriceDTO() {
+//		if(priceDTO.size() >= 1 && priceDTO != null) {
+//			for(int i=0; i<priceDTO.size(); i++) {
+				System.out.println("#######priceDTO리스트 겟터 인입:");
+//			}
+//		}
+//		
+		return priceDTO;
+	}
+
+
+	public void setPriceDTO(ArrayList<PriceDTO> priceDTO) {
+//		if(priceDTO.size() >= 1 && priceDTO != null) {
+//			for(int i=0; i<priceDTO.size(); i++) {
+				System.out.println("#######priceDTO리스트 셋터 인입:"/*+priceDTO.get(i).getBuild_no()*/);
+//			}
+//		}
+		this.priceDTO = priceDTO;
 	}
 
 

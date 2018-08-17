@@ -26,5 +26,7 @@
 			<mapper resource="com/team/station4/mybatis/Reservation.xml" />
 			<mapper resource="com/team/station4/mybatis/Request.xml" />
 			<mapper resource="com/team/station4/mybatis/Qna.xml" />
+			<mapper resource="com/team/station4/mybatis/Build_Price.xml" />
+			<mapper resource="com/team/station4/mybatis/Injection.xml" />
 		</mappers>
 	</configuration>

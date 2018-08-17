@@ -33,9 +33,7 @@ public class QnaController {
 			System.out.println("sss: "+ s);	
 		}
 		mv.addObject("qnaList", qnaList);
-		
 		return mv;
 	}
-	
 	
 }

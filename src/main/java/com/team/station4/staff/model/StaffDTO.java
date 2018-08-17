@@ -136,22 +136,14 @@ public class StaffDTO {
 	public void setSt_media(String st_media) {
 		this.st_media = st_media;
 	}
+	public int getVerify() {
+		return verify;
+	}
+
+	public void setVerify(int verify) {
+		this.verify = verify;
+	}
 	
-	public int getVerify() {
-		return verify;
-	}
-
-	public void setVerify(int verify) {
-		this.verify = verify;
-	}
-
-	public int getVerify() {
-		return verify;
-	}
-
-	public void setVerify(int verify) {
-		this.verify = verify;
-	}
 
 	public Date getSt_rdate() {
 		return st_rdate;

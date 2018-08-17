@@ -5,8 +5,16 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 	<mapper namespace="com.team.station4.map">
+		<resultMap type="Price" id="PriceResult">
+			<result property="priceno" column="PRICENO" />
+			<result property="lease" column="LEASE" />
+			<result property="salePrice" column="SALEPRICE" />
+			<result property="monthly" column="MONTHLY" />
+			<result property="deposit" column="DEPOSIT" />
+			<result property="build_no" column="BUILD_NO" />
+		</resultMap>
 		
-		<resultMap id="mapResult" type="Build">
+		<resultMap id="Build" type="Build">
 			<result property="build_no" column="BUILD_NO" />
 			<result property="address" column="ADDRESS"/>
 			<result property="buildType" column="BUILDTYPE" />
@@ -28,6 +36,7 @@
 			<result property="st_no" column="ST_NO" />
 			<result property="estate_no" column="ESTATE_NO" />
 			<result property="mem_no" column="MEM_NO" />
+			<collection property="priceDTO" javaType="java.util.ArrayList" resultMap="Price"> </collection>
 		</resultMap>
 		<!-- jsl -->
 		<insert id="myInsert" parameterType="Build"> <!-- 로그인 정보가 아직 없으니까 null처리, reservation_time은 방등록할 때 하는 것이 아니라, room.do에서 하는 것이니까 초기값은 null  -->
@@ -145,38 +154,40 @@
 		
 		
 		<select id="mySelect" parameterType="Map" resultType="Build"> 
-
-			select * from(select A.*, ROWNUM rn from(select * from BUILDING NATURAL JOIN PRICE NATURAL JOIN ADDINFO  where LNG between #{west} and #{east} order by BUILD_NO desc)A 
+			select * from(
+			select ads.*, ROWNUM rn from(
+			select a.build_no, a.address, a.proType, a.wholeFloor, a.floor, a.jArea, a.gArea, a.view_count, a.lat, a.lng, a.picPath, a.roomTitle, a.explainText, a.privateMemo, b.deposit, b.salePrice, 
+			b.monthly, b.lease, a.estate_no, c.parking, c.animal, a.BUILDTYPE from 
+			BUILDING a, PRICE b, ADDINFO c where a.build_no(+)=b.build_no and a.build_no = c.build_no and b.build_no = c.build_no AND a.LNG between #{west} and #{east} order by a.BUILD_NO desc) ads 
 			where LAT between #{south} and #{north}
 			<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
 			<if test="proType != null and proType != '전체' ">
-				AND  PROTYPE=#{proType}
+				AND PROTYPE=#{proType}
 			</if>
-
 			
 			<!-- 매물 종류 -->
 			<choose>
 			<when test="buildType != null and buildType == '월세' ">
-				 AND  BUILDTYPE=1
+				 AND BUILDTYPE=1
 			</when>
 			<when test="buildType != null and buildType == '전세' ">
-				 AND  BUILDTYPE=2
+				 AND BUILDTYPE=2
 			</when>
 			<when test="buildType != null and buildType == '매매' ">
-				 AND  BUILDTYPE=3
+				 AND BUILDTYPE=3
 			</when>
 			<when test="buildType != null and buildType == '월세or전세' ">
-				 AND  BUILDTYPE=4
+				 AND BUILDTYPE=4
 			</when>
 			</choose>
 			
 			<!-- 거래 종류 -->			
 			<choose>
 				<when test="kind_of_trade != null and kind_of_trade == '중개' ">
-					 AND  ESTATE_NO between 1 and 999999
+					 AND ESTATE_NO between 1 and 999999
 				</when>
 				<when test="kind_of_trade != null and kind_of_trade == '직거래' ">
-					 AND  MEM_NO between 1 and 999999
+					 AND MEM_NO between 1 and 999999
 				</when>
 
 			</choose>
@@ -210,10 +221,7 @@
 			<if test="startArea != null and endArea != null" >
 				AND GAREA between #{startArea} and #{endArea}
 			</if>
-			
 			)where rn between #{start} and #{last}
-			
-			
 		</select>
 
 		<select id="myLocation" resultType="Build">
@@ -223,12 +231,6 @@
 		<select id="myLatLng" parameterType="HashMap" resultType="Build">
 			select LAT, LNG from BUILDING where ADDRESS like '%'||#{서울}||'%'
 		</select>
-		
-		<!--  resultInjection   -->
-		<insert id="myInjection" parameterType="Build">
-			insert into BUILDING values (BUILD_NO_SEQ.nextval, #{address}, #{buildType}, #{proType}, #{wholeFloor}, #{floor}, #{jArea}, #{gArea}, 0, 
-			#{picPath}, null, #{lat}, #{lng}, #{roomTitle}, #{explainText}, #{privateMemo}, #{buildState}, #{bu_rdate}, #{st_no}, #{estate_no}, null)
-		</insert>
 		
 		<select id="myCountCluster" parameterType="Map" resultType="int" >
 			select count(*) from(select * from BUILDING NATURAL JOIN PRICE NATURAL JOIN ADDINFO where LNG between #{west} and #{east})A where LAT between #{south} and #{north}
@@ -362,43 +364,24 @@
 			
 		</select>
 		
-		<insert id="myInsertPrice" parameterType="HashMap">
-			insert into PRICE values(PRICE_NO_SEQ.nextval, #{lease}, null, #{monthly}, #{deposit}, #{build_no})
-		</insert>
-		
-		<insert id="myInsertAddInfo" parameterType="HashMap">
-			insert into ADDINFO values(ADDINFO_NO_SEQ.nextval, #{costfee}, #{internet}, #{cost_tv}, #{cleanfee}, #{waterfee}, 
-			#{gas}, #{electricity}, #{parking}, #{elevator}, #{heat}, #{animal}, SYSDATE, #{aircon}, #{washing}, #{bed}, #{desk}, #{closet}, 
-			#{option_tv}, #{fridge}, #{shoerack}, #{gasstove}, #{induction}, #{microwave}, #{doorlock}, #{bidet}, #{build_no})
-		</insert>
-		
-		<select id="myCount" resultType="int">
-			select count(*) from BUILDING
-		</select>
-		
-		<!--빌드넘버 최대값 구하는 쿼리문 -->
-		<select id="myMax" resultType="int">
-			select count(BUILD_NO) from BUILDING
-		</select>
-		
 		<!-- 	멤버 테이블의 찜목록 등록 업데이트 쿼리문	추후 세션으로 로그인 정보가 들어오면 mem_email 부분은 변수 처리 필요  parameter 도 HashMap 으로 변경 필요 -->
-		<update id="myMemHotUpdate" parameterType="int" >
-			update MEMBER set HOT = concat((select HOT from MEMBER where MEM_EMAIL = '1234@gmail.com'), ','||#{buildNo}) where  MEM_EMAIL = '1234@gmail.com'
+		<update id="myMemHotUpdate" parameterType="HashMap" >
+			update MEMBER set HOT = concat((select HOT from MEMBER where MEM_EMAIL = #{email}), ','||#{buildNo}) where  MEM_EMAIL = #{email}
 		</update>
 		
 		<!-- 	멤버 테이블의 찜목록 삭제 업데이트 쿼리문	추후 세션으로 로그인 정보가 들어오면 mem_email 부분은 변수 처리 필요 parameter 도 HashMap 으로 변경 필요  buildNo 는  HOT column 에 들어있는 매물 번호 값-->
-		<update id="myMemHotDelete" parameterType="int" >
-			update MEMBER set HOT = (select replace(HOT, ','||#{buildNo}, '') from MEMBER where MEM_EMAIL = '1234@gmail.com') where MEM_EMAIL = '1234@gmail.com'
+		<update id="myMemHotDelete" parameterType="HashMap" >
+			update MEMBER set HOT = (select replace(HOT, ','||#{buildNo}, '') from MEMBER where MEM_EMAIL = #{email}) where MEM_EMAIL = #{email}
 		</update>
 		
 		<!-- 	찜 목록 삭제 업데이트를 위한 멤버 테이블의 찜목록 값 확인 -->
-		<select id="myHotSelect" parameterType="int" resultType="int">
-			select count(*) from MEMBER where MEM_EMAIL = '1234@gmail.com' AND HOT like '%'||','||#{buildNo}||'%'
+		<select id="myHotSelect" parameterType="HashMap" resultType="int">
+			select count(*) from MEMBER where MEM_EMAIL =#{email} AND HOT like '%'||','||#{buildNo}||'%'
 		</select>
 		
 		<!-- 	관심목록 - 찜한 방  리스트 뽑기를 위한 멤버 테이블의 찜목록 값 확인 -->
-		<select id="myHot" parameterType="String" resultType="String">
-			select HOT from MEMBER where MEM_EMAIL = '1234@gmail.com'
+		<select id="myHot" parameterType="HashMap" resultType="String">
+			select HOT from MEMBER where MEM_EMAIL = #{email}
 		</select>
 		
 		<!-- 	관심목록 - 찜한 방  리스트 뽑기 -->
@@ -420,20 +403,20 @@
 		</select>
 		
 		<!-- 	멤버 테이블의 최근 본 매물 등록 업데이트 쿼리문	추후 세션으로 로그인 정보가 들어오면 mem_email 부분은 변수 처리 필요  parameter 도 HashMap 으로 변경 필요 -->
-		<update id="myMemRecentUpdate" parameterType="String" >
-			update MEMBER set RECENTLIST=#{reRecent} where MEM_EMAIL = '1234@gmail.com'
+		<update id="myMemRecentUpdate" parameterType="HashMap" >
+			update MEMBER set RECENTLIST=#{build_no} where MEM_EMAIL = #{email}
 		</update>
 		
 		
 		<!-- 	찜 목록 삭제 업데이트를 위한 멤버 테이블의 찜목록 값 확인 -->
-		<select id="myRecentSelect" parameterType="String" resultType="int">
-				select count(*) from MEMBER where MEM_EMAIL = '1234@gmail.com' AND RECENTLIST like '%'||','||#{buildNo}||'%'
+		<select id="myRecentSelect" parameterType="HashMap" resultType="int">
+				select count(*) from MEMBER where MEM_EMAIL = #{email} AND RECENTLIST like '%'||','||#{build_no}||'%'
 <!-- 				select count(RECENTLIST) from MEMBER where MEM_EMAIL = '1234@gmail.com'  -->
 		</select>
 		
 		<!-- 	관심목록 - 찜한 방  리스트 뽑기를 위한 멤버 테이블의 최근 본 매물 값 확인 -->
 		<select id="myRecent" parameterType="String" resultType="String">
-			select RECENTLIST from MEMBER where MEM_EMAIL = '1234@gmail.com'
+			select RECENTLIST from MEMBER where MEM_EMAIL = #{email}
 		</select>
 		
 		<!-- 	관심목록 - 찜한 방  리스트 뽑기 -->
@@ -446,6 +429,7 @@
 			select * from PRICE where BUILD_NO = #{build_no}
 		</select>
 		
+
 		
 		
 	</mapper>
