@@ -1,5 +1,7 @@
 package com.team.station4.uploadroom.model;
 
+import java.util.ArrayList;
+
 public class PriceDTO {
 	private int priceNo;
 	private int lease;
@@ -8,6 +10,8 @@ public class PriceDTO {
 	private int deposit;
 	private int build_no;
 	
+	
+
 	public PriceDTO(){}
 
 	public PriceDTO(int priceNo, int lease, int salePrice, int monthly, int deposit, int build_no) {

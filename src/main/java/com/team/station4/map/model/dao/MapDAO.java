@@ -5,9 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.team.station4.estate.model.EstateDTO;
+import com.team.station4.main.model.MainDTO;
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.vo.PagingVo;
 import com.team.station4.room.model.RequestDTO;
+import com.team.station4.staff.model.StaffDTO;
+import com.team.station4.uploadroom.model.AddInfoDTO;
 import com.team.station4.uploadroom.model.PriceDTO;
 
 public interface MapDAO {
@@ -16,9 +20,6 @@ public interface MapDAO {
 	int countCluster(Map jsonLatLng);
 	List<BuildDTO> location();
 	List<BuildDTO>latLng(HashMap hm);
-	void insertInjection(BuildDTO dto);
-	void insertPrice(HashMap price);
-	int count();
 	
 	/* jsl */
 	int countBuild(Map hm);
@@ -36,19 +37,20 @@ public interface MapDAO {
 	int countBuildAll();
 	
 	List<BuildDTO>clusterList(Map hm);
-	void InsertAddInfo(HashMap addInfo);
-	int myMax();
-	void memHotUpdate(int buildNo);
-	int memHotSelect(int buildNo);
-	void memHotDelete(int buildNo);
-	String myHot();
+
+	void memHotUpdate(HashMap<String, Object> hm);
+	int memHotSelect(HashMap<String, Object> hm);
+	void memHotDelete(HashMap<String, Object> hm);
+	String myHot(String email);
 	BuildDTO hotList(int parseInt);
-	String myRecent();
+	String myRecent(String email);
 	BuildDTO recentList(int parseInt);
-	int memRecentSelect(String buildNo);
-	void memRecentUpdate(String reRecent);
+	int memRecentSelect(HashMap<String, Object> hm);
+	void memRecentUpdate(HashMap<String, Object> hm);
 	List<BuildDTO> hotListPaging(Map<String, Object> jsonLatLng);
 	List<PriceDTO> priceSelect(BuildDTO dto);
+
+
 	
 	/* admin 그래프 */
 		/* 매물현황 */

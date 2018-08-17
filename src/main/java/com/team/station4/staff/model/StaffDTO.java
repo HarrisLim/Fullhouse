@@ -136,7 +136,6 @@ public class StaffDTO {
 	public void setSt_media(String st_media) {
 		this.st_media = st_media;
 	}
-	
 	public int getVerify() {
 		return verify;
 	}

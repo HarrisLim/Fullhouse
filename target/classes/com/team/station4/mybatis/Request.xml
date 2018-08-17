@@ -20,6 +20,53 @@
 	<select id="selectRequest" parameterType="Map" resultType="HashMap">
 		select * from request r join building b on b.build_no = r.build_no where estate_no = #{estate_no} and r.build_no=#{build_no}
 	</select>
-	</mapper>
+	<insert id="myRequestInsert" parameterType="HashMap">
+		insert into REQUEST values(request_no_seq.nextval, #{phone}, #{name}, SYSDATE, #{build_no})
+	</insert>
+		<!-- 	Build_no로 addInfo 뽑기 -->
+	<select id="myAddInfoSelect" parameterType="int" resultType="AddInfo">
+		select * from addinfo where build_no=#{buildNo}
+	</select>
+	
+	<!-- 	mem_no 로 member 정보 뽑기 -->
+	<select id="myMemInfo" parameterType="int" resultType="Member">
+		select * from MEMBER where mem_no=#{mem_no}
+	</select>
+	
+	<!-- 	st_no 로 staffInfo 뽑기 -->
+	<select id="myStaffInfo" parameterType="int" resultType="Staff">
+		select * from STAFF where st_no=#{st_no}
+	</select>
+	
+	<!-- 	estate_no로 estateInfo 뽑기 -->
+	<select id="myEstateInfo" parameterType="int" resultType="Estate">
+		select * from ESTATE where estate_no=#{estate_no}
+	</select>
+	
+	<!-- 	Building 의 viewCount insert -->
+	<update id="myViewCountInsert" parameterType="HashMap">
+		update BUILDING set view_count=#{viewCount} where build_no=#{build_no}
+	</update>
+	
+	<!-- 	Building 의 viewCount check -->
+	<select id="myViewCountCheck" parameterType="int" resultType="int">
+		select view_count from BUILDING where build_no=#{build_no}
+	</select>
+	
+	<!-- 	매물별 연락 요청건수 check -->
+	<select id="myRequestCountCheck" parameterType="HashMap" resultType="int">
+	 	select count(*) from REQUEST where build_no=${build_no} and req_phone=#{phone}
+ 	</select>
+ 	
+	<!-- 	매물별 하트 리스트 check -->
+	<select id="myHeartCountCheck" parameterType="HashMap" resultType="String">
+	 	select hot from MEMBER where mem_email=#{email}
+ 	</select>
+ 	
+	<!-- 	매물별 신고 리스트 check -->
+	<select id="myCountViewCountCheck" parameterType="HashMap" resultType="int">
+	 	select view_count from BUILDING where build_no=${build_no}
+ 	</select>
+</mapper>
 
 	

@@ -1594,19 +1594,7 @@ function heart(that){
 	
 }
 
-//매물 클릭(방검색 에서만)
-function buildContent(that){
-	var build_no = $(that).children().children().children().find('[name=build_no]');
-	console.log("매물 클릭 build_no.val()");
-	var seq = build_no.val();
-	console.log("build_no: "+seq);
-	$.ajax({
-		url : "recentList.do",
-		type : "POST",
-		data : {"seq" : seq}
 
-	});
-}
 
 
 //하트 마우스 오버

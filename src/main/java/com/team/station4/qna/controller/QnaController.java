@@ -98,10 +98,7 @@ public class QnaController {
 		mv.setViewName("jsonView");
 		List<QnaDTO> qnaList = qnaService.selectQnaService(email);
 		mv.addObject("qnaList", qnaList);
-
-		
 		return mv;
 	}
-	
 	
 }

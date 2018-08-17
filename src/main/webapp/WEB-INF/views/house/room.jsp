@@ -153,33 +153,92 @@
     <main class="main">
 	<div id="floatMenu">
 		<br><br> 
-   		<strong>오피스텔 월세 1000/70만원</strong><br>
-   		[브릿지타워]깔끔한 인테리어<br>
-   		경기도 성남시 분당구 삼평동<br>
-	    <span style='background-color:rgba(150,150,150,0.3)'>#주차</span>&nbsp;&nbsp;<span style='background-color:rgba(150,150,150,0.3)'>#반려동물</span><br>
+   		<strong>${dto.proType}</strong> 
+   		<c:choose>
+   		<c:when test="${dto.buildType eq 1 && list[0].deposit ne 0 && list[0].deposit ne null}">
+   			<strong>월세 ${list[0].deposit}/${list[0].monthly}만원</strong><br>
+   		</c:when>
+   		<c:when test="${dto.buildType eq 2 && list[0].lease ne 0 && list[0].lease ne null}">
+   			<strong>전세 ${list[0].lease}만원</strong><br>
+   		</c:when>
+   		<c:when test="${dto.buildType eq 3 && list[0].salePrice ne 0 && list[0].salePrice ne null}">
+   			<strong>매매  ${list[0].salePrice}만원</strong><br>
+   		</c:when>
+   		<c:when test="${dto.buildType eq 4}">
+   			<strong>월세 ${list[0].deposit}/${list[0].monthly}만원 <br> 전세  ${list[0].lease}</strong><br>
+   		</c:when>
+   		</c:choose>
+
+   		${dto.roomTitle}<br>
+   		${dto.address}<br>
+   		<c:if test="${addInfo.parking eq 1}">
+	    	<span style='background-color:rgba(150,150,150,0.3)'>#주차</span>&nbsp;&nbsp;
+	    </c:if>
+   		<c:if test="${addInfo.animal eq 1}">
+	    	<span style='background-color:rgba(150,150,150,0.3)'>#반려동물</span><br>
+	    </c:if>
+	    
 	    <hr>
-	    <button class='btn btn-outline-tertiary'>찜</button>&nbsp;&nbsp;&nbsp;<button class='btn btn-outline-tertiary'>신고</button>
+	    <div>
+		    <div id="heart_div" style="float:left;">
+		    <c:if test="${heartCount eq 0 || heartCount eq null}">
+		    	<button class='btn btn-outline-tertiary' id="heart" onClick="heart(this)">찜</button>&nbsp;&nbsp;&nbsp;
+	    	</c:if>
+		    <c:if test="${heartCount >= 1}">
+		    	<button class='btn btn-outline-tertiary' id='heart' onClick='heart(this)' style='background-color:red;' disabled>찜 완료</button>&nbsp;&nbsp;&nbsp;
+	    	</c:if>
+		    </div>
+		    <div id="viewCount_div">
+		    <c:if test="${countViewCount < 1}">
+		    	<button class='btn btn-outline-tertiary' id="viewCount" onClick="viewCount(this)">신고</button>
+	    	</c:if>
+		    <c:if test="${countViewCount >= 1}">
+		    	<button class='btn btn-outline-tertiary' id="viewCount" onClick="viewCount(this)" disabled>신고</button>
+	    	</c:if>
+		    </div>
+		    <div id="message" style="margin-top:15px;font-size:1em;font-weight:bold;color:red;"> </div>
+	    </div>
+	     
 	    <hr>
-	    <strong>리치공인중개사무소</strong><br>
-	    대표: 권홍배<br><br>
-	    [담당자] 권홍배 대표 (대표공인중개사)<br>
-	    서울특별시 강서구 화곡동 773-1, 리치공인중개사사무소<br>
-	    대표번호 02-2644-2727<br>
-	    중개등록번호<br>92400000-01-05251<br><br>
-	    <button class='btn btn-primary' data-toggle="modal" data-target="#requestcalling">연락 요청하기</button>
+	   <c:if test="${estateInfo ne null}">
+	   	   <strong>${estateInfo.estate_name}</strong><br>
+	   				 대표: ${estateInfo.owner_name}<br><br>
+	   				[담당자] ${builderInfo.st_name} (${builderInfo.st_position})<br>
+	    </c:if>
+        <c:if test="${memDTO ne null}">
+	    	[담당자] ${memDTO.mem_name} (직거래 매물)<br>
+	    </c:if>
+	    <c:if test="${estateInfo ne null}">
+		    ${estateInfo.estateaddr}, <br>${estateInfo.estate_name}<br>
+		    대표번호${builderInfo.st_phone}<br>
+		    중개등록번호<br>${estateInfo.erno}<br><br>
+	    </c:if>
+   	    <c:if test="${memDTO ne null}">
+		  이메일  ${memDTO.mem_email}, <br>
+		    연락처 ${memDTO.mem_phone}
+	    </c:if>
+	    <div id="abx">
+     	<c:if test="${requestCount >= 1}">
+	    	<button class='btn btn-primary' data-toggle="modal" data-target="#requestcalling" disabled>연락 요청완료!!</button>
+    	</c:if>
+     	<c:if test="${requestCount eq 0 || requestCount eq null}">
+	    	<button class='btn btn-primary' data-toggle="modal" data-target="#requestcalling">연락 요청하기</button>
+    	</c:if>
+	    </div>
 	</div>
 	<div class="modal fade" id="requestcalling" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">연락 요청하기<br>[오피스텔 월세 1000/70만원] (여기 데이터 동적으로 넣어. 현재 보고있는 페이지 )</h5>
+
+	        <h5 class="modal-title" id="exampleModalLabel">연락 요청하기<br>[${dto.proType} 월세 ${list[0].deposit}/${list[0].monthly}만원] </h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	      	<input placeholder="&nbsp; 여기에 로그인 한 아이디의 phone을 넣고, disabled를 넣는다. REQUEST(favorite페이지)에서 식별하기 위함)" style="width:100%;height:40px">
-	        <button type="button" class="btn btn-primary" style="float:right;margin:10px">연락 요청</button>
+	      	<input value="&nbsp; ${sessionScope.mem.mem_phone}" style="width:100%;height:40px" readOnly id="mem_phone"/>
+	        <button type="button" class="btn btn-primary" style="float:right;margin:10px" id="call_back">연락 요청</button>
 	      </div>
 	    </div>
 	  </div>
@@ -209,7 +268,7 @@
 			       						<c:choose>
 			       						<c:when test="${dto.deposit ne null && dto.deposit ne 0}">
 			       							<tr>
-			    	       					<td width="25%" collspan="2">
+			    	       					<td width="25%" collspan="2" id="build_type${loop.index}">
 					       						보증금 / 월세  </td>
 					       					<td width="25%">
 			       							<strong>${dto.deposit} / ${dto.monthly}</strong>
@@ -218,7 +277,7 @@
 			       						</c:when>
 			       						<c:when test="${dto.lease ne null && dto.lease ne 0 && (dto.monthly eq 0 || dto.monthly eq null)}">
 			       							<tr>
-					       					<td width="25%" collspan="2">
+					       					<td width="25%" collspan="2" id="build_type${loop.index}">
 					       						전세  </td>
 					       					<td width="25%">
 			       							<strong>${dto.lease}</strong>
@@ -226,7 +285,7 @@
 			       						</c:when>
 			       						<c:when test="${dto.salePrice ne null && dto.salePrice ne 0}">
 			       							<tr>
-					       					<td width="25%" collspan="2">
+					       					<td width="25%" collspan="2" id="build_type${loop.index}">
 					       						매매  </td>
 					       					<td width="25%">
 			       							<strong>${dto.salePrice}</strong>
@@ -240,9 +299,22 @@
 			       					<td width="25%">
 			       						방 종류
 			       					</td>
-			       					<td width="25%">
-			       						${dto.buildType}
-			       					</td>
+			       					
+	       					   		<c:choose>
+								   		<c:when test="${dto.buildType eq 1}">
+								   			<td width="25%">월세</td>
+							   			</c:when>
+								   		<c:when test="${dto.buildType eq 2}">
+								   			<td width="25%">전세</td>
+								   		</c:when>
+								   		<c:when test="${dto.buildType eq 3}">
+								   			<td width="25%">매매</td>
+								   		</c:when>
+								   		<c:when test="${dto.buildType eq 4}">
+								   			<td width="25%">월세or전세</td>
+								   		</c:when>
+   									</c:choose>
+
 			       					</tr>
 			       		
 			       				<tr>
@@ -256,7 +328,7 @@
 			       						전용 / 공급면적
 			       					</td>
 			       					<td width="25%">
-			       						${dto.jArea}m2 / ${dto.gArea}m2
+			       						<strong>${dto.jArea}m2 / ${dto.gArea}m2</strong>
 			       					</td>
 			       				</tr>
 			       				<tr>
@@ -264,13 +336,15 @@
 			       						관리비
 			       					</td>
 			       					<td width="25%">
-			       						<strong>4만원</strong> 
+			       						<strong>${addInfo.costFee}원</strong> 
 			       					</td>
 			       					<td width="25%">
 			       						관리비포함항목
 			       					</td>
 			       					<td width="25%">
-			       						기타, 청소비
+			       						<strong>
+											${costList}
+			       						</strong> 
 			       					</td>
 			       				</tr>
 			       				<tr>
@@ -278,13 +352,22 @@
 			       						난방 종류
 			       					</td>
 			       					<td width="25%">
-			       						<strong>개별난방</strong> 
+			       						<strong>
+			       						<c:choose>
+			       							<c:when test="${addInfo.heat eq 1}">
+			       								개별 난방
+			       							</c:when>
+			       							<c:when test="${addInfo.heat eq 0}">
+			       								중앙 난방
+			       							</c:when>
+			       						</c:choose>
+			       						</strong> 
 			       					</td>
 			       					<td width="25%">
 			       						입주가능일
 			       					</td>
 			       					<td width="25%">
-			       						즉시 입주 
+			       						<strong>${movingDate}</strong>
 			       					</td>
 			       				</tr>
 			       				<tr>
@@ -292,13 +375,28 @@
 			       						주차
 			       					</td>
 			       					<td width="25%">
-			       						<strong>가능</strong> 
+		       						<c:choose>
+		       							<c:when test="${addInfo.parking eq 1}">
+		       								<strong>가능</strong> 
+		       							</c:when>
+		       							<c:when test="${addInfo.parking eq 0}">
+		       								<strong>불가능</strong> 
+		       							</c:when>
+		       						</c:choose>
+			       				
 			       					</td>
 			       					<td width="25%">
 			       						반려동물
 			       					</td>
 			       					<td width="25%">
-			       						가능
+		       						<c:choose>
+		       							<c:when test="${addInfo.animal eq 1}">
+		       								<strong>가능</strong> 
+		       							</c:when>
+		       							<c:when test="${addInfo.animal eq 0}">
+		       								<strong>불가능</strong> 
+		       							</c:when>
+		       						</c:choose>
 			       					</td>
 			       				</tr>
 			       				<tr>
@@ -306,7 +404,14 @@
 			       						엘리베이터
 			       					</td>
 			       					<td width="25%" colspan="3">
-			       						<strong>있음</strong> 
+		       						<c:choose>
+		       							<c:when test="${addInfo.elevator eq 1}">
+		       								<strong>있음</strong> 
+		       							</c:when>
+		       							<c:when test="${addInfo.elevator eq 0}">
+		       								<strong>없음</strong> 
+		       							</c:when>
+		       						</c:choose>
 			       					</td>
 			       				</tr>
 			       			</tbody>
@@ -323,21 +428,111 @@
 				<div class="pt-lg-md">
 					<h2 class="h3 mb-4">&nbsp;옵션 </h2>
         			<div style="margin:15px">
-						<img id="aircon" src="../kanu/options/aircon_black.png" width="70px">&nbsp;&nbsp;&nbsp;
-						<img id="washing" src="../kanu/options/washing_black.png" width="70px">&nbsp;&nbsp;&nbsp;
-						<img id="bed" src="../kanu/options/bed_black.png" width="70px">&nbsp;&nbsp;&nbsp;
-						<img id="desk" src="../kanu/options/desk_black.png" width="70px">&nbsp;&nbsp;&nbsp;
-						<img id="closet" src="../kanu/options/closet_black.png" width="70px">&nbsp;&nbsp;&nbsp;
-						<img id="tv" src="../kanu/options/tv_black.png" width="70px">&nbsp;&nbsp;&nbsp;
-						<img id="shoerack" src="../kanu/options/shoerack_black.png" width="70px">&nbsp;&nbsp;&nbsp;<br/> 
-						<img id="fridge" src="../kanu/options/fridge_black.png" width="70px">&nbsp;&nbsp;&nbsp;
-						<img id="gasstove" src="../kanu/options/gasstove_black.png" width="70px">&nbsp;&nbsp;&nbsp;
-						<img id="induction" src="../kanu/options/induction_black.png" width="70px">&nbsp;&nbsp;&nbsp;
-						<img id="microwave" src="../kanu/options/microwave_black.png" width="70px">&nbsp;&nbsp;&nbsp;
-						<img id="doorlock" src="../kanu/options/doorlock_black.png" width="70px">&nbsp;&nbsp;&nbsp;
-						<img id="bidet" src="../kanu/options/bidet_black.png" width="70px">&nbsp;&nbsp;&nbsp;
-						
-					</div>
+        			<c:choose>
+        				<c:when test="${addInfo.aircon eq 0}">
+							<img id="aircon" src="../kanu/options/aircon_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:when test="${addInfo.aircon eq 1}">
+							<img id="aircon" src="../kanu/options/aircon_color.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+					</c:choose>
+        			<c:choose>
+        				<c:when test="${addInfo.washing eq 0}">
+							<img id="washing" src="../kanu/options/washing_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:when test="${addInfo.washing eq 1}">
+							<img id="washing" src="../kanu/options/washing_color.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+					</c:choose>
+        			<c:choose>
+        				<c:when test="${addInfo.bed eq 0}">
+							<img id="bed" src="../kanu/options/bed_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:when test="${addInfo.bed eq 1}">
+							<img id="bed" src="../kanu/options/bed_color.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+					</c:choose>
+        			<c:choose>
+        				<c:when test="${addInfo.desk eq 0}">
+							<img id="desk" src="../kanu/options/desk_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:when test="${addInfo.desk eq 1}">
+							<img id="desk" src="../kanu/options/desk_color.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+					</c:choose>
+        			<c:choose>
+        				<c:when test="${addInfo.closet eq 0}">
+							<img id="closet" src="../kanu/options/closet_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:when test="${addInfo.closet eq 1}">
+							<img id="closet" src="../kanu/options/closet_color.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+					</c:choose>
+        			<c:choose>
+        				<c:when test="${addInfo.option_tv eq 0}">
+							<img id="tv" src="../kanu/options/tv_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:when test="${addInfo.option_tv eq 1}">
+							<img id="tv" src="../kanu/options/tv_color.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+					</c:choose>
+        			<c:choose>
+        				<c:when test="${addInfo.shoerack eq 0}">
+							<img id="shoerack" src="../kanu/options/shoerack_black.png" width="70px">&nbsp;&nbsp;&nbsp;<br/> 
+						</c:when>
+						<c:when test="${addInfo.shoerack eq 1}">
+							<img id="shoerack" src="../kanu/options/shoerack_color.png" width="70px">&nbsp;&nbsp;&nbsp;<br/> 
+						</c:when>
+					</c:choose>
+        			<c:choose>
+        				<c:when test="${addInfo.fridge eq 0}">
+							<img id="fridge" src="../kanu/options/fridge_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:when test="${addInfo.fridge eq 1}">
+							<img id="fridge" src="../kanu/options/fridge_color.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+					</c:choose>	
+        			<c:choose>
+        				<c:when test="${addInfo.gasstove eq 0}">
+							<img id="gasstove" src="../kanu/options/gasstove_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:when test="${addInfo.gasstove eq 1}">
+							<img id="gasstove" src="../kanu/options/gasstove_color.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+					</c:choose>		
+        			<c:choose>
+        				<c:when test="${addInfo.induction eq 0}">
+							<img id="induction" src="../kanu/options/induction_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:when test="${addInfo.induction eq 1}">
+							<img id="induction" src="../kanu/options/induction_color.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+					</c:choose>		
+        			<c:choose>
+        				<c:when test="${addInfo.microwave eq 0}">
+							<img id="microwave" src="../kanu/options/microwave_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:when test="${addInfo.microwave eq 1}">
+							<img id="microwave" src="../kanu/options/microwave_color.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+					</c:choose>	
+        			<c:choose>
+        				<c:when test="${addInfo.doorlock eq 0}">
+							<img id="doorlock" src="../kanu/options/doorlock_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:when test="${addInfo.doorlock eq 1}">
+							<img id="doorlock" src="../kanu/options/doorlock_color.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+					</c:choose>	
+        			<c:choose>
+        				<c:when test="${addInfo.bidet eq 0}">
+							<img id="bidet" src="../kanu/options/bidet_black.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+						<c:when test="${addInfo.bidet eq 1}">
+							<img id="bidet" src="../kanu/options/bidet_color.png" width="70px">&nbsp;&nbsp;&nbsp;
+						</c:when>
+					</c:choose>		
+				</div>
 			       		<hr style="margin-top:0px">
 				</div>
 			</div>
@@ -349,11 +544,7 @@
 				<div class="pt-lg-md">
 					<h2 class="h3 mb-4">상세설명</h2>
 					<div style="margin:15px">
-						권정열과 윤철종은 처음에 '해령(海靈)'이라는 밴드로 음악활동을 시작했다.<br><br><br>
-						 해령은 2004년 쌈지 사운드 페스티벌 숨은 고수에 선정되기도 하였으나 구성원들의 군입대로 해체되었다.<br><br><br>
-						 오랜 세월이 지나 두 남자가 다시 음악을 시작하기로 마음먹은 것이 십센치의 시작이다.<br><br><br>
-						 2010년 벅스 뮤직어워드 인디 부문에서 2위를 차지했으며[2], '유희열의 라디오 천국' 선정 '올해의 신인', 엠넷아시아뮤직어워드 '올해의 발견' 등에 선정되기도 했다.<br><br><br>
-						 2011년 2월 12일 정규앨범 1집 발매 기념 콘서트를 열었다.[3]<br><br><br>
+						${dto.explainText}
 					</div>
 			       	<hr>
 				</div>
@@ -424,4 +615,12 @@
     <!-- 4. Javascript -->
     <script type="text/javascript" src="../kanu/js/room.js"></script>
   </body>
+  <input type="hidden" value="${dto.lat}" id=lat />
+  <input type="hidden" value="${dto.lng}" id=lng />
+  <input type="hidden" value="${dto.address}" id="address" />
+  <input type="hidden" value="${dto.build_no}" id="build_no" />
+  <input type="hidden" value="${dto.view_count}" id="count_view" />
+  <input type="hidden" value="${sessionScope.mem.mem_phone}" id="phone" />
+  <input type="hidden" value="${sessionScope.mem.mem_name}" id="name" />
+  <input type="hidden" value="${sessionScope.mem.mem_email}" id="email" />
 </html>
