@@ -32,6 +32,7 @@
   <link href="../assets/demo/demo.css" rel="stylesheet" />
   <!-- daum map api -->
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=920b18ed9b88780f730ccf0faa6707f7&libraries=clusterer,services"></script>
+  
 
 
 </head>
@@ -64,7 +65,10 @@
 	<input type="hidden" value="" id="endFloor" name="endFloor" />
 	<input type="hidden" value="" id="startArea" name="startArea" />
 	<input type="hidden" value="" id="endArea" name="endArea" />
-	
+	<!--  세션 정보 저장   -->
+	<input type="hidden" value="${sessionScope.mem.mem_phone}" id="phone" />
+	<input type="hidden" value="${sessionScope.mem.mem_name}" id="name" />
+	<input type="hidden" value="${sessionScope.mem.mem_email}" id="email" />
 	<!-- flag = 0 방검색 페이지에서 json 처리 위한 구분자 -->
 	<input type="hidden" value="0" id="flag" name="flag" />
 	
@@ -289,6 +293,8 @@
     <!-- 4. Javascript -->
   <script type="text/javascript" src="../kanu/js/paging.js"></script>    
   <script src="../kanu/js/map.js"></script>
+  
+
 	
 
 

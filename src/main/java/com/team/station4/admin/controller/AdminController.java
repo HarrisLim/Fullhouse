@@ -36,6 +36,7 @@ public class AdminController {
 	@RequestMapping(value = "house/admin.do", method = RequestMethod.GET)
 	public ModelAndView manageroom(PagingVo pagingVo) {
 		ModelAndView mv = new ModelAndView();
+		
 		Calendar oCalendar = Calendar.getInstance();
 		mv.setViewName("house/admin");
 		Map<String, Object> map = new HashMap<String, Object>(); 

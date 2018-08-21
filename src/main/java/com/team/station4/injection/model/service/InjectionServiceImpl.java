@@ -30,8 +30,8 @@ public class InjectionServiceImpl implements InjectionService {
 		 // 37.792602855680975, 126.5212847590806 //강화도
 		 Random r = new Random();
 		 //전국
-		 //double start = 34.36648681811837;
-		 //double end = 38.56840795178768;
+//		 double start = 34.36648681811837;
+//		 double end = 38.56840795178768;
 		 //수도권
 		 double start = 37.35787318799519;
 		 double end = 37.8347415116356;
@@ -49,8 +49,8 @@ public class InjectionServiceImpl implements InjectionService {
 		 List<Double>randomLng = new ArrayList<Double>();
 		 Random r = new Random();
 		 //전국
-		 //double start = 126.09912791740395;
-		 //double end = 130.525309690136;
+//		 double start = 126.09912791740395;
+//		 double end = 130.525309690136;
 		 //수도권
 		 double start = 126.60845644761866;
 		 double end = 127.65287076386323;

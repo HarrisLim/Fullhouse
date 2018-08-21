@@ -5,9 +5,8 @@ import java.util.ArrayList;
 
 import com.team.station4.uploadroom.model.PriceDTO;
 
-public class BuildDTO {
 
-	
+public class BuildDTO {
 	private int build_no;
 	private String address;
 	private int buildType;

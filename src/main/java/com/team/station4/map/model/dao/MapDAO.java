@@ -15,7 +15,7 @@ import com.team.station4.uploadroom.model.AddInfoDTO;
 import com.team.station4.uploadroom.model.PriceDTO;
 
 public interface MapDAO {
-
+	List<HashMap<String, Object>> selectMap(Map jsonLatLng);
 	List<BuildDTO> mapList(Map jsonLatLng);
 	int countCluster(Map jsonLatLng);
 	List<BuildDTO> location();
@@ -49,8 +49,8 @@ public interface MapDAO {
 	void memRecentUpdate(HashMap<String, Object> hm);
 	List<BuildDTO> hotListPaging(Map<String, Object> jsonLatLng);
 	List<PriceDTO> priceSelect(BuildDTO dto);
-
-
+	
+	
 	
 	/* admin 그래프 */
 		/* 매물현황 */
@@ -62,4 +62,6 @@ public interface MapDAO {
 	int selectBuildBarMonth(Map<String, Object> buildBarMonthMap);
 	int selectBuildLineYear(Map<String, Object> buildLineYearMap);
 	int selectBuildLineDay(Map<String, Object> buildLineDayMap);
+	List<HashMap<String, Object>> recentListPrint(HashMap<String, Object> hm);
+	List<BuildDTO> mySerchAuto(String address);
 }

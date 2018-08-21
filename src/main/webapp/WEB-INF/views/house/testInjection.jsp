@@ -2,6 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<!-- <script src="http://code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script> -->
+<!-- <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js" type="text/javascript"></script> -->
+
     <meta charset="utf-8">
     <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
   	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
@@ -20,9 +24,13 @@
 
 <!-- <form method="post" action="join.do" name="jj"> -->
 	<input type="text" id="addr" name="addr" size="90px"/> &nbsp;&nbsp;<input type="submit" value="주소 전송" name="sub" id="sub"/>
+	<br>
+	<input type="text" id="name" name="name" size="90px"/>
 <!-- </form> -->
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=920b18ed9b88780f730ccf0faa6707f7&libraries=clusterer,services"></script>
+<!-- <script src="http://code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script> -->
+<!-- <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js" type="text/javascript"></script> -->
 <script type="text/javascript" language="javascript" src="http://code.jquery.com/jquery-1.3.1.min.js"></script>
 <script>
 $('document').ready(function (){
@@ -155,10 +163,10 @@ $('document').ready(function (){
 		$.ajax({
 			url : "compulsionInjection.do",
 			type : "post",
-			data : {count : 100},
+			data : {count : 1000},
 			success : function(responseData){
 				var data = JSON.parse(responseData);
-				//console.log("인입: "+data.randomLat.length);
+				console.log("인입: "+data.randomLat.length);
 				function searchDetailAddrFromCoords(arrayLatLng, callback) {
                 	//console.log("2 : "+ i);
 			 	    // 좌표로 법정동 상세 주소 정보를 요청합니다
@@ -245,7 +253,8 @@ $('document').ready(function (){
 	    });
 	});
 	
-	
+
+
 
 	
 	

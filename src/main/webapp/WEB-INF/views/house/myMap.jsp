@@ -9,8 +9,11 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-   <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+  <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
   <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+  <meta name="google-signin-scope" content="profile email">
+  <meta name="google-signin-client_id" content="69570195917-qamvmgijh74iq624fdgdgcttra3u41fq.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <title>
     Full House
   </title>
@@ -62,15 +65,15 @@
          </div>
       </nav>
        <!-- 연락한 방 -->   
-	  <nav class="navbar navbar-expand-lg navbar-transparent" style="float: left">
-      	<div class="container">
-          <ul class="navbar-nav ml-auto align-items-lg-center">
-            <li class="nav-item dropdown">
-              <a class="navbar-brand" href="#" style="font-size: 1em">연락한 방</a>
+<!-- 	  <nav class="navbar navbar-expand-lg navbar-transparent" style="float: left"> -->
+<!--       	<div class="container"> -->
+<!--           <ul class="navbar-nav ml-auto align-items-lg-center"> -->
+<!--             <li class="nav-item dropdown"> -->
+<!--               <a class="navbar-brand" href="#" style="font-size: 1em">연락한 방</a> -->
    
-          </ul>
-         </div>
-      </nav>
+<!--           </ul> -->
+<!--          </div> -->
+<!--       </nav> -->
 
     <!-- third-panel -->    
 	</div>
