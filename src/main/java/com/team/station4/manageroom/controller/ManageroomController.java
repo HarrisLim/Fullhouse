@@ -56,7 +56,7 @@ public class ManageroomController {
 			if(type.equals("mem")) {
 				MainDTO seMemberDTO = (MainDTO)session.getAttribute("mem");
 				System.out.println("seMemberDTO: "+ seMemberDTO);
-				if(seMemberDTO.getMem_email().equals("harris@gmail.com")) return; // admin일 때, 
+				if(seMemberDTO.getMem_email().equals("harris@gmail.com")||seMemberDTO.getMem_email().equals("plannist@naver.com")) return; // admin일 때, 
 				memNo = seMemberDTO.getMem_no();
 			}else { // type == "staff"
 				StaffDTO seStaffDTO = (StaffDTO)session.getAttribute("st");

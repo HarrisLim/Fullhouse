@@ -446,7 +446,7 @@ var header = $("meta[name='_csrf_header']").attr("content");
 					            </div>
 					            <div class="form-group text-center">
 					              <button type="button" class="btn btn-info" id="memInput" disabled>회원가입<i class="fa fa-check spaceLeft"></i></button>
-					              <button type="button" class="btn btn-warning" id="Cancel" data-dismiss="modal" >가입취소<i class="fa fa-times spaceLeft"></i></button>
+					              <button type="button" class="btn btn-warning id="Cancel" data-dismiss="modal" >가입취소<i class="fa fa-times spaceLeft"></i></button>
 					            </div>
 					          </form>
 					        </div>

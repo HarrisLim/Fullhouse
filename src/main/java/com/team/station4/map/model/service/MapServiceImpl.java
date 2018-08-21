@@ -37,6 +37,12 @@ public class MapServiceImpl implements MapService {
 	@Autowired
 	MapDAO dao;
 	
+
+	@Override
+	public List<HashMap<String, Object>> selectMapService(Map jsonLatLng) {
+		return dao.selectMap(jsonLatLng);
+	}
+	
 	@Override
 	public List<BuildDTO> mapListService(Map jsonLatLng){
 		return dao.mapList(jsonLatLng);
@@ -286,5 +292,17 @@ public class MapServiceImpl implements MapService {
 	public int countBuildAllService() {
 		return dao.countBuildAll();
 	}
+
+	@Override
+	public List<HashMap<String, Object>> recentListPrintService(HashMap<String, Object> hm) {
+
+		return dao.recentListPrint(hm);
+	}
+
+	@Override
+	public List<BuildDTO> mySerchAutoService(String address) {
+		return dao.mySerchAuto(address);
+	}
+
 
 }

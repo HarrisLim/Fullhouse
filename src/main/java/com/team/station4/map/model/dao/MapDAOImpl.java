@@ -26,6 +26,17 @@ public class MapDAOImpl implements MapDAO {
 	private String ns = "com.team.station4.map";
 	private String bp = "com.team.station4.bp";
 	
+
+	@Override
+	public List<HashMap<String, Object>> selectMap(Map jsonLatLng) {
+		return sqlsession.selectList(bp+".mySelectMap", jsonLatLng);
+	}
+	
+	@Override
+	public List<HashMap<String, Object>> recentListPrint(HashMap<String, Object> hm) {
+		return sqlsession.selectList(bp+".recentListPrint", hm);
+	}
+	
 	@Override
 	public List<BuildDTO> mapList(Map jsonLatLng){
 		return sqlsession.selectList(bp+".mySelect", jsonLatLng);
@@ -34,7 +45,7 @@ public class MapDAOImpl implements MapDAO {
 	
 	@Override
 	public int countCluster(Map jsonLatLng) {
-		return sqlsession.selectOne(ns+".myCountCluster", jsonLatLng);
+		return sqlsession.selectOne(bp+".myCountCluster", jsonLatLng);
 	}
 
 	@Override
@@ -49,7 +60,7 @@ public class MapDAOImpl implements MapDAO {
 	
 	@Override
 	public List<BuildDTO>clusterList(Map hm){
-		return sqlsession.selectList(ns+".myClusterList", hm);
+		return sqlsession.selectList(bp+".myClusterList", hm);
 	}
 
 	///// 아래부터 찜 관련 ///////////
@@ -234,6 +245,15 @@ public class MapDAOImpl implements MapDAO {
 	public int countBuildAll() {
 		return sqlsession.selectOne(ns+".myCountAll");
 	}
+
+	@Override
+	public List<BuildDTO> mySerchAuto(String address) {
+		return sqlsession.selectList(bp+".mySerchAuto", address);
+	}
+
+
+
+
 
 
 }

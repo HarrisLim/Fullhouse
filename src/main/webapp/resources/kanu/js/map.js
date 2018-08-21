@@ -93,6 +93,8 @@ $('document').ready(function(){
         xhr.setRequestHeader(header, token);
 
     });
+    
+ 
 	
 	 $("#map").mouseup(function(){
 	   //console.log("인포인입");
@@ -782,8 +784,8 @@ $('document').ready(function(){
 		$("#end_unlimited").css("background-color", "#3B8DE0");
 		$("#end_0 , #end_500 , #end_1000 , #end_2000 , #end_3000 , #end_4000 , #end_5000 , #end_6000 , #end_7000 , #end_8000 , #end_9000 , #end_10000").css("background-color", "rgba(0,0,0,0)");
 		$("#begin_0, #begin_500, #begin_1000, #begin_2000, #begin_3000, #begin_4000, #begin_5000, #begin_6000, #begin_7000, #begin_8000, #begin_9000, #begin_10000, #begin_unlimited").removeClass("disabled");
-		if($("#begin_text").val()*1 != 99999){
-			$("#begin_text").val(99999); 
+		if($("#begin_text").val()*1 > 9999 || $("#begin_text").val() === ""){
+			$("#begin_text").val(9999); 
 		}
 		$("#deposit").empty().append("(보)"+$("#begin_text").val()+"만 ~ "+$("#end_text").val()+"만");
 		pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
@@ -1577,21 +1579,29 @@ $('document').ready(function(){
 
 //좋아요 하트 버튼 동작
 function heart(that){
-	if($(that).children().children().attr('class').includes("o")){
-		$(that).children().children().removeClass().addClass("fa fa-heart fa-2x");
-	}else {
-		$(that).children().children().removeClass().addClass("fa fa-heart-o fa-2x");
+	if($("#email").val() === null || $("#email").val() === undefined || $("#email").val() === ""){
+		$("#log-in").click();
 	}
-	var build_no = $(that).next().find( '[name = build_no]');
-	var seq = build_no.val();
-	console.log("build_no: "+seq);
-	$.ajax({
-		url : "heart.do",
-		type : "POST",
-		data : {"seq" : seq}
-
-	});
+	if($("#email").val() == null || $("#email").val() == undefined || $("#email").val() == ''){
+		$("#requestcalling").modal('hide');
+		alert("로그인 후 이용가능합니다.");
+		return false;
+	}else{
+		if($(that).children().children().attr('class').includes("o")){
+			$(that).children().children().removeClass().addClass("fa fa-heart fa-2x");
+		}else {
+			$(that).children().children().removeClass().addClass("fa fa-heart-o fa-2x");
+		}
+		var build_no = $(that).next().find( '[name = build_no]');
+		var seq = build_no.val();
+		console.log("build_no: "+seq);
+		$.ajax({
+			url : "heart.do",
+			type : "POST",
+			data : {"seq" : seq}
 	
+		});
+	}
 }
 
 
@@ -1785,7 +1795,105 @@ $(function() {
     });
 });
 
+/////////////////////////////////////////////////////// 로그인 ///////////////////////
+
+function showLogin(type){
+	if(type==='1')
+		$("#logA").click(); 
+}
+
+(function() { showLogin($("#whenFail").val()); }());
+// 비번 중복 체크
+$('#inputPw1').keyup(function(){
+	if( $('#inputPw1').val() != $('#inputPw2').val()){
+		$('#font2').text('');
+		$('#font2').html('<b>비밀번호가 다릅니다</b>');
+	}else{
+		$('#font2').text('');
+		$('#font2').text('비밀번호 확인 완료!');
+	}
+}); // InputPw1 keyup
+
+$('#inputPw2').keyup(function(){
+	if( $('#inputPw1').val() != $('#inputPw2').val()){
+		$('#font2').text('');
+		$('#font2').html('<b>비밀번호가 다릅니다</b>');
+	}else{
+		$('#font2').text('');
+		$('#font2').text('비밀번호 확인 완료!');
+	}
+}); // InputPw2 keyu
+
+// 로그인시 빈칸 확인 및 로그인시 이메일 & 비밀번호 확인
+$("#logIn").click(function(){
+	if( $("#input_email").val() === "" ){
+		alert("이메일 주소가 비어있습니다. 적어 주세요.")
+		return;
+	}else if( $("#input_pw").val() === "" ){
+		alert("비밀번호가 비어있습니다. 채워 주세요.")
+		return;
+	}
+	$("#log").submit();
+});
+
+// 이메일 주소 중복 체크
+$('#inputEmail').keyup(function(){
 	
+	$.ajax({
+		type:'POST',
+		url:'emCheck.do',
+		data:{ mem_email : $("#inputEmail").val() },
+		success : function(responseData){
+			var data = responseData.email;
+			
+			if( $("#inputEmail").val() != data ){
+				$('#font').text('');
+				$('#font').html('<b> 중복되지 않습니다. 사용가능 합니다! </b>');
+				$('#memInput').attr( 'disabled', false );
+			}else if($("#inputEmail").val() === ""){
+				$('#font').text('');
+			}else{
+				$('#font').text('');
+				$('#font').text('중복 되는 이메일 입니다.');
+				$('#memInput').attr( 'disabled', true );
+				
+			}
+		}
+	});
+});
+
+// inputEmail / inputPw1 / userName / phone / customCheck6 / customCheck7
+//회원 가입시 확인 스크립트
+$("#memInput").click(function(){
+	if( $("#inputEmail").val() === "" ){
+		alert(" 이메일을 입력해주세요.")
+		return;
+	}
+	if( $("#inputPw1").val() === "" ){
+		alert(" 비밀번호를 입력해주세요.")
+		return;
+	}
+	if( $("#userName").val() === "" ){
+		alert(" 이름을 입력해주세요.")
+		return;
+	}
+	if( $("#phone").val() === "" ){
+		alert(" 핸드폰 번호를 입력해주세요.")
+		return;
+	}
+	if( $("input[name=customCheck6]").prop("checked") === false ){
+		alert(" 이용약관에 확인 해주세요.")
+		return;
+	}
+	if( $("input[name=customCheck7]").prop("checked") === false ){
+		alert(" 개인정보 이용에 확인 해주세요.")
+		return;
+	}
+	$("#memInsert").submit();
+});
+
+
+
 
 
 

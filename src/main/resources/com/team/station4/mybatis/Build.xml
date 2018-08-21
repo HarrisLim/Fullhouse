@@ -218,79 +218,6 @@
 		<select id="selectBuildRequest" parameterType="int" resultType="build">
 			select * from building where estate_no = #{estate_no}
 		</select>
-		
-		
-		
-		<select id="mySelect" parameterType="Map" resultType="Build"> 
-			select * from(
-			select ads.*, ROWNUM rn from(
-			select a.build_no, a.address, a.proType, a.wholeFloor, a.floor, a.jArea, a.gArea, a.view_count, a.lat, a.lng, a.picPath, a.roomTitle, a.explainText, a.privateMemo, b.deposit, b.salePrice, 
-			b.monthly, b.lease, a.estate_no, c.parking, c.animal, a.BUILDTYPE from 
-			BUILDING a, PRICE b, ADDINFO c where a.build_no(+)=b.build_no and a.build_no = c.build_no and b.build_no = c.build_no AND a.LNG between #{west} and #{east} order by a.BUILD_NO desc) ads 
-			where LAT between #{south} and #{north}
-			<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
-			<if test="proType != null and proType != '전체' ">
-				AND PROTYPE=#{proType}
-			</if>
-			
-			<!-- 매물 종류 -->
-			<choose>
-			<when test="buildType != null and buildType == '월세' ">
-				 AND BUILDTYPE=1
-			</when>
-			<when test="buildType != null and buildType == '전세' ">
-				 AND BUILDTYPE=2
-			</when>
-			<when test="buildType != null and buildType == '매매' ">
-				 AND BUILDTYPE=3
-			</when>
-			<when test="buildType != null and buildType == '월세or전세' ">
-				 AND BUILDTYPE=4
-			</when>
-			</choose>
-			
-			<!-- 거래 종류 -->			
-			<choose>
-				<when test="kind_of_trade != null and kind_of_trade == '중개' ">
-					 AND ESTATE_NO between 1 and 999999
-				</when>
-				<when test="kind_of_trade != null and kind_of_trade == '직거래' ">
-					 AND MEM_NO between 1 and 999999
-				</when>
-
-			</choose>
-			
-			<!-- 보증금 -->	
-			<if test="beginDeposit != null and endDeposit != null" >
-				AND DEPOSIT between #{beginDeposit} and #{endDeposit}
-			</if>
-			
-			<!-- 월세-->	
-			<if test="beginRent != null and endRent != null" >
-				AND MONTHLY between #{beginRent} and #{endRent}
-			</if>
-			
-			<!-- 주차 -->	
-			<if test="parking != null" >
-				AND PARKING = #{parking}
-			</if>
-			
-			<!-- 반려동물 -->	
-			<if test="animal != null " >
-				AND ANIMAL = #{animal}
-			</if>
-			
-			<!-- 층수 -->	
-			<if test="startFloor != null and endFloor != null" >
-				AND FLOOR between #{startFloor} and #{endFloor}
-			</if>
-			
-			<!-- 전용면적 -->	
-			<if test="startArea != null and endArea != null" >
-				AND GAREA between #{startArea} and #{endArea}
-			</if>
-			)where rn between #{start} and #{last}
-		</select>
 
 		<select id="myLocation" resultType="Build">
 			select LAT, LNG from BUILDING
@@ -300,138 +227,7 @@
 			select LAT, LNG from BUILDING where ADDRESS like '%'||#{서울}||'%'
 		</select>
 		
-		<select id="myCountCluster" parameterType="Map" resultType="int" >
-			select count(*) from(select * from BUILDING NATURAL JOIN PRICE NATURAL JOIN ADDINFO where LNG between #{west} and #{east})A where LAT between #{south} and #{north}
-			<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
-			<if test="proType != null and proType != '전체' ">
-				AND  PROTYPE=#{proType}
-			</if>
-			
-			<!-- 매물 종류 -->
-			<choose>
-			<when test="buildType != null and buildType == '월세' ">
-				 AND  BUILDTYPE=1
-			</when>
-			<when test="buildType != null and buildType == '전세' ">
-				 AND  BUILDTYPE=2
-			</when>
-			<when test="buildType != null and buildType == '매매' ">
-				 AND  BUILDTYPE=3
-			</when>
-			<when test="buildType != null and buildType == '월세or전세' ">
-				 AND  BUILDTYPE=4
-			</when>
-			</choose>
-			
-			<!-- 거래 종류 -->			
-			<choose>
-				<when test="kind_of_trade != null and kind_of_trade == '중개' ">
-					 AND  ESTATE_NO between 1 and 999999
-				</when>
-				<when test="kind_of_trade != null and kind_of_trade == '직거래' ">
-					 AND  MEM_NO between 1 and 999999
-				</when>
 
-			</choose>
-			
-			<!-- 보증금 -->	
-			<if test="beginDeposit != null and endDeposit != null" >
-				AND DEPOSIT between #{beginDeposit} and #{endDeposit}
-			</if>
-			
-			<!-- 월세-->	
-			<if test="beginRent != null and endRent != null" >
-				AND MONTHLY between #{beginRent} and #{endRent}
-			</if>
-			
-			<!-- 주차 -->	
-			<if test="parking != null" >
-				AND PARKING = #{parking}
-			</if>
-			
-			<!-- 반려동물 -->	
-			<if test="animal != null " >
-				AND ANIMAL = #{animal}
-			</if>
-			
-			<!-- 층수 -->	
-			<if test="startFloor != null and endFloor != null" >
-				AND FLOOR between #{startFloor} and #{endFloor}
-			</if>
-			
-			<!-- 전용면적 -->	
-			<if test="startArea != null and endArea != null" >
-				AND GAREA between #{startArea} and #{endArea}
-			</if>
-			
-		</select>
-		
-		<select id="myClusterList" parameterType="Map" resultType="Build" >
-			select * from(select * from BUILDING NATURAL JOIN PRICE NATURAL JOIN ADDINFO where LNG between #{west} and #{east})A where LAT between #{south} and #{north}
-			<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
-			<if test="proType != null and proType != '전체' ">
-				AND  PROTYPE=#{proType}
-			</if>
-			
-			<!-- 매물 종류 -->
-			<choose>
-			<when test="buildType != null and buildType == '월세' ">
-				 AND  BUILDTYPE=1
-			</when>
-			<when test="buildType != null and buildType == '전세' ">
-				 AND  BUILDTYPE=2
-			</when>
-			<when test="buildType != null and buildType == '매매' ">
-				 AND  BUILDTYPE=3
-			</when>
-			<when test="buildType != null and buildType == '월세or전세' ">
-				 AND  BUILDTYPE=4
-			</when>
-			</choose>
-			
-			<!-- 거래 종류 -->			
-			<choose>
-				<when test="kind_of_trade != null and kind_of_trade == '중개' ">
-					 AND  ESTATE_NO between 1 and 999999
-				</when>
-				<when test="kind_of_trade != null and kind_of_trade == '직거래' ">
-					 AND  MEM_NO between 1 and 999999
-				</when>
-
-			</choose>
-			
-			<!-- 보증금 -->	
-			<if test="beginDeposit != null and endDeposit != null" >
-				AND DEPOSIT between #{beginDeposit} and #{endDeposit}
-			</if>
-			
-			<!-- 월세-->	
-			<if test="beginRent != null and endRent != null" >
-				AND MONTHLY between #{beginRent} and #{endRent}
-			</if>
-			
-			<!-- 주차 -->	
-			<if test="parking != null" >
-				AND PARKING = #{parking}
-			</if>
-			
-			<!-- 반려동물 -->	
-			<if test="animal != null " >
-				AND ANIMAL = #{animal}
-			</if>
-			
-			<!-- 층수 -->	
-			<if test="startFloor != null and endFloor != null" >
-				AND FLOOR between #{startFloor} and #{endFloor}
-			</if>
-			
-			<!-- 전용면적 -->	
-			<if test="startArea != null and endArea != null" >
-				AND GAREA between #{startArea} and #{endArea}
-			</if>
-			
-		</select>
-		
 		<!-- 	멤버 테이블의 찜목록 등록 업데이트 쿼리문	추후 세션으로 로그인 정보가 들어오면 mem_email 부분은 변수 처리 필요  parameter 도 HashMap 으로 변경 필요 -->
 		<update id="myMemHotUpdate" parameterType="HashMap" >
 			update MEMBER set HOT = concat((select HOT from MEMBER where MEM_EMAIL = #{email}), ','||#{buildNo}) where  MEM_EMAIL = #{email}
@@ -470,6 +266,11 @@
 			select * from BUILDING where BUILD_NO = #{parseInt}
 		</select>
 		
+		<!-- 	관심목록 - 찜한 방  리스트 뽑기 -->
+<!-- 		<select id="mySerchAuto" parameterType="String" resultType="HashMap"> -->
+<!-- 			select * from BUILDING where BUILD_NO = #{parseInt} -->
+<!-- 		</select> -->
+		
 		<!-- 	멤버 테이블의 최근 본 매물 등록 업데이트 쿼리문	추후 세션으로 로그인 정보가 들어오면 mem_email 부분은 변수 처리 필요  parameter 도 HashMap 으로 변경 필요 -->
 		<update id="myMemRecentUpdate" parameterType="HashMap" >
 			update MEMBER set RECENTLIST=#{build_no} where MEM_EMAIL = #{email}
@@ -479,7 +280,6 @@
 		<!-- 	찜 목록 삭제 업데이트를 위한 멤버 테이블의 찜목록 값 확인 -->
 		<select id="myRecentSelect" parameterType="HashMap" resultType="int">
 				select count(*) from MEMBER where MEM_EMAIL = #{email} AND RECENTLIST like '%'||','||#{build_no}||'%'
-<!-- 				select count(RECENTLIST) from MEMBER where MEM_EMAIL = '1234@gmail.com'  -->
 		</select>
 		
 		<!-- 	관심목록 - 찜한 방  리스트 뽑기를 위한 멤버 테이블의 최근 본 매물 값 확인 -->

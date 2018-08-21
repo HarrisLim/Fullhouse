@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,29 +54,29 @@ public class MapController {
 		hm.put("north", 37.6898343030413);
 		hm.put("east", 127.2456203269095);
 
-		List<BuildDTO> list =service.mapListService(hm);
-		
-		HashMap<BuildDTO, List<PriceDTO>> priceMap = new HashMap<BuildDTO, List<PriceDTO>>();
+		//////
+		List<HashMap<String, Object>>map = service.selectMapService(hm);
+		//System.out.println("월세:"+map.get(0).get("MONTHLY")+", 전세:"+map.get(0).get("LEASE")+", 보증금:"+map.get(0).get("DEPOSIT"));
+		for(int i=0; i<map.size(); i++) {
+			if(map.get(i).get("ROOMTITLE").toString().length() > 23) {
+				String roomTitle = map.get(i).get("ROOMTITLE").toString().substring(0, 22)+"...";
+				map.get(i).put("ROOMTITLE", roomTitle);
+				//System.out.println("Xxxx: "+ roomTitle);
+			}
+		}
+		/////
 		int count = service.countClusterService(hm);
 		pagingVo.setTotal(count);
 		
-		for(int i=0; i<list.size(); i++) {
-			String [] picPath = list.get(i).getPicPath().split(",");
-			list.get(i).setPicPath(picPath[0]);
+		for(int i=0; i<map.size(); i++) {
+			String [] picPath = map.get(i).get("PICPATH").toString().split(",");
+			map.get(i).put("PICPATH", picPath[0]);
 		}
 
-		for(BuildDTO dto : list) {
-			List<PriceDTO> price =  service.priceSelectService(dto);
-			priceMap.put(dto, price);
-			System.out.println("priceList내용: "+price.get(0).getBuild_no()+", deposit: "+price.get(0).getDeposit()+", monthly: "+price.get(0).getMonthly()+", lease: "+price.get(0).getLease());
-		}
-		
-		
-	
 		mv.setViewName("house/map");
-		mv.addObject("priceMap", priceMap);
+		mv.addObject("flag", 0);
+		mv.addObject("map", map);
 		mv.addObject("count", count);
-		mv.addObject("list", list);
 		mv.addObject("page", pagingVo);
 		return mv;
 	}
@@ -122,24 +123,24 @@ public class MapController {
 			jsonLatLng.put("start", pagingVo.getStart());
 			jsonLatLng.put("last", pagingVo.getLast());
 				
-			List<BuildDTO> list =service.mapListService(jsonLatLng);
+			List<HashMap<String, Object>>map = service.selectMapService(jsonLatLng);
 			
-			for(int i=0; i<list.size(); i++) {
-				String [] picPath = list.get(i).getPicPath().split(",");
-				list.get(i).setPicPath(picPath[0]);
+			for(int i=0; i<map.size(); i++) {
+				String [] picPath = map.get(i).get("PICPATH").toString().split(",");
+				map.get(i).put("PICPATH", picPath[0]);
 			}
-
-			HashMap<BuildDTO, List<PriceDTO>> priceMap = new HashMap<BuildDTO, List<PriceDTO>>();  
-			for(BuildDTO dto : list) {
-				List<PriceDTO>price = service.priceSelectService(dto);
-				priceMap.put(dto, price);
-			} 
-			
+			for(int i=0; i<map.size(); i++) {
+				if(map.get(i).get("ROOMTITLE").toString().length() > 23) {
+					String roomTitle = map.get(i).get("ROOMTITLE").toString().substring(0, 22)+"...";
+					map.get(i).put("ROOMTITLE", roomTitle);
+					//System.out.println("Xxxx: "+ roomTitle);
+				}
+			}
 			
 			pagingVo.setTotal(service.countClusterService(jsonLatLng));
 			System.out.println("pagingVo.getPageLastNum: "+pagingVo.getPageLastNum());
-			mv.addObject("list", list);
-			mv.addObject("priceMap", priceMap);
+			mv.addObject("flag", 0);
+			mv.addObject("list", map);
 			mv.addObject("pagingVo", pagingVo);
 			//mapClusterer(jsonLatLng);
 			return mv;
@@ -156,30 +157,37 @@ public class MapController {
 			jsonLatLng.put("last", pagingVo.getLast());
 			List<Integer> listHot = new ArrayList<Integer>();
 			String hot = service.myHotService(email);
+			hot= hot.substring(hot.indexOf(",")+1);
 			String [] hotArray = hot.split(",");
 			for(String hotStr : hotArray) {
-				if(hotStr.length() != 0) {
 					listHot.add(Integer.parseInt(hotStr));
-				}
 			}
-			jsonLatLng.put("list", listHot);
+			HashMap<String, Object> hm = new HashMap<String, Object>();
 			int total = listHot.size();
 			pagingVo.setTotal(total);
 			System.out.println("파스인트된 flag 찜목록: "+flag+", index: "+pagingVo.getIndex()+", pageStartNum: "+pagingVo.getPageStartNum()+", pageLastNum: "+pagingVo.getPageLastNum()+", total: "+pagingVo.getTotal());
-			List<BuildDTO>list = service.hotListServicePaging(jsonLatLng);
-			for(int i=0; i<list.size(); i++) {
-				String [] picPath = list.get(i).getPicPath().split(",");
-				list.get(i).setPicPath(picPath[0]);
+			hm.put("list", listHot);
+			hm.put("start", pagingVo.getStart());
+			hm.put("last", pagingVo.getLast());
+			List<HashMap<String, Object>>map = service.recentListPrintService(hm);
+			
+			for(int i=0; i<map.size(); i++) {
+				String [] picPath = map.get(i).get("PICPATH").toString().split(",");
+				map.get(i).put("PICPATH", picPath[0]);
 			}
-
-			HashMap<BuildDTO, List<PriceDTO>> priceMap = new HashMap<BuildDTO, List<PriceDTO>>();  
-			for(BuildDTO dto : list) {
-				List<PriceDTO>price = service.priceSelectService(dto);
-				priceMap.put(dto, price);
-			} 
-
-			mv.addObject("list", list);
-			mv.addObject("priceMap", priceMap);
+			for(int i=0; i<map.size(); i++) {
+				if(map.get(i).get("ROOMTITLE").toString().length() > 23) {
+					String roomTitle = map.get(i).get("ROOMTITLE").toString().substring(0, 22)+"...";
+					map.get(i).put("ROOMTITLE", roomTitle);
+					//System.out.println("Xxxx: "+ roomTitle);
+				}
+			}
+			for(HashMap<String, Object> obj : map) {
+				System.out.println("찜목록클릭 flag1 : "+obj.get("BUILD_NO")+", address: "+obj.get("ADDRESS")+", deposit: "+obj.get("DEPOSIT"));
+			}
+			
+			mv.addObject("flag", 1);
+			mv.addObject("list", map);
 			mv.addObject("pagingVo", pagingVo);
 			return mv;
 		//flag 2 은 방검색 페이지 - 최근 본 방 제이슨 데이터 처리
@@ -195,29 +203,34 @@ public class MapController {
 			jsonLatLng.put("last", pagingVo.getLast());
 			List<Integer> listRecent = new ArrayList<Integer>();
 			String recent = service.myRecentService(email);
+			recent= recent.substring(recent.indexOf(",")+1);
 			String [] recentArray = recent.split(",");
 			for(String recentStr : recentArray) {
-				if(recentStr.length() != 0) {
 					listRecent.add(Integer.parseInt(recentStr));
-				}
 			}
-			jsonLatLng.put("list", listRecent);
 			int total = listRecent.size();
 			pagingVo.setTotal(total);
+			HashMap<String, Object> hm = new HashMap<String, Object>();
+			hm.put("list", listRecent);
+			hm.put("start", pagingVo.getStart());
+			hm.put("last", pagingVo.getLast());
+			
 			System.out.println("파스인트된 flag 관심목록: "+flag+", index: "+pagingVo.getIndex()+", pageStartNum: "+pagingVo.getPageStartNum()+", pageLastNum: "+pagingVo.getPageLastNum()+", total: "+pagingVo.getTotal());
-			List<BuildDTO>list = service.hotListServicePaging(jsonLatLng);
-			for(int i=0; i<list.size(); i++) {
-				String [] picPath = list.get(i).getPicPath().split(",");
-				list.get(i).setPicPath(picPath[0]);
+			List<HashMap<String, Object>>map = service.recentListPrintService(hm);
+			
+			for(int i=0; i<map.size(); i++) {
+				String [] picPath = map.get(i).get("PICPATH").toString().split(",");
+				map.get(i).put("PICPATH", picPath[0]);
 			}
-
-			HashMap<BuildDTO, List<PriceDTO>> priceMap = new HashMap<BuildDTO, List<PriceDTO>>();  
-			for(BuildDTO dto : list) {
-				List<PriceDTO>price = service.priceSelectService(dto);
-				priceMap.put(dto, price);
-			} 
-			mv.addObject("list", list);
-			mv.addObject("priceMap", priceMap);
+			for(int i=0; i<map.size(); i++) {
+				if(map.get(i).get("ROOMTITLE").toString().length() > 23) {
+					String roomTitle = map.get(i).get("ROOMTITLE").toString().substring(0, 22)+"...";
+					map.get(i).put("ROOMTITLE", roomTitle);
+					//System.out.println("Xxxx: "+ roomTitle);
+				}
+			}
+			mv.addObject("flag", 2);
+			mv.addObject("list", map);
 			mv.addObject("pagingVo", pagingVo);
 			return mv;
 		}
@@ -310,17 +323,20 @@ public class MapController {
 	public void recentList(@RequestParam("seq") String buildNo, HttpSession session ) {
 		if(session.getAttribute("mem") != null) {
 			MainDTO member = (MainDTO)session.getAttribute("mem");
-			String email = member.getMem_email();
+			String email = member.getMem_email().trim();
 			String recent = service.myRecentService(email);
 			HashMap<String, Object> hm = new HashMap<String, Object>();
-			hm.put("build_no", ","+buildNo);
+			hm.put("build_no", buildNo); //빌드 넘버 검색을 위한 hm
 			hm.put("email", email);
-			System.out.println("최근본 페이지 추가 인입 리센트 확인: "+recent+", 빌드번호 확인: "+buildNo);
+			
 			//recentList 목록이 있는지 검사 0이면 최근본목록 없으니 그냥 등록 1이면 최근본목록+ 추가로 본목록, 추가로 본 목록이 최근목록에 있으면 recent는 기존 목록처리
 			int count = service.memRecentSelectService(hm);
+			System.out.println("최근본 페이지 추가 인입 리센트 확인: "+recent+", 빌드번호 확인: "+buildNo+", count: "+count+", email: "+email);
 			if (count < 1) {
+				hm.put("build_no", recent+","+buildNo);
 				service.memRecentUpdateService(hm);
 				recent = service.myRecentService(email);
+				System.out.println("중복 매물이없을때: recent: "+recent);
 			}else {
 				if(recent.contains(buildNo)) {
 					System.out.println("리센트에 내가 선택한 빌드번호가 있으면: "+recent);
@@ -328,7 +344,7 @@ public class MapController {
 					hm.put("build_no", recent+","+buildNo);
 					service.memRecentUpdateService(hm);
 					recent = service.myRecentService(email);
-					System.out.println("리센트에 내가 선택한 빌드번호가 없으면: "+recent);
+					System.out.println("리센트에 내가 선택한 빌드번호가 없으면: "+recent+"hashMap데이터 확인: "+hm.get("build_no"));
 				}
 			}
 			String recentArray[] = recent.split(",");
@@ -353,33 +369,43 @@ public class MapController {
 		if(session.getAttribute("mem") != null) {
 			MainDTO member = (MainDTO)session.getAttribute("mem");
 			String email = member.getMem_email();
-			System.out.println("관심목록 입장");
-			List<BuildDTO> list = new ArrayList<BuildDTO>();
+			
+			
 			String recent = service.myRecentService(email);
+			
+			System.out.println("관심목록 입장 recent: "+recent);
 			if(recent != null ) {
-				String [] hotSplit = recent.split(",");
-				for(String hs : hotSplit) {
-					//System.out.println("hs: "+hs+", hs.length: "+hs.length());
-					if(hs.length() > 0) {
-						list.add(service.recentListService(Integer.parseInt(hs)));
+				recent = recent.substring(recent.indexOf(",")+1);
+				String recentArray [] = recent.split(",");
+				List<Integer> list = new ArrayList<Integer>();
+				for(String recentStr :recentArray) {
+					list.add(Integer.parseInt(recentStr));
+				}
+				int count = list.size();
+				pagingVo.setTotal(count);
+				HashMap<String, Object> hm = new HashMap<String, Object>();
+				hm.put("start", pagingVo.getStart());
+				hm.put("last", pagingVo.getLast());
+				hm.put("list", list); 
+				List<HashMap<String, Object>>map = service.recentListPrintService(hm);
+		
+				//System.out.println("월세:"+map.get(0).get("MONTHLY")+", 전세:"+map.get(0).get("LEASE")+", 보증금:"+map.get(0).get("DEPOSIT"));
+				for(int i=0; i<map.size(); i++) {
+					if(map.get(i).get("ROOMTITLE").toString().length() > 23) {
+						String roomTitle = map.get(i).get("ROOMTITLE").toString().substring(0, 22)+"...";
+						map.get(i).put("ROOMTITLE", roomTitle);
+						//System.out.println("Xxxx: "+ roomTitle);
 					}
 				}
-				int total = list.size();
-				System.out.println("list: "+list);
-				for(int i=0; i<list.size(); i++) {
-					String [] picPath = list.get(i).getPicPath().split(",");
-					list.get(i).setPicPath(picPath[0]);
-				}
-	
-				HashMap<BuildDTO, List<PriceDTO>> priceMap = new HashMap<BuildDTO, List<PriceDTO>>();  
-				for(BuildDTO dto : list) {
-					List<PriceDTO>price = service.priceSelectService(dto);
-					priceMap.put(dto, price);
+				
+				for(int i=0; i<map.size(); i++) {
+					String [] picPath = map.get(i).get("PICPATH").toString().split(",");
+					map.get(i).put("PICPATH", picPath[0]);
 				}
 				mv.setViewName("house/myMap");
-				mv.addObject("priceMap", priceMap);
-				mv.addObject("total", total);
-				mv.addObject("list", list);
+				mv.addObject("flag", 2);
+				mv.addObject("map", map);
+				mv.addObject("count", count);
 				mv.addObject("page", pagingVo);
 				return mv;
 			}else {
@@ -399,143 +425,189 @@ public class MapController {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		ArrayList<HashMap> list = new ArrayList<HashMap>();
 		int flag = (Integer)map.get("flag");
-		MainDTO member = (MainDTO)session.getAttribute("mem");
-		String email="";
-		if(member!=null) email = member.getMem_email();
-		if(flag == 0) {
-			System.out.println("flag 관심목록: "+flag);
-			String recent = service.myRecentService(email);
-			if(recent != null) {
-				String [] recentSplit = recent.split(",");
-				for(String resultRecent : recentSplit) {
-					if(resultRecent.length() > 0) {
-						BuildDTO dto = service.recentListService(Integer.parseInt(resultRecent));
+		if(session.getAttribute("mem") != null) {
+			MainDTO member = (MainDTO)session.getAttribute("mem");
+			String email = member.getMem_email();
+			if(flag == 0) { // 관심목록 입장 (myMap.do)
+				String recent = service.myRecentService(email);
+				System.out.println("flag 관심목록: "+flag+"recentList: "+recent);
+				if(recent != null) {
+					String [] recentSplit = recent.split(",");
+					for(int i=1; i<recentSplit.length; i++) {
+						BuildDTO dto = service.recentListService(Integer.parseInt(recentSplit[i]));
+						//System.out.println("flag 관심목록: "+flag+"lat: "+dto.getLat()+", lng: "+dto.getLng());
 						hm.put("lat", dto.getLat());
 						hm.put("lng", dto.getLng());
 						list.add(hm);
+						if(hm.size() == 2) {
+							hm = new HashMap<String, Object>();
+						}
+						System.out.println("flag 관심목록: "+flag+"lat: "+hm.get("lat")+", lng: "+hm.get("lng"));
 					}
-					if(hm.size() == 2) {
-						hm = new HashMap<String, Object>();
-					}
+	
+					mv.addObject("positions", list);
+					return mv;
+				}else {
+					System.out.println("관심목록 없음");
+					return mv;
 				}
-				mv.addObject("positions", list);
-				return mv;
-			}else {
-				System.out.println("관심목록 없음");
-				return mv;
-			}
-		}else {
-			System.out.println("flag 찜한 방: "+flag);
-			String hot = service.myHotService(email);
-			if(hot != null) {
-				String [] hotSplit = hot.split(",");
-				for(String resultHot : hotSplit) {
-					if(resultHot.length() > 0) {
-						BuildDTO dto = service.hotListService(Integer.parseInt(resultHot));
+			}else { // 찜한방 클릭
+				System.out.println("flag 찜한 방: "+flag);
+				String hot = service.myHotService(email);
+				if(hot != null) {
+					String [] hotSplit = hot.split(",");
+					for(int i=1; i<hotSplit.length; i++) {
+						BuildDTO dto = service.hotListService(Integer.parseInt(hotSplit[i]));
+						System.out.println("flag 관심목록: "+flag+"lat: "+dto.getLat()+", lng: "+dto.getLng());
 						hm.put("lat", dto.getLat());
 						hm.put("lng", dto.getLng());
 						list.add(hm);
+						if(hm.size() == 2) {
+							hm = new HashMap<String, Object>();
+						}
+						
 					}
-					if(hm.size() == 2) {
-						hm = new HashMap<String, Object>();
-					}
+	
+					mv.addObject("positions", list);
+					return mv;
+				}else {
+					System.out.println("찜한방 없음");
+					return mv;
 				}
-				mv.addObject("positions", list);
-				return mv;
-			}else {
-				System.out.println("찜한방 없음");
-				return mv;
 			}
 		}
-
-		
+		return mv;
 	}
 		
 	/*관심목록 - 찜한 방 클릭시*/
 	@RequestMapping(value="house/heartRoom.do", method=RequestMethod.POST)	
 	public ModelAndView heartRoom(PagingVo pagingVo, HttpSession session) {
-	
-		MainDTO member = (MainDTO)session.getAttribute("mem");
-		String email = member.getMem_email();
-		ArrayList<Integer> BuildNumlist = new ArrayList<Integer>();
-		HashMap<String, Object>hm = new HashMap<String, Object>();
 		ModelAndView mv = new ModelAndView("jsonView");
-		String hot = service.myHotService(email);
-		System.out.println("찜한방 입장: "+email+"hot: "+hot);
-		if(hot != null) {
-			String [] hotSplit = hot.split(",");
-			for(String hs : hotSplit) {
-				System.out.println("hs: "+hs);
-				if(hs.length() > 0) {
-					BuildNumlist.add(Integer.parseInt(hs));
-				}
-			}
-			int total = BuildNumlist.size();
-			hm.put("list", BuildNumlist);
-			hm.put("start", pagingVo.getStart());
-			hm.put("last", pagingVo.getLast());
-			List<BuildDTO> list = service.hotListServicePaging(hm);
-			for(int i=0; i<list.size(); i++) {
-				String [] picPath = list.get(i).getPicPath().split(",");
-				list.get(i).setPicPath(picPath[0]);
-			}
-
-			pagingVo.setTotal(total);
-			System.out.println("찜한방 에서 list.size(): "+list.size()+", index: "+pagingVo.getIndex()+", pageStartNum: "+pagingVo.getPageStartNum()+", pageLastNum: "+pagingVo.getPageLastNum()+", listCnt: "+pagingVo.getListCnt()+", listCnt: "+pagingVo.getLast());
+		if(session.getAttribute("mem") != null) {
+			MainDTO member = (MainDTO)session.getAttribute("mem");
+			String email = member.getMem_email();
 			
-			HashMap<BuildDTO, List<PriceDTO>> priceMap = new HashMap<BuildDTO, List<PriceDTO>>();  
-			for(BuildDTO dto : list) {
-				List<PriceDTO>price = service.priceSelectService(dto);
-				priceMap.put(dto, price);
+			
+			String hot = service.myHotService(email);
+			
+			System.out.println("찜목록 입장 hot: "+hot);
+			if(hot != null ) {
+				hot = hot.substring(hot.indexOf(",")+1);
+				String hotArray [] = hot.split(",");
+				List<Integer> list = new ArrayList<Integer>();
+				for(String hotStr :hotArray) {
+					list.add(Integer.parseInt(hotStr));
+				}
+				int count = list.size();
+				pagingVo.setTotal(count);
+				HashMap<String, Object> hm = new HashMap<String, Object>();
+				hm.put("start", pagingVo.getStart());
+				hm.put("last", pagingVo.getLast());
+				hm.put("list", list); 
+				List<HashMap<String, Object>>map = service.recentListPrintService(hm);
+		
+				//System.out.println("월세:"+map.get(0).get("MONTHLY")+", 전세:"+map.get(0).get("LEASE")+", 보증금:"+map.get(0).get("DEPOSIT"));
+				for(int i=0; i<map.size(); i++) {
+					if(map.get(i).get("ROOMTITLE").toString().length() > 23) {
+						String roomTitle = map.get(i).get("ROOMTITLE").toString().substring(0, 22)+"...";
+						map.get(i).put("ROOMTITLE", roomTitle);
+						//System.out.println("Xxxx: "+ roomTitle);
+					}
+				}
+				
+				for(int i=0; i<map.size(); i++) {
+					String [] picPath = map.get(i).get("PICPATH").toString().split(",");
+					map.get(i).put("PICPATH", picPath[0]);
+				}
+				System.out.println("찜한방 에서 list.size(): "+list.size()+", index: "+pagingVo.getIndex()+", pageStartNum: "+pagingVo.getPageStartNum()+
+						", pageLastNum: "+pagingVo.getPageLastNum()+", listCnt: "+pagingVo.getListCnt()+", listCnt: "+pagingVo.getLast()+", total: "+pagingVo.getTotal());
+				
+				
+				mv.addObject("map", map);
+				mv.addObject("flag", 1);
+				mv.addObject("count", count);
+				mv.addObject("page", pagingVo);
+				return mv;
+			}else {
+				System.out.println("찜한방 클릭시 찜한방 없음");
+				return mv;
 			}
-			mv.addObject("priceMap", priceMap);
-			mv.addObject("total", total);
-			mv.addObject("list", list);
-			mv.addObject("page", pagingVo);
-			return mv;
-		}else {
-			System.out.println("찜한방 클릭시 찜한방 없음");
-			return mv;
 		}
+		return mv;	
 	}
 	
 	/*관심목록 - 최근 본 방 클릭시*/
 	@RequestMapping(value="house/recentRoom.do", method=RequestMethod.POST)	
 	public ModelAndView recentRoom(PagingVo pagingVo, HttpSession session) {
-		MainDTO member = (MainDTO)session.getAttribute("mem");
-		String email = member.getMem_email();
-		List<BuildDTO> list = new ArrayList<BuildDTO>();
 		ModelAndView mv = new ModelAndView("jsonView");
-	
-		String recent = service.myRecentService(email);
-		System.out.println("관심목록 클릭: "+email+"recent: "+recent);
-		if(recent != null) {
-			String [] recentSplit = recent.split(",");
-			for(String hs : recentSplit) {
-				System.out.println("hs: "+hs);
-				if(hs.length() > 0) {
-					BuildDTO dto = service.recentListService(Integer.parseInt(hs));
-					list.add(dto);
-				}
-			}
-			for(int i=0; i<list.size(); i++) {
-				String [] picPath = list.get(i).getPicPath().split(",");
-				list.get(i).setPicPath(picPath[0]);
-			}
-
-			int total = list.size();
-			pagingVo.setTotal(total);
+		if(session.getAttribute("mem") != null) {
+			MainDTO member = (MainDTO)session.getAttribute("mem");
+			String email = member.getMem_email();
 			
-			System.out.println("관심목록-최근본방 클릭: list: "+list+"list.size(): "+list.size());
-			mv.addObject("total", total);
-			mv.addObject("list", list);
-			mv.addObject("page", pagingVo);
-			return mv;
+
+			
+			
+			String recent = service.myRecentService(email);
+			
+			System.out.println("관심목록 입장 recent: "+recent);
+			if(recent != null ) {
+				recent = recent.substring(recent.indexOf(",")+1);
+				String recentArray [] = recent.split(",");
+				List<Integer> list = new ArrayList<Integer>();
+				for(String recentStr :recentArray) {
+					list.add(Integer.parseInt(recentStr));
+				}
+				int count = list.size();
+				pagingVo.setTotal(count);
+				HashMap<String, Object> hm = new HashMap<String, Object>();
+				hm.put("start", pagingVo.getStart());
+				hm.put("last", pagingVo.getLast());
+				hm.put("list", list); 
+				List<HashMap<String, Object>>map = service.recentListPrintService(hm);
+		
+				//System.out.println("월세:"+map.get(0).get("MONTHLY")+", 전세:"+map.get(0).get("LEASE")+", 보증금:"+map.get(0).get("DEPOSIT"));
+				for(int i=0; i<map.size(); i++) {
+					if(map.get(i).get("ROOMTITLE").toString().length() > 23) {
+						String roomTitle = map.get(i).get("ROOMTITLE").toString().substring(0, 22)+"...";
+						map.get(i).put("ROOMTITLE", roomTitle);
+						//System.out.println("Xxxx: "+ roomTitle);
+					}
+				}
+				
+				for(int i=0; i<map.size(); i++) {
+					String [] picPath = map.get(i).get("PICPATH").toString().split(",");
+					map.get(i).put("PICPATH", picPath[0]);
+				}
+				mv.addObject("flag", 2);
+				mv.addObject("map", map);
+				mv.addObject("count", count);
+				mv.addObject("page", pagingVo);
+				return mv;
+			}else {
+				System.out.println("최근 본방 없음");
+				return mv;
+			}
 		}else {
-			System.out.println("관심목록-최근본방 클릭, 최근본방 없음");
+			mv.addObject("flag", 1);
 			return mv;
 		}
+			
 	}
+	
+	@RequestMapping(value="house/serchAuto.do", method=RequestMethod.POST)
+	public ModelAndView serchAuto( @RequestParam("writer") String address) {
+		ModelAndView mv = new ModelAndView("jsonView");
+		List<BuildDTO> serchAddress = service.mySerchAutoService(address);
+		ArrayList<String> serch = new ArrayList<String>();
+		for(int i=0; i<serchAddress.size();i++) {
+			serch.add(serchAddress.get(i).getAddress());
+		}
+		//System.out.println(serchAddress.get(0).getAddress());
+		mv.addObject("list", serch);
+		
+		return mv;
+	}
+			
 	
 }
 

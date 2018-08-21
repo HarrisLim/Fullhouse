@@ -16,7 +16,7 @@ import com.team.station4.uploadroom.model.AddInfoDTO;
 import com.team.station4.uploadroom.model.PriceDTO;
 
 public interface MapService {
-	
+	List<HashMap<String, Object>> selectMapService(Map jsonLatLng);
 	List<BuildDTO> mapListService(Map jsonLatLng);
 	int countClusterService(Map jsonLatLng);
 	List<BuildDTO> locationService();
@@ -62,4 +62,6 @@ public interface MapService {
 	int selectBuildBarMonthService(Map<String, Object> buildBarMonthMap);
 	int selectBuildLineYearService(Map<String, Object> buildLineYearMap);
 	int selectBuildLineDayService(Map<String, Object> buildLineDayMap);
+	List<HashMap<String, Object>> recentListPrintService(HashMap<String, Object> hm);
+	List<BuildDTO> mySerchAutoService(String address);
 }
