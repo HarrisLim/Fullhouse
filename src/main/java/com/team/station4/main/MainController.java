@@ -1,11 +1,15 @@
 package com.team.station4.main;
 
 
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.team.station4.main.model.MainDTO;
@@ -45,7 +49,10 @@ public class MainController {
 	}
 	// 내 정보 비번 변경 업데이트 
 	@RequestMapping(value = "house/myinfoUp.do", method = RequestMethod.POST)
-	public ModelAndView myinfoUp(MainDTO dto) {
+	public ModelAndView myinfoUp(MainDTO dto, @RequestParam("photo") MultipartFile file) {
+//		System.out.println("zzzzzzzzzz "); , @RequestParam("photo") MultipartFile file
+//		System.out.println("file: "+ file);
+		System.out.println("zzzzzzzzzz ");
 		ModelAndView mv = new ModelAndView();
 		service.changeInfoS(dto);
 		int count = 0;

@@ -127,6 +127,10 @@ $('document').ready(function(){
 
 //좋아요 하트 버튼 동작
 function heart(that){
+	if($("#email").val() === null || $("#email").val() === undefined || $("#email").val() === ""){
+		$("#log-in").click();
+
+	}
 	if($(that).children().children().attr('class').includes("o")){
 		$(that).children().children().removeClass().addClass("fa fa-heart fa-2x");
 	}else {
@@ -187,7 +191,8 @@ function buildMouseOut(that){
 $("#heartRoom").click(function(){
 	console.log("찜한방 클릭 인입");
 	$("#flag").val(1);
-	var email = "1234@gmail.com";
+	var email = $("#email_check").val();
+	console.log("찜한방 클릭 email: "+$("#email_check").val());
     for ( var i = 0; i < markers.length; i++ ) {
         markers[i].setMap(null);
    } 
@@ -196,9 +201,10 @@ $("#heartRoom").click(function(){
 	$.ajax({
 		url : "heartRoom.do",
 		type : "POST",
-		data : {email : email},
+		data : {email : $("#email_check").val()},
 		success : function (responseData){
 			var data = responseData;
+			console.log("찜한방 클릭시 마크클러스터 나오고 난뒤1: "+data.page.total);
 			$("#total").val(data.page.total);
 			$("#pageCnt").val(data.page.pageCnt);
 			$("#listCnt").val(data.page.listCnt);
@@ -210,26 +216,29 @@ $("#heartRoom").click(function(){
 
 //관심목록 - 최근 본방 클릭시
 $("#recentRoom").click(function(){
-	console.log("최근 본 방 클릭 인입");
-	$("#flag").val(2);
-	var email = "1234@gmail.com";
-    for ( var i = 0; i < markers.length; i++ ) {
-        markers[i].setMap(null);
-   } 
-	mkClusterer(0);
-	$.ajax({
-		url : "recentRoom.do",
-		type : "POST",
-		data : {email : email},
-		success : function (responseData){
-			var data = responseData;
-			$("#total").val(data.page.total);
-			$("#pageCnt").val(data.page.pageCnt);
-			$("#listCnt").val(data.page.listCnt);
-			console.log("최근본방 목록 success: 페이징정보 total: "+$("#total").val()+", listCnt: "+ $("#listCnt").val()+", pageCnt: "+$("#pageCnt").val());
-			pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
-		}
-	});
+	
+		console.log("최근 본 방 클릭 인입");
+		$("#flag").val(2);
+		var email = $("#email").val();
+	    for ( var i = 0; i < markers.length; i++ ) {
+	        markers[i].setMap(null);
+	   } 
+		mkClusterer(2);
+		$.ajax({
+			url : "recentRoom.do",
+			type : "POST",
+			data : {email : email},
+			success : function (responseData){
+				var data = responseData;
+				$("#total").val(data.page.total);
+				$("#pageCnt").val(data.page.pageCnt);
+				$("#listCnt").val(data.page.listCnt);
+				console.log("최근본방 목록 success: 페이징정보 total: "+$("#total").val()+", listCnt: "+ $("#listCnt").val()+", pageCnt: "+$("#pageCnt").val());
+				pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
+			}
+			
+		});
+
 });
 
 // 토큰 생성
@@ -242,7 +251,9 @@ $(function() {
 });
 
 function mkClusterer(flag){
-
+    for ( var i = 0; i < markers.length; i++ ) {
+        markers[i].setMap(null);
+   } 
 	 latLngArray["north"] = $("#north").val();
 	 latLngArray["south"] = $("#south").val();
 	 latLngArray["east"] = $("#east").val();
@@ -261,14 +272,15 @@ function mkClusterer(flag){
 		   position = responseData;
     
 		    for(var i=0; i<position.positions.length; i++){
-		    	//console.log("position2 포문: "+position.positions[i].lat+", i: "+i);
+		    	console.log("position2 포문: lat: "+position.positions[i].lat+", lng: "+position.positions[i].lng+", i: "+i);
 		    	var coords = new daum.maps.LatLng(position.positions[i].lat, position.positions[i].lng);
 		    	marker = new daum.maps.Marker({
 			    	position: coords,
 			    	image: customMarkerImage1
 		    	});
-		    	marker.setMap(map);		    	
+		    			    	
 		    	markers.push(marker);
+		    	markers[i].setMap(map);
 		    }
 		},error:function(request,status,error){
 	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

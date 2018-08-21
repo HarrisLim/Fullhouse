@@ -9,8 +9,7 @@ public class PriceDTO {
 	private int monthly;
 	private int deposit;
 	private int build_no;
-	
-	
+		
 
 	public PriceDTO(){}
 

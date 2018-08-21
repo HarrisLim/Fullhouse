@@ -7,7 +7,7 @@
                 <span class="font-weight-800">테마 검색</span>
               </h1></br></br>
           <div class="row cols-xs-space cols-sm-space cols-md-space">
-            <div class="col-lg-6">
+            <div class="col-lg-6" style="margin-bottom:20px">
               <div class="card bg-dark alpha-container text-white border-0 overflow-hidden">
                 <a href="../house/map.do" target="_blank">
                   <div class="card-img-bg" style="background-image: url('../kanu/main/반려동물.jpg');"></div>
@@ -16,9 +16,6 @@
                     <div style="min-height: 300px;">
                       <h3 class="heading h1 text-white mb-3">반려동물</h3>
                     </div>
-                   <span href=""class="text-white text-uppercase font-weight-500">
-                     	고고싱<i class="fas fa-arrow-right ml-2"></i>
-                    </span>
                   </div>
                 </a>
               </div>
@@ -32,10 +29,6 @@
                     <div style="min-height: 300px;">
                       <h3 class="heading h1 text-white mb-3">저보증금</h3>
                     </div>
-                    <span href="#" class="text-white text-uppercase font-weight-500">
-                      	궈궈싱
-                      <i class="fas fa-arrow-right ml-2"></i>
-                    </span>
                   </div>
                 </a>
               </div>
@@ -49,10 +42,6 @@
                     <div style="min-height: 300px;">
                       <h3 class="heading h1 text-white mb-3">오피스텔</h3>
                     </div>
-                    <span href="#" class="text-white text-uppercase font-weight-500">
-                      	꼬꼬씽
-                      <i class="fas fa-arrow-right ml-2"></i>
-                    </span>
                   </div>
                 </a>
               </div>
@@ -66,10 +55,6 @@
                     <div style="min-height: 300px;">
                       <h3 class="heading h1 text-white mb-3">주차가능</h3>
                     </div>
-                    <span href="#" class="text-white text-uppercase font-weight-500">
-                      	꿔꿔싱
-                      <i class="fas fa-arrow-right ml-2"></i>
-                    </span>
                   </div>
                 </a>
               </div>

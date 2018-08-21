@@ -39,13 +39,26 @@
 			<collection property="priceDTO" javaType="java.util.ArrayList" resultMap="Pirce"> </collection>
 		</resultMap>
 		
-		<select id="mySelect" parameterType="Map" resultType="Build"> 
-			select * from(
-			select ads.*, ROWNUM rn from(
-			select a.build_no, a.address, a.proType, a.wholeFloor, a.floor, a.jArea, a.gArea, a.view_count, a.lat, a.lng, a.picPath, a.roomTitle, a.explainText, a.privateMemo, b.deposit, b.salePrice, 
-			b.monthly, b.lease, a.estate_no, c.parking, c.animal, a.BUILDTYPE from 
-			BUILDING a, PRICE b, ADDINFO c where a.build_no(+)=b.build_no and a.build_no = c.build_no and b.build_no=c.build_no AND a.LNG between #{west} and #{east} order by a.BUILD_NO desc) ads 
-			where LAT between #{south} and #{north}
+		<select id="mySerchAuto" parameterType="String" resultType="Build">
+			select ADDRESS from BUILDING where ADDRESS like '%'||#{address}||'%' 
+		</select>
+		
+		<select id="mySelectMap" parameterType="Map" resultType="HashMap"> 
+			select * 
+			from(
+			select bc.*, ROWNUM rn from(
+			select b.build_no, b.address, b.buildtype, b.protype,b.lat, b.lng, b.floor, b.wholefloor, b.jarea, b.garea, b.view_count, b.picpath, b.reservation_time, b.roomtitle, b.explaintext, b.privatememo, b.bu_rdate, b.st_no, b.estate_no, b.mem_no, 
+			min(p.deposit) deposit, max(p.SALEPRICE) saleprice, max(p.MONTHLY) monthly, max(p.lease) lease, max(a.parking) parking, max(a.animal) animal 
+			from  
+			BUILDING b, PRICE p, ADDINFO a 
+			where 
+			b.build_no=p.build_no AND b.build_no=a.build_no AND p.build_no=a.build_no 
+			<!-- 지도 범위 설정	 -->
+			<if test="south != null and north != null and west != null and east != null " >
+				AND lat between #{south} and #{north} AND lng between #{west} and #{east}
+			</if>
+			
+			
 			<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
 			<if test="proType != null and proType != '전체' ">
 				AND PROTYPE=#{proType}
@@ -107,10 +120,266 @@
 			<if test="startArea != null and endArea != null" >
 				AND GAREA between #{startArea} and #{endArea}
 			</if>
-			)where rn between #{start} and #{last}
+			
+			<!-- 주소 검색	 -->
+			<if test="address != null" >
+				AND ADDRESS like '%'||#{address}||'%'
+			</if>
+			
+			group by b.build_no, b.address, b.buildtype, b.protype, b.lat, b.lng, b.floor, b.wholefloor, b.jarea, b.garea, b.view_count, b.picpath, b.reservation_time, b.roomtitle, b.explaintext, b.privatememo, b.bu_rdate, b.st_no, b.estate_no, b.mem_no order by b.build_no desc) bc
+    		) where rn between #{start} and #{last}
+			
+		</select>
+		
+		
+		<select id="mySelect" parameterType="Map" resultType="Build"> 
+			select * 
+			from(
+			select bc.*, ROWNUM rn from(
+			select b.build_no, b.address, b.buildtype, b.protype,b.lat, b.lng, b.floor, b.wholefloor, b.jarea, b.garea, b.view_count, b.picpath, b.reservation_time, b.roomtitle, b.explaintext, b.privatememo, b.bu_rdate, b.st_no, b.estate_no, b.mem_no, 
+			min(p.deposit) deposit, max(p.SALEPRICE) saleprice, max(p.MONTHLY) monthly, max(p.lease) lease, max(a.parking) parking, max(a.animal) animal 
+			from  
+			BUILDING b, PRICE p, ADDINFO a 
+			where 
+			b.build_no=p.build_no AND b.build_no=a.build_no AND p.build_no=a.build_no AND lat between #{south} and #{north} AND lng between #{west} and #{east}
+			<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
+			<if test="proType != null and proType != '전체' ">
+				AND PROTYPE=#{proType}
+			</if>
+			
+			<!-- 매물 종류 -->
+			<choose>
+			<when test="buildType != null and buildType == '월세' ">
+				 AND BUILDTYPE=1
+			</when>
+			<when test="buildType != null and buildType == '전세' ">
+				 AND BUILDTYPE=2
+			</when>
+			<when test="buildType != null and buildType == '매매' ">
+				 AND BUILDTYPE=3
+			</when>
+			<when test="buildType != null and buildType == '월세or전세' ">
+				 AND BUILDTYPE=4
+			</when>
+			</choose>
+			
+			<!-- 거래 종류 -->			
+			<choose>
+				<when test="kind_of_trade != null and kind_of_trade == '중개' ">
+					 AND ESTATE_NO between 1 and 999999
+				</when>
+				<when test="kind_of_trade != null and kind_of_trade == '직거래' ">
+					 AND MEM_NO between 1 and 999999
+				</when>
+
+			</choose>
+			
+			<!-- 보증금 -->	
+			<if test="beginDeposit != null and endDeposit != null" >
+				AND DEPOSIT between #{beginDeposit} and #{endDeposit}
+			</if>
+			
+			<!-- 월세-->	
+			<if test="beginRent != null and endRent != null" >
+				AND MONTHLY between #{beginRent} and #{endRent}
+			</if>
+			
+			<!-- 주차 -->	
+			<if test="parking != null" >
+				AND PARKING = #{parking}
+			</if>
+			
+			<!-- 반려동물 -->	
+			<if test="animal != null " >
+				AND ANIMAL = #{animal}
+			</if>
+			
+			<!-- 층수 -->	
+			<if test="startFloor != null and endFloor != null" >
+				AND FLOOR between #{startFloor} and #{endFloor}
+			</if>
+			
+			<!-- 전용면적 -->	
+			<if test="startArea != null and endArea != null" >
+				AND GAREA between #{startArea} and #{endArea}
+			</if>
+			
+			group by b.build_no, b.address, b.buildtype, b.protype, b.lat, b.lng, b.floor, b.wholefloor, b.jarea, b.garea, b.view_count, b.picpath, b.reservation_time, b.roomtitle, b.explaintext, b.privatememo, b.bu_rdate, b.st_no, b.estate_no, b.mem_no order by b.build_no desc) bc
+    		) where rn between #{start} and #{last}
+			
 		</select>
 
+
+		<select id="myCountCluster" parameterType="Map" resultType="int" >
+			select count(*) 
+			from(
+			select bc.*, ROWNUM rn from(
+			select b.build_no, b.address, b.buildtype, b.protype,b.lat, b.lng, b.floor, b.wholefloor, b.jarea, b.garea, b.view_count, b.picpath, b.reservation_time, b.roomtitle, b.explaintext, b.privatememo, b.bu_rdate, b.st_no, b.estate_no, b.mem_no, 
+			min(p.deposit) deposit, max(p.SALEPRICE) saleprice, max(p.MONTHLY) monthly, max(p.lease) lease, max(a.parking) parking, max(a.animal) animal 
+			from  
+			BUILDING b, PRICE p, ADDINFO a 
+			where 
+			b.build_no=p.build_no AND b.build_no=a.build_no AND p.build_no=a.build_no AND lat between #{south} and #{north} AND lng between #{west} and #{east}
+			<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
+			<if test="proType != null and proType != '전체' ">
+				AND PROTYPE=#{proType}
+			</if>
+			
+			<!-- 매물 종류 -->
+			<choose>
+			<when test="buildType != null and buildType == '월세' ">
+				 AND BUILDTYPE=1
+			</when>
+			<when test="buildType != null and buildType == '전세' ">
+				 AND BUILDTYPE=2
+			</when>
+			<when test="buildType != null and buildType == '매매' ">
+				 AND BUILDTYPE=3
+			</when>
+			<when test="buildType != null and buildType == '월세or전세' ">
+				 AND BUILDTYPE=4
+			</when>
+			</choose>
+			
+			<!-- 거래 종류 -->			
+			<choose>
+				<when test="kind_of_trade != null and kind_of_trade == '중개' ">
+					 AND ESTATE_NO between 1 and 999999
+				</when>
+				<when test="kind_of_trade != null and kind_of_trade == '직거래' ">
+					 AND MEM_NO between 1 and 999999
+				</when>
+
+			</choose>
+			
+			<!-- 보증금 -->	
+			<if test="beginDeposit != null and endDeposit != null" >
+				AND DEPOSIT between #{beginDeposit} and #{endDeposit}
+			</if>
+			
+			<!-- 월세-->	
+			<if test="beginRent != null and endRent != null" >
+				AND MONTHLY between #{beginRent} and #{endRent}
+			</if>
+			
+			<!-- 주차 -->	
+			<if test="parking != null" >
+				AND PARKING = #{parking}
+			</if>
+			
+			<!-- 반려동물 -->	
+			<if test="animal != null " >
+				AND ANIMAL = #{animal}
+			</if>
+			
+			<!-- 층수 -->	
+			<if test="startFloor != null and endFloor != null" >
+				AND FLOOR between #{startFloor} and #{endFloor}
+			</if>
+			
+			<!-- 전용면적 -->	
+			<if test="startArea != null and endArea != null" >
+				AND GAREA between #{startArea} and #{endArea}
+			</if>
+			
+			group by b.build_no, b.address, b.buildtype, b.protype, b.lat, b.lng, b.floor, b.wholefloor, b.jarea, b.garea, b.view_count, b.picpath, b.reservation_time, b.roomtitle, b.explaintext, b.privatememo, b.bu_rdate, b.st_no, b.estate_no, b.mem_no order by b.build_no desc) bc
+    		) 
+			
+		</select>
+		
+		<select id="myClusterList" parameterType="Map" resultType="Build" >
+			select * 
+			from(
+			select bc.*, ROWNUM rn from(
+			select b.build_no, b.address, b.buildtype, b.protype,b.lat, b.lng, b.floor, b.wholefloor, b.jarea, b.garea, b.view_count, b.picpath, b.reservation_time, b.roomtitle, b.explaintext, b.privatememo, b.bu_rdate, b.st_no, b.estate_no, b.mem_no, 
+			min(p.deposit) deposit, max(p.SALEPRICE) saleprice, max(p.MONTHLY) monthly, max(p.lease) lease, max(a.parking) parking, max(a.animal) animal 
+			from  
+			BUILDING b, PRICE p, ADDINFO a 
+			where 
+			b.build_no=p.build_no AND b.build_no=a.build_no AND p.build_no=a.build_no AND lat between #{south} and #{north} AND lng between #{west} and #{east}
+			<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
+			<if test="proType != null and proType != '전체' ">
+				AND PROTYPE=#{proType}
+			</if>
+			
+			<!-- 매물 종류 -->
+			<choose>
+			<when test="buildType != null and buildType == '월세' ">
+				 AND BUILDTYPE=1
+			</when>
+			<when test="buildType != null and buildType == '전세' ">
+				 AND BUILDTYPE=2
+			</when>
+			<when test="buildType != null and buildType == '매매' ">
+				 AND BUILDTYPE=3
+			</when>
+			<when test="buildType != null and buildType == '월세or전세' ">
+				 AND BUILDTYPE=4
+			</when>
+			</choose>
+			
+			<!-- 거래 종류 -->			
+			<choose>
+				<when test="kind_of_trade != null and kind_of_trade == '중개' ">
+					 AND ESTATE_NO between 1 and 999999
+				</when>
+				<when test="kind_of_trade != null and kind_of_trade == '직거래' ">
+					 AND MEM_NO between 1 and 999999
+				</when>
+
+			</choose>
+			
+			<!-- 보증금 -->	
+			<if test="beginDeposit != null and endDeposit != null" >
+				AND DEPOSIT between #{beginDeposit} and #{endDeposit}
+			</if>
+			
+			<!-- 월세-->	
+			<if test="beginRent != null and endRent != null" >
+				AND MONTHLY between #{beginRent} and #{endRent}
+			</if>
+			
+			<!-- 주차 -->	
+			<if test="parking != null" >
+				AND PARKING = #{parking}
+			</if>
+			
+			<!-- 반려동물 -->	
+			<if test="animal != null " >
+				AND ANIMAL = #{animal}
+			</if>
+			
+			<!-- 층수 -->	
+			<if test="startFloor != null and endFloor != null" >
+				AND FLOOR between #{startFloor} and #{endFloor}
+			</if>
+			
+			<!-- 전용면적 -->	
+			<if test="startArea != null and endArea != null" >
+				AND GAREA between #{startArea} and #{endArea}
+			</if>
+			
+			group by b.build_no, b.address, b.buildtype, b.protype, b.lat, b.lng, b.floor, b.wholefloor, b.jarea, b.garea, b.view_count, b.picpath, b.reservation_time, b.roomtitle, b.explaintext, b.privatememo, b.bu_rdate, b.st_no, b.estate_no, b.mem_no order by b.build_no desc) bc
+    		) 
+		</select>
 		
 		
-		
-		</mapper>
+		<select id="recentListPrint" parameterType="String" resultType="HashMap">
+		 select * 
+		    from(
+		    select bc.*, ROWNUM rn 
+			    from(
+			    select b.build_no, b.address, b.buildtype, b.protype,b.lat, b.lng, b.floor, b.wholefloor, b.jarea, b.garea, b.view_count, b.picpath, b.reservation_time, b.roomtitle, b.explaintext, b.privatememo, b.bu_rdate, b.st_no, b.estate_no, b.mem_no, 
+			    min(p.deposit) deposit, max(p.SALEPRICE) saleprice, max(p.MONTHLY) monthly, max(p.lease) lease, max(a.parking) parking, max(a.animal) animal 
+			    from  
+				    BUILDING b, PRICE p, ADDINFO a 
+				    where 
+				    b.build_no=p.build_no AND b.build_no=a.build_no AND p.build_no=a.build_no AND b.build_no in
+				    <foreach item="list" index="index" collection="list"
+						open = "(" separator="," close=")">
+					 		#{list}
+				 	</foreach>
+				    group by b.build_no, b.address, b.buildtype, b.protype, b.lat, b.lng, b.floor, b.wholefloor, b.jarea, b.garea, b.view_count, 
+				             b.picpath, b.reservation_time, b.roomtitle, b.explaintext, b.privatememo, b.bu_rdate, b.st_no, b.estate_no, b.mem_no order by b.build_no desc) bc )
+             </select>
+</mapper>

@@ -12,7 +12,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at  the highest level of quality.                             ">
     <meta name="author" content="Webpixels">
-    <title>Boomerang UI Kit - Free Bootstrap Framework by Webpixels</title>
+  <link rel="apple-touch-icon" sizes="76x76" href="../kanu/main/로고.png">
+  <link rel="icon" type="image/png" href="../kanu/main/로고.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Admin : FullHouse
+  </title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700" rel="stylesheet">
     <!-- Theme CSS -->
@@ -191,7 +196,7 @@
 //     			console.log("clickedState: "+ clickedState+", "+response.buildList[i].buildState);
     			html+='<tr>';
 				html+='<td style="width:100px;font-size:15px">';
-				html+='No. '+response.buildList[i].build_no+'<br>';
+				html+='<a href="room.do?buildNo='+response.buildList[i].build_no+'" target="_self">No. '+response.buildList[i].build_no+'</a><br>';
 				if(clickedState===-1 || clickedState===0){ // 전체 
 					switch(response.buildList[i].buildState){
   						case 1: html+='<strong>[광고진행]</strong><br>'; break;
@@ -516,7 +521,7 @@
 	      			<c:forEach items="${buildList }" var="build">
 	      				<tr>
 	      					<td style="width:100px;font-size:15px">
-	       						No. ${build.build_no }<br>
+	      					<a href="room.do?buildNo=${build.build_no }" target="_self">No. ${build.build_no }</a><br>
 	       						<c:choose>
 	       							<c:when test="${build.buildState eq 1 }">
 	       								<strong>[광고진행]</strong><br>

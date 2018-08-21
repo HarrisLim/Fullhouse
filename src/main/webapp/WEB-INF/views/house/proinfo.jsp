@@ -8,7 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at  the highest level of quality.                             ">
     <meta name="author" content="Webpixels">
-    <title>공인중개사 계정 관리</title>
+  <link rel="apple-touch-icon" sizes="76x76" href="../kanu/main/로고.png">
+  <link rel="icon" type="image/png" href="../kanu/main/로고.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    MyInfo : FullHouse
+  </title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700" rel="stylesheet">
     <!-- Theme CSS -->
@@ -254,8 +259,12 @@
 							<tbody>
 								<tr>
 									<th>프로필</th>
-									<td>사진 변경하는 거 넣자.</td>
-									<td><input type="text" id="Estate_no" name="Estate_no" value="${sessionScope.st.estate_no}" style="background:rgba(200,200,240,0.1); width:100%" readonly/></td>
+									<td>
+										<div data-toggle="tooltip" title="클릭하여 사진을 추가해주세요." style="width:75px;height:100px;border:1px solid;background-image:url('../kanu/images/picImage.png');">
+											<input type="file" style="height:100px" class="custom-file-input" id="customFile" name="photo" accept=".png, .jpg, .jpeg">
+										</div>
+									</td>
+									<td><input type="hidden" id="Estate_no" name="Estate_no" value="${sessionScope.st.estate_no}" style="background:rgba(200,200,240,0.1); width:100%" readonly/></td>
 								</tr>
 								<tr>
 									<th>성명</th>

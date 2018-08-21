@@ -1,5 +1,7 @@
 package com.team.station4.uploadroom.model.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +26,8 @@ public class UploadroomServiceImpl implements UploadroomService {
 	}
 
 	@Override
-	public void buildingInsertService(BuildDTO buildDTO) {
-		urDAO.buildingInsert(buildDTO);
+	public void buildingInsertService(Map<String, Object> Hmap) {
+		urDAO.buildingInsert(Hmap);
 	}
 
 	@Override

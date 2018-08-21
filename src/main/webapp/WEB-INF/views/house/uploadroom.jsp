@@ -8,7 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at  the highest level of quality.                             ">
     <meta name="author" content="Webpixels">
-    <title>방등록</title>
+    
+  <link rel="apple-touch-icon" sizes="76x76" href="../kanu/main/로고.png">
+  <link rel="icon" type="image/png" href="../kanu/main/로고.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    UploadRoom : FullHouse
+  </title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700" rel="stylesheet">
     <!-- Theme CSS -->
@@ -75,7 +81,7 @@
 		</div>
 	</section>
 	
-	<form id="formId" name="fileForm" method="post" action="uploaddroomsubmit.do" enctype="multipart/form-data">
+	<form id="formId" name="fileForm" method="post" action="uploadroomsubmit.do?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 	<section class="" name="location">
 		<div class="container">
 			<div class="justify-content-center">
@@ -340,7 +346,7 @@
 									<span style="color:red">FullHouse 로고를 제외한 불필요한 정보(워터마크, 상호, 전화번호 등)가 있는 매물은 비공개 처리 됩니다.</span><br>
 
 								    <div class="custom-file" style="margin: 15px 0 20px 0;">
-								        <input type="file" class="custom-file-input" id="customFile" name="photo" id="photo" accept=".png, .jpg, .jpeg" onchange="readFile(this);" multiple>
+								        <input type="file" class="custom-file-input" id="customFile" name="photo" accept=".png, .jpg, .jpeg" onchange="readFile(this);" multiple>
 										<label class="custom-file-label" for="customFile">사진을 올려주세요.</label>
 								  	</div>
 									<div id="status"></div>
@@ -729,7 +735,7 @@
 			else $("#bidet").val(0);
 
 			$("#buildType").val(chooseBuildType($("#addSellPrice").length, $("#addDepositPrice").length, $(".addMonthlyPrice").length));
-			alert("success");
+			alert("방등록이 완료되었습니다.");
 	    	$("#formId").submit();
 	    }
 	    

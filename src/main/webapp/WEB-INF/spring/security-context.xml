@@ -13,6 +13,7 @@
 		<intercept-url pattern="/resources/**" access="permitAll" />
 		<intercept-url pattern="/house/myMap.do" access="hasAnyRole('USER, ADMIN')" />
 		<intercept-url pattern="/house/myinfo.do" access="hasAnyRole('USER, ADMIN')" />
+		<intercept-url pattern="/house/myinfoUp.do" access="hasAnyRole('USER, ADMIN')" />
 		<!-- <intercept-url pattern="/house/proinfo.do" access="hasAnyRole('USER, ADMIN')" /> -->
 		<intercept-url pattern="/house/uploadroom.do" access="hasAnyRole('USER, ADMIN')" />
 		<intercept-url pattern="/house/manageroom" access="hasAnyRole('USER, ADMIN')" />

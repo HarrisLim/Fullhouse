@@ -1,24 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
+<meta charset="utf-8" />
 <!--   여기부터     -->
-  <meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
-  <meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
-  
-  <link rel="apple-touch-icon" sizes="76x76" href="../kanu/main/로고.png">
-  <link rel="icon" type="image/png" href="../kanu/main/로고.png">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>
-    Full House
-  </title>
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-  <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+<meta id="_csrf" name="_csrf" content="${_csrf.token}" />
+<meta id="_csrf_header" name="_csrf_header"
+	content="${_csrf.headerName}" />
+
+<link rel="apple-touch-icon" sizes="76x76" href="../kanu/main/로고.png">
+<link rel="icon" type="image/png" href="../kanu/main/로고.png">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>Search : FullHouse</title>
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+	name='viewport' />
+<!--     Fonts and icons     -->
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200"
+	rel="stylesheet" />
 <!--   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   
@@ -64,7 +68,10 @@
 	<input type="hidden" value="" id="endFloor" name="endFloor" />
 	<input type="hidden" value="" id="startArea" name="startArea" />
 	<input type="hidden" value="" id="endArea" name="endArea" />
-	
+	<!--  세션 정보 저장   -->
+	<input type="hidden" value="${sessionScope.mem.mem_phone}" id="phone" />
+	<input type="hidden" value="${sessionScope.mem.mem_name}" id="name" />
+	<input type="hidden" value="${sessionScope.mem.mem_email}" id="email" />
 	<!-- flag = 0 방검색 페이지에서 json 처리 위한 구분자 -->
 	<input type="hidden" value="0" id="flag" name="flag" />
 	
@@ -289,6 +296,8 @@
     <!-- 4. Javascript -->
   <script type="text/javascript" src="../kanu/js/paging.js"></script>    
   <script src="../kanu/js/map.js"></script>
+  
+
 	
 
 
@@ -318,25 +327,26 @@
   </script>
 
 </body>
-	<style>
-	.area {
-	    position: absolute;
-	    background: rgba(0,0,0,0);
-	    border: 1px solid #888;
-	    border-radius: 3px;
-	    font-size: 12px;
-	    top: -5px;
-	    left: 15px;
-	    padding:2px;
-	}
-	
-	.info {
-	    font-size: 12px;
-	    padding: 5px;
-	}
-	.info .title {
-	    font-weight: bold;
-	}
-	</style> 
+<style>
+.area {
+	position: absolute;
+	background: rgba(0, 0, 0, 0);
+	border: 1px solid #888;
+	border-radius: 3px;
+	font-size: 12px;
+	top: -5px;
+	left: 15px;
+	padding: 2px;
+}
+
+.info {
+	font-size: 12px;
+	padding: 5px;
+}
+
+.info .title {
+	font-weight: bold;
+}
+</style>
 
 </html>

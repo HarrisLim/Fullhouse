@@ -9,7 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at  the highest level of quality.                             ">
     <meta name="author" content="Webpixels">
-    <title>매물</title>
+    
+  <link rel="apple-touch-icon" sizes="76x76" href="../kanu/main/로고.png">
+  <link rel="icon" type="image/png" href="../kanu/main/로고.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Room : FullHouse
+  </title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700" rel="stylesheet">
     <!-- Theme CSS -->
@@ -198,15 +204,14 @@
 		    </div>
 		    <div id="message" style="margin-top:15px;font-size:1em;font-weight:bold;color:red;"> </div>
 	    </div>
-	     
 	    <hr>
 	   <c:if test="${estateInfo ne null}">
 	   	   <strong>${estateInfo.estate_name}</strong><br>
-	   				 대표: ${estateInfo.owner_name}<br><br>
-	   				[담당자] ${builderInfo.st_name} (${builderInfo.st_position})<br>
+	   				 대표: ${estateInfo.owner_name.substring(2)}<br><br>
+	   				[담당자] ${builderInfo.st_name.substring(2)} (${builderInfo.st_position})<br>
 	    </c:if>
         <c:if test="${memDTO ne null}">
-	    	[담당자] ${memDTO.mem_name} (직거래 매물)<br>
+	    	[담당자] ${memDTO.mem_name.substring(2)} (직거래 매물)<br>
 	    </c:if>
 	    <c:if test="${estateInfo ne null}">
 		    ${estateInfo.estateaddr}, <br>${estateInfo.estate_name}<br>
@@ -322,7 +327,20 @@
 			       						해당 층 / 건물 층
 			       					</td>
 			       					<td width="25%">
-			       						<strong>${dto.floor}층 / ${dto.wholeFloor}층</strong> 
+			       						<strong>
+			       							<c:choose>
+			       								<c:when test="${dto.floor eq '-1'} ">
+			       									반지하
+			       								</c:when>
+			       								<c:when test="${dto.floor eq '100'} ">
+			       									옥탑
+			       								</c:when>
+			       								<c:otherwise>
+			       									${dto.floor}층
+			       								</c:otherwise>
+			       							</c:choose>
+			       						 / ${dto.wholeFloor}층
+			       						</strong> 
 			       					</td>
 			       					<td width="25%">
 			       						전용 / 공급면적
@@ -354,11 +372,14 @@
 			       					<td width="25%">
 			       						<strong>
 			       						<c:choose>
-			       							<c:when test="${addInfo.heat eq 1}">
+			       							<c:when test="${addInfo.heat eq 'center'}">
+			       								중앙 난방
+			       							</c:when>
+			       							<c:when test="${addInfo.heat eq 'individual'}">
 			       								개별 난방
 			       							</c:when>
-			       							<c:when test="${addInfo.heat eq 0}">
-			       								중앙 난방
+			       							<c:when test="${addInfo.heat eq 'region'}">
+			       								지역 난방
 			       							</c:when>
 			       						</c:choose>
 			       						</strong> 

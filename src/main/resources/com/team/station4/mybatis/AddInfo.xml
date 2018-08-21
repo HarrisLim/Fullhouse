@@ -33,8 +33,8 @@
 		<result property="bidet" column="BIDET" />
 		<result property="build_no" column="BUILD_NO" />
 	</resultMap>
-	<insert id="myInsert" parameterType="String">
-		insert into ADDINFO values(ADDINFO_NO_SEQ.nextval, #{costFee}, #{internet}, #{cost_tv}, #{cleanFee}, #{waterFee}, #{gas}, #{electricity}, #{parking}, #{elevator}, #{heat}, #{animal}, #{moveDate}, #{aircon}, #{washing}, #{bed}, #{desk}, #{closet}, #{option_tv}, #{fridge}, #{shoerack}, #{gasstove}, #{induction}, #{microwave}, #{doorlock}, #{bidet})
+	<insert id="myInsert" parameterType="AddInfo">
+		insert into ADDINFO values(ADDINFO_NO_SEQ.nextval, #{costFee}, #{internet}, #{cost_tv}, #{cleanFee}, #{waterFee}, #{gas}, #{electricity}, #{parking}, #{elevator}, #{heat}, #{animal}, #{moveDate}, #{aircon}, #{washing}, #{bed}, #{desk}, #{closet}, #{option_tv}, #{fridge}, #{shoerack}, #{gasstove}, #{induction}, #{microwave}, #{doorlock}, #{bidet}, #{build_no})
 	</insert>
 	<select id="mySelect" resultType="int">
 		select max(addinfo_no) from ADDINFO

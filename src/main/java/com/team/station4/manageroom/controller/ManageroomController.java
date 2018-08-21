@@ -56,7 +56,7 @@ public class ManageroomController {
 			if(type.equals("mem")) {
 				MainDTO seMemberDTO = (MainDTO)session.getAttribute("mem");
 				System.out.println("seMemberDTO: "+ seMemberDTO);
-				if(seMemberDTO.getMem_email().equals("harris@gmail.com")) return; // admin일 때, 
+				if(seMemberDTO.getMem_email().equals("harris@gmail.com")||seMemberDTO.getMem_email().equals("plannist@naver.com")) return; // admin일 때, 
 				memNo = seMemberDTO.getMem_no();
 			}else { // type == "staff"
 				StaffDTO seStaffDTO = (StaffDTO)session.getAttribute("st");
@@ -65,6 +65,15 @@ public class ManageroomController {
 		}
 	}
 	
+	public static String getPicOne(String picPath) {
+		if(picPath!=null) {
+			if(picPath.contains(",")) {
+				int idx = picPath.indexOf(",");
+				picPath = picPath.substring(0, idx);
+			}
+		}
+		return picPath;
+	}
 	@RequestMapping(value="house/manageroom.do", method=RequestMethod.GET)
 	public ModelAndView manageroom(PagingVo pagingVo, HttpSession session) {
 		
@@ -85,6 +94,7 @@ public class ManageroomController {
 		
 		// buildList하나당 price가 여러개니까 2차원배열을 사용해서 jsp로 데이터전송, 인접리스트같은 느낌으로 넣었다. 
 		for(int i=0; i<buildList.size(); i++) {
+			buildList.get(i).setPicPath(getPicOne(buildList.get(i).getPicPath()));
 			buildDTO.setBuild_no(buildList.get(i).getBuild_no());
 			List<PriceDTO> priceList = mrService.mrPriceSelectService(buildDTO);
 			System.out.println("priceList: "+priceList.size());
@@ -189,8 +199,8 @@ public class ManageroomController {
 		if(estateNo==-1 && memNo==-1) count = mService.countBuildAllService();
 		else count = mService.countBuildService(hm); // 이거 동적으로 가져오게 하자.
 		pagingVo.setTotal(count);
-		
 		for(int i=0; i<buildList.size(); i++) {
+			buildList.get(i).setPicPath(getPicOne(buildList.get(i).getPicPath()));
 			buildDTO.setBuild_no(buildList.get(i).getBuild_no());
 			List<PriceDTO> priceList = mrService.mrPriceSelectService(buildDTO);
 			mapList.put(buildList.get(i), priceList);
@@ -211,6 +221,7 @@ public class ManageroomController {
 			
 			// buildList하나당 price가 여러개니까 2차원배열을 사용해서 jsp로 데이터전송, 인접리스트같은 느낌으로 넣었다. 
 			for(int i=0; i<buildList.size(); i++) {
+				buildList.get(i).setPicPath(getPicOne(buildList.get(i).getPicPath()));
 				buildDTO.setBuild_no(buildList.get(i).getBuild_no());
 				List<PriceDTO> priceList = mrService.mrPriceSelectService(buildDTO);
 				System.out.println("priceList: "+priceList.size());

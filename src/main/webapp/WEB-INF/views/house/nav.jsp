@@ -7,38 +7,33 @@
 	<meta name="google-signin-scope" content="profile email">
 	<meta name="google-signin-client_id" content="69570195917-qamvmgijh74iq624fdgdgcttra3u41fq.apps.googleusercontent.com">
 	<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
-<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
+	<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	
 </head>
 <script type="text/javascript">
-	// 토큰 
-	var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		$(function() {
-		$(document).ajaxSend(function(e, xhr, options) {
-		    xhr.setRequestHeader(header, token);
-		});
-	});
-	
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
 	// 내 계정 스크립트	
 	$(function(){
+	// 토큰 
+		token = $("meta[name='_csrf']").attr("content");
+		header = $("meta[name='_csrf_header']").attr("content");
+		$(function() {
+			$(document).ajaxSend(function(e, xhr, options) {
+			    xhr.setRequestHeader(header, token);
+			});
+		});
+	
 		
 		// 폰 번호 나눠 넣기 ~
-		var phone = $('#mPhone').val();
-		var sharePh = phone.split("-", 3);
-		for ( var i in sharePh){
-			console.log(sharePh[i]);
-		}
-		$("#p1").val(sharePh[0]);
-		$("#p2").val(sharePh[1]);
-		$("#p3").val(sharePh[2]);
+		$("#p1").val($('#mPhone').val().substr(0,3));
+		$("#p2").val($('#mPhone').val().substr(3,4));
+		$("#p3").val($('#mPhone').val().substr(7,4));
 		
 		//내 계정 정보 변경 전 정보확인 스크립트
 		$('#myinfoB1').click(function(){
-			alert(" 내계정 바꿔보까~?")
-			
 			if( $('#nowPw').val() == "" ){
 				alert ("현재 비밀번호가 비어있습니다! 확인해주세요. ")
 				$('#nowPw').focus();
@@ -54,7 +49,7 @@
 				url:'chkPw.do',
 				data:{ mem_email : $('#myEmail').val() , mem_pw : $('#nowPw').val() },
 				success : function(responseData){
-					alert ( "responseData.count : " + responseData.count )
+// 					alert ( "responseData.count : " + responseData.count )
 					if( responseData.count == 0) {
 						alert ( '현재 비밀번호가 틀립니다.' )
 						return;
@@ -238,11 +233,11 @@
         </button>
 		<div class="navbar-collapse offcanvas-collapse" id="navbar_main">
 			<ul class="navbar-nav ml-auto align-items-lg-center ">
-	            <li class="nav-item active" >
-	              <a class="nav-link text-dark" href="../house/myinfo.do">FHS Pro</a>
+	            <li class="nav-item" >
+	              <a class="nav-link text-dark" href="../house/promain.do">FHS Pro</a>
 	            </li>
 	            <sec:authorize access="isAuthenticated()">
-		            <li class="nav-item active" >
+		            <li class="nav-item" >
 		              <a class="nav-link text-dark" href="../house/uploadroom.do">방 등록</a>
 		            </li>
 	            </sec:authorize>
@@ -263,18 +258,17 @@
 	            		<a id="logA" class="nav-link text-dark" data-toggle="modal" href="<c:url value="#myModal"/>">회원가입 및 로그인</a>
 	            	</sec:authorize>
 	            	<sec:authorize access="isAuthenticated()">
-						<form:form action="../logout" method="POST">
+						<form:form action="../logout" method="POST" id="logoutSubmit">
 							<div class="dropdown">
 								<c:if test="${sessionScope.type eq 'mem'}">
 								    <button type="button" class="nav-link text-dark dropdown-toggle" id="logout" name="logout" value="title" 
 								    	aria-expanded="true" data-toggle="dropdown">${sessionScope.mem.mem_name.substring(2)} 님</button>
 								    	<ul id="mytype" class="dropdown-menu" role="menu" aria-labelledby="searchType">
-								        <li role="presentation">
-								            <button type="button" role="menuitem" tabindex="-1">
-								            <a class="text-dark nav-item"href="../house/myinfo.do">내 계정</a></button>
+								        <li role="presentation" style="margin:10px">
+								            <a class="text-dark nav-item" href="../house/myinfo.do">내 계정</a>
 								        </li>
-								        <li role="presentation">
-											<input type="submit" class="text-dark nav-item" role="menuitem" tabindex="-1" value="로그 아웃"/>
+								        <li role="presentation" style="margin:10px">
+								        	<a href="javascript:$('#logoutSubmit').submit()" class="text-dark nav-item">로그아웃</a>
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 										</li>
 								    </ul>
@@ -305,7 +299,7 @@
 			        <div class="card bg-primary">
 			          <div class="card-body">
 			          <button type="button" class="close" data-dismiss="modal">&times;</button>
-		          		<img src="../assets/images/brand/icon.png"  style="width: 100px;">
+		          		<img src="../kanu/main/로고.png"  style="width: 100px;">
 			            <h4 class="heading h2 text-white pt-2 pb-4">환영 합니다</h4>
 			            <span class="clearfix"></span>
 						<form class="form-primary" id="log" name="log" action="../j_spring_security_check" method="post" >
@@ -319,8 +313,8 @@
 							<a data-toggle="modal" href="#myModal2" class="btn btn-primary btn-lg btn-block">회원가입</a>
 							<div class="row">
 							 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-								<div class="col-sm-6"><a id="kakao-login-btn"></a></div>
-								<div class="g-signin2 col-lg-6 text-center" data-onsuccess="onSignIn" style="width:205px;height:50px"></div>
+<!-- 								<div class="col-sm-6"><a id="kakao-login-btn"></a></div> -->
+<!-- 								<div class="g-signin2 col-lg-6 text-center" data-onsuccess="onSignIn" style="width:205px;height:50px"></div> -->
 							</div>
 							
 						<script type='text/javascript'>
@@ -452,7 +446,7 @@
 					            </div>
 					            <div class="form-group text-center">
 					              <button type="button" class="btn btn-info" id="memInput" disabled>회원가입<i class="fa fa-check spaceLeft"></i></button>
-					              <button type="button" class="btn btn-warning" id="Cancel" data-dismiss="modal" >가입취소<i class="fa fa-times spaceLeft"></i></button>
+					              <button type="button" class="btn btn-warning id="Cancel" data-dismiss="modal" >가입취소<i class="fa fa-times spaceLeft"></i></button>
 					            </div>
 					          </form>
 					        </div>

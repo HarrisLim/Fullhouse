@@ -11,7 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at  the highest level of quality.                             ">
     <meta name="author" content="Webpixels">
-    <title>매물관리</title>
+    
+  <link rel="apple-touch-icon" sizes="76x76" href="../kanu/main/로고.png">
+  <link rel="icon" type="image/png" href="../kanu/main/로고.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    ManageRoom : FullHouse
+  </title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700" rel="stylesheet">
     <!-- Theme CSS -->
@@ -89,7 +95,7 @@
 //     			console.log("clickedState: "+ clickedState+", "+response.buildList[i].buildState);
     			html+='<tr>';
 				html+='<td style="width:100px;font-size:15px">';
-				html+='No. '+response.buildList[i].build_no+'<br>';
+				html+='<a href="room.do?buildNo='+response.buildList[i].build_no+'" target="_self">No. '+response.buildList[i].build_no+'</a><br>';
 				if(clickedState===-1 || clickedState===0){ // 전체 
 					switch(response.buildList[i].buildState){
   						case 1: html+='<strong>[광고진행]</strong><br>'; break;
@@ -424,9 +430,11 @@
 					<input type="hidden" id="nowState" value="0">
 					<h2 class="h1 mb-4">매물관리</h2>
 				    <!-- 로그인된 아이디에 등록한 매물이 없다면, -->
-					<p class="lead lh-180">
-						일반회원은 1개의 매물만 등록이 가능합니다. -- 일반회원일 때만 보여줘.
-					</p><br>
+				    <c:if test="${type eq 'mem' }">
+						<p class="lead lh-180">
+							일반회원은 1개의 매물만 등록이 가능합니다.
+						</p><br>
+					</c:if>
 					<!-- 로그인된 아이디에 등록한 매물이 있다면,  -->
 					<nav>
 					  <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -478,7 +486,7 @@
 					       			<c:forEach items="${buildList }" var="build">
 						       			<tr>
 					       					<td style="width:100px;font-size:15px">
-					       						No. ${build.build_no }<br>
+					       						<a href="room.do?buildNo=${build.build_no }" target="_self">No. ${build.build_no }</a><br>
 					       						<c:choose>
 					       							<c:when test="${build.buildState eq 1 }">
 					       								<strong>[광고진행]</strong><br>

@@ -29,13 +29,14 @@ public class AddInfoDTO {
 	private int microwave;
 	private int doorlock;
 	private int bidet;
+	private int build_no;
 	
 	public AddInfoDTO() {}
 
 	public AddInfoDTO(int addInfo_no, int costFee, int internet, int cost_tv, int cleanFee, int waterFee, int gas,
 			int electricity, int parking, int elevator, String heat, int animal, Date moveDate, int aircon, int washing,
 			int bed, int desk, int closet, int option_tv, int shoerack, int fridge, int gasstove, int induction,
-			int microwave, int doorlock, int bidet) {
+			int microwave, int doorlock, int bidet, int build_no) {
 		super();
 		this.addInfo_no = addInfo_no;
 		this.costFee = costFee;
@@ -63,6 +64,7 @@ public class AddInfoDTO {
 		this.microwave = microwave;
 		this.doorlock = doorlock;
 		this.bidet = bidet;
+		this.build_no = build_no;
 	}
 
 	public int getAddInfo_no() {
@@ -271,6 +273,14 @@ public class AddInfoDTO {
 
 	public void setBidet(int bidet) {
 		this.bidet = bidet;
+	}
+
+	public int getBuild_no() {
+		return build_no;
+	}
+
+	public void setBuild_no(int build_no) {
+		this.build_no = build_no;
 	}
 	
 	
