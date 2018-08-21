@@ -400,7 +400,8 @@ public class MapController {
 		ArrayList<HashMap> list = new ArrayList<HashMap>();
 		int flag = (Integer)map.get("flag");
 		MainDTO member = (MainDTO)session.getAttribute("mem");
-		String email = member.getMem_email();
+		String email="";
+		if(member!=null) email = member.getMem_email();
 		if(flag == 0) {
 			System.out.println("flag 관심목록: "+flag);
 			String recent = service.myRecentService(email);

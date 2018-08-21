@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.team.station4.manageroom.controller.ManageroomController;
 import com.team.station4.manageroom.service.ManageroomService;
 import com.team.station4.map.model.BuildDTO;
 import com.team.station4.map.model.service.MapService;
@@ -126,6 +127,7 @@ public class AdminController {
 		
 		// buildList하나당 price가 여러개니까 2차원배열을 사용해서 jsp로 데이터전송, 인접리스트같은 느낌으로 넣었다. 
 		for(int i=0; i<buildList.size(); i++) {
+			buildList.get(i).setPicPath(ManageroomController.getPicOne(buildList.get(i).getPicPath()));
 			buildDTO.setBuild_no(buildList.get(i).getBuild_no());
 			List<PriceDTO> priceList = mrService.mrPriceSelectService(buildDTO);
 			System.out.println("priceList: "+priceList.size());

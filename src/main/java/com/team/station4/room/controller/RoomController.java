@@ -129,6 +129,35 @@ public class RoomController {
 			
 		}
 		
+		String myAddr = dto.getAddress();
+		String myProType = dto.getproType();
+		String myName = "";
+
+		String type = (String)session.getAttribute("type");
+		if(type!=null) {
+			if(type.equals("mem")) {
+				MainDTO seMemberDTO = (MainDTO)session.getAttribute("mem");
+				myName = seMemberDTO.getMem_name();
+			}else { // type == "staff"
+				StaffDTO seStaffDTO = (StaffDTO)session.getAttribute("st");
+				myName = seStaffDTO.getSt_name();
+			}
+		}
+		if(myAddr.contains("_fhs_")) {
+			int idx = myAddr.indexOf("_fhs_");
+			myAddr = myAddr.substring(0,idx);
+		}
+		dto.setAddress(myAddr);
+		
+		if(myProType.equals("oneroom")) myProType="[원룸]";
+		else if(myProType.equals("onefiveroom")) myProType="[1.5룸]";
+		else if(myProType.equals("tworoom")) myProType="[투룸]";
+		else if(myProType.equals("threeroom")) myProType="[쓰리룸]";
+		else if(myProType.equals("studio")) myProType="[오피스텔]";
+		else if(myProType.equals("apartment")) myProType="[아파트]";
+		dto.setproType(myProType);		
+		
+		
 		System.out.println("heartCount: "+heartCount+", countViewCount: "+countViewCount+", requestCount: "+requestCount);
 		mv.setViewName(view);
 		mv.addObject("heartCount", heartCount);
@@ -140,7 +169,7 @@ public class RoomController {
 		mv.addObject("list", price); // 매물별 가격 정보
 		mv.addObject("addInfo", addDto); // 매물별 info - option
 		mv.addObject("costList", costList); // 매물별 info - costFee
-		System.out.println("priceMap: "+price.get(0).getDeposit()+", size: "+price.size());
+//		System.out.println("priceMap: "+price.get(0).getDeposit()+", size: "+price.size());
 		return mv;
 	}
 	

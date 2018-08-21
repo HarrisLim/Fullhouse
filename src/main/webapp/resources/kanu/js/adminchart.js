@@ -47,7 +47,7 @@ window.onload=function(){
 					datasets: [{
 						label: '등록 건수',
 						backgroundColor: 'skyblue',
-						data: [$("#buildPie1").val(), $("#buildPie2").val(), $("#buildPie3").val(), $("#buildPie4").val(), $("#buildPie5").val(), $("#buildPie6").val(), $("#buildPie7").val()],
+						data: [$("#buildBar1").val(), $("#buildBar2").val(), $("#buildBar3").val(), $("#buildBar4").val(), $("#buildBar5").val(), $("#buildBar6").val(), $("#buildBar7").val()],
 						fill: false,
 					}]
 				},

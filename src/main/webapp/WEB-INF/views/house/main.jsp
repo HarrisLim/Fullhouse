@@ -4,11 +4,14 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <link rel="apple-touch-icon" sizes="76x76" href="../kanu/main/로고.png">
+  <link rel="icon" type="image/png" href="../kanu/main/로고.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Probably the most complete UI kit out there. Multiple functionalities and controls added,  extended color palette and beautiful typography, designed as its own extended version of Bootstrap at  the highest level of quality.                             ">
     <meta name="author" content="Webpixels">
-    <title>Full House is Station4 ^_^</title>
+    <title>Main : FullHouse</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800|Roboto:400,500,700" rel="stylesheet">
     <link type="text/css" href="../assets/css/theme.css" rel="stylesheet">
     <link type="text/css" href="../assets/css/demo.css" rel="stylesheet">
@@ -37,7 +40,7 @@
 		                 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		                </c:if>
 		            	
-		              <img src="../assets/images/brand/icon.png" style="width: 200px;" class="img-fluid animated" data-animation-in="jackInTheBox" data-animation-delay="1000">
+		              <img src="../kanu/main/로고.png" style="width: 200px;" class="img-fluid animated" data-animation-in="jackInTheBox" data-animation-delay="1000">
 		              <h2 class="heading display-4 font-weight-400 text-white mt-5 animated" data-animation-in="fadeInUp" data-animation-delay="2000">
 		                <span class="font-weight-700">Full House</span>
 		              </h2>
@@ -118,15 +121,6 @@
 		     </section>
 		   </main>
 		   <section>
-    	<div id="navbar_main" align="center">
-			<a class="navbar-brand" href="#">회사소개</a>
-			<a class="navbar-brand" href="#">공인중개사 회원가입</a>
-			<a class="navbar-brand" href="#">이용약관</a>
-			<a class="navbar-brand" href="#">개인정보처리방침</a>
-			<a class="navbar-brand" href="#">위치기반약관</a>
-			<a class="navbar-brand" href="#">매물관리규정</a>
-			<a class="navbar-brand" href="#">자동저장 서비스</a>
-    	</div>
     </section>
     <section>
     <%@ include file="footer.jsp"%>

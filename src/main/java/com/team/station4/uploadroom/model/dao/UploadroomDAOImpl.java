@@ -1,5 +1,8 @@
 package com.team.station4.uploadroom.model.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,8 +30,8 @@ public class UploadroomDAOImpl implements UploadroomDAO {
 
 
 	@Override
-	public void buildingInsert(BuildDTO buildDTO) {
-		sqlSession.insert(ns+".map.myInsert", buildDTO);
+	public void buildingInsert(Map<String, Object> Hmap) {
+		sqlSession.insert(ns+".map.myInsert", Hmap);
 	}
 
 	@Override
