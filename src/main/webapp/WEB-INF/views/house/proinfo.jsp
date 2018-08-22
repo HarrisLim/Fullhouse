@@ -43,6 +43,17 @@
 		 })
 			
 		} */
+
+	    
+	    function readFile(input) {
+   			if (input.files && input.files[0]) {
+   				var reader = new FileReader();
+   				reader.onload = function (e) {
+           			$("#pho").empty().append('<img src="'+e.target.result+'" class="img-thumbnail" style="width:100%;height:100%;z-index:10">');
+   				};
+   				reader.readAsDataURL(input.files[0]);
+   			}
+	      }
 		
 		// 다음 주소찾기 
 		function execDaumPostcode() {
@@ -82,7 +93,7 @@
 	                document.getElementById('address').value = fullAddr;
 
 	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById('address2').focus();
+	                document.getElementById('address').focus();
 	            }
 	        }).open();
 	    }
@@ -102,30 +113,31 @@
 			var str2 = $('#stHomePhone').val();
 			var sharePh2 = str2.split("-", 3);
 			
-			$("#op1").val(sharePh[0]);
-			$("#op2").val(sharePh[1]);
-			$("#op3").val(sharePh[2]);
+			$("#op1").val(sharePh2[0]);
+			$("#op2").val(sharePh2[1]);
+			$("#op3").val(sharePh2[2]);
 			
 			var str3 = $('#lrno').val();
 			var sharePh3 = str3.split("-");
 			
-			$("#lrno1").val(sharePh[0]);
-			$("#lrno2").val(sharePh[1]);
-			$("#lrno3").val(sharePh[2]);
+			$("#lrno1").val(sharePh3[0]);
+			$("#lrno2").val(sharePh3[1]);
+			$("#lrno3").val(sharePh3[2]);
 			
 			var str4 = $('#estateaddr').val();
-			var sharePh4 = str4.split("-");
+			if(str4.includes("_fhs_")){
+				var sharePh4 = str4.split("_fhs_");
+				var st = sharePh4[0] + " " + sharePh4[1];
+				$("#address").val(st);
+			}else{
+				$("#address").val(str4);
+			}
 			
-			$("#postcode").val(sharePh[0]);
-			$("#address1").val(sharePh[1]);
-			$("#address2").val(sharePh[2]);
 			
 			
 			
 			//프로 내 계정 정보 변경 전 정보확인 스크립트
 			$('#proinfoB1').click(function(){
-				alert(" 내계정 바꿔보까~?")
-				
 				if( $('#nowPw').val() == "" ){
 					alert ("현재 비밀번호가 비어있습니다! 확인해주세요. ")
 					$('#nowPw').focus();
@@ -227,17 +239,12 @@
 									<td colspan="2"><input id="lrno1" name="lrno1" class="phoneNum" value="" readonly>
 									&nbsp;-&nbsp;<input id="lrno2" name="lrno2" class="phoneNum" value="" readonly>
 									&nbsp;-&nbsp;<input id="lrno3" name="lrno3" class="phoneNum" value="" readonly>
-									<input type="text" id="lrno" name="lrno" class="phoneNum" value="${estate.lrno}" readonly></td>
+									<input type="hidden" id="lrno" name="lrno" class="phoneNum" value="${estate.lrno}" readonly></td>
 								</tr>
 								<tr>
-									<th rowspan="2">중개사무소 주소</th>
-									<td><input type="text" id="postcode" value="48060"></td>
-									<td><input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"></td>
-								</tr>
-								<tr>
-									<td><input type="text" id="address1" style="width:100%" value=""></td>
-									<td><input type="text" id="address2" style="width:100%" value=""> </td>
-									<td><input type="text" id="estateaddr"  name="estateaddr" style="width:100%" value="${estate.estateaddr}"> </td> 
+									<th>중개사무소 주소</th>
+									<td><input type="hidden" id="postcode" value="48060"><input type="text" id="address" style="width:100%" value="" onclick="alert('주소검색을 통해서 입력해주세요')" readonly></td>
+									<td><input type="button" onclick="execDaumPostcode()" value="주소검색"><input type="hidden" id="estateaddr"  name="estateaddr" style="width:100%" value="${estate.estateaddr}"></td>
 								</tr>
 								<tr>
 									<th>공인중개사 대표자명</th>
@@ -260,8 +267,10 @@
 								<tr>
 									<th>프로필</th>
 									<td>
-										<div data-toggle="tooltip" title="클릭하여 사진을 추가해주세요." style="width:75px;height:100px;border:1px solid;background-image:url('../kanu/images/picImage.png');">
-											<input type="file" style="height:100px" class="custom-file-input" id="customFile" name="photo" accept=".png, .jpg, .jpeg">
+										<div id="photo" data-toggle="tooltip" title="클릭하여 사진을 추가해주세요." style="position:relative;width:77px;height:102px;border:1px solid;background-image:url('../kanu/images/picImage.png');">
+											<input type="file" style="height:100px" class="custom-file-input" id="customFile" name="photo" accept=".png, .jpg, .jpeg"  onchange="readFile(this);" >
+											<div id="pho" style="width:75px;height:100px;position:absolute;top:0px;">
+											</div>
 										</div>
 									</td>
 									<td><input type="hidden" id="Estate_no" name="Estate_no" value="${sessionScope.st.estate_no}" style="background:rgba(200,200,240,0.1); width:100%" readonly/></td>
@@ -279,7 +288,7 @@
 									<td><input id="p1" class="phoneNum" value="" readonly>
 									&nbsp;-&nbsp;<input id="p2" class="phoneNum" value="" readonly>
 									&nbsp;-&nbsp;<input id="p3" class="phoneNum" value="" readonly>
-									<input type="text" id="stPhone" class="phoneNum" value="${sessionScope.st.st_phone}" readonly></td>
+									<input type="hidden" id="stPhone" class="phoneNum" value="${sessionScope.st.st_phone}" readonly></td>
 									<!-- <td><button id="modifyBtn" class="btn btn-outline-primary">변경</button></td> -->
 								</tr>
 								<tr>
@@ -291,7 +300,7 @@
 									<td><input id="op1" value="">
 									&nbsp;-&nbsp;<input id="op2" value="">
 									&nbsp;-&nbsp;<input id="op3" value="">
-									<input type="text" id="stHomePhone" class="phoneNum" value="${sessionScope.st.st_homephone}" readonly></td>
+									<input type="hidden" id="stHomePhone" class="phoneNum" value="${sessionScope.st.st_homephone}" readonly></td>
 								</tr>
 								<tr>
 									<th rowspan="3">비밀번호 변경</th>
@@ -306,7 +315,7 @@
 							</tbody>
 						</table>
 						<div align="center" style="margin-top:20px;margin-bottom:50px">
-							<input type="button" id="proinfoB2" class="btn btn-dark" value="취소">&nbsp;&nbsp;
+							<input type="button" id="proinfoB2" class="btn btn-dark" value="취소" onclick="location.href='main.do'">&nbsp;&nbsp;
 							<input type="button" id="proinfoB1" class="btn btn-primary" value="확인">
 						</div>
 					</div>

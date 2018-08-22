@@ -104,40 +104,12 @@ public class UploadroomController {
     
 	@ResponseBody
     @RequestMapping(value="house/imageupload.do", method=RequestMethod.POST)
-    public int multiImageUpload(@RequestParam("uploadFiles")List<MultipartFile> images) {
+    public int multiImageUpload(@RequestParam("uploadFiles")List<MultipartFile> images, HttpServletRequest request) {
 		try {
 			wholePath="";
 	        long sizeSum = 0;
 	        
-//	        File pfad = new File("");
-//	        System.out.println("xz: "+pfad.getAbsolutePath()); 
-//	        
-//	        String workingDir = System.getProperty("user.dir");
-//	        System.out.println("workingDir: "+ workingDir);
-//	        
-	        String path1 = this.getClass().getClassLoader().getResource("").getPath();
-	        String fullPath = URLDecoder.decode(path1, "UTF-8");
-	        String pathArr[] = fullPath.split("/WEB-INF/classes/");
-	        System.out.println(fullPath);
-	        System.out.println(pathArr[0]);
-	        fullPath = pathArr[0];
-	        // to read a file from webcontent
-	        String path = new File(fullPath).getPath() + File.separatorChar + "resources/kanu/roomimg";
-	        System.out.println("path: " + path);
-	        
-//	        String path = "resources/kanu/roomimg";
-//	        
-//	        URL r = this.getClass().getResource("../../../../");
-////	        /Users/harris/Documents/java_bit/sts/workspace/Fullhouse/src/main/webapp/resources/kanu/roomimg
-//	        
-//	        String decoded = URLDecoder.decode(r.getFile(), "UTF-8");
-//	        System.out.println("decoded: "+ decoded);
-//		     if (decoded.startsWith("/")) {
-//		         decoded = decoded.replaceFirst("/", "");
-//		     }
-//		     path = decoded+"kanu/roomimg";
-//		     System.out.println("path: " + path);
-//		     File f = new File(decoded, "somefile.properties");
+	        String path ="/Users/harris/Documents/java_bit/sts/workspace/Fullhouse/src/main/webapp/resources/kanu/roomimg";
 	        
 	        File fStore = new File(path);
 	        if(!fStore.exists()) {
@@ -164,7 +136,7 @@ public class UploadroomController {
 	            }
             	image.transferTo(new File(path, originalName));
 //            	System.out.println(path+"/"+originalName+", ");
-            	wholePath += path+"/"+originalName+", ";
+            	wholePath += "../resources/kanu/roomimg/"+originalName+", ";
             	System.out.println(wholePath);
             	System.out.println("파일 저장 성공 !");
 	        }

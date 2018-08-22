@@ -1,5 +1,12 @@
 
 window.onload=function(){
+	(function(){
+		$("#myNavBar").css("z-index",-1); // navbar 제일 뒤로 밀기
+		$("#first").css({margin:"20px 0",padding:"0px 0"});
+		$("#second").css({margin:"0px 0",padding:"0px 0"});
+		$("#third").css({margin:"40px 0",padding:"0px 0"});
+		$("#fourth").css({margin:"10px 0",padding:"0px 0"});
+	})()
    			var pie = document.getElementById('pieChart').getContext('2d');
 		   	var bar = document.getElementById('barChart').getContext('2d');
 		   	var center = document.getElementById('centerChart').getContext('2d');

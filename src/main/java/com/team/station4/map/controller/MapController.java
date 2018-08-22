@@ -41,7 +41,7 @@ public class MapController {
 	
 	/* 방검색 페이지 표시  */
 	@RequestMapping(value = "house/map.do", method= {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView mapPage(PagingVo pagingVo) {
+	public ModelAndView mapPage(PagingVo pagingVo, HttpSession session) {
 		System.out.println("control: "+pagingVo.getIndex()+", startNum: "+pagingVo.getPageStartNum());
 		ModelAndView mv = new ModelAndView();
 		Map<String, Object> hm = new HashMap<String, Object>();
@@ -69,7 +69,8 @@ public class MapController {
 		pagingVo.setTotal(count);
 		
 		for(int i=0; i<map.size(); i++) {
-			String [] picPath = map.get(i).get("PICPATH").toString().split(",");
+			String temp = map.get(i).get("PICPATH")+"";
+			String [] picPath = temp.split(", ");
 			map.get(i).put("PICPATH", picPath[0]);
 		}
 
@@ -78,6 +79,7 @@ public class MapController {
 		mv.addObject("map", map);
 		mv.addObject("count", count);
 		mv.addObject("page", pagingVo);
+		mv.addObject("seType", session.getAttribute("type"));
 		return mv;
 	}
 	
@@ -407,6 +409,7 @@ public class MapController {
 				mv.addObject("map", map);
 				mv.addObject("count", count);
 				mv.addObject("page", pagingVo);
+				mv.addObject("seType", session.getAttribute("type"));
 				return mv;
 			}else {
 				System.out.println("최근 본방 없음");

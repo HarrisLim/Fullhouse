@@ -31,7 +31,6 @@
     <!-- paging.js -->
   	<script type="text/javascript" src="../kanu/js/paging.js"></script>
     <script>
-
 	 // 토큰 생성
 	    var token = $("meta[name='_csrf']").attr("content");
 	    var header = $("meta[name='_csrf_header']").attr("content");
@@ -345,9 +344,11 @@
     </script>
   </head>
   <body>
+	<div id="navContainer" style="z-index:-1">
+ 		<%@include file="nav.jsp" %>
+ 	</div>
 	<div class="nav-side-menu left">
 	    <div class="brand">
-	    	
 	    	<a class="" href="../house/main.do" style="color:white">
 	    		<img src="../kanu/main/로고.png" class="avatar avatar-sm bg-#00000000" style="background-color:transparent"><strong>Full House</strong> Station4
 	    	</a>
@@ -429,7 +430,6 @@
 		    <input type="hidden" id="buildLineDay${loop.count }${ l.count }" value="${line*5000}"> <!-- 서울특별시 -->
     	</c:forEach>
     </c:forEach>
-
     
     <section class="slice">
       <div class="container">
@@ -499,7 +499,6 @@
     <section class="slice">
       <div class="container">
         <h3 class="heading h3">매물관리</h3>
-	    <br>
 	    <p style="float:left;font-size:20px;margin:5px 20px 5px 0px ">총 등록된 매물: ${count }</p>
 		<div class="btn-group" role="group" style="width:100%; margin:10px 0 10px 0">
 	        <button id="btn1" type="button" onclick="makeActive(1);" class="btn btn-outline-dark active" style="width:100%">전체</button>
@@ -690,7 +689,6 @@
     <section class="slice">
       <div class="container">
         <h3 class="heading h3">Q&A관리</h3>
-	    <br>
 		<div class="btn-group" role="group" style="width:100%; margin:10px 0 10px 0">
 	        <button id="btn6" onclick="makeActive(6, 1); getQnestionList(0)" type="button" class="btn btn-outline-dark active" style="width:100%">대기중인 질문</button>
 	        <button id="btn7" onclick="makeActive(7, 1); getQnestionList(1)" type="button" class="btn btn-outline-dark" style="width:100%">완료된 질문</button>

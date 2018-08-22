@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+
 <head>
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 </head>
@@ -192,34 +194,66 @@
 						<div id="menubar"
 							class="collapse navbar-collapse justify-content-center">
 
+<!-- 							<div> -->
+<!-- 								<a class="navbar-brand" href="./map.do">방검색</a> -->
+<!-- 							</div> -->
 							<div>
-								<a class="navbar-brand" href="./map.do">방검색</a>
+								<c:set var="URL" value="${pageContext.request.requestURL}" />
+								<c:choose>
+						    		<c:when test="${fn:contains(URL, 'myMap')}">
+						    			<a class="navbar-brand" href="./map.do">방 검색</a>
+						    		</c:when>
+									<c:when test="${(sessionScope.mem.mem_name != null) || (sessionScope.st.st_name != null)}">
+										<a class="navbar-brand" href="./myMap.do">관심목록</a>
+									</c:when>
+									<c:when test="${(sessionScope.mem.mem_name eq null) || (sessionScope.st.st_name eq null)}">
+										<a class="navbar-brand" data-toggle="modal" href="#myModal" onclick="alert('로그인 후 이용 가능한 서비스입니다.')">관심목록</a>
+									</c:when>
+								</c:choose>
 							</div>
 							<div>
-								<c:if test="${sessionScope.mem.mem_name != null}">
-									<a class="navbar-brand" href="./myMap.do">관심목록</a>
-								</c:if>
-								<c:if test="${sessionScope.mem.mem_name eq null}">
-									<a class="navbar-brand" data-toggle="modal" href="#myModal">관심목록</a>
-								</c:if>
+								<c:choose>
+									<c:when test="${(sessionScope.mem.mem_name != null) || (sessionScope.st.st_name != null)}">
+										<a class="navbar-brand" href="./uploadroom.do">방 등록</a>
+									</c:when>
+									<c:when test="${(sessionScope.mem.mem_name eq null) || (sessionScope.st.st_name eq null)}">
+										<a class="navbar-brand" data-toggle="modal" href="#myModal" onclick="alert('로그인 후 이용 가능한 서비스입니다.')">방 등록</a>
+									</c:when>
+								</c:choose>
 							</div>
-							<div>
-								<a class="navbar-brand" href="#pablo">방 등록</a>
-							</div>
-							<div>
-								<a id="log-in" class="navbar-brand" data-toggle="modal" href="<c:url value='#myModal'/>">회원가입 및 로그인 </a>
-							</div>
+							<c:if test="${fn:length(seType) eq 0 }">
+								<div>
+									<a id="log-in" class="navbar-brand" data-toggle="modal" href="<c:url value='#myModal'/>">회원가입 및 로그인 </a>
+								</div>
+							</c:if>
 						</div>
 						<!--  ul 지구본, 드랍다운 메뉴 등     -->
-						<ul class="navbar-nav ml-auto align-items-lg-center"
-							style="margin-right: 40px">
-							<i class="now-ui-icons users_single-02"></i>
-							<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="my_station" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 0.85em">${sessionScope.mem.mem_name.substring(2)}</a>
-								<div class="dropdown-menu " aria-labelledby="navbar_1_dropdown_1">
-									<a class="dropdown-item" id="my_info" href="#">내정보</a> 
-									<a class="dropdown-item" id="log_out" href="#">로그 아웃</a>
-								</div></li>
-						</ul>
+						<c:if test="${fn:length(seType) ne 0 }">
+							<ul class="navbar-nav ml-auto align-items-lg-center"
+								style="margin-right: 40px">
+								<i class="now-ui-icons users_single-02"></i>
+								<c:if test="${seType eq 'mem' }">
+									<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="my_station" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 0.85em">${sessionScope.mem.mem_name.substring(2)}</a>
+								</c:if>
+								<c:if test="${seType eq 'staff' }">
+									<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="my_station" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 0.85em">${sessionScope.st.st_name.substring(2)}</a>
+								</c:if>
+									<div class="dropdown-menu " aria-labelledby="navbar_1_dropdown_1">
+									<c:choose>
+										<c:when test="${seType eq 'mem'}">
+											<a class="dropdown-item" id="my_info" href="myinfo.do">내정보</a>
+										</c:when>
+										<c:when test="${seType eq 'staff'}">
+											<a class="dropdown-item" id="my_info" href="proinfo.do">내정보</a>
+										</c:when>
+									</c:choose> 
+									<form action="../logout?${_csrf.parameterName}=${_csrf.token}" method="POST" id="logoutSubmit"></form>
+										<a class="dropdown-item" id="log_out" href="javascript:$('#logoutSubmit').submit();">로그 아웃</a>
+									</form>
+									</div>
+									</li>
+							</ul>
+						</c:if>
 					</div>
 				</div>
 			</div>
@@ -237,9 +271,8 @@
 							<div class="card bg-primary">
 								<div class="card-body">
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<img src="../assets/images/brand/icon.png"
-										style="width: 100px;">
-									<h4 class="heading h2 text-white pt-2 pb-4">환영 합니다</h4>
+									<img src="../kanu/main/로고.png"  style="width: 100px;">
+									<h4 class="heading h3 text-white pt-2 pb-4"> 환영합니다 :) </h4>
 									<span class="clearfix"></span>
 									<form class="form-primary" id="log" name="log"
 										action="../j_spring_security_check" method="post">

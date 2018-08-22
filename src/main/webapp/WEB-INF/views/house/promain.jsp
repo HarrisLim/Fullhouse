@@ -23,7 +23,7 @@
     <link type="text/css" href="../assets/css/demo.css" rel="stylesheet">
   </head>
   <body>
-  <%@include file="pronav.jsp" %>
+  <%@include file="nav.jsp" %>
     <main class="main">
       <section class="spotlight parallax bg-cover bg-size--cover" data-spotlight="fullscreen" style="background-image: url('../kanu/images/proback.jpeg')">
         <span class="mask bg-tertiary alpha-7"></span>
@@ -34,10 +34,12 @@
                 <div class="col-lg-7">
                   <div class="text-center mt-5">
                     <h1 class="heading h1 text-white">
-                      			대한민국 1등 부동산 광고 플랫폼 </br>
-                      			 풀 하우스
+                    	<c:if test="${ !empty sessionScope.st.st_name }">
+                    		환영합니다. ${sessionScope.st.st_name.substring(2)} 공인중개사님 !<br><br>
+                    	</c:if>
+              			대한민국 1등이 될 부동산 광고 플랫폼<br>
+              			FullHouse
                     </h1>
-					<iframe width="560" height="315" align="center" src="https://www.youtube.com/embed/GuUz6bHWR5c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                   </div>
                 </div>
               </div>
@@ -45,61 +47,6 @@
           </div>
         </div>
       </section>
-      <section class="slice slice-lg">
-      <div class="container">
-        <div class="mb-5 text-center">
-          <h3 class="heading h2">Stay tuned with our company news</h3>
-          <h3 class="heading h2">여기다가 일단 틀만 만들어 놓은것! </h3>
-          
-          
-          
-          <div class="fluid-paragraph text-center">
-            <p class="lead mb-0">Daily insights from our company</p>
-          </div>
-        </div>
-        <div class="row cols-md-space cols-sm-space cols-xs-space">
-          <div class="col-lg-4">
-            <div class="card border-0">
-              <img src="../assets/images/prv/img-1-800x600.jpg" class="img-fluid img-center rounded z-depth-2">
-              <div class="pt-4">
-                <span class="text-muted">Oct 15, 2018</span>
-                <a href="#" class="heading h4 d-block mt-1">Listen to the nature</a>
-                <a href="#" class="heading h4 d-block mt-1">틀3</a>
-                <p class="mt-3">
-                  When we strive to become better than we are, everything around us becomes better, too.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="card border-0">
-              <img src="../assets/images/prv/img-2-800x600.jpg" class="img-fluid img-center rounded z-depth-2">
-              <div class="pt-4">
-                <span class="text-muted">Oct 15, 2018</span>
-                <a href="#" class="heading h4 d-block mt-1">Listen to the nature</a>
-                <a href="#" class="heading h4 d-block mt-1">틀 1</a>
-                <p class="mt-3">
-                  When we strive to become better than we are, everything around us becomes better, too.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="card border-0">
-              <img src="../assets/images/prv/img-3-800x600.jpg" class="img-fluid img-center rounded z-depth-2">
-              <div class="pt-4">
-                <span class="text-muted">Oct 15, 2018</span>
-                <a href="#" class="heading h4 d-block mt-1">Listen to the nature</a>
-                <a href="#" class="heading h4 d-block mt-1">틀2</a>
-                <p class="mt-3">
-                  When we strive to become better than we are, everything around us becomes better, too.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
   <%@include file="./footer.jsp" %>
   <!-- Core -->

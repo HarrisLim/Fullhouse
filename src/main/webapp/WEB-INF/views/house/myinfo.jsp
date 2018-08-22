@@ -111,7 +111,7 @@
 						</tbody>
 					</table>
 					<div align="center" style="margin-top:20px;margin-bottom:50px">
-						<button type="button" id="myinfoB2" class="btn btn-dark" >취소</button>
+						<button type="button" id="myinfoB2" class="btn btn-dark" onclick="location.href='main.do'">취소</button>
 						&nbsp;&nbsp;
 						<button type="button" id="myinfoB1" class="btn btn-primary">확인</button>
 					</div>

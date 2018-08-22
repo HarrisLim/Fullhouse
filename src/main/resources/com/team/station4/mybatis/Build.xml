@@ -345,680 +345,680 @@
 				<when test="type == 0"> <!-- 서울 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 1"> <!-- 경기 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 2"> <!-- 인천 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 3"> <!-- 강원도 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 4"> <!-- 충청북도 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 5"> <!-- 충청남도 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 6"> <!-- 대전광역시 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 7"> <!-- 세종특별자치시 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 8"> <!-- 전라북도 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 9"> <!-- 전라남도 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 10"> <!-- 광주광역시 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 11"> <!-- 경상남도 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 12"> <!-- 경상북도 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 13"> <!-- 대구광역시 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 14"> <!-- 부산광역시 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 15"> <!-- 울산광역시 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 16"> <!-- 제주특별자치도 -->
 					<choose>
 						<when test="month==0"> <!-- 1월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___01%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="month==1"> <!-- 2월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___02%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="month==2"> <!-- 3월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___03%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="month==3"> <!-- 4월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___04%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="month==4"> <!-- 5월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___05%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="month==5"> <!-- 6월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___06%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="month==6"> <!-- 7월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___07%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="month==7"> <!-- 8월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___08%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="month==8"> <!-- 9월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___09%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="month==9"> <!-- 10월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___10%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="month==10"> <!-- 11월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___11%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="month==11"> <!-- 12월 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like '___12%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 					</choose>
 				</when>
@@ -1082,221 +1082,221 @@
 				<when test="type == 0"> <!-- 서울 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 1"> <!-- 경기 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 2"> <!-- 인천 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 3"> <!-- 강원도 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 4"> <!-- 충청북도 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 5"> <!-- 충청남도 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 6"> <!-- 대전광역시 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 7"> <!-- 세종특별자치시 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 8"> <!-- 전라북도 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 9"> <!-- 전라남도 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 10"> <!-- 광주광역시 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 11"> <!-- 경상남도 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 12"> <!-- 경상북도 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 13"> <!-- 대구광역시 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 14"> <!-- 부산광역시 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 15"> <!-- 울산광역시 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 16"> <!-- 제주특별자치도 -->
 					<choose>
 						<when test="year==0"> <!-- 현재연도 -2 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-2 from dual)||'%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="year==1"> <!-- 현재연도 -1 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2)-1 from dual)||'%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="year==2"> <!-- 현재연도 -->
-							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where TO_CHAR(BU_RDATE, 'YY/MM/DD') like (select substr(to_char(sysdate, 'YY/MM/DD'), 0, 2) from dual)||'%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 					</choose>
 				</when>
@@ -1307,425 +1307,425 @@
 				<when test="type == 0"> <!-- 서울 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '서울특별시%' or address like '서울%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '서울특별시%' or ADDRESS like '서울%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 1"> <!-- 경기 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '경기도%' or address like '경기%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '경기도%' or ADDRESS like '경기%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 2"> <!-- 인천 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '인천광역시%' or address like '인천%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '인천광역시%' or ADDRESS like '인천%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 3"> <!-- 강원도 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '강원도%' or address like '강원%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '강원도%' or ADDRESS like '강원%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 4"> <!-- 충청북도 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '충청북도%' or address like '충북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '충청북도%' or ADDRESS like '충북%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 5"> <!-- 충청남도 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '충청남도%' or address like '충남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '충청남도%' or ADDRESS like '충남%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 6"> <!-- 대전광역시 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '대전광역시%' or address like '대전%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '대전광역시%' or ADDRESS like '대전%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 7"> <!-- 세종특별자치시 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '세종특별자치시%' or address like '세종%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '세종특별자치시%' or ADDRESS like '세종%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 8"> <!-- 전라북도 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '전라북도%' or address like '전북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '전라북도%' or ADDRESS like '전북%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 9"> <!-- 전라남도 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '전라남도%' or address like '전남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '전라남도%' or ADDRESS like '전남%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 10"> <!-- 광주광역시 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '광주광역시%' or address like '광주%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '광주광역시%' or ADDRESS like '광주%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 11"> <!-- 경상남도 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '경상남도%' or address like '경남%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '경상남도%' or ADDRESS like '경남%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 12"> <!-- 경상북도 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '경상북도%' or address like '경북%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '경상북도%' or ADDRESS like '경북%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 13"> <!-- 대구광역시 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '대구광역시%' or address like '대구%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '대구광역시%' or ADDRESS like '대구%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 14"> <!-- 부산광역시 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '부산광역시%' or address like '부산%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '부산광역시%' or ADDRESS like '부산%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 15"> <!-- 울산광역시 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '울산광역시%' or address like '울산%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '울산광역시%' or ADDRESS like '울산%')
 						</when>
 					</choose>
 				</when>
 				<when test="type == 16"> <!-- 제주특별자치도 -->
 					<choose>
 						<when test="day==0"> <!-- 월 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )) from dual)||'%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="day==1"> <!-- 화 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+1) from dual)||'%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="day==2"> <!-- 수 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+2) from dual)||'%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="day==3"> <!-- 목 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+3) from dual)||'%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="day==4"> <!-- 금 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+4) from dual)||'%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="day==5"> <!-- 토 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+5) from dual)||'%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 						<when test="day==6"> <!-- 일 -->
-							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and ADDRESS like '제주특별자치도%' or address like '제주%'
+							select count(*) from BUILDING where BU_RDATE like '%'||(select to_char( sysdate-( (select to_char(sysdate,'D') from dual) -2 )+6) from dual)||'%' and (ADDRESS like '제주특별자치도%' or ADDRESS like '제주%')
 						</when>
 					</choose>
 				</when>
