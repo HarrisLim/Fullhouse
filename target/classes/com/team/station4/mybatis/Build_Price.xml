@@ -39,8 +39,16 @@
 			<collection property="priceDTO" javaType="java.util.ArrayList" resultMap="Pirce"> </collection>
 		</resultMap>
 		
+		<select id="mySearchAddress" parameterType="String" resultType="Build">
+			select ADDRESS, LAT, LNG from BUILDING where ADDRESS = #{address}
+		</select>
+		
+		<select id="mySearchArea" parameterType="String" resultType="Build">
+			select ADDRESS, LAT, LNG from BUILDING where ADDRESS like '%'||#{address}||'%'
+		</select>
+		
 		<select id="mySerchAuto" parameterType="String" resultType="Build">
-			select ADDRESS from BUILDING where ADDRESS like '%'||#{address}||'%' 
+			select a.*, rn from (select ADDRESS, LAT, LNG, ROWNUM rn from BUILDING where ADDRESS like '%'||#{address}||'%' order by BUILD_NO desc)a where rn between 1 and 10
 		</select>
 		
 		<select id="mySelectMap" parameterType="Map" resultType="HashMap"> 
@@ -58,6 +66,10 @@
 				AND lat between #{south} and #{north} AND lng between #{west} and #{east}
 			</if>
 			
+			<!--	주소 검색값	   -->
+			<if test="address != null">
+				AND b.address like '%'||#{address}||'%'
+			</if>
 			
 			<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
 			<if test="proType != null and proType != '전체' ">
@@ -142,6 +154,10 @@
 			BUILDING b, PRICE p, ADDINFO a 
 			where 
 			b.build_no=p.build_no AND b.build_no=a.build_no AND p.build_no=a.build_no AND lat between #{south} and #{north} AND lng between #{west} and #{east}
+			<!--	주소 검색값	   -->
+			<if test="address != null">
+				AND b.address like '%'||#{address}||'%'
+			</if>
 			<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
 			<if test="proType != null and proType != '전체' ">
 				AND PROTYPE=#{proType}
@@ -220,6 +236,11 @@
 			BUILDING b, PRICE p, ADDINFO a 
 			where 
 			b.build_no=p.build_no AND b.build_no=a.build_no AND p.build_no=a.build_no AND lat between #{south} and #{north} AND lng between #{west} and #{east}
+			<!--	주소 검색값	   -->
+			<if test="address != null">
+				AND b.address like '%'||#{address}||'%'
+			</if>
+			
 			<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
 			<if test="proType != null and proType != '전체' ">
 				AND PROTYPE=#{proType}
@@ -297,6 +318,10 @@
 			BUILDING b, PRICE p, ADDINFO a 
 			where 
 			b.build_no=p.build_no AND b.build_no=a.build_no AND p.build_no=a.build_no AND lat between #{south} and #{north} AND lng between #{west} and #{east}
+			<!--	주소 검색값	   -->
+			<if test="address != null">
+				AND b.address like '%'||#{address}||'%'
+			</if>
 			<!-- 오피스텔, 아파트, 원룸 등 방 종류 -->
 			<if test="proType != null and proType != '전체' ">
 				AND PROTYPE=#{proType}

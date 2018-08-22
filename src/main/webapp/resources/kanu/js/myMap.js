@@ -193,9 +193,9 @@ $("#heartRoom").click(function(){
 	$("#flag").val(1);
 	var email = $("#email_check").val();
 	console.log("찜한방 클릭 email: "+$("#email_check").val());
-    for ( var i = 0; i < markers.length; i++ ) {
-        markers[i].setMap(null);
-   } 
+//    for ( var i = 0; i < markers.length; i++ ) {
+//        markers[i].setMap(null);
+//   } 
 	mkClusterer(1);
 	console.log("찜한방 클릭시 마크클러스터 나오고 난뒤");
 	$.ajax({
@@ -220,10 +220,10 @@ $("#recentRoom").click(function(){
 		console.log("최근 본 방 클릭 인입");
 		$("#flag").val(2);
 		var email = $("#email").val();
-	    for ( var i = 0; i < markers.length; i++ ) {
-	        markers[i].setMap(null);
-	   } 
-		mkClusterer(2);
+//	    for ( var i = 0; i < markers.length; i++ ) {
+//	        markers[i].setMap(null);
+//	   } 
+		mkClusterer(0);
 		$.ajax({
 			url : "recentRoom.do",
 			type : "POST",
@@ -253,7 +253,8 @@ $(function() {
 function mkClusterer(flag){
     for ( var i = 0; i < markers.length; i++ ) {
         markers[i].setMap(null);
-   } 
+   }
+    markers = [];
 	 latLngArray["north"] = $("#north").val();
 	 latLngArray["south"] = $("#south").val();
 	 latLngArray["east"] = $("#east").val();
@@ -272,15 +273,15 @@ function mkClusterer(flag){
 		   position = responseData;
     
 		    for(var i=0; i<position.positions.length; i++){
-		    	console.log("position2 포문: lat: "+position.positions[i].lat+", lng: "+position.positions[i].lng+", i: "+i);
+		    	console.log("position2 포문: lat: "+position.positions[i].lat+", lng: "+position.positions[i].lng+", i: "+i+", markers[].length: "+markers.length);
 		    	var coords = new daum.maps.LatLng(position.positions[i].lat, position.positions[i].lng);
 		    	marker = new daum.maps.Marker({
 			    	position: coords,
 			    	image: customMarkerImage1
 		    	});
-		    			    	
-		    	markers.push(marker);
-		    	markers[i].setMap(map);
+		    	marker.setMap(map);		    	
+		    	markers[i] = marker;
+		    	//markers[i].setMap(map);
 		    }
 		},error:function(request,status,error){
 	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

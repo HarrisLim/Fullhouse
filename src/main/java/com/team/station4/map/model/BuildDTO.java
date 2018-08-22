@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import com.team.station4.uploadroom.model.PriceDTO;
 
-
 public class BuildDTO {
 	private int build_no;
 	private String address;
@@ -32,7 +31,6 @@ public class BuildDTO {
 	
 	public BuildDTO() {}
 	
-
 	public BuildDTO(int build_no, String address, int buildType, String proType, int wholeFloor, int floor,
 			double jArea, double gArea, int view_count, String picPath, String reservation_time, double lat, double lng,
 			String roomTitle, String explainText, String privateMemo, int buildState, Date bu_rdate, int st_no,

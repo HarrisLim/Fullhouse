@@ -144,6 +144,44 @@ $('document').ready(function(){
 	 //클러스터러 생성
 	 $('document').ready(mkClusterer());
 	 
+	 //돋보기 버튼 클릭시 지도 센터로 오게
+	 $("#search_button").click( function(){
+		 $.ajax({
+			 url : "areaSearch.do",
+			 type : "POST",
+			 data : {address : $("#address_search").val()},
+			 success : function(responseData){
+				 var data = responseData;
+				 console.log("돋보기버튼 lat: "+data.lat+"돋보기버튼 lng: "+data.lng);
+				 map.setCenter(new daum.maps.LatLng(data.lat, data.lng));
+				 map.setLevel(12);
+				 setTimeout( function() { pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());  }, 500);
+				 map.setLevel(8);
+			 }
+		 });
+	 });
+	 
+	 $("#address_search").keypress(function(event){
+		 console.log("검색어 쓰고 엔터 인입");
+		 if(event.which == 13){
+			 $.ajax({
+				 url : "areaSearch.do",
+				 type : "POST",
+				 data : {address : $("#address_search").val()},
+				 success : function(responseData){
+					 var data = responseData;
+					 console.log("돋보기버튼 lat: "+data.lat+"돋보기버튼 lng: "+data.lng);
+					 map.setCenter(new daum.maps.LatLng(data.lat, data.lng));
+					 map.setLevel(12);
+					 setTimeout( function() { pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());  }, 500);
+					 map.setLevel(8);
+				 }
+			 });
+
+		 }
+	 });
+	 
+	 
 	 function mkClusterer(){
 		 latLngArray["north"] = $("#north").val();
 		 latLngArray["south"] = $("#south").val();
@@ -151,6 +189,7 @@ $('document').ready(function(){
 		 latLngArray["west"] = $("#west").val();
 		 latLngArray["pageStartNum"] = $("#pageStartNum").val()*1;
 		 latLngArray["index"] =	$("#index").val()*1;
+		 latLngArray["address"]=$("#address_search").val;
 		 var jsonLatLng = JSON.stringify(latLngArray);
 		 $.ajax({
 		 	contentType : "application/json",
@@ -304,7 +343,7 @@ $('document').ready(function(){
  
  // 주소로 좌표를 검색합니다
  		$("#serch_now").click(function(){
- 			var addr = $("#serch_addr").val();
+ 			var addr = $("#search_addr").val();
 	 		 geocoder.addressSearch(addr, function(result, status) {
 	
 	 	        // 정상적으로 검색이 완료됐으면 
@@ -1571,7 +1610,7 @@ $('document').ready(function(){
 
 	//매물 마우스 아웃
 	$(".itemList").mouseout(function(){
-		$('.itemList').css('background-color', '#00ff0000');
+		$('.itemList').css('background-color', '');
 		//e6e6e6
 	});
 	
@@ -1645,7 +1684,7 @@ function buildMouseOut(that){
 		//console.log("매물 마우스아웃");
 		customMarker.setMap(null);
 		clusterer.removeMarker(customMarker);
-		$(that).css('background-color', '#00ff0000');
+		$(that).css('background-color', '');
 //	});
 }
 
@@ -1894,9 +1933,101 @@ $("#memInput").click(function(){
 
 
 
+$(window).load(function() {    
+    $('#loading').hide();  
+});
 
+var search_lat = 32.1;
+var search_lng = 120.4;
+var coords;
+//검색할 때 입력한 글자만 진하게 나오는 부분
+   $(function(){
+   	
+   	$.ui.autocomplete.prototype._renderItem = function (ul, item) {
+   	    item.label = item.label.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + $.ui.autocomplete.escapeRegex(this.term) + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
+   	    return $("<li></li>")
+   	            .data("item.autocomplete", item)
+   	            .append("<a>" + item.label + "</a>")
+   	            .appendTo(ul);
+   	};
+   	   	
+   	//input 태그 id가 name
+       $( "#address_search" ).autocomplete({
+       	
+           source : function( request, response ) {
+        	   console.log("오토컴플릿 인입");
+                $.ajax({
+                       type: 'post',
+                       url: "serchAuto.do",
+                       dataType: "json",
+                       //request.term = $("#autocomplete").val()
+                       data: { "writer" : $("#address_search").val()},
+                       //select * from BOARD where writer like %?%;
+                       success: function(responseData) {
+                       	var data = responseData;
+                       	//console.log("오토컴플릿 인입: "+data[0].lat);
+                       	$("#search_lat").val(data[0].lat)*1;
+                        $("#search_lng").val(data[0].lng)*1;
+                        search_lat = $("#search_lat").val()*1;
+                        search_lng = $("#search_lng").val()*1;
+                        coords = new daum.maps.LatLng(search_lat, search_lng);
+                       	console.log("오토컴플릿 인입 lat: "+search_lat+", lng: "+search_lng);
+                           //서버에서 json 데이터 response 후 목록에 뿌려주기 위함
+                           response(
+                               $.map(data, function(item) {
+                               	//console.log(item);
+                               	
+   										 return {
+   											label: item.address,
+   											value: item.address 
+ 										 }                
+                               })
+                           );
+                       }
+                  });
+               },
+           //조회를 위한 최소글자수
+           minLength: 2,
+           select: function( event, ui ) {
+        	   setTimeout( function() {	console.log("조회된 목록 선택 했을때 이벤트: "+$("#address_search").val()+", lat: "+search_lat+", lng: "+search_lng);
+        	   							selectCheck();  
+        	   							pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
+        	   							
+        	   							map.setCenter(new daum.maps.LatLng(search_lat, search_lng));
+        	   							
+        	   }, 200);
+        	   						
+           }
+       });
 
+   });
 
+   var search_address = "";
+   function selectCheck(){
+	   //console.log("selectCheck인입: "+$("#address_search").val());
+	   search_address = $("#address_search").val();
+	   $.ajax({
+		   url : "searchAddress.do",
+		   type : "POST",
+		   data : {address : search_address},
+		   success : function(responseData){
+			   var data = responseData;
+			   console.log("selectCheck인입 latlng1:"+data.lat+", lng:"+data.lng);
+			   $("#search_lat").val(data.lat)*1;
+               $("#search_lng").val(data.lng)*1;
+               
+               search_lat = $("#search_lat").val()*1;
+               search_lng = $("#search_lng").val()*1;
+               console.log("selectCheck인입 latlng2:"+search_lat+", lng:"+search_lng);
+               $("#flag").val(0);
+               map.setCenter(new daum.maps.LatLng(search_lat, search_lng));
+               map.setLevel(12);
+               setTimeout( function() { pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());  }, 500);
+               map.setLevel(7);	
+			   
+		   }
+	   });
+   }
 
 
 

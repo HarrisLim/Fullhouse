@@ -48,6 +48,11 @@ function viewCount(that){
 
 
 $('document').ready(function(){
+    $(document).ajaxSend(function(e, xhr, options) {
+    	console.log("ajaxSend 인입");
+        xhr.setRequestHeader(header, token);
+
+    });
 	//최근본방 등록(방검색 에서만)
 	(function buildContent(){
 		if($("#email").val() == null || $("#email").val() == undefined || $("#email").val() == ''){

@@ -9,8 +9,7 @@
 <meta charset="utf-8" />
 <!--   여기부터     -->
 <meta id="_csrf" name="_csrf" content="${_csrf.token}" />
-<meta id="_csrf_header" name="_csrf_header"
-	content="${_csrf.headerName}" />
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}" />
 
 <link rel="apple-touch-icon" sizes="76x76" href="../kanu/main/로고.png">
 <link rel="icon" type="image/png" href="../kanu/main/로고.png">
@@ -25,7 +24,7 @@
 	rel="stylesheet" />
 <!--   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
   <!-- CSS Files -->
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../assets/css/bootstrap-theme.min.css" rel="stylesheet" />
@@ -45,6 +44,9 @@
    <%@ include file="mapTop.jsp" %>
 	
 	<div class="third-panel">
+	<!-- 	address_search 인풋 텍스트[0]번째 좌표값 -->
+	<input type="hidden" value="" id="search_lat" name="search_lat" />
+	<input type="hidden" value="" id="search_lng" name="search_lng" />
 	<!-- 	바운스 (지도영역)에서 가지고온 좌표 값 저장 -->
 	<input type="hidden" value="" id="center" name="center" />
 	<input type="hidden" value="" id="level" name="level" />
@@ -273,14 +275,38 @@
 	</div>
 	
 	<%@ include file="mapView.jsp" %>
-		
+	
+	<div id="loading"><img id="loading-image" src="../kanu/images/30.gif" alt="Loading..." /></div>
+
+	<style>
+		#loading {
+		 width: 100%;  
+		 height: 100%;  
+		 top: 0px;
+		 left: 0px;
+		 position: fixed;  
+		 display: block;  
+		 opacity: 0.7;  
+		 background-color: #fff;  
+		 z-index: 99;  
+		 text-align: center; } 
+		  
+		#loading-image {  
+		 position: absolute;  
+		 top: 50%;  
+		 left: 50%; 
+		 z-index: 100; }
+	</style>
 	<!--  메인판넬    -->    
 	  </div> 
   </div>
 
      
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/jquery.min.js"></script>
+
+    <script src="../assets/js/core/jquery.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js" type="text/javascript"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
@@ -296,7 +322,7 @@
     <!-- 4. Javascript -->
   <script type="text/javascript" src="../kanu/js/paging.js"></script>    
   <script src="../kanu/js/map.js"></script>
-  
+
 
 	
 
@@ -317,13 +343,8 @@
 
       // Javascript method's body can be found in assets/js/demos.js
       demo.initDashboardPageCharts();
-      
-
-      
     });
 
-
-   
   </script>
 
 </body>
