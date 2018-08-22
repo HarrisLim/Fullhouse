@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
     
 <head>
 	<meta name="google-signin-scope" content="profile email">
@@ -26,7 +27,6 @@ var header = $("meta[name='_csrf_header']").attr("content");
 			});
 		});
 	
-		
 		// 폰 번호 나눠 넣기 ~
 		$("#p1").val($('#mPhone').val().substr(0,3));
 		$("#p2").val($('#mPhone').val().substr(3,4));
@@ -35,12 +35,12 @@ var header = $("meta[name='_csrf_header']").attr("content");
 		//내 계정 정보 변경 전 정보확인 스크립트
 		$('#myinfoB1').click(function(){
 			if( $('#nowPw').val() == "" ){
-				alert ("현재 비밀번호가 비어있습니다! 확인해주세요. ")
+				alert (" 현재 비밀번호가 비어있습니다! 확인해주세요. ")
 				$('#nowPw').focus();
 				return;
 			}
 			if( $('#changePw1').val() == "" || $('#changePw12').val() == "" ){
-				alert ("변경할 비밀번호가 비어 있습니다! 확인해주세요.")
+				alert (" 변경할 비밀번호가 비어 있습니다! 확인해주세요.")
 				$('#changePw1').focus();
 				return;
 			}
@@ -60,17 +60,23 @@ var header = $("meta[name='_csrf_header']").attr("content");
 							return;
 						}else{
 							$("#myinfo").submit();
-							alert( '변경 완료 ^^' )
+							alert( '수정 완료!' )
 						}
 					}
 				}
 			})
 		});
 	});
-	// 로그인 실패시 로그인창 활성화
+	
 	window.onload = function(){
 		
+		// 로그인 실패시 메인 다시 호출
+		function showLogin(type){
+			if(type==='1')
+				$("#logA").click(); 
+		}
 		
+		(function() { showLogin($("#whenFail").val()); }());
 		
 		// 프로 회원가입 비번 중복 체크 
 		$(document).ready(function() {
@@ -94,13 +100,7 @@ var header = $("meta[name='_csrf_header']").attr("content");
 				}
 			});  // st_pwcheck keyup
 		});
-		// 로그인 실패시...
-		function showLogin(type){
-			if(type==='1')
-				$("#logA").click(); 
-		}
 		
-		(function() { showLogin($("#whenFail").val()); }());
 		// 비번 중복 체크
 		$('#inputPw1').keyup(function(){
 			if( $('#inputPw1').val() != $('#inputPw2').val()){
@@ -133,29 +133,7 @@ var header = $("meta[name='_csrf_header']").attr("content");
 			}
 			$("#log").submit();
 		});
-			/* else{
-				$.ajax({
-					type:'POST',
-					url:'empwCheck.do',
-					data:{ mem_email : $('#input_email').val() , mem_pw : $('#input_pw').val() },
-					success : function(responseData){
-						if( responseData.count == 2 ){
-							var fName = '${sessionScope.memName}'
-							var name = fName.substring(2);
-							alert ( '환영 합니다!!' + name + '님' )
-							location.href="../house/main.do"
-						}else if( responseData.count == 0){
-							alert ( '이메일이 틀렸습니다 다시 입력해 주세요.' )
-							return;
-						}else if( responseData.count == 1){
-							alert ( '비밀번호가 틀렸습니다 다시 입력해 주세요.' )
-							return;
-						}
-					}
-				});
-			} */
-		// mem_pw : $('#input_pw').val()
-		
+			
 		// 이메일 주소 중복 체크
 		$('#inputEmail').keyup(function(){
 			
@@ -176,29 +154,41 @@ var header = $("meta[name='_csrf_header']").attr("content");
 						$('#font').text('');
 						$('#font').text('중복 되는 이메일 입니다.');
 						$('#memInput').attr( 'disabled', true );
-						
 					}
 				}
 			});
 		});
-
-		// inputEmail / inputPw1 / userName / phone / customCheck6 / customCheck7
+		
 		//회원 가입시 확인 스크립트
 		$("#memInput").click(function(){
 			if( $("#inputEmail").val() === "" ){
 				alert(" 이메일을 입력해주세요.")
+				$("#inputEmail").focus();
 				return;
 			}
 			if( $("#inputPw1").val() === "" ){
 				alert(" 비밀번호를 입력해주세요.")
+				$("#inputPw1").focus();
 				return;
 			}
 			if( $("#userName").val() === "" ){
 				alert(" 이름을 입력해주세요.")
+				$("#userName").focus();
 				return;
 			}
-			if( $("#phone").val() === "" ){
+			if( $("#phone1").val() === "" ){
 				alert(" 핸드폰 번호를 입력해주세요.")
+				$("#phone1").focus();
+				return;
+			}
+			if( $("#phone2").val() === "" ){
+				alert(" 핸드폰 번호를 입력해주세요.")
+				$("#phone2").focus();
+				return;
+			}
+			if( $("#phone3").val() === "" ){
+				alert(" 핸드폰 번호를 입력해주세요.")
+				$("#phone3").focus();
 				return;
 			}
 			if( $("input[name=customCheck6]").prop("checked") === false ){
@@ -209,28 +199,32 @@ var header = $("meta[name='_csrf_header']").attr("content");
 				alert(" 개인정보 이용에 확인 해주세요.")
 				return;
 			}
+			
+			var value = $('#phone1').val();
+			value += "-";
+			value += $('#phone2').val();
+			value += "-";
+			value += $('#phone3').val();
+			$('#phone').val( value );
+			
 			$("#memInsert").submit();
+			
 		});
 		
 	}
-/* <sec:authorize access="isAnonymous()">
-	<a href="${CONTEXT }/j_spring_security_check">로그인</a>
-</sec:authorize>
-<sec:authorize access="isAuthenticated()">
-	<a href="${CONTEXT }/j_spring_security_logout">로그아웃</a>
-</sec:authorize> */
-
 </script>
-
-
-<nav class="navbar navbar-expand-lg navbar-transparent navbar-dark py-4">
+	<nav class="navbar navbar-expand-lg navbar-transparent navbar-dark py-4" id="myNavBar">
 	<div class="container">
-		<img src="../kanu/main/로고.png" class="avatar avatar-sm bg-#00000000" style="background-color:transparent">
-        <a class="navbar-brand text-dark" id="logo" href="../house/main.do"><strong>Full House</strong> Station4</a>
-        <button class="navbar-toggler" type="button" data-action="offcanvas-open" data-target="#navbar_main" 
-        							aria-controls="navbar_main" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+	
+		<c:set var="URL" value="${pageContext.request.requestURL}" />
+	    <c:if test="${!fn:contains(URL, 'admin')}">
+			<img src="../kanu/main/로고.png" class="avatar avatar-sm bg-#00000000" style="background-color:transparent">
+	        <a class="navbar-brand text-dark" id="logo" href="../house/main.do"><strong>Full House</strong> Station4</a>
+	        <button class="navbar-toggler" type="button" data-action="offcanvas-open" data-target="#navbar_main" 
+	        							aria-controls="navbar_main" aria-expanded="false" aria-label="Toggle navigation">
+	          <span class="navbar-toggler-icon"></span>
+	        </button>
+	    </c:if>
 		<div class="navbar-collapse offcanvas-collapse" id="navbar_main">
 			<ul class="navbar-nav ml-auto align-items-lg-center ">
 	            <li class="nav-item" >
@@ -241,18 +235,23 @@ var header = $("meta[name='_csrf_header']").attr("content");
 		              <a class="nav-link text-dark" href="../house/uploadroom.do">방 등록</a>
 		            </li>
 	            </sec:authorize>
-	            <li class="nav-item dropdown">
-	              <a class="nav-link dropdown-toggle text-dark" href="#" id="navbar_main_dropdown_1" role="button" data-toggle="dropdown" 
-	              												aria-haspopup="true" aria-expanded="false">검색</a>
-	              <div class="dropdown-menu " aria-labelledby="navbar_1_dropdown_1">
-	                <a class="dropdown-item text-dark" href="../house/map.do">방 검색</a>
-	                <a class="dropdown-item text-dark" href="../house/myMap.do">관심 목록</a>
-	                <!-- <a class="dropdown-item text-dark" href="../house/uploadroom.do">방 등록</a> -->
-	              </div>
-	            </li>
 	            <li class="nav-item" >
-	            	<a class="nav-link text-dark" href="../house/proterms.do">공인중개사 회원가입</a>
-	            </li>
+                	<a class="nav-link text-dark" href="../house/map.do">방 검색</a>
+                </li>
+	            <li class="nav-item" >
+               		<a class="nav-link text-dark" href="../house/myMap.do">관심 목록</a>
+                </li>
+		    	<c:if test = "${fn:contains(sessionScope.mem.mem_name, '#9')}">
+			        <li class="nav-item">
+			            <a class="nav-link text-dark" href="../house/admin.do">관리자페이지</a>
+			        </li>
+		    	</c:if>
+	                <!-- <a class="dropdown-item text-dark" href="../house/uploadroom.do">방 등록</a> -->
+	            <c:if test="${empty sessionScope.type }">
+		            <li class="nav-item" >
+		            	<a class="nav-link text-dark" href="../house/proterms.do">공인중개사 회원가입</a>
+		            </li>
+	            </c:if>
 	            <li>
 	            	<sec:authorize access="isAnonymous()">
 	            		<a id="logA" class="nav-link text-dark" data-toggle="modal" href="<c:url value="#myModal"/>">회원가입 및 로그인</a>
@@ -263,7 +262,13 @@ var header = $("meta[name='_csrf_header']").attr("content");
 								<c:if test="${sessionScope.type eq 'mem'}">
 								    <button type="button" class="nav-link text-dark dropdown-toggle" id="logout" name="logout" value="title" 
 								    	aria-expanded="true" data-toggle="dropdown">${sessionScope.mem.mem_name.substring(2)} 님</button>
-								    	<ul id="mytype" class="dropdown-menu" role="menu" aria-labelledby="searchType">
+								    <ul id="mytype" class="dropdown-menu" role="menu" aria-labelledby="searchType">
+								        <li role="presentation" style="margin:10px">
+								            <a class="text-dark nav-item" href="../house/manageroom.do">매물관리</a>
+								        </li>
+								        <li role="presentation" style="margin:10px">
+								        	<a class="text-dark nav-item" href="../house/qna.do">Q&A</a>
+										</li>
 								        <li role="presentation" style="margin:10px">
 								            <a class="text-dark nav-item" href="../house/myinfo.do">내 계정</a>
 								        </li>
@@ -276,13 +281,18 @@ var header = $("meta[name='_csrf_header']").attr("content");
 								<c:if test="${sessionScope.type eq 'staff'}">
 								    <button type="button" class="nav-link text-dark dropdown-toggle" id="logout" name="logout" value="title" 
 								    	aria-expanded="true" data-toggle="dropdown">${sessionScope.st.st_name.substring(2)} 님</button>
-								    	<ul id="mytype" class="dropdown-menu" role="menu" aria-labelledby="searchType">
-								        <li role="presentation">
-								            <button type="button" role="menuitem" tabindex="-1">
-								            <a class="text-dark nav-item"href="../house/proinfo.do">내 계정</a></button>
+							    	<ul id="mytype" class="dropdown-menu" role="menu" aria-labelledby="searchType">
+								        <li role="presentation" style="margin:10px">
+								            <a class="text-dark nav-item" href="../house/manageroom.do">매물&직원관리</a>
 								        </li>
-								        <li role="presentation">
-											<input type="submit" class="text-dark nav-item" role="menuitem" tabindex="-1" value="로그 아웃"/>
+								        <li role="presentation" style="margin:10px">
+								        	<a class="text-dark nav-item" href="../house/qna.do">Q&A</a>
+										</li>
+								        <li role="presentation" style="margin:10px">
+								            <a class="text-dark nav-item" href="../house/proinfo.do">내 계정</a>
+								        </li>
+								        <li role="presentation" style="margin:10px">
+								        	<a href="javascript:$('#logoutSubmit').submit()" class="text-dark nav-item">로그아웃</a>
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 										</li>
 								    </ul>
@@ -365,7 +375,7 @@ var header = $("meta[name='_csrf_header']").attr("content");
 			    </div>
 			  </div>
 			</div>
-			<!-- <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div> -->
+			
 			<script>
 			  function onSignIn(googleUser) {
 			    // Useful data for your client-side scripts:
@@ -382,6 +392,7 @@ var header = $("meta[name='_csrf_header']").attr("content");
 			    console.log("ID Token: " + id_token);
 			  };
 			</script>
+			
 			<div class="modal" id="myModal2" data-backdrop="static">
 				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
@@ -414,7 +425,10 @@ var header = $("meta[name='_csrf_header']").attr("content");
 					            <div class="form-group">
 					              <label for="username">휴대폰 번호</label>
 					              <div class="input-group">
-					                <input type="tel" class="form-control" id="phone" name="mem_phone" placeholder="- 없이 입력해 주세요">
+					              	<input class="phoneNum form-control" id="phone1" style="width:30%">&nbsp;-&nbsp;
+					              	<input class="phoneNum form-control" id="phone2" style="width:30%">&nbsp;-&nbsp;
+					              	<input class="phoneNum form-control" id="phone3" style="width:30%">
+					                <input type="hidden" class="form-control" id="phone" name="mem_phone">
 					              </div>
 					              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 

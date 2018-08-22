@@ -26,6 +26,18 @@
 
 	    
 		<script>
+
+	    function readFile(input) {
+   			if (input.files && input.files[0]) {
+   				var reader = new FileReader();
+   				reader.onload = function (e) {
+           			$("#pho").empty().append('<img src="'+e.target.result+'" class="img-thumbnail" style="width:100%;height:100%;z-index:10">');
+   				};
+   				reader.readAsDataURL(input.files[0]);
+   			}
+	      }
+		
+	    
 		// 토큰 
 		var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
@@ -78,7 +90,7 @@
 		        }).open();
 		    }
 			
-			/* 파일 업로드 스크립트 */
+			// 파일 업로드 스크립트
 			/*  function uploadFile(){
 	                var form = $('#FILE_FORM')[0];
 	                var formData = new FormData(form);
@@ -97,6 +109,7 @@
 	                    });
 	            } */
 	            
+	        // 프로 회원가입 이메일 등록 검사    
 			function semCheck1(){
 				
 				$.ajax({
@@ -129,7 +142,7 @@
 					}
 				});
 			}
-			//다중 submit ( 중복검사 버튼 & 회원가입 버튼)
+			// 다중 submit ( 중복검사 버튼 & 회원가입 버튼)
 			 function lrnoCheck(str) {
 					
 				var value = $('#lrno1').val();
@@ -174,7 +187,6 @@
 									
 								}else if( data.lrno != null ) {
 									
-									
 									alert(" 등록된 번호 값을 불러옵니다.");
 									var String2 = data.lrno;
 									var lrnoin = String2.split("-");
@@ -196,14 +208,10 @@
 									$("#Estate_no").val(data.estate_no).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
 									return;
 								}
-								/* if( $('#semCheck').prop("disabled") == true ){
-									$('#proin').attr('disabled' , false)
-								} */
 							}
 						});
-						//$('#proin').attr('disabled' , false)
 					}else if( str == "str" ){
-						// 분할 테그 합치기
+						// 각 입력창 값 분할 테그 합쳐서 히든 테그에 넣기
 						
 						var value2 = $('#postcode').val();
 						value2 += "-";
@@ -274,7 +282,7 @@
 							$("#st_pw").focus();
 							return;
 						}
-						//비밀번호 유효성 검사
+						// 비밀번호 유효성 검사
 						if( $("#st_pw").val() != "" ){
 							
 							var pw = $('#st_pw').val();
@@ -353,18 +361,19 @@
 		<div class="container">
 			<div class="justify-content-center">
 				<div class="pt-lg-sm">
-					<h3 class="h1 mb-5 text-center">공인 중개사 정보 입력</h3>
-					<hr size="4" color="black" width="900">
+					<h3 class="h1 mb-5 text-center">공인중개사 정보 입력</h3>
+					<div align="center" style="color:red">* 이미 등록된 공인중개소의 직원이라면 사업자등록번호로 공인중개소 정보를 등록할 수 있습니다. </div>
+					<hr size="4" color="black" width="900" style="margin-top:0px">
 					<table width="800" align="center">
 						<tbody>
 							<tr>
 								<th>중개 사무소명</th>
-								<td><input id="estate_name" name="estate_name" style="width:75%" value="알리"></td>
+								<td><input id="estate_name" name="estate_name" style="width:75%" value=""></td>
 							</tr>
 							<tr>
 								<th>중개 등록번호</th>
 								<td>
-									<input value="752" id="erno" name="erno" style="width:50%"/>
+									<input value="" id="erno" name="erno" style="width:50%"/>
 									<!-- <button type="button" class="btn btn-sm btn-outline-primary btn-icon" style="width:25%">
 										    <span class="btn-inner--text">중개등록증 첨부</span>
 										    <span class="btn-inner--icon"><i class="fas fa-user"></i></span>
@@ -378,9 +387,9 @@
 							</tr>
 							<tr>
 								<th>사업자 등록번호</th>
-								<td><input style="width:14%" id="lrno1" name="lrno1" value="4">
-								&nbsp;-&nbsp;<input style="width:14%" id="lrno2" name="lrno2" value="5">
-								&nbsp;-&nbsp;<input style="width:14%" id="lrno3" name="lrno3" value="6">
+								<td><input style="width:14%" id="lrno1" name="lrno1" value="">
+								&nbsp;-&nbsp;<input style="width:14%" id="lrno2" name="lrno2" value="">
+								&nbsp;-&nbsp;<input style="width:14%" id="lrno3" name="lrno3" value="">
 								<input type="hidden" id="lrno" name="lrno" value=""/>
 								<input type="button" id="lrCheck" name="lrCheck" class="btn btn-sm btn-outline-primary" onClick="lrnoCheck('check')" value="인증">
 								<p> 인증 확인 후 회원가입이 가능합니다.</p>
@@ -389,17 +398,17 @@
 							
 							<tr>
 								<th rowspan="2">중개 사무소 주소</th>
-								<td><input type="text" id="postcode" value="10">
-								<input class="btn btn-sm btn-outline-primary" id=postco type="button" onclick="execDaumPostcode()" value="우편번호 찾기"></td>
+								<td><input type="text" id="postcode" value="">
+								<input class="btn btn-sm btn-outline-primary" id=postco type="button" onclick="execDaumPostcode()" value="주소검색"></td>
 							</tr>
 							<tr>
-								<td><input type="text" id="estateaddr1" style="width:35%" value="te">
-								<input type="text" id="estateaddr2" style="width:35%" value="st"> 
+								<td><input type="text" id="estateaddr1" style="width:35%" value="">
+								<input type="text" id="estateaddr2" style="width:35%" value=""> 
 								<input type="hidden" id="estateaddr" name="estateaddr" value=""/></td> 
 							</tr>
 							<tr>
 								<th>중개사 대표자명</th>
-								<td><input value="test" id="owner_name" name="owner_name" style="width:75%"/></td>
+								<td><input value="" id="owner_name" name="owner_name" style="width:75%"/></td>
 							</tr>
 						</tbody>
 					</table>
@@ -418,13 +427,19 @@
 							<div><input type="hidden" id="Estate_no" name="Estate_no" value="0" /></div>
 							<tr>
 								<th>프로필</th>
-								<td colspan="2" ><input type="hidden" id="st_pic" name="st_pic" value="사진"/>사진 변경하는 거 넣자.</td>
+								<td>
+									<div id="photo" data-toggle="tooltip" title="클릭하여 사진을 추가해주세요." style="position:relative;width:77px;height:102px;border:1px solid;background-image:url('../kanu/images/picImage.png');">
+										<input type="file" style="height:100px" class="custom-file-input" id="customFile" name="photo" accept=".png, .jpg, .jpeg"  onchange="readFile(this);" >
+										<div id="pho" style="width:75px;height:100px;position:absolute;top:0px;">
+										</div>
+									</div>
+								</td>
 							</tr>
 							<tr>
 								<th>본인 성명</th>
 								<td>
-									<input value="테스트" id="st_name" name="st_name" style="width:25%"/>
-									직책 직급<input value="직책/직급" id="st_position" name="st_position" style=" width:25%"/>
+									<input value="" id="st_name" name="st_name" style="width:25%"/>
+									직책 직급<input value="" id="st_position" name="st_position" style=" width:25%"/>
 								</td>
 								<td>	
 								    <div class="col-lg-12">
@@ -447,16 +462,14 @@
 							</tr>
 							<tr>
 								<th>휴대폰번호</th>
-								<td colspan="2"><input id="st_phone1" value="010" >&nbsp;-&nbsp;<input id="st_phone2" value="5882">
-								&nbsp;-&nbsp;<input id="st_phone3" value="1004">
+								<td colspan="2"><input id="st_phone1" value="" >&nbsp;-&nbsp;<input id="st_phone2" value="">&nbsp;-&nbsp;<input id="st_phone3" value="">
 								<input type="hidden" id="st_phone" name="st_phone" value=""/>
 								</td>
 								
 							</tr>
 							<tr>
 								<th>대표 번호</th>
-								<td colspan="2"><input value="02" id="st_homephone1">&nbsp;-&nbsp;<input value="1004" id="st_homephone2">
-								&nbsp;-&nbsp;<input  value="8282" id="st_homephone3">
+								<td colspan="2"><input value="" id="st_homephone1">&nbsp;-&nbsp;<input value="" id="st_homephone2">&nbsp;-&nbsp;<input  value="" id="st_homephone3">
 								<input type="hidden" id="st_homephone" name="st_homephone" value=""/>
 								</td>
 							</tr>
@@ -473,7 +486,7 @@
 							<tr>
 								<td colspan="2">
 								<input type="password" placeholder="비밀번호 확인" style="width:65%" id="st_pwcheck" name="st_pwcheck"/>
-								<div name="profont2" style="color:red;" ></div>
+								<div id="profont2" style="color:red;" ></div>
 								</td>
 							</tr>
 							<tr>

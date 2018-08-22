@@ -16,12 +16,11 @@ import com.team.station4.uploadroom.model.AddInfoDTO;
 import com.team.station4.uploadroom.model.PriceDTO;
 
 public interface MapService {
-	List<HashMap<String, Object>> selectMapService(Map jsonLatLng);
+	List<HashMap<String, Object>> selectMapService(Map<String, Object> jsonLatLng);
 	List<BuildDTO> mapListService(Map jsonLatLng);
 	int countClusterService(Map jsonLatLng);
 	List<BuildDTO> locationService();
 	List<BuildDTO> latLngService(HashMap hm);
-	void makeImage(int count);
 	
 	/* jsl */
 	int countBuildService(Map hm);
@@ -64,4 +63,7 @@ public interface MapService {
 	int selectBuildLineDayService(Map<String, Object> buildLineDayMap);
 	List<HashMap<String, Object>> recentListPrintService(HashMap<String, Object> hm);
 	List<BuildDTO> mySerchAutoService(String address);
+	List<BuildDTO> mySearchAddressService(String address);
+	List<BuildDTO> mySearchAreaService(String address);
+	
 }

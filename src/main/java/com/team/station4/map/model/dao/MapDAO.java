@@ -15,7 +15,7 @@ import com.team.station4.uploadroom.model.AddInfoDTO;
 import com.team.station4.uploadroom.model.PriceDTO;
 
 public interface MapDAO {
-	List<HashMap<String, Object>> selectMap(Map jsonLatLng);
+	List<HashMap<String, Object>> selectMap(Map<String, Object> jsonLatLng);
 	List<BuildDTO> mapList(Map jsonLatLng);
 	int countCluster(Map jsonLatLng);
 	List<BuildDTO> location();
@@ -64,4 +64,6 @@ public interface MapDAO {
 	int selectBuildLineDay(Map<String, Object> buildLineDayMap);
 	List<HashMap<String, Object>> recentListPrint(HashMap<String, Object> hm);
 	List<BuildDTO> mySerchAuto(String address);
+	List<BuildDTO> mySearchAddress(String address);
+	List<BuildDTO> mySearchArea(String address);
 }

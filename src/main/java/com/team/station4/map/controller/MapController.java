@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.team.station4.estate.model.EstateDTO;
@@ -41,7 +41,7 @@ public class MapController {
 	
 	/* 방검색 페이지 표시  */
 	@RequestMapping(value = "house/map.do", method= {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView mapPage(PagingVo pagingVo) {
+	public ModelAndView mapPage(PagingVo pagingVo, HttpSession session) {
 		System.out.println("control: "+pagingVo.getIndex()+", startNum: "+pagingVo.getPageStartNum());
 		ModelAndView mv = new ModelAndView();
 		Map<String, Object> hm = new HashMap<String, Object>();
@@ -55,7 +55,9 @@ public class MapController {
 		hm.put("east", 127.2456203269095);
 
 		//////
+		
 		List<HashMap<String, Object>>map = service.selectMapService(hm);
+		
 		//System.out.println("월세:"+map.get(0).get("MONTHLY")+", 전세:"+map.get(0).get("LEASE")+", 보증금:"+map.get(0).get("DEPOSIT"));
 		for(int i=0; i<map.size(); i++) {
 			if(map.get(i).get("ROOMTITLE").toString().length() > 23) {
@@ -66,10 +68,12 @@ public class MapController {
 		}
 		/////
 		int count = service.countClusterService(hm);
+		
 		pagingVo.setTotal(count);
 		
 		for(int i=0; i<map.size(); i++) {
-			String [] picPath = map.get(i).get("PICPATH").toString().split(",");
+			String temp = map.get(i).get("PICPATH")+"";
+			String [] picPath = temp.split(", ");
 			map.get(i).put("PICPATH", picPath[0]);
 		}
 
@@ -78,6 +82,7 @@ public class MapController {
 		mv.addObject("map", map);
 		mv.addObject("count", count);
 		mv.addObject("page", pagingVo);
+		mv.addObject("seType", session.getAttribute("type"));
 		return mv;
 	}
 	
@@ -90,6 +95,7 @@ public class MapController {
 		System.out.println("jsonLatLng:buildType: "+jsonLatLng.get("buildType")+", kind_of_trade: "+jsonLatLng.get("kind_of_trade")+", proType: "+jsonLatLng.get("proType"));
 		System.out.println("jsonLatLng:parking: "+jsonLatLng.get("parking")+", animal: "+jsonLatLng.get("animal")+", startFloor: "+jsonLatLng.get("startFloor")+", endFloor: "+jsonLatLng.get("endFloor")+", startArea: "+jsonLatLng.get("startArea")+", endArea: "+jsonLatLng.get("endArea"));
 		System.out.println("jsonLAtLng:flag: "+jsonLatLng.get("flag"));
+		System.out.println("jsonLAtLng:address: "+jsonLatLng.get("address"));
 		String flagStr = (String)jsonLatLng.get("flag");
 		int flag = Integer.parseInt(flagStr);
 		
@@ -183,7 +189,7 @@ public class MapController {
 				}
 			}
 			for(HashMap<String, Object> obj : map) {
-				System.out.println("찜목록클릭 flag1 : "+obj.get("BUILD_NO")+", address: "+obj.get("ADDRESS")+", deposit: "+obj.get("DEPOSIT"));
+				System.out.println("찜목록클릭 flag1 : "+obj.get("BUILD_NO")+", address: "+obj.get("ADDRESS")+", deposit: "+obj.get("DEPOSIT")+", lat: "+obj.get("LAT")+", lng: "+obj.get("LNG"));
 			}
 			
 			mv.addObject("flag", 1);
@@ -243,6 +249,7 @@ public class MapController {
 		System.out.println("클러스터:beginRent "+map.get("beginRent")+", endRent: "+map.get("endRent"));
 		System.out.println("클러스터:buildType: "+map.get("buildType")+", kind_of_trade: "+map.get("kind_of_trade")+", proType: "+map.get("proType"));
 		System.out.println("클러스터:south: "+map.get("south")+", north: "+map.get("north")+", east: "+map.get("east")+", west: "+map.get("west"));
+		System.out.println("클러스터:address: "+map.get("address"));
 		
 		if(map.get("beginDeposit") != null && Integer.parseInt((String)map.get("beginDeposit")) > 0) {
 			String begin = map.get("beginDeposit").toString();
@@ -407,6 +414,7 @@ public class MapController {
 				mv.addObject("map", map);
 				mv.addObject("count", count);
 				mv.addObject("page", pagingVo);
+				mv.addObject("seType", session.getAttribute("type"));
 				return mv;
 			}else {
 				System.out.println("최근 본방 없음");
@@ -458,7 +466,7 @@ public class MapController {
 					String [] hotSplit = hot.split(",");
 					for(int i=1; i<hotSplit.length; i++) {
 						BuildDTO dto = service.hotListService(Integer.parseInt(hotSplit[i]));
-						System.out.println("flag 관심목록: "+flag+"lat: "+dto.getLat()+", lng: "+dto.getLng());
+						System.out.println("mapMarker flag 찜한방: "+flag+"lat: "+dto.getLat()+", lng: "+dto.getLng());
 						hm.put("lat", dto.getLat());
 						hm.put("lng", dto.getLng());
 						list.add(hm);
@@ -543,10 +551,6 @@ public class MapController {
 		if(session.getAttribute("mem") != null) {
 			MainDTO member = (MainDTO)session.getAttribute("mem");
 			String email = member.getMem_email();
-			
-
-			
-			
 			String recent = service.myRecentService(email);
 			
 			System.out.println("관심목록 입장 recent: "+recent);
@@ -593,22 +597,43 @@ public class MapController {
 		}
 			
 	}
-	
+	/////// 여기서부터 오토 컴플릿 관련 검색 메서드 /////////
 	@RequestMapping(value="house/serchAuto.do", method=RequestMethod.POST)
-	public ModelAndView serchAuto( @RequestParam("writer") String address) {
-		ModelAndView mv = new ModelAndView("jsonView");
+	public @ResponseBody List<BuildDTO>serchAuto( @RequestParam("writer") String address) {
 		List<BuildDTO> serchAddress = service.mySerchAutoService(address);
-		ArrayList<String> serch = new ArrayList<String>();
-		for(int i=0; i<serchAddress.size();i++) {
-			serch.add(serchAddress.get(i).getAddress());
-		}
-		//System.out.println(serchAddress.get(0).getAddress());
-		mv.addObject("list", serch);
-		
-		return mv;
+		return serchAddress;
 	}
-			
 	
+	@RequestMapping(value="house/searchAddress.do", method=RequestMethod.POST)
+	public @ResponseBody BuildDTO searchAddress( @RequestParam("address") String address) {
+		List<BuildDTO> searchLatLng = service.mySearchAddressService(address);
+		BuildDTO build = searchLatLng.get(0);
+		return build;
+	}
+	
+	@RequestMapping(value="house/areaSearch.do", method=RequestMethod.POST)
+	public @ResponseBody HashMap<String, Double> areaSearch( @RequestParam("address") String address) {
+		ModelAndView mv = new ModelAndView();
+		List<BuildDTO> searchLatLng = service.mySearchAreaService(address);
+		System.out.println("#######: "+searchLatLng.size());
+		double lat = 0.0;
+		double lng = 0.0;
+		for(int i=0; i<searchLatLng.size(); i++) {
+			lat += searchLatLng.get(i).getLat();
+			lng += searchLatLng.get(i).getLng();
+		}
+		System.out.println("#######: "+Double.parseDouble(searchLatLng.size()+""));
+		lat = lat/Double.parseDouble(searchLatLng.size()+"");
+		lng = lng/Double.parseDouble(searchLatLng.size()+"");
+		System.out.println("평균좌표 lat: "+lat+", 평균좌표 lng:"+lng);
+		HashMap<String, Double>hm = new HashMap<String, Double>();
+		hm.put("lat", lat);
+		hm.put("lng", lng);
+		return hm;
+	}
+	
+	
+
 }
 
 

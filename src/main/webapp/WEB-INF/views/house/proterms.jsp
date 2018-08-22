@@ -52,7 +52,6 @@
 	</script>
   </head>
 <body>
-  <!-- 인글루드 시작 -->
   <%@include file="nav.jsp" %>
 	
 	<main class="main">

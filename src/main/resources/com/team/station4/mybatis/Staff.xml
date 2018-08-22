@@ -32,8 +32,7 @@
 		</select>
 		
 		<insert id="staffInsert" parameterType= "Staff" >
-		   insert into STAFF values(ST_NO_SEQ.nextval, #{estate_no}, #{st_pic}, '#2'||#{st_name}, #{st_position}, 
-		   #{st_qual}, #{st_phone}, #{st_homephone}, #{st_email}, #{st_pw}, #{st_joinpath}, 'null', 0, SYSDATE)
+		   insert into STAFF values(ST_NO_SEQ.nextval, #{estate_no}, null, '#2'||#{st_name}, #{st_position}, #{st_qual}, #{st_phone}, #{st_homephone}, #{st_email}, #{st_pw}, #{st_joinpath}, null, 0, SYSDATE)
 		</insert>
 		
 		<select id="mySelect" parameterType="int" resultType="Staff">

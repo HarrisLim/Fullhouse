@@ -52,6 +52,7 @@ public class authController {
 			model.addAttribute("st", st);
 			session.setAttribute("type", "staff");
 		}
+		
 		mv.setViewName("house/main");
 		return mv;
 	}

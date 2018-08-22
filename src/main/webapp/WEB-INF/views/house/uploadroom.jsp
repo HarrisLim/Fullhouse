@@ -202,7 +202,7 @@
 								<th rowspan="2">관리비</th>
 								<td colspan="5">
 									<input type="radio" name="costFeeT" value="1" onclick="$('#costFeeP').css('background-color','').removeAttr('readonly');$('#costFeeCB [type=checkbox]').prop('disabled',false)"> 있음 &nbsp;&nbsp;
-									<input id="costFeeP" onkeyup="checkNumber(this, 'int')" placeholder="ex) 120000">&nbsp;만원 &nbsp; &nbsp;
+									<input id="costFeeP" onkeyup="checkNumber(this, 'int')" placeholder="ex) 120000">&nbsp;원 &nbsp; &nbsp;
 									<input type="radio" name="costFeeT" value="0" onclick="$('#costFeeP').css('background-color','rgba(200, 200, 240, 0.1)').attr('readonly', true).val('');$('#costFeeCB [type=checkbox]').prop({'disabled':true, 'checked':false})"> 없음
 									<input type="hidden" name="costFee" id="costFee">
 								</td>

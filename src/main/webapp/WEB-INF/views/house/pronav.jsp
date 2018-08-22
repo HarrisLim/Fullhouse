@@ -261,7 +261,7 @@
 								<c:if test="${sessionScope.type eq 'mem'}">
 								    <button type="button" class="nav-link text-white dropdown-toggle" id="logout" name="logout" value="title" 
 								    	aria-expanded="true" data-toggle="dropdown">${sessionScope.mem.mem_name.substring(2)} 님</button>
-								    	<ul id="mytype" class="dropdown-menu" role="menu" aria-labelledby="searchType">
+							    	<ul id="mytype" class="dropdown-menu" role="menu" aria-labelledby="searchType">
 								        <li role="presentation" style="margin:10px">
 								            <a class="text-dark nav-item" href="../house/myinfo.do">내 계정</a>
 								        </li>

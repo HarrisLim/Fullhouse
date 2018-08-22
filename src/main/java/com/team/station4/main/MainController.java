@@ -66,6 +66,9 @@ public class MainController {
 	// 멤버 등록
 	@RequestMapping(value = "house/memInsert.do", method = RequestMethod.POST)
 	public String memInsert(MainDTO dto) {
+		System.out.println("111: "+ dto.getMem_email());
+		System.out.println("222: "+ dto.getMem_name());
+		System.out.println("333: "+ dto.getMem_pw());
 		service.memberInsertS(dto);
 		return "house/main";
 	}

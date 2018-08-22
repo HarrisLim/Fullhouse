@@ -57,7 +57,7 @@ public class ProtermsController {
 			staffdto.setEstate_no(es.getEstate_no());
 			service2.StaffInsertS(staffdto);
 		}
-		return "house/proterms";
+		return "house/main";
 		
 	}
 	@RequestMapping(value = "house/stemCheck.do", method = {RequestMethod.GET,RequestMethod.POST})

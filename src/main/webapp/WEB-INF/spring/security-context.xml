@@ -11,12 +11,13 @@
 			
 		<intercept-url pattern="/house/main.do" access="permitAll" /> 
 		<intercept-url pattern="/resources/**" access="permitAll" />
-		<intercept-url pattern="/house/myMap.do" access="hasAnyRole('USER, ADMIN')" />
+		<intercept-url pattern="/house/myMap.do" access="hasAnyRole('USER, Staff, ADMIN')" />
 		<intercept-url pattern="/house/myinfo.do" access="hasAnyRole('USER, ADMIN')" />
-		<intercept-url pattern="/house/myinfoUp.do" access="hasAnyRole('USER, ADMIN')" />
+		<intercept-url pattern="/house/proinfo.do" access="hasAnyRole('Staff')" />
+		<intercept-url pattern="/house/myinfoUp.do" access="hasAnyRole('USER, Staff, ADMIN')" />
 		<!-- <intercept-url pattern="/house/proinfo.do" access="hasAnyRole('USER, ADMIN')" /> -->
-		<intercept-url pattern="/house/uploadroom.do" access="hasAnyRole('USER, ADMIN')" />
-		<intercept-url pattern="/house/manageroom" access="hasAnyRole('USER, ADMIN')" />
+		<intercept-url pattern="/house/uploadroom.do" access="hasAnyRole('USER, Staff, ADMIN')" />
+		<intercept-url pattern="/house/manageroom.do" access="hasAnyRole('USER, Staff,ADMIN')" />
 		<intercept-url pattern="/house/admin.do" access="hasRole('ADMIN')" /> 
 		
 			<form-login login-page="/house/main.do"         	
@@ -29,8 +30,6 @@
 			<logout invalidate-session="true" 
 				logout-url="/logout"   
 				logout-success-url="/house/main.do" />
-				
-			
 				
 			<session-management>
 			    <concurrency-control max-sessions="1" />
