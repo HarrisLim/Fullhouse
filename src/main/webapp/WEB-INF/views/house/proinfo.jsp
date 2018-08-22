@@ -26,7 +26,7 @@
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	
 	<script>
-/* 		$(document).ready(function(){
+		/*$(document).ready(function(){
 			$("#modifyBtn").click(function() {
 				$("#certiPhone").css("display","");
 				$("#certiPhoneBtn").css("display","");
@@ -136,7 +136,7 @@
 			
 			
 			
-			//프로 내 계정 정보 변경 전 정보확인 스크립트
+			// 프로 내 계정 정보 변경 전 정보확인 스크립트
 			$('#proinfoB1').click(function(){
 				if( $('#nowPw').val() == "" ){
 					alert ("현재 비밀번호가 비어있습니다! 확인해주세요. ")
