@@ -13,5 +13,5 @@ public interface InjectionService {
 	void insertPriceService(HashMap price);
 	int countService();
 	void InsertAddInfoService(HashMap<String, Object> addInfo);
-	
+	void makeImage(int count);
 }

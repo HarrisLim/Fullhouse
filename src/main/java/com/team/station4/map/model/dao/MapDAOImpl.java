@@ -28,7 +28,7 @@ public class MapDAOImpl implements MapDAO {
 	
 
 	@Override
-	public List<HashMap<String, Object>> selectMap(Map jsonLatLng) {
+	public List<HashMap<String, Object>> selectMap(Map<String, Object> jsonLatLng) {
 		return sqlsession.selectList(bp+".mySelectMap", jsonLatLng);
 	}
 	
@@ -249,6 +249,16 @@ public class MapDAOImpl implements MapDAO {
 	@Override
 	public List<BuildDTO> mySerchAuto(String address) {
 		return sqlsession.selectList(bp+".mySerchAuto", address);
+	}
+
+	@Override
+	public List<BuildDTO> mySearchAddress(String address) {
+		return sqlsession.selectList(bp+".mySearchAddress", address);
+	}
+
+	@Override
+	public List<BuildDTO> mySearchArea(String address) {
+		return sqlsession.selectList(bp+".mySearchArea", address);
 	}
 
 

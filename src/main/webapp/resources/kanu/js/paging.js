@@ -197,6 +197,13 @@ function ajaxList(index, pageStartNum){
 		delete latLngArray["animal"];
 	}
 	
+	//주소 검색
+	if($("#address_search").val() != "" && $("#address_search").val() != null){
+		console.log("주소검색값: "+$("#address_search").val());
+		latLngArray["address"] = $("#address_search").val();
+	}else{
+		delete latLngArray["address"];
+	}
 	
 	var jsonLatLng = JSON.stringify(latLngArray);
 	console.log("latLng:"+jsonLatLng);
@@ -207,7 +214,7 @@ function ajaxList(index, pageStartNum){
 		dataType : "json",
 		data : jsonLatLng,
 		success : function(responseData){
-			
+			// $('#loading').show(); 
 			console.log("paing.js flag 확인 인입"+responseData.flag);
 			var data = responseData;
 			console.log("pagingVo.pageStartNum: "+data.pagingVo.pageStartNum+"pagingVo.getPageLastNum: "+data.pagingVo.pageLastNum);
@@ -322,6 +329,7 @@ function ajaxList(index, pageStartNum){
 			var jsonLatLng = JSON.stringify(latLngArray);
 			 //console.log("클러스터러 인입 페이징 ajax: "+jsonLatLng);
 			if(latLngArray["flag"] == 0){
+				console.log("index에서 클러스터 생성 인입.....");
 				 $.ajax({
 					 	contentType : "application/json",
 				    	url : "mapClusterer.do",
@@ -343,9 +351,16 @@ function ajaxList(index, pageStartNum){
 				 });
 			}
 		 }
+		 ,beforeSend:function(){
+			 $('#loading').show();
+		 }
+	     ,complete:function(){
+	    	 setTimeout( function() { $('#loading').hide() }, 1000);
+	    	 
+	     }
 	
 	});
-
+	 
 }
 
 // 리스트출력개수 처리
