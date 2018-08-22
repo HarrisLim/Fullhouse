@@ -72,7 +72,7 @@
 		        }).open();
 		    }
 			
-			/* 파일 업로드 스크립트 */
+			// 파일 업로드 스크립트
 			/*  function uploadFile(){
 	                var form = $('#FILE_FORM')[0];
 	                var formData = new FormData(form);
@@ -91,6 +91,7 @@
 	                    });
 	            } */
 	            
+	        // 프로 회원가입 이메일 등록 검사    
 			function semCheck1(){
 				
 				$.ajax({
@@ -123,7 +124,7 @@
 					}
 				});
 			}
-			//다중 submit ( 중복검사 버튼 & 회원가입 버튼)
+			// 다중 submit ( 중복검사 버튼 & 회원가입 버튼)
 			 function lrnoCheck(str) {
 					
 				var value = $('#lrno1').val();
@@ -168,7 +169,6 @@
 									
 								}else if( data.lrno != null ) {
 									
-									
 									alert(" 등록된 번호 값을 불러옵니다.");
 									var String2 = data.lrno;
 									var lrnoin = String2.split("-");
@@ -190,14 +190,10 @@
 									$("#Estate_no").val(data.estate_no).attr("readonly",true).css("background-color","rgba(200,200,240,0.1)");
 									return;
 								}
-								/* if( $('#semCheck').prop("disabled") == true ){
-									$('#proin').attr('disabled' , false)
-								} */
 							}
 						});
-						//$('#proin').attr('disabled' , false)
 					}else if( str == "str" ){
-						// 분할 테그 합치기
+						// 각 입력창 값 분할 테그 합쳐서 히든 테그에 넣기
 						
 						var value2 = $('#postcode').val();
 						value2 += "-";
@@ -268,7 +264,7 @@
 							$("#st_pw").focus();
 							return;
 						}
-						//비밀번호 유효성 검사
+						// 비밀번호 유효성 검사
 						if( $("#st_pw").val() != "" ){
 							
 							var pw = $('#st_pw').val();
@@ -467,7 +463,7 @@
 							<tr>
 								<td colspan="2">
 								<input type="password" placeholder="비밀번호 확인" style="width:65%" id="st_pwcheck" name="st_pwcheck"/>
-								<div name="profont2" style="color:red;" ></div>
+								<div id="profont2" style="color:red;" ></div>
 								</td>
 							</tr>
 							<tr>

@@ -46,7 +46,7 @@
 	</script>
   </head>
 <body>
-  <!-- 인글루드 시작 -->
+  <!-- 인클루드 시작 -->
   <%@include file="pronav2.jsp" %>
 	
 	<main class="main">

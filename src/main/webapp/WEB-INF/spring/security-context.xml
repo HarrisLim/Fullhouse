@@ -29,8 +29,6 @@
 				logout-url="/logout"   
 				logout-success-url="/house/main.do" />
 				
-			
-				
 			<session-management>
 			    <concurrency-control max-sessions="1" />
 			</session-management>  

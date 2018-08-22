@@ -21,7 +21,7 @@
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	
 	<script>
-/* 		$(document).ready(function(){
+		/*$(document).ready(function(){
 			$("#modifyBtn").click(function() {
 				$("#certiPhone").css("display","");
 				$("#certiPhoneBtn").css("display","");
@@ -30,15 +30,6 @@
 				$(".phoneNum").css("background","white");
 			});
 		}); */
-		/* bd 에서 스태프 정보 가져오기
-		$(function(){
-		 $.ajax({
-			 type:'POST',
-			 url:
-		 })
-			
-		} */
-		
 		// 다음 주소찾기 
 		function execDaumPostcode() {
 	        new daum.Postcode({
@@ -117,7 +108,7 @@
 			
 			
 			
-			//프로 내 계정 정보 변경 전 정보확인 스크립트
+			// 프로 내 계정 정보 변경 전 정보확인 스크립트
 			$('#proinfoB1').click(function(){
 				alert(" 내계정 바꿔보까~?")
 				

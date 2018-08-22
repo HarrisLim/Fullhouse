@@ -37,15 +37,15 @@
 		
 		//내 계정 정보 변경 전 정보확인 스크립트
 		$('#myinfoB1').click(function(){
-			alert(" 내계정 바꿔보까~?")
+			//alert(" 내계정 바꿔보까~?")
 			
 			if( $('#nowPw').val() == "" ){
-				alert ("현재 비밀번호가 비어있습니다! 확인해주세요. ")
+				alert (" 현재 비밀번호가 비어있습니다! 확인해주세요. ")
 				$('#nowPw').focus();
 				return;
 			}
 			if( $('#changePw1').val() == "" || $('#changePw12').val() == "" ){
-				alert ("변경할 비밀번호가 비어 있습니다! 확인해주세요.")
+				alert (" 변경할 비밀번호가 비어 있습니다! 확인해주세요.")
 				$('#changePw1').focus();
 				return;
 			}
@@ -65,17 +65,23 @@
 							return;
 						}else{
 							$("#myinfo").submit();
-							alert( '변경 완료 ^^' )
+							alert( '수정 완료!' )
 						}
 					}
 				}
 			})
 		});
 	});
-	// 로그인 실패시 로그인창 활성화
+	
 	window.onload = function(){
 		
+		// 로그인 실패시 메인 다시 호출
+		function showLogin(type){
+			if(type==='1')
+				$("#logA").click(); 
+		}
 		
+		(function() { showLogin($("#whenFail").val()); }());
 		
 		// 프로 회원가입 비번 중복 체크 
 		$(document).ready(function() {
@@ -99,13 +105,7 @@
 				}
 			});  // st_pwcheck keyup
 		});
-		// 로그인 실패시...
-		function showLogin(type){
-			if(type==='1')
-				$("#logA").click(); 
-		}
 		
-		(function() { showLogin($("#whenFail").val()); }());
 		// 비번 중복 체크
 		$('#inputPw1').keyup(function(){
 			if( $('#inputPw1').val() != $('#inputPw2').val()){
@@ -138,29 +138,7 @@
 			}
 			$("#log").submit();
 		});
-			/* else{
-				$.ajax({
-					type:'POST',
-					url:'empwCheck.do',
-					data:{ mem_email : $('#input_email').val() , mem_pw : $('#input_pw').val() },
-					success : function(responseData){
-						if( responseData.count == 2 ){
-							var fName = '${sessionScope.memName}'
-							var name = fName.substring(2);
-							alert ( '환영 합니다!!' + name + '님' )
-							location.href="../house/main.do"
-						}else if( responseData.count == 0){
-							alert ( '이메일이 틀렸습니다 다시 입력해 주세요.' )
-							return;
-						}else if( responseData.count == 1){
-							alert ( '비밀번호가 틀렸습니다 다시 입력해 주세요.' )
-							return;
-						}
-					}
-				});
-			} */
-		// mem_pw : $('#input_pw').val()
-		
+			
 		// 이메일 주소 중복 체크
 		$('#inputEmail').keyup(function(){
 			
@@ -181,29 +159,41 @@
 						$('#font').text('');
 						$('#font').text('중복 되는 이메일 입니다.');
 						$('#memInput').attr( 'disabled', true );
-						
 					}
 				}
 			});
 		});
-
-		// inputEmail / inputPw1 / userName / phone / customCheck6 / customCheck7
+		
 		//회원 가입시 확인 스크립트
 		$("#memInput").click(function(){
 			if( $("#inputEmail").val() === "" ){
 				alert(" 이메일을 입력해주세요.")
+				$("#inputEmail").focus();
 				return;
 			}
 			if( $("#inputPw1").val() === "" ){
 				alert(" 비밀번호를 입력해주세요.")
+				$("#inputPw1").focus();
 				return;
 			}
 			if( $("#userName").val() === "" ){
 				alert(" 이름을 입력해주세요.")
+				$("#userName").focus();
 				return;
 			}
-			if( $("#phone").val() === "" ){
+			if( $("#phone1").val() === "" ){
 				alert(" 핸드폰 번호를 입력해주세요.")
+				$("#phone1").focus();
+				return;
+			}
+			if( $("#phone2").val() === "" ){
+				alert(" 핸드폰 번호를 입력해주세요.")
+				$("#phone2").focus();
+				return;
+			}
+			if( $("#phone3").val() === "" ){
+				alert(" 핸드폰 번호를 입력해주세요.")
+				$("#phone3").focus();
 				return;
 			}
 			if( $("input[name=customCheck6]").prop("checked") === false ){
@@ -214,17 +204,18 @@
 				alert(" 개인정보 이용에 확인 해주세요.")
 				return;
 			}
+			
+			var value = $('#phone1').val();
+			value += "-";
+			value += $('#phone2').val();
+			value += "-";
+			value += $('#phone3').val();
+			$('#phone').val( value );
+			
 			$("#memInsert").submit();
 		});
 		
 	}
-/* <sec:authorize access="isAnonymous()">
-	<a href="${CONTEXT }/j_spring_security_check">로그인</a>
-</sec:authorize>
-<sec:authorize access="isAuthenticated()">
-	<a href="${CONTEXT }/j_spring_security_logout">로그아웃</a>
-</sec:authorize> */
-
 </script>
 
 
@@ -304,74 +295,74 @@
 			      <div class="col-lg5">
 			        <div class="card bg-primary">
 			          <div class="card-body">
-			          <button type="button" class="close" data-dismiss="modal">&times;</button>
-		          		<img src="../assets/images/brand/icon.png"  style="width: 100px;">
-			            <h4 class="heading h2 text-white pt-2 pb-4">환영 합니다</h4>
-			            <span class="clearfix"></span>
-						<form class="form-primary" id="log" name="log" action="../j_spring_security_check" method="post" >
-						<div class="form-group">
-						  <input type="email" class="form-control" id="input_email" name="mem_email" placeholder="Your email" value="harris@gmail.com">
-						</div>
-						<div class="form-group">
-						  <input type="password" class="form-control" id="input_pw" name="mem_pw" placeholder="Password" value="1234">
-						</div>
-							<input type="button" id="logIn" class="btn btn-block btn-lg bg-white mt-4" value="로그인" >
-							<a data-toggle="modal" href="#myModal2" class="btn btn-primary btn-lg btn-block">회원가입</a>
-							<div class="row">
-							 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-								<div class="col-sm-6"><a id="kakao-login-btn"></a></div>
-								<div class="g-signin2 col-lg-6 text-center" data-onsuccess="onSignIn" style="width:205px;height:50px"></div>
-							</div>
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			          		<img src="../assets/images/brand/icon.png"  style="width: 100px;">
+				            <h4 class="heading h2 text-white pt-2 pb-4">환영 합니다</h4>
+				            <span class="clearfix"></span>
+							<form class="form-primary" id="log" name="log" action="../j_spring_security_check" method="post" >
+								<div class="form-group">
+								  <input type="email" class="form-control" id="input_email" name="mem_email" placeholder="Your email" value="harris@gmail.com">
+								</div>
+								<div class="form-group">
+								  <input type="password" class="form-control" id="input_pw" name="mem_pw" placeholder="Password" value="1234">
+								</div>
+									<input type="button" id="logIn" class="btn btn-block btn-lg bg-white mt-4" value="로그인" >
+									<a data-toggle="modal" href="#myModal2" class="btn btn-primary btn-lg btn-block">회원가입</a>
+								<div class="row">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+									<div class="col-sm-6"><a id="kakao-login-btn"></a></div>
+									<div class="g-signin2 col-lg-6 text-center" data-onsuccess="onSignIn" style="width:205px;height:50px"></div>
+								</div>
 							
-						<script type='text/javascript'>
-						//<![CDATA[
-						// 사용할 앱의 JavaScript 키를 설정해 주세요.
-						Kakao.init('4883831475945bf63a47a6f7ad0f08ca');
-						
-						// 카카오 로그인 버튼을 생성합니다.
-						Kakao.Auth.createLoginButton({
-							container: '#kakao-login-btn',
-							success: function(authObj) {
-								
-								// 로그인 성공시, API를 호출합니다.
-								Kakao.API.request({
-									url: '/v1/user/me',
-									success: function(res) {
-										console.log(res);
-										
-										alert(" userID  : " + res.id )
-										alert("userEmail : " + res.account_email )
-										alert("NN : " + res.properties.nickname )
-										
-										var userID = res.id;						//유저의 카카오톡 고유 id
-										var userEmail = res.account_email;			//유저의 이메일
-										var userNickName = res.properties.nickname;	//유저가 등록한 별명
-										
-										console.log(userID);
-										console.log(userEmail);
-										console.log(userNickName);
-										
-										
-									},
-									fail: function(error) {
-										alert(JSON.stringify(error));
-									}
-								});
-							},
-							fail: function(err) {
-								alert(JSON.stringify(err));
-							}
-						});
-					  //]]>
-						</script>
-						</form>
+							<script type='text/javascript'>
+							//<![CDATA[
+							// 사용할 앱의 JavaScript 키를 설정해 주세요.
+							Kakao.init('4883831475945bf63a47a6f7ad0f08ca');
+							
+							// 카카오 로그인 버튼을 생성합니다.
+							Kakao.Auth.createLoginButton({
+								container: '#kakao-login-btn',
+								success: function(authObj) {
+									
+									// 로그인 성공시, API를 호출합니다.
+									Kakao.API.request({
+										url: '/v1/user/me',
+										success: function(res) {
+											console.log(res);
+											
+											alert(" userID  : " + res.id )
+											alert("userEmail : " + res.account_email )
+											alert("NN : " + res.properties.nickname )
+											
+											var userID = res.id;						//유저의 카카오톡 고유 id
+											var userEmail = res.account_email;			//유저의 이메일
+											var userNickName = res.properties.nickname;	//유저가 등록한 별명
+											
+											console.log(userID);
+											console.log(userEmail);
+											console.log(userNickName);
+											
+											
+										},
+										fail: function(error) {
+											alert(JSON.stringify(error));
+										}
+									});
+								},
+								fail: function(err) {
+									alert(JSON.stringify(err));
+								}
+							});
+						  	//]]>
+							</script>
+							</form>
 			          </div>
 			        </div>
 			      </div>
 			    </div>
 			  </div>
 			</div>
-			<!-- <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div> -->
+			
 			<script>
 			  function onSignIn(googleUser) {
 			    // Useful data for your client-side scripts:
@@ -388,6 +379,7 @@
 			    console.log("ID Token: " + id_token);
 			  };
 			</script>
+			
 			<div class="modal" id="myModal2" data-backdrop="static">
 				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
@@ -420,7 +412,10 @@
 					            <div class="form-group">
 					              <label for="username">휴대폰 번호</label>
 					              <div class="input-group">
-					                <input type="tel" class="form-control" id="phone" name="mem_phone" placeholder="- 없이 입력해 주세요">
+					              	<input class="phoneNum form-control" id="phone1" style="width:30%">&nbsp;-&nbsp;
+					              	<input class="phoneNum form-control" id="phone2" style="width:30%">&nbsp;-&nbsp;
+					              	<input class="phoneNum form-control" id="phone3" style="width:30%">
+					                <input type="hidden" class="form-control" id="phone" name="mem_phone">
 					              </div>
 					              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 

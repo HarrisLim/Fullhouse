@@ -10,8 +10,8 @@
 		<result property="mem_email" column="MEM_EMAIL" />
 		<result property="mem_pw" column="MEM_PW" />
 		<result property="mem_phone" column="MEM_PHONE" />
-		<result property="hot" column="HOT" />
 		<result property="mem_rdate" column="MEM_RDATE" />
+		<result property="hot" column="HOT" />
 		<result property="recentList" column="RECENTLIST" />
 	</resultMap>
 	
@@ -36,7 +36,7 @@
 		</select>
 		
 		<insert id="memInsert" parameterType="Member">
-		   insert into MEMBER values(MEM_NO_SEQ.nextval, #{mem_email}, #{mem_pw}, '#1'||#{mem_name}, #{mem_phone}, null, SYSDATE, null)
+		   insert into MEMBER values(MEM_NO_SEQ.nextval, '#1'||#{mem_name}, #{mem_email}, #{mem_pw}, #{mem_phone}, SYSDATE, null, null)
 		</insert>
 		
 		<select id="Security" resultType="Member" parameterType="String">
