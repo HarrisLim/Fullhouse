@@ -50,8 +50,6 @@ public interface MapDAO {
 	List<BuildDTO> hotListPaging(Map<String, Object> jsonLatLng);
 	List<PriceDTO> priceSelect(BuildDTO dto);
 	
-	
-	
 	/* admin 그래프 */
 		/* 매물현황 */
 	int selectBuildPie(Map<String, Object> buildPieMap);
@@ -66,4 +64,5 @@ public interface MapDAO {
 	List<BuildDTO> mySerchAuto(String address);
 	List<BuildDTO> mySearchAddress(String address);
 	List<BuildDTO> mySearchArea(String address);
+	
 }

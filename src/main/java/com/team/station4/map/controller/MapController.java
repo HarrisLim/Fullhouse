@@ -73,7 +73,7 @@ public class MapController {
 		
 		for(int i=0; i<map.size(); i++) {
 			String temp = map.get(i).get("PICPATH")+"";
-			String [] picPath = temp.split(", ");
+			String [] picPath = temp.split(",");
 			map.get(i).put("PICPATH", picPath[0]);
 		}
 
@@ -199,46 +199,63 @@ public class MapController {
 		//flag 2 은 방검색 페이지 - 최근 본 방 제이슨 데이터 처리
 		}else {
 			ModelAndView mv = new ModelAndView("jsonView");
-			MainDTO member = (MainDTO)session.getAttribute("mem");
-			String email = member.getMem_email();
-			PagingVo pagingVo = new PagingVo();
-			pagingVo.setIndex((Integer)jsonLatLng.get("index"));
-			pagingVo.setPageStartNum((Integer)jsonLatLng.get("pageStartNum"));
+			if(session.getAttribute("mem") != null) {
+				MainDTO member = (MainDTO)session.getAttribute("mem");
+				String email = member.getMem_email();
+				PagingVo pagingVo = new PagingVo();
+				pagingVo.setIndex((Integer)jsonLatLng.get("index"));
+				pagingVo.setPageStartNum((Integer)jsonLatLng.get("pageStartNum"));
+				jsonLatLng.put("start", pagingVo.getStart());
+				jsonLatLng.put("last", pagingVo.getLast());
+				
+							
+				String recent = service.myRecentService(email);
+				
+				System.out.println("관심목록 입장 recent: "+recent);
+				if(recent != null ) {
+					recent = recent.substring(recent.indexOf(",")+1);
+					String recentArray [] = recent.split(",");
+					List<Integer> list = new ArrayList<Integer>();
+					for(String recentStr :recentArray) {
+						list.add(Integer.parseInt(recentStr));
+					}
+					int count = list.size();
+					pagingVo.setTotal(count);
+					HashMap<String, Object> hm = new HashMap<String, Object>();
+					hm.put("start", pagingVo.getStart());
+					hm.put("last", pagingVo.getLast());
+					hm.put("list", list); 
+					List<HashMap<String, Object>>map = service.recentListPrintService(hm);
 			
-			jsonLatLng.put("start", pagingVo.getStart());
-			jsonLatLng.put("last", pagingVo.getLast());
-			List<Integer> listRecent = new ArrayList<Integer>();
-			String recent = service.myRecentService(email);
-			recent= recent.substring(recent.indexOf(",")+1);
-			String [] recentArray = recent.split(",");
-			for(String recentStr : recentArray) {
-					listRecent.add(Integer.parseInt(recentStr));
-			}
-			int total = listRecent.size();
-			pagingVo.setTotal(total);
-			HashMap<String, Object> hm = new HashMap<String, Object>();
-			hm.put("list", listRecent);
-			hm.put("start", pagingVo.getStart());
-			hm.put("last", pagingVo.getLast());
-			
-			System.out.println("파스인트된 flag 관심목록: "+flag+", index: "+pagingVo.getIndex()+", pageStartNum: "+pagingVo.getPageStartNum()+", pageLastNum: "+pagingVo.getPageLastNum()+", total: "+pagingVo.getTotal());
-			List<HashMap<String, Object>>map = service.recentListPrintService(hm);
-			
-			for(int i=0; i<map.size(); i++) {
-				String [] picPath = map.get(i).get("PICPATH").toString().split(",");
-				map.get(i).put("PICPATH", picPath[0]);
-			}
-			for(int i=0; i<map.size(); i++) {
-				if(map.get(i).get("ROOMTITLE").toString().length() > 23) {
-					String roomTitle = map.get(i).get("ROOMTITLE").toString().substring(0, 22)+"...";
-					map.get(i).put("ROOMTITLE", roomTitle);
-					//System.out.println("Xxxx: "+ roomTitle);
+					//System.out.println("월세:"+map.get(0).get("MONTHLY")+", 전세:"+map.get(0).get("LEASE")+", 보증금:"+map.get(0).get("DEPOSIT"));
+					for(int i=0; i<map.size(); i++) {
+						if(map.get(i).get("ROOMTITLE").toString().length() > 23) {
+							String roomTitle = map.get(i).get("ROOMTITLE").toString().substring(0, 22)+"...";
+							map.get(i).put("ROOMTITLE", roomTitle);
+							//System.out.println("Xxxx: "+ roomTitle);
+						}
+					}
+					
+					for(int i=0; i<map.size(); i++) {
+						String [] picPath = map.get(i).get("PICPATH").toString().split(",");
+						map.get(i).put("PICPATH", picPath[0]);
+					}
+					
+					mv.addObject("flag", 2);
+					mv.addObject("list", map);
+					//mv.addObject("count", count);
+					mv.addObject("pagingVo", pagingVo);
+					//mv.addObject("seType", session.getAttribute("type"));
+					return mv;
+				}else {
+					mv.addObject("pagingVo", pagingVo);
+					System.out.println("최근 본방 없음");
+					return mv;
 				}
+			}else {
+				mv.addObject("flag", 1);
+				return mv;
 			}
-			mv.addObject("flag", 2);
-			mv.addObject("list", map);
-			mv.addObject("pagingVo", pagingVo);
-			return mv;
 		}
 	}
 	
@@ -339,20 +356,20 @@ public class MapController {
 			//recentList 목록이 있는지 검사 0이면 최근본목록 없으니 그냥 등록 1이면 최근본목록+ 추가로 본목록, 추가로 본 목록이 최근목록에 있으면 recent는 기존 목록처리
 			int count = service.memRecentSelectService(hm);
 			System.out.println("최근본 페이지 추가 인입 리센트 확인: "+recent+", 빌드번호 확인: "+buildNo+", count: "+count+", email: "+email);
-			if (count < 1) {
+			if (count < 1) { //중복 빌드넘버가 없음. 그러니 리센트 추가하여 업데이트
 				hm.put("build_no", recent+","+buildNo);
 				service.memRecentUpdateService(hm);
 				recent = service.myRecentService(email);
 				System.out.println("중복 매물이없을때: recent: "+recent);
-			}else {
-				if(recent.contains(buildNo)) {
-					System.out.println("리센트에 내가 선택한 빌드번호가 있으면: "+recent);
-				}else {
-					hm.put("build_no", recent+","+buildNo);
-					service.memRecentUpdateService(hm);
-					recent = service.myRecentService(email);
-					System.out.println("리센트에 내가 선택한 빌드번호가 없으면: "+recent+"hashMap데이터 확인: "+hm.get("build_no"));
-				}
+//			}else { //중복 빌드 넘버가 있음
+//				if(recent.contains(buildNo)) { 
+//					System.out.println("리센트에 내가 선택한 빌드번호가 있으면: "+recent);
+//				}else {
+//					hm.put("build_no", recent+","+buildNo);
+//					service.memRecentUpdateService(hm);
+//					recent = service.myRecentService(email);
+//					System.out.println("리센트에 내가 선택한 빌드번호가 없으면: "+recent+"hashMap데이터 확인: "+hm.get("build_no"));
+//				}
 			}
 			String recentArray[] = recent.split(",");
 			if(recentArray.length > 10) {
@@ -410,17 +427,21 @@ public class MapController {
 					map.get(i).put("PICPATH", picPath[0]);
 				}
 				mv.setViewName("house/myMap");
+				mv.addObject("total", count);
 				mv.addObject("flag", 2);
 				mv.addObject("map", map);
-				mv.addObject("count", count);
 				mv.addObject("page", pagingVo);
 				mv.addObject("seType", session.getAttribute("type"));
 				return mv;
 			}else {
+				mv.addObject("total", pagingVo.getTotal());
+				mv.addObject("page", pagingVo);
+				mv.addObject("seType", session.getAttribute("type"));
 				System.out.println("최근 본방 없음");
 				return mv;
 			}
 		}else {
+			mv.addObject("seType", session.getAttribute("type"));
 			mv.addObject("flag", 1);
 			return mv;
 		}

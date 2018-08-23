@@ -1,7 +1,8 @@
 
 window.onload=function(){
 	(function(){
-		$("#myNavBar").css("z-index",-1); // navbar 제일 뒤로 밀기
+		$("#myLeft").css("z-index",2); // navbar 제일 뒤로 밀기
+		$("#myNavBar").css("z-index",1); // navbar 제일 뒤로 밀기
 		$("#first").css({margin:"20px 0",padding:"0px 0"});
 		$("#second").css({margin:"0px 0",padding:"0px 0"});
 		$("#third").css({margin:"40px 0",padding:"0px 0"});

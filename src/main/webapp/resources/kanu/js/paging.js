@@ -205,6 +205,7 @@ function ajaxList(index, pageStartNum){
 		delete latLngArray["address"];
 	}
 	
+	var i = 0;
 	var jsonLatLng = JSON.stringify(latLngArray);
 	console.log("latLng:"+jsonLatLng);
 	$.ajax({
@@ -215,17 +216,20 @@ function ajaxList(index, pageStartNum){
 		data : jsonLatLng,
 		success : function(responseData){
 			// $('#loading').show(); 
-			console.log("paing.js flag 확인 인입"+responseData.flag);
+			//console.log("paing.js flag 확인 인입"+responseData.flag);
 			var data = responseData;
-			console.log("pagingVo.pageStartNum: "+data.pagingVo.pageStartNum+"pagingVo.getPageLastNum: "+data.pagingVo.pageLastNum);
+			//console.log("pagingVo.pageStartNum: "+data.pagingVo.pageStartNum+"pagingVo.getPageLastNum: "+data.pagingVo.pageLastNum);
 			//console.log("인입2"+data);
 			var html = "";
 			html +="<style>";
 			html +=".itemList a:hover { font-weight:bold;color:gray; }";
 			html +="</style>";
-
-			if(data.length != 0){
-				for(var i=0; i<data.list.length; i++){
+			//console.log("데이터: "+Object.keys(data));
+			
+			//console.log("데이터xx: "+Object.keys(data.map).length);
+			if(Object.keys(data).includes("list")){
+				//console.log("데이터랭스 1이상");
+				for(i=0; i<data.list.length; i++){
 					html +="<div class ='itemList' style='width:95%;height:145px;border:1px solid gray;margin:5px;margin-left:12px;' onmouseover='getterLatLng(this)' onmouseout='buildMouseOut(this)' >";
 					html +="<div class='RoomItem-icons' style='float:right;margin:15px;' onClick='heart(this)'>";
 					html +="<span class='room-favorite' >";
@@ -299,7 +303,8 @@ function ajaxList(index, pageStartNum){
 				}
 				html +="</div>";
 				html +="</div>";
-
+			}else{
+				html +="<br><br><br><br><center><strong>데이터 없음.</strong></center>"
 			}
 			var text = "검색결과 "+data.pagingVo.total+" 개";
 			var paging = "";
@@ -311,7 +316,7 @@ function ajaxList(index, pageStartNum){
 			paging +="<li class='page-item'><a class='page-link' onclick='pagePre("+data.pagingVo.index+","+data.pagingVo.pageStartNum+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+");'>&lsaquo;</a></li>";
 			//<!--페이지번호 -->
 			for(var i=data.pagingVo.pageStartNum; i<=data.pagingVo.pageLastNum; i++){
-				paging+="<li class='pageIndex"+i+"' id='idx"+i+"'><a class='page-link' onclick='pageIndex("+(i-1)+","+i+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+");'>"+i+"</a></li>";
+				paging+="<li class='pageIndex"+i+"' id='idx"+i+"'><a class='page-link' onclick='pageIndex("+(i-1)+","+(i-4)+","+data.pagingVo.total+","+data.pagingVo.listCnt+","+data.pagingVo.pageCnt+");'>"+i+"</a></li>";
 			}
 			
 			//<!--다음 페이지 이동 -->
@@ -329,7 +334,7 @@ function ajaxList(index, pageStartNum){
 			var jsonLatLng = JSON.stringify(latLngArray);
 			 //console.log("클러스터러 인입 페이징 ajax: "+jsonLatLng);
 			if(latLngArray["flag"] == 0){
-				console.log("index에서 클러스터 생성 인입.....");
+				//console.log("index에서 클러스터 생성 인입.....");
 				 $.ajax({
 					 	contentType : "application/json",
 				    	url : "mapClusterer.do",
@@ -351,17 +356,17 @@ function ajaxList(index, pageStartNum){
 				 });
 			}
 		 }
-		 ,beforeSend:function(){
-			 $('#loading').show();
+		 ,beforeSend:function(){ // 미완성 
+	    	 $('#loading').show();
 		 }
 	     ,complete:function(){
-	    	 setTimeout( function() { $('#loading').hide() }, 1000);
-	    	 
+    		 setTimeout( function() { $('#loading').hide() }, 1000); 
 	     }
 	
 	});
 	 
 }
+
 
 // 리스트출력개수 처리
 function listCnt() {

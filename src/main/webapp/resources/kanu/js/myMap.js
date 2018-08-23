@@ -229,11 +229,14 @@ $("#recentRoom").click(function(){
 			type : "POST",
 			data : {email : email},
 			success : function (responseData){
-				var data = responseData;
-				$("#total").val(data.page.total);
-				$("#pageCnt").val(data.page.pageCnt);
-				$("#listCnt").val(data.page.listCnt);
-				console.log("최근본방 목록 success: 페이징정보 total: "+$("#total").val()+", listCnt: "+ $("#listCnt").val()+", pageCnt: "+$("#pageCnt").val());
+				if(responseData == null || responseData == undefined ){
+					var data = responseData;
+					$("#total").val(data.page.total);
+					$("#pageCnt").val(data.page.pageCnt);
+					$("#listCnt").val(data.page.listCnt);
+					console.log("최근본방 목록 success: 페이징정보 total: "+$("#total").val()+", listCnt: "+ $("#listCnt").val()+", pageCnt: "+$("#pageCnt").val());
+//					pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
+				}
 				pageIndex(0, 1, $("#total").val(), $("#listCnt").val(), $("#pageCnt").val());
 			}
 			
@@ -271,18 +274,22 @@ function mkClusterer(flag){
    	data : jsonLatLng,
 	 	success : function(responseData){
 		   position = responseData;
-    
-		    for(var i=0; i<position.positions.length; i++){
-		    	console.log("position2 포문: lat: "+position.positions[i].lat+", lng: "+position.positions[i].lng+", i: "+i+", markers[].length: "+markers.length);
-		    	var coords = new daum.maps.LatLng(position.positions[i].lat, position.positions[i].lng);
-		    	marker = new daum.maps.Marker({
-			    	position: coords,
-			    	image: customMarkerImage1
-		    	});
-		    	marker.setMap(map);		    	
-		    	markers[i] = marker;
-		    	//markers[i].setMap(map);
-		    }
+		   if(position.positions == null || position.positions == undefined ){
+			   console.log("myMap.js- mkCluster: 최근본목록없음");
+//			   return false;
+		   }else{
+			    for(var i=0; i<position.positions.length; i++){
+			    	console.log("position2 포문: lat: "+position.positions[i].lat+", lng: "+position.positions[i].lng+", i: "+i+", markers[].length: "+markers.length);
+			    	var coords = new daum.maps.LatLng(position.positions[i].lat, position.positions[i].lng);
+			    	marker = new daum.maps.Marker({
+				    	position: coords,
+				    	image: customMarkerImage1
+			    	});
+			    	marker.setMap(map);		    	
+			    	markers[i] = marker;
+			    	//markers[i].setMap(map);
+			    }
+		   }
 		},error:function(request,status,error){
 	        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
       }
