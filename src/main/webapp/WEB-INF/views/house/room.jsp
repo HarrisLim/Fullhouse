@@ -272,33 +272,30 @@
 
 			       					
 			       						<c:forEach var="dto" varStatus="loop" items="${list}">
-			       						<c:choose>
-			       						<c:when test="${dto.deposit ne null && dto.deposit ne 0}">
+<%-- 			       						${dto.lease} --%>
+			       						<c:if test="${dto.deposit ne null && dto.deposit ne 0}">
 			       							<tr>
-			    	       					<td width="25%" collspan="2" id="build_type${loop.index}">
-					       						보증금 / 월세  </td>
+			    	       					<td width="25%" collspan="2" id="build_type${loop.index}"> 보증금 / 월세 </td>
 					       					<td width="25%">
 			       							<strong>${dto.deposit} / ${dto.monthly}</strong>
 			       							</td>
 			       							</tr>
-			       						</c:when>
-			       						<c:when test="${dto.lease ne null && dto.lease ne 0 && (dto.monthly eq 0 || dto.monthly eq null)}">
+			       						</c:if>
+			       						<c:if test="${dto.lease ne null && dto.lease ne 0}">
 			       							<tr>
-					       					<td width="25%" collspan="2" id="build_type${loop.index}">
-					       						전세  </td>
+					       					<td width="25%" collspan="2" id="build_type${loop.index}"> 전세  </td>
 					       					<td width="25%">
 			       							<strong>${dto.lease}</strong>
 			       							</tr>
-			       						</c:when>
-			       						<c:when test="${dto.salePrice ne null && dto.salePrice ne 0}">
+			       						</c:if>
+			       						<c:if test="${dto.salePrice ne null && dto.salePrice ne 0}">
 			       							<tr>
-					       					<td width="25%" collspan="2" id="build_type${loop.index}">
-					       						매매  </td>
+					       					<td width="25%" collspan="2" id="build_type${loop.index}"> 매매 </td>
 					       					<td width="25%">
 			       							<strong>${dto.salePrice}</strong>
 			       							</tr>
-			       						</c:when>
-		       						</c:choose>
+			       						</c:if>
+		       						
 		       						</c:forEach> 
 			       					</td>
        							</tr>
@@ -306,24 +303,8 @@
 			       					<td width="25%">
 			       						방 종류
 			       					</td>
-			       					
-	       					   		<c:choose>
-								   		<c:when test="${dto.buildType eq 1}">
-								   			<td width="25%">월세</td>
-							   			</c:when>
-								   		<c:when test="${dto.buildType eq 2}">
-								   			<td width="25%">전세</td>
-								   		</c:when>
-								   		<c:when test="${dto.buildType eq 3}">
-								   			<td width="25%">매매</td>
-								   		</c:when>
-								   		<c:when test="${dto.buildType eq 4}">
-								   			<td width="25%">월세or전세</td>
-								   		</c:when>
-   									</c:choose>
-
+			 				   			<td width="25%"><strong>${dto.proType}<strong></td>
 			       					</tr>
-			       		
 			       				<tr>
 			       					<td width="25%">
 			       						해당 층 / 건물 층

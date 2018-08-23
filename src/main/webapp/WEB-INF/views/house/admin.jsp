@@ -347,7 +347,7 @@
 	<div id="navContainer" style="z-index:-1">
  		<%@include file="nav.jsp" %>
  	</div>
-	<div class="nav-side-menu left">
+	<div class="nav-side-menu left" id="myLeft">
 	    <div class="brand">
 	    	<a class="" href="../house/main.do" style="color:white">
 	    		<img src="../kanu/main/로고.png" class="avatar avatar-sm bg-#00000000" style="background-color:transparent"><strong>Full House</strong> Station4

@@ -87,8 +87,8 @@ public class UploadroomController {
 		priceDTO.setBuild_no(build_no);
 		if(monthly!=null) {
 			for(int i=0; i<monthly.size(); i++) {
-				priceDTO.setMonthly(Integer.parseInt(monthly.get(i)));
-				priceDTO.setDeposit(Integer.parseInt(deposit.get(i)));
+				priceDTO.setMonthly(Integer.parseInt(deposit.get(i))); // monthly와 deposit 이 뒤바뀜 db확인 필요 
+				priceDTO.setDeposit(Integer.parseInt(monthly.get(i)));
 				if(i==0) urService.priceInsertService(priceDTO);
 				else urService.priceMonthlyInsertService(priceDTO);
 			}
@@ -109,7 +109,8 @@ public class UploadroomController {
 			wholePath="";
 	        long sizeSum = 0;
 	        
-	        String path ="/Users/harris/Documents/java_bit/sts/workspace/Fullhouse/src/main/webapp/resources/kanu/roomimg";
+	        String path ="C:/web/sts-bundle/workspace/Fullhouse/src/main/webapp/resources/kanu/roomimg";
+//	        String path ="/Users/harris/Documents/java_bit/sts/workspace/Fullhouse/src/main/webapp/resources/kanu/roomimg";
 	        
 	        File fStore = new File(path);
 	        if(!fStore.exists()) {

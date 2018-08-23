@@ -246,7 +246,7 @@ public class MapServiceImpl implements MapService {
 	public List<BuildDTO> mySearchAddressService(String address) {
 		return dao.mySearchAddress(address);
 	}
-
+	
 	@Override
 	public List<BuildDTO> mySearchAreaService(String address) {
 		return dao.mySearchArea(address);

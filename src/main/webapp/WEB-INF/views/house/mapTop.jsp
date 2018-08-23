@@ -30,6 +30,8 @@
 	color: gray;
 }
 </style>
+<c:choose>
+	<c:when test="${fn:length(map) ne 0 }">
 		<c:forEach var="dto" items="${map}">
 			<div class="itemList" style="width: 95%; height: 145px; border: 1px solid gray; margin: 5px; margin-left: 12px;" onmouseover="getterLatLng(this)" onmouseout="buildMouseOut(this)">
 				<!-- 관심목록 추가 하트모양 -->
@@ -106,12 +108,16 @@
 				</a>
 			</div>
 		</c:forEach>
-
-
+	</c:when>
+	<c:when test="${fn:length(map) eq 0 }">
+			<br><br><br><br><center><strong>데이터 없음.</strong></center>
+		</c:when>
+</c:choose>
 	</div>
 
 </div>
 
+	
 <div id="page"
 	style="height: 45px; width: 480px; bottom: calc(-100% + 60px); float: right; position: relative;">
 	<div id="pageLoad">
@@ -127,7 +133,7 @@
 			<c:forEach var='i' begin="${page.pageStartNum}"
 				end="${page.pageLastNum}" step="1">
 				<li class='pageIndex${i}' id='idx${i}'><a class="page-link"
-					onclick='pageIndex(${i-1}, ${i}, ${page.total}, ${page.listCnt}, ${page.pageCnt});'>${i}</a></li>
+					onclick='pageIndex(${i-1}, ${i}-4, ${page.total}, ${page.listCnt}, ${page.pageCnt});'>${i}</a></li>
 			</c:forEach>
 
 			<!--다음 페이지 이동 -->
@@ -173,10 +179,10 @@
 				</button>
 				<div class="collapse navbar-collapse justify-content-end"
 					id="navigation">
-					<form>
+					<form onsubmit="return false" >
 						<div class="input-group no-border">
 						<c:if test="${flag eq 0}">
-							<input type="text" value="" class="form-control" placeholder="관심지역 또는 매물 번호 검색.." size="50dp" id="address_search" 
+							<input type="text" value="" class="form-control" placeholder="관심지역 또는 매물 번호 검색.." size="50dp" id="address_search"  
 							style="border-radius: 20px; height: 40px; margin-top: 3px;"/>&nbsp;&nbsp;
 							<div >
 								<i class="now-ui-icons ui-1_zoom-bold" id="search_button" style="margin: 11px;font-size: 25px;cursor:pointer"
@@ -196,49 +202,46 @@
 						<div id="menubar"
 							class="collapse navbar-collapse justify-content-center">
 
-<!-- 							<div> -->
-<!-- 								<a class="navbar-brand" href="./map.do">방검색</a> -->
-<!-- 							</div> -->
 							<div>
 								<c:set var="URL" value="${pageContext.request.requestURL}" />
 								<c:choose>
 						    		<c:when test="${fn:contains(URL, 'myMap')}">
-						    			<a class="navbar-brand" href="./map.do">방 검색</a>
+						    			<a class="navbar-brand" href="./map.do" style="font-size:1.0em">방 검색</a>
 						    		</c:when>
 									<c:when test="${(sessionScope.mem.mem_name != null) || (sessionScope.st.st_name != null)}">
-										<a class="navbar-brand" href="./myMap.do">관심목록</a>
+										<a class="navbar-brand" href="./myMap.do" style="font-size:1.0em">관심목록</a>
 									</c:when>
 									<c:when test="${(sessionScope.mem.mem_name eq null) || (sessionScope.st.st_name eq null)}">
-										<a class="navbar-brand" data-toggle="modal" href="#myModal" onclick="alert('로그인 후 이용 가능한 서비스입니다.')">관심목록</a>
+										<a class="navbar-brand" data-toggle="modal" href="#myModal" onclick="alert('로그인 후 이용 가능한 서비스입니다.')" style="font-size:1.0em">관심목록</a>
 									</c:when>
 								</c:choose>
 							</div>
 							<div>
 								<c:choose>
 									<c:when test="${(sessionScope.mem.mem_name != null) || (sessionScope.st.st_name != null)}">
-										<a class="navbar-brand" href="./uploadroom.do">방 등록</a>
+										<a class="navbar-brand" href="./uploadroom.do" style="font-size:1.0em">&nbsp;&nbsp;&nbsp;방 등록</a>
 									</c:when>
 									<c:when test="${(sessionScope.mem.mem_name eq null) || (sessionScope.st.st_name eq null)}">
-										<a class="navbar-brand" data-toggle="modal" href="#myModal" onclick="alert('로그인 후 이용 가능한 서비스입니다.')">방 등록</a>
+										<a class="navbar-brand" data-toggle="modal" href="#myModal" onclick="alert('로그인 후 이용 가능한 서비스입니다.')" style="font-size:1.0em">&nbsp;&nbsp;&nbsp;방 등록</a>
 									</c:when>
 								</c:choose>
 							</div>
 							<c:if test="${fn:length(seType) eq 0 }">
 								<div>
-									<a id="log-in" class="navbar-brand" data-toggle="modal" href="<c:url value='#myModal'/>">회원가입 및 로그인 </a>
+									<a id="log-in" class="navbar-brand" data-toggle="modal" href="<c:url value='#myModal'/>" style="font-size:1.0em">&nbsp;&nbsp;회원가입 및 로그인 </a>
 								</div>
 							</c:if>
 						</div>
 						<!--  ul 지구본, 드랍다운 메뉴 등     -->
 						<c:if test="${fn:length(seType) ne 0 }">
 							<ul class="navbar-nav ml-auto align-items-lg-center"
-								style="margin-right: 40px">
+								style="margin-right: 80px">
 								<i class="now-ui-icons users_single-02"></i>
 								<c:if test="${seType eq 'mem' }">
-									<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="my_station" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 0.85em">${sessionScope.mem.mem_name.substring(2)}</a>
+									<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="my_station" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 1.0em;margin-right:10px;">${sessionScope.mem.mem_name.substring(2)}</a>
 								</c:if>
 								<c:if test="${seType eq 'staff' }">
-									<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="my_station" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 0.85em">${sessionScope.st.st_name.substring(2)}</a>
+									<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="my_station" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 1.0em;margin-right:10px;">${sessionScope.st.st_name.substring(2)}</a>
 								</c:if>
 									<div class="dropdown-menu " aria-labelledby="navbar_1_dropdown_1">
 									<c:choose>

@@ -125,12 +125,12 @@
 								<td>
 									<select class="btn btn-sm btn-primary" name="proType" id="proType">
 									  <option value="">방 종류 선택</option>
-									  <option value="oneroom">원룸</option>
-									  <option value="onefiveroom">1.5룸</option>
-									  <option value="tworoom">투룸</option>
-									  <option value="threeroom">쓰리룸</option>
-									  <option value="studio">오피스텔</option>
-									  <option value="apartment">아파트</option>
+									  <option value="원룸">원룸</option>
+									  <option value="1.5룸">1.5룸</option>
+									  <option value="투룸">투룸</option>
+									  <option value="쓰리룸">쓰리룸</option>
+									  <option value="오피스텔">오피스텔</option>
+									  <option value="아파트">아파트</option>
 									</select>
 								</td>
 								<td colspan="5">
