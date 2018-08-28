@@ -1,6 +1,8 @@
 # FullHouse
   공인중개사와 구매자가 활동할 수 있는 부동산 중개 플랫폼 서비스입니다.
 
+![FullHouse](/github_image/main.gif)
+
 ## Project Period
   * 2018.07.05(Wed) ~ 2017.08.23(Thu)
 
