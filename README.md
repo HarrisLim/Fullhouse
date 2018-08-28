@@ -28,5 +28,8 @@
   * Spring Security v3.2.3
   * BootStrap
 
+## Record
+  * [Trello](https://trello.com/b/4LRGxHHs/fullhouse)
+
 ## Author
   * TEAM Station4 ( 박종석, 박승균, 임정수 )
